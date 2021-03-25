@@ -5,123 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/description.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_win_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_win_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_win_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Java.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/Semesterprojekt-2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/libraries/lib.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-console-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-datetime-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-debug-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-errorhandling-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-file-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-file-l1-2-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-file-l2-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-handle-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-heap-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-interlocked-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-libraryloader-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-localization-l1-2-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-memory-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-namedpipe-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-processenvironment-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-processthreads-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-processthreads-l1-1-1.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-profile-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-rtlsupport-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-string-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-synch-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-synch-l1-2-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-sysinfo-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-timezone-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-core-util-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-conio-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-convert-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-environment-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-filesystem-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-heap-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-locale-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-math-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-multibyte-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-private-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-process-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-runtime-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-stdio-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-string-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-time-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/api-ms-win-crt-utility-l1-1-0.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/concrt140.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/decora_sse.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/fxplugins.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/glass.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/glib-lite.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/gstreamer-lite.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/javafx_font.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/javafx_iio.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/jfxmedia.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/jfxwebkit.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/msvcp140.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/prism_common.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/prism_d3d.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/prism_sw.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/ucrtbase.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/bin/vcruntime140.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.base/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.base/ASSEMBLY_EXCEPTION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.base/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.controls/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.controls/ASSEMBLY_EXCEPTION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.controls/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.fxml/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.fxml/ASSEMBLY_EXCEPTION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.fxml/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.graphics/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.graphics/ASSEMBLY_EXCEPTION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.graphics/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.graphics/jpeg_fx.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.media/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.media/ASSEMBLY_EXCEPTION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.media/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.media/applecoreaudio.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.media/glib.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.media/gstreamer.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.media/libffi.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.swing/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.swing/ASSEMBLY_EXCEPTION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.swing/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.web/ADDITIONAL_LICENSE_INFO" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.web/ASSEMBLY_EXCEPTION" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.web/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.web/icu_web.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.web/libxml2.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.web/libxslt.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/legal/javafx.web/webkit.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../javafx-sdk-11.0.2/lib/javafx.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/GUI.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/GUIController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/description.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/libraries/Maven__org_openjfx_javafx_base_15_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/libraries/Maven__org_openjfx_javafx_base_win_15_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/libraries/Maven__org_openjfx_javafx_controls_15_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/libraries/Maven__org_openjfx_javafx_controls_win_15_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/libraries/Maven__org_openjfx_javafx_fxml_15_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/libraries/Maven__org_openjfx_javafx_fxml_win_15_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/libraries/Maven__org_openjfx_javafx_graphics_15_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/libraries/Maven__org_openjfx_javafx_graphics_win_15_0_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/Java.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/src/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/src/main/java/sample/GUIController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/src/main/java/sample/Main.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +92,15 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
@@ -321,17 +235,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -373,7 +276,8 @@
       <option name="presentableId" value="Default" />
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
-      <workItem from="1616668120233" duration="1294000" />
+      <workItem from="1616668120233" duration="1938000" />
+      <workItem from="1616670095898" duration="18000" />
     </task>
     <servers />
   </component>
@@ -423,10 +327,21 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
