@@ -1,4 +1,4 @@
-package sample;
+package Java;
 
 public class GUIController {
 
