@@ -25,25 +25,17 @@
     <top>
         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="6.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
                     <image>
                         <Image url="@TV_2_PLAY_Hvid_RGB.png" />
                     </image>
                 </ImageView>
-            <MenuBar layoutX="849.0" layoutY="20.0" style="-fx-background-color: #009ceb;">
-              <menus>
-                <Menu mnemonicParsing="false">
-                     <graphic>
-                        <MenuButton contentDisplay="RIGHT" mnemonicParsing="false" text="Brugernavn">
-                          <items>
-                            <MenuItem mnemonicParsing="false" onAction="#handleMyProfile" text="Min Profil" />
-                            <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
-                          </items>
-                        </MenuButton>
-                     </graphic>
-                </Menu>
-              </menus>
-            </MenuBar>
+            <MenuButton alignment="CENTER" contentDisplay="RIGHT" layoutX="917.0" layoutY="14.0" mnemonicParsing="false" text="Brugernavn">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#handleMyProfile" text="Min profil" />
+                <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
+              </items>
+            </MenuButton>
             </children></Pane>
     </top>
 </BorderPane>

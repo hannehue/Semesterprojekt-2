@@ -25,17 +25,17 @@
     <top>
         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="6.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
                     <image>
                         <Image url="@TV_2_PLAY_Hvid_RGB.png" />
                     </image>
                 </ImageView>
-            <MenuButton alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" text="Brugernavn">
+            <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Brugernavn">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
+                <MenuItem mnemonicParsing="false" onAction="#handleMyProfile" text="Min profil" />
+                <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
               </items>
-            </MenuButton>
+            </SplitMenuButton>
             </children></Pane>
     </top>
 </BorderPane>

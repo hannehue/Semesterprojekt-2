@@ -5,45 +5,5 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
-    <center>
-        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <children>
-                <Button layoutX="522.0" layoutY="2.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="40.0">
-                    <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@search.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                <TextField layoutX="222.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" text="foeunfgek" />
-                <Pane layoutX="222.0" layoutY="39.0" prefHeight="460.0" prefWidth="528.0" style="-fx-background-color: white;" visible="false" />
-            </children>
-        </Pane>
-    </center>
-    <top>
-        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
-                    <image>
-                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
-                    </image>
-                </ImageView>
-                <MenuBar layoutX="849.0" layoutY="20.0">
-                    <menus>
-                        <Menu mnemonicParsing="false">
-                            <graphic>
-                                <MenuButton contentDisplay="RIGHT" mnemonicParsing="false" text="Brugernavn">
-                                    <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#handleMyProfile" text="Min Profil" />
-                                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
-                                    </items>
-                                </MenuButton>
-                            </graphic>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-            </children></Pane>
-    </top>
+
 </BorderPane>
