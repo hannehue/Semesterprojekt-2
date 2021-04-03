@@ -1,6 +1,7 @@
 package Java;
 
-public class Season {
+public class
+Season {
 
     private int seasonID;
     private String description;
