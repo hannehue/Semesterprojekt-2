@@ -12,7 +12,7 @@ public class Main extends Application {
     private static Scene scene;
     @Override
     public void start(Stage primaryStage) throws Exception{
-        scene = new Scene(loadFXML("GUI"), 960,720);
+        scene = new Scene(loadFXML("GUI"), 1024,768);
         primaryStage.setTitle("TV2-Krediteringer");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -27,6 +27,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
+
 
     public static void main(String[] args) {
         launch(args);

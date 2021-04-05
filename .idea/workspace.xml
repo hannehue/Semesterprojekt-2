@@ -23,13 +23,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Profile-edit.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_mac_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_mac_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_mac_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_mac_15_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/AddPersonToCredit.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Producer.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ProducerAddCredit.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ProducerProfile-edit.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/ProducerProfile.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Java.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sample/GUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/GUIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/LoggedIn.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/LoggedIn.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Profile.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/LoggedIn.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/LoggedIn.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Profile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/GUI.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/LoggedIn.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/CreditPerson.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Profile-edit.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/CreditPersonProfile-edit.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/CreditPersonProfile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/LoggedIn.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Profile.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sample/GUIController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/GUIController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/search.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/search.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,15 +215,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -280,32 +297,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/.." />
     </ignored-roots>
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="765" y="231" key="#com.intellij.ide.util.MemberChooser" timestamp="1617454735199">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="765" y="231" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1617454735199" />
-    <state x="690" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1617452657114">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state x="690" y="271" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1050@0.0.1920.1050" timestamp="1617452657114" />
-    <state width="1877" height="304" key="GridCell.Tab.0.bottom" timestamp="1617458445074">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="304" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1617458445074" />
-    <state width="1877" height="304" key="GridCell.Tab.0.center" timestamp="1617458445074">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="304" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1617458445074" />
-    <state width="1877" height="304" key="GridCell.Tab.0.left" timestamp="1617458445074">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="304" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1617458445074" />
-    <state width="1877" height="304" key="GridCell.Tab.0.right" timestamp="1617458445074">
-      <screen x="0" y="0" width="1920" height="1050" />
-    </state>
-    <state width="1877" height="304" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1617458445074" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
