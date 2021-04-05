@@ -1,36 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane depthTest="ENABLE" focusTraversable="true" prefHeight="654.0" prefWidth="824.0" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="TOP_LEFT" layoutX="729.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="40.0">
-               <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@search.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <TextField alignment="TOP_LEFT" layoutX="258.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="457.0" promptText="Søg">
-               <font>
-                  <Font size="17.0" />
-               </font></TextField>
-            <Pane layoutX="222.0" layoutY="39.0" prefHeight="460.0" prefWidth="528.0" style="-fx-background-color: white;" visible="false" />
+            <Pane fx:id="searchPane" layoutX="222.0" layoutY="19.0" prefHeight="40.0" prefWidth="364.0">
+               <children>
+                  <Button layoutX="314.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="22.0" prefWidth="40.0">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@search.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <TextField layoutX="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" text="foeunfgek" />
+               </children>
+            </Pane>
+            <Pane fx:id="searchContent" layoutX="80.0" layoutY="3.0" prefHeight="534.0" prefWidth="664.0" style="-fx-background-color: white;" visible="false" />
          </children>
       </Pane>
    </center>
    <top>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="128.0" prefWidth="1024.0" BorderPane.alignment="CENTER" viewOrder="NaN">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
                <image>
@@ -40,4 +37,13 @@
             <Button fx:id="Loginknap" layoutX="929.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" />
          </children></Pane>
    </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+   </right>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: BLACK;" visible="false" BorderPane.alignment="CENTER" />
+   </bottom>
 </BorderPane>
