@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
+    <center>
+        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <VBox layoutX="254.0" layoutY="14.0" prefHeight="525.0" prefWidth="463.0">
+                    <children>
+                        <Pane prefHeight="346.0" prefWidth="463.0" style="-fx-background-color: white;">
+                            <children>
+                                <Button layoutX="361.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleSaveProfileProducer" text="Godkend Profil" />
+                                <TextField layoutX="14.0" layoutY="19.0" text="Brugernavn" />
+                                <TextField layoutX="14.0" layoutY="54.0" text="Fødselsdato" />
+                                <TextField layoutX="14.0" layoutY="87.0" text="Familieforhold" />
+                            </children>
+                        </Pane>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+    </center>
+    <top>
+        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="6.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+                    <image>
+                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
+                    </image>
+                </ImageView>
+                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Producer">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleMyProfileProducer" text="Min profil" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAddCreditProducer" text="Tilføj krediteringer" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
+                    </items>
+                </SplitMenuButton>
+            </children></Pane>
+    </top>
+</BorderPane>

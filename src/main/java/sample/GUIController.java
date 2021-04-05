@@ -116,10 +116,12 @@ public class GUIController implements Initializable {
     protected void handleSearch(ActionEvent Event) throws IOException, InterruptedException {
         //Når der bliver klikket på søg skal søge bar og knap rykkes op
         TranslateTransition moveSearch= new TranslateTransition();
-        moveSearch.setDuration(Duration.seconds(1));
-        moveSearch.setToY(-175);
+        moveSearch.setDuration(Duration.millis(500));
+        moveSearch.setToY(-120);
         moveSearch.setNode(searchPane);
         moveSearch.play();
+        //Sætter søge boxen til at være i fronten så den kan interaggeres med
+        searchPane.setViewOrder(-1.0);
         moveSearch.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
