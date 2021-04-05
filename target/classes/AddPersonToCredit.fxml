@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField layoutX="72.0" layoutY="196.0" prefHeight="27.0" prefWidth="206.0" promptText="Rolle" />
       <TextField layoutX="300.0" layoutY="196.0" prefHeight="27.0" prefWidth="206.0" promptText="Navn" />
@@ -21,7 +21,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="72.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleAddPersonToProgram" prefHeight="69.0" prefWidth="434.0" text="Tilføj">
+      <Button layoutX="72.0" layoutY="244.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="434.0" text="Tilføj">
          <font>
             <Font size="26.0" />
          </font>

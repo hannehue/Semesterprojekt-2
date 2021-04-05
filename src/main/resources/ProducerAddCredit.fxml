@@ -17,11 +17,11 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
     <center>
-        <Pane prefHeight="551.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+        <Pane prefHeight="713.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
             <children>
             <Accordion layoutX="259.0" layoutY="21.0" prefHeight="585.0" prefWidth="541.0">
               <panes>
-                <TitledPane animated="false" prefHeight="718.0" prefWidth="541.0" text="Tilføj Program">
+                <TitledPane animated="false" prefHeight="533.0" prefWidth="541.0" text="Tilføj Program">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -41,14 +41,25 @@
                               <Label layoutX="10.0" layoutY="150.0" prefHeight="26.0" prefWidth="199.0" text="Producer:" />
                               <TextField layoutX="200.0" layoutY="150.0" prefHeight="26.0" prefWidth="295.0" />
                               <Button contentDisplay="CENTER" layoutX="195.0" layoutY="197.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
-                              <TextArea disable="true" layoutX="9.0" layoutY="244.0" prefHeight="275.0" prefWidth="522.0" />
+                              <TextArea disable="true" layoutX="9.0" layoutY="244.0" prefHeight="238.0" prefWidth="522.0" />
+                              <Button contentDisplay="CENTER" layoutX="405.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleSendProgramButton" text="Godkend og send" />
                            </children>
                         </AnchorPane>
                   </content>
                 </TitledPane>
                 <TitledPane animated="false" prefHeight="369.0" prefWidth="498.0" text="Tilføj Person">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="14.0" prefHeight="26.0" text="Navn:" />
+                              <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Email:" />
+                              <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Telefon:" />
+                              <TextField layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
+                              <TextField layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
+                              <TextField layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
+                              <Button contentDisplay="CENTER" layoutX="405.0" layoutY="482.0" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" />
+                           </children>
+                        </AnchorPane>
                   </content>
                 </TitledPane>
               </panes>
@@ -57,9 +68,9 @@
         </Pane>
     </center>
     <top>
-        <Pane prefHeight="66.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+        <Pane prefHeight="61.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="6.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
                     <image>
                         <Image url="@TV_2_PLAY_Hvid_RGB.png" />
                     </image>
