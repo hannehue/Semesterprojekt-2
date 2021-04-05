@@ -56,6 +56,23 @@ public class GUIController implements Initializable {
         //hver gang billedet klikkes ryges der til forsiden
         Main.setRoot("GUI");
     }
+    @FXML
+    protected  void handleSendPersonButton(ActionEvent Event) throws IOException{
+        Main.setRoot("GUI");
+    } // Tilføj kode der sende til fil
+    @FXML
+    protected void handleAddCreditButton(ActionEvent Event) throws IOException {
+        Scene scene = new Scene(FXMLLoader.load(Main.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
+        Stage stage = new Stage();
+        stage.setTitle("Tilføj person");
+        stage.setScene(scene);
+        stage.show();
+    } // Opens new window for adding person
+    @FXML
+    protected  void handleSendProgramButton(ActionEvent Event) throws IOException{
+        Main.setRoot("GUI");
+    } // Tilføj kode der sende til fil
+
 
     //Credit Person
     @FXML
@@ -89,16 +106,44 @@ public class GUIController implements Initializable {
     @FXML
     protected  void handleSaveProfileProducer(ActionEvent Event) throws IOException{
         Main.setRoot("ProducerProfile");
+    } // tilføj kode der redigere profil
+    @FXML
+    protected  void handleAddPersonToProgram(ActionEvent Event) throws IOException{
+        Main.setRoot("ProducerAddCredit");
+    } // Tilføj kode der tilføjere person til tekstfelt
+
+    // Moderator
+    @FXML
+    protected  void handleApproveCreditsModerator(ActionEvent Event) throws IOException{
+        Main.setRoot("ModeratorApproveCredits");
+    }
+    @FXML
+    protected  void handleAddCreditsModerator(ActionEvent Event) throws IOException{
+        Main.setRoot("ModeratorAddCredits");
     }
 
+    //Admin
     @FXML
-    protected void handleAddCreditButton(ActionEvent Event) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(Main.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
-                Stage stage = new Stage();
-                stage.setTitle("Tilføj person");
-                stage.setScene(scene);
-                stage.show();
+    protected  void handleAddCreditsAdmin(ActionEvent Event) throws IOException{
+        Main.setRoot("AdminAddCredits");
     }
+    @FXML
+    protected  void handleApproveCreditsAdmin(ActionEvent Event) throws IOException{
+        Main.setRoot("AdminApproveCredits");
+    }
+    @FXML
+    protected  void handleAddUserAdmin(ActionEvent Event) throws IOException{
+        Main.setRoot("AdminAddUsers");
+    }
+    @FXML
+    protected  void handleUserRightsAdmin(ActionEvent Event) throws IOException{
+        Main.setRoot("AdminUserRights");
+    }
+    @FXML
+    protected  void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
+        Main.setRoot("GUI");
+    }
+
 
 
     @Override

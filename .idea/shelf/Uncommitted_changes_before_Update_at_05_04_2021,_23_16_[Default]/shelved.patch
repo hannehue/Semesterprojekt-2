@@ -1,0 +1,801 @@
+Index: src/main/java/sample/GUIController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/sample/GUIController.java b/src/main/java/sample/GUIController.java
+--- a/src/main/java/sample/GUIController.java	(revision cfac1d6cd0d146c7e61d8e1e1aa79c669825fc95)
++++ b/src/main/java/sample/GUIController.java	(date 1617656799890)
+@@ -56,6 +56,23 @@
+         //hver gang billedet klikkes ryges der til forsiden
+         Main.setRoot("GUI");
+     }
++    @FXML
++    protected  void handleSendPersonButton(ActionEvent Event) throws IOException{
++        Main.setRoot("GUI");
++    } // Tilføj kode der sende til fil
++    @FXML
++    protected void handleAddCreditButton(ActionEvent Event) throws IOException {
++        Scene scene = new Scene(FXMLLoader.load(Main.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
++        Stage stage = new Stage();
++        stage.setTitle("Tilføj person");
++        stage.setScene(scene);
++        stage.show();
++    } // Opens new window for adding person
++    @FXML
++    protected  void handleSendProgramButton(ActionEvent Event) throws IOException{
++        Main.setRoot("GUI");
++    } // Tilføj kode der sende til fil
++
+ 
+     //Credit Person
+     @FXML
+@@ -89,16 +106,44 @@
+     @FXML
+     protected  void handleSaveProfileProducer(ActionEvent Event) throws IOException{
+         Main.setRoot("ProducerProfile");
+-    }
++    } // tilføj kode der redigere profil
++    @FXML
++    protected  void handleAddPersonToProgram(ActionEvent Event) throws IOException{
++        Main.setRoot("ProducerAddCredit");
++    } // Tilføj kode der tilføjere person til tekstfelt
+ 
++    // Moderator
+     @FXML
+-    protected void handleAddCreditButton(ActionEvent Event) throws IOException {
+-        Scene scene = new Scene(FXMLLoader.load(Main.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
+-                Stage stage = new Stage();
+-                stage.setTitle("Tilføj person");
+-                stage.setScene(scene);
+-                stage.show();
++    protected  void handleApproveCreditsModerator(ActionEvent Event) throws IOException{
++        Main.setRoot("ModeratorApproveCredits");
++    }
++    @FXML
++    protected  void handleAddCreditsModerator(ActionEvent Event) throws IOException{
++        Main.setRoot("ModeratorAddCredits");
++    }
++
++    //Admin
++    @FXML
++    protected  void handleAddCreditsAdmin(ActionEvent Event) throws IOException{
++        Main.setRoot("AdminAddCredits");
++    }
++    @FXML
++    protected  void handleApproveCreditsAdmin(ActionEvent Event) throws IOException{
++        Main.setRoot("AdminApproveCredits");
++    }
++    @FXML
++    protected  void handleAddUserAdmin(ActionEvent Event) throws IOException{
++        Main.setRoot("AdminAddUsers");
+     }
++    @FXML
++    protected  void handleUserRightsAdmin(ActionEvent Event) throws IOException{
++        Main.setRoot("AdminUserRights");
++    }
++    @FXML
++    protected  void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
++        Main.setRoot("GUI");
++    }
++
+ 
+ 
+     @Override
+Index: src/main/resources/ProducerAddCredit.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/ProducerAddCredit.fxml b/src/main/resources/ProducerAddCredit.fxml
+--- a/src/main/resources/ProducerAddCredit.fxml	(revision cfac1d6cd0d146c7e61d8e1e1aa79c669825fc95)
++++ b/src/main/resources/ProducerAddCredit.fxml	(date 1617653792743)
+@@ -17,11 +17,11 @@
+ 
+ <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
+     <center>
+-        <Pane prefHeight="551.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
++        <Pane prefHeight="713.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+             <children>
+             <Accordion layoutX="259.0" layoutY="21.0" prefHeight="585.0" prefWidth="541.0">
+               <panes>
+-                <TitledPane animated="false" prefHeight="718.0" prefWidth="541.0" text="Tilføj Program">
++                <TitledPane animated="false" prefHeight="533.0" prefWidth="541.0" text="Tilføj Program">
+                   <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+@@ -41,14 +41,25 @@
+                               <Label layoutX="10.0" layoutY="150.0" prefHeight="26.0" prefWidth="199.0" text="Producer:" />
+                               <TextField layoutX="200.0" layoutY="150.0" prefHeight="26.0" prefWidth="295.0" />
+                               <Button contentDisplay="CENTER" layoutX="195.0" layoutY="197.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
+-                              <TextArea disable="true" layoutX="9.0" layoutY="244.0" prefHeight="275.0" prefWidth="522.0" />
++                              <TextArea disable="true" layoutX="9.0" layoutY="244.0" prefHeight="238.0" prefWidth="522.0" />
++                              <Button contentDisplay="CENTER" layoutX="405.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleSendProgramButton" text="Godkend og send" />
+                            </children>
+                         </AnchorPane>
+                   </content>
+                 </TitledPane>
+                 <TitledPane animated="false" prefHeight="369.0" prefWidth="498.0" text="Tilføj Person">
+                   <content>
+-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
++                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
++                           <children>
++                              <Label layoutX="14.0" prefHeight="26.0" text="Navn:" />
++                              <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Email:" />
++                              <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Telefon:" />
++                              <TextField layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
++                              <TextField layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
++                              <TextField layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
++                              <Button contentDisplay="CENTER" layoutX="405.0" layoutY="482.0" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" />
++                           </children>
++                        </AnchorPane>
+                   </content>
+                 </TitledPane>
+               </panes>
+@@ -57,9 +68,9 @@
+         </Pane>
+     </center>
+     <top>
+-        <Pane prefHeight="66.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
++        <Pane prefHeight="61.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+             <children>
+-                <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="6.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
++                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+                     <image>
+                         <Image url="@TV_2_PLAY_Hvid_RGB.png" />
+                     </image>
+Index: src/main/resources/ModeratorApproveCredits.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/ModeratorApproveCredits.fxml b/src/main/resources/ModeratorApproveCredits.fxml
+new file mode 100644
+--- /dev/null	(date 1617654783175)
++++ b/src/main/resources/ModeratorApproveCredits.fxml	(date 1617654783175)
+@@ -0,0 +1,56 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.scene.control.Accordion?>
++<?import javafx.scene.control.MenuItem?>
++<?import javafx.scene.control.SplitMenuButton?>
++<?import javafx.scene.control.TitledPane?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.BorderPane?>
++<?import javafx.scene.layout.Pane?>
++
++<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
++    <top>
++        <Pane prefHeight="59.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
++            <children>
++                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
++                    <image>
++                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
++                    </image>
++                </ImageView>
++                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Moderator">
++                    <items>
++                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsModerator" text="Godkend Krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddCreditsModerator" text="Tilføj krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
++                    </items>
++                </SplitMenuButton>
++            </children></Pane>
++    </top>
++   <center>
++      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
++         <children>
++            <Accordion layoutX="276.0" prefHeight="467.0" prefWidth="473.0">
++              <panes>
++                <TitledPane animated="false" text="Serie 1">
++                  <content>
++                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
++                  </content>
++                </TitledPane>
++                <TitledPane animated="false" text="Serie 2">
++                  <content>
++                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
++                  </content>
++                </TitledPane>
++                <TitledPane animated="false" text="Serie 3">
++                  <content>
++                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
++                  </content>
++                </TitledPane>
++              </panes>
++            </Accordion>
++         </children>
++      </Pane>
++   </center>
++</BorderPane>
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision cfac1d6cd0d146c7e61d8e1e1aa79c669825fc95)
++++ b/.idea/workspace.xml	(date 1617655640227)
+@@ -22,33 +22,20 @@
+     <select />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_mac_15_0_1.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_mac_15_0_1.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_fxml_mac_15_0_1.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_mac_15_0_1.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/resources/AddPersonToCredit.fxml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/resources/Producer.fxml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/resources/ProducerAddCredit.fxml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/resources/ProducerProfile-edit.fxml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/resources/ProducerProfile.fxml" afterDir="false" />
++    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added FXML files for creditPerson + producer">
++      <change afterPath="$PROJECT_DIR$/src/main/resources/Admin.fxml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/AdminAddCredits.fxml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/AdminAddUsers.fxml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/AdminApproveCredits.fxml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/AdminUserRights.fxml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/Moderator.fxml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/ModeratorAddCredits.fxml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/resources/ModeratorApproveCredits.fxml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/Java.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Java.iml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/sample/GUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/GUIController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/Main.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/GUI.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/LoggedIn.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/CreditPerson.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Login.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/Profile-edit.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/CreditPersonProfile-edit.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/resources/Profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/CreditPersonProfile.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/GUI.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GUI.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/LoggedIn.fxml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Login.fxml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/Profile.fxml" beforeDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/AddPersonToCredit.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/AddPersonToCredit.fxml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/resources/ProducerAddCredit.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ProducerAddCredit.fxml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/target/classes/sample/GUIController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/GUIController.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/Main.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/search.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/search.png" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -128,7 +115,9 @@
+     <option name="height" value="876" />
+   </component>
+   <component name="ProjectId" id="1qFGqVgTKGtKBOeQ9MlCePRZWn1" />
+-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
++  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
++    <ConfirmationsSetting value="2" id="Add" />
++  </component>
+   <component name="ProjectReloadState">
+     <option name="STATE" value="0" />
+   </component>
+@@ -274,6 +263,14 @@
+       <workItem from="1617454411961" duration="3515000" />
+       <workItem from="1617458073162" duration="1482000" />
+     </task>
++    <task id="LOCAL-00001" summary="Added FXML files for creditPerson + producer">
++      <created>1617650731526</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1617650731526</updated>
++    </task>
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -297,6 +294,8 @@
+     <ignored-roots>
+       <path value="$PROJECT_DIR$/.." />
+     </ignored-roots>
++    <MESSAGE value="Added FXML files for creditPerson + producer" />
++    <option name="LAST_COMMIT_MESSAGE" value="Added FXML files for creditPerson + producer" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+Index: src/main/resources/ModeratorAddCredits.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/ModeratorAddCredits.fxml b/src/main/resources/ModeratorAddCredits.fxml
+new file mode 100644
+--- /dev/null	(date 1617653823123)
++++ b/src/main/resources/ModeratorAddCredits.fxml	(date 1617653823123)
+@@ -0,0 +1,87 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.scene.control.Accordion?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.control.MenuItem?>
++<?import javafx.scene.control.SplitMenuButton?>
++<?import javafx.scene.control.TextArea?>
++<?import javafx.scene.control.TextField?>
++<?import javafx.scene.control.TitledPane?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.BorderPane?>
++<?import javafx.scene.layout.Pane?>
++<?import javafx.scene.text.Font?>
++
++<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
++    <center>
++        <Pane prefHeight="551.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
++            <children>
++                <Accordion layoutX="259.0" layoutY="21.0" prefHeight="585.0" prefWidth="541.0">
++                    <panes>
++                        <TitledPane animated="false" prefHeight="533.0" prefWidth="541.0" text="Tilføj Program">
++                            <content>
++                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
++                                    <children>
++                                        <TextField layoutX="200.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="200.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="200.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="200.0" layoutY="90.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <Label layoutX="10.0" prefHeight="26.0" prefWidth="199.0" text="Titel" />
++                                        <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" prefWidth="199.0" text="År:" />
++                                        <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" prefWidth="199.0" text="Sted:" />
++                                        <Label layoutX="10.0" layoutY="90.0" prefHeight="26.0" prefWidth="199.0" text="Kategori:" />
++                                        <Label layoutX="10.0" layoutY="120.0" prefHeight="26.0" prefWidth="199.0" text="Krediteringer">
++                                            <font>
++                                                <Font name="System Bold" size="13.0" />
++                                            </font>
++                                        </Label>
++                                        <Label layoutX="10.0" layoutY="150.0" prefHeight="26.0" prefWidth="199.0" text="Producer:" />
++                                        <TextField layoutX="200.0" layoutY="150.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <Button contentDisplay="CENTER" layoutX="195.0" layoutY="197.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
++                                        <TextArea disable="true" layoutX="9.0" layoutY="244.0" prefHeight="238.0" prefWidth="522.0" />
++                                        <Button contentDisplay="CENTER" layoutX="405.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleSendProgramButton" text="Godkend og send" />
++                                    </children>
++                                </AnchorPane>
++                            </content>
++                        </TitledPane>
++                        <TitledPane animated="false" prefHeight="369.0" prefWidth="498.0" text="Tilføj Person">
++                            <content>
++                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
++                                    <children>
++                                        <Label layoutX="14.0" prefHeight="26.0" text="Navn:" />
++                                        <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Email:" />
++                                        <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Telefon:" />
++                                        <TextField layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <Button contentDisplay="CENTER" layoutX="405.0" layoutY="482.0" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" />
++                                    </children>
++                                </AnchorPane>
++                            </content>
++                        </TitledPane>
++                    </panes>
++                </Accordion>
++            </children>
++        </Pane>
++    </center>
++    <top>
++        <Pane prefHeight="61.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
++            <children>
++                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
++                    <image>
++                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
++                    </image>
++                </ImageView>
++                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Moderator">
++                    <items>
++                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsModerator" text="Godkend Krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddCreditsModerator" text="Tilføj krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
++                    </items>
++                </SplitMenuButton>
++            </children></Pane>
++    </top>
++</BorderPane>
+Index: src/main/resources/AdminAddCredits.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/AdminAddCredits.fxml b/src/main/resources/AdminAddCredits.fxml
+new file mode 100644
+--- /dev/null	(date 1617657347790)
++++ b/src/main/resources/AdminAddCredits.fxml	(date 1617657347790)
+@@ -0,0 +1,88 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.scene.control.Accordion?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.control.MenuItem?>
++<?import javafx.scene.control.SplitMenuButton?>
++<?import javafx.scene.control.TextArea?>
++<?import javafx.scene.control.TextField?>
++<?import javafx.scene.control.TitledPane?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.BorderPane?>
++<?import javafx.scene.layout.Pane?>
++<?import javafx.scene.text.Font?>
++
++<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
++    <center>
++        <Pane prefHeight="713.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
++            <children>
++                <Accordion layoutX="259.0" layoutY="21.0" prefHeight="585.0" prefWidth="541.0">
++                    <panes>
++                        <TitledPane animated="false" prefHeight="533.0" prefWidth="541.0" text="Tilføj Program">
++                            <content>
++                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
++                                    <children>
++                                        <TextField layoutX="200.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="200.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="200.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="200.0" layoutY="90.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <Label layoutX="10.0" prefHeight="26.0" prefWidth="199.0" text="Titel" />
++                                        <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" prefWidth="199.0" text="År:" />
++                                        <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" prefWidth="199.0" text="Sted:" />
++                                        <Label layoutX="10.0" layoutY="90.0" prefHeight="26.0" prefWidth="199.0" text="Kategori:" />
++                                        <Label layoutX="10.0" layoutY="120.0" prefHeight="26.0" prefWidth="199.0" text="Krediteringer">
++                                            <font>
++                                                <Font name="System Bold" size="13.0" />
++                                            </font>
++                                        </Label>
++                                        <Label layoutX="10.0" layoutY="150.0" prefHeight="26.0" prefWidth="199.0" text="Producer:" />
++                                        <TextField layoutX="200.0" layoutY="150.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <Button contentDisplay="CENTER" layoutX="195.0" layoutY="197.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
++                                        <TextArea disable="true" layoutX="9.0" layoutY="244.0" prefHeight="238.0" prefWidth="522.0" />
++                                        <Button contentDisplay="CENTER" layoutX="405.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleSendProgramButton" text="Godkend og send" />
++                                    </children>
++                                </AnchorPane>
++                            </content>
++                        </TitledPane>
++                        <TitledPane animated="false" prefHeight="369.0" prefWidth="498.0" text="Tilføj Person">
++                            <content>
++                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
++                                    <children>
++                                        <Label layoutX="14.0" prefHeight="26.0" text="Navn:" />
++                                        <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Email:" />
++                                        <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Telefon:" />
++                                        <TextField layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <TextField layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
++                                        <Button contentDisplay="CENTER" layoutX="405.0" layoutY="482.0" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" />
++                                    </children>
++                                </AnchorPane>
++                            </content>
++                        </TitledPane>
++                    </panes>
++                </Accordion>
++            </children>
++        </Pane>
++    </center>
++    <top>
++        <Pane prefHeight="61.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
++            <children>
++                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
++                    <image>
++                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
++                    </image>
++                </ImageView>
++                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Admin">
++                    <items>
++                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsAdmin" text="Godkend Krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddCreditsAdmin" text="Tilføj krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddUserAdmin" text="Tilføj bruger" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
++                    </items>
++                </SplitMenuButton>
++            </children></Pane>
++    </top>
++</BorderPane>
+\ No newline at end of file
+Index: src/main/resources/AdminApproveCredits.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/AdminApproveCredits.fxml b/src/main/resources/AdminApproveCredits.fxml
+new file mode 100644
+--- /dev/null	(date 1617657347794)
++++ b/src/main/resources/AdminApproveCredits.fxml	(date 1617657347794)
+@@ -0,0 +1,57 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.scene.control.Accordion?>
++<?import javafx.scene.control.MenuItem?>
++<?import javafx.scene.control.SplitMenuButton?>
++<?import javafx.scene.control.TitledPane?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.BorderPane?>
++<?import javafx.scene.layout.Pane?>
++
++<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
++    <top>
++        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
++            <children>
++                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
++                    <image>
++                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
++                    </image>
++                </ImageView>
++                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Admin">
++                    <items>
++                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsAdmin" text="Godkend Krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddCreditsAdmin" text="Tilføj krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddUserAdmin" text="Tilføj bruger" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
++                    </items>
++                </SplitMenuButton>
++            </children></Pane>
++    </top>
++    <center>
++        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
++            <children>
++                <Accordion layoutX="276.0" prefHeight="467.0" prefWidth="473.0">
++                    <panes>
++                        <TitledPane animated="false" text="Serie 1">
++                            <content>
++                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
++                            </content>
++                        </TitledPane>
++                        <TitledPane animated="false" text="Serie 2">
++                            <content>
++                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
++                            </content>
++                        </TitledPane>
++                        <TitledPane animated="false" text="Serie 3">
++                            <content>
++                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
++                            </content>
++                        </TitledPane>
++                    </panes>
++                </Accordion>
++            </children>
++        </Pane>
++    </center>
++</BorderPane>
+Index: src/main/resources/AddPersonToCredit.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/AddPersonToCredit.fxml b/src/main/resources/AddPersonToCredit.fxml
+--- a/src/main/resources/AddPersonToCredit.fxml	(revision cfac1d6cd0d146c7e61d8e1e1aa79c669825fc95)
++++ b/src/main/resources/AddPersonToCredit.fxml	(date 1617653070392)
+@@ -7,7 +7,7 @@
+ <?import javafx.scene.text.Font?>
+ 
+ 
+-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
++<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
+    <children>
+       <TextField layoutX="72.0" layoutY="196.0" prefHeight="27.0" prefWidth="206.0" promptText="Rolle" />
+       <TextField layoutX="300.0" layoutY="196.0" prefHeight="27.0" prefWidth="206.0" promptText="Navn" />
+@@ -21,7 +21,7 @@
+             <Font size="15.0" />
+          </font>
+       </Label>
+-      <Button layoutX="72.0" layoutY="244.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="434.0" text="Tilføj">
++      <Button layoutX="72.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleAddPersonToProgram" prefHeight="69.0" prefWidth="434.0" text="Tilføj">
+          <font>
+             <Font size="26.0" />
+          </font>
+Index: src/main/resources/Admin.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/Admin.fxml b/src/main/resources/Admin.fxml
+new file mode 100644
+--- /dev/null	(date 1617657347798)
++++ b/src/main/resources/Admin.fxml	(date 1617657347798)
+@@ -0,0 +1,52 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.MenuItem?>
++<?import javafx.scene.control.SplitMenuButton?>
++<?import javafx.scene.control.TextField?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.BorderPane?>
++<?import javafx.scene.layout.Pane?>
++<?import javafx.scene.text.Font?>
++
++<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
++    <center>
++        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
++            <children>
++                <Button alignment="TOP_LEFT" layoutX="729.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="40.0">
++                    <graphic>
++                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
++                            <image>
++                                <Image url="@search.png" />
++                            </image>
++                        </ImageView>
++                    </graphic>
++                </Button>
++                <TextField alignment="TOP_LEFT" layoutX="258.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="457.0" promptText="Søg">
++                    <font>
++                        <Font size="17.0" />
++                    </font></TextField>
++                <Pane layoutX="222.0" layoutY="39.0" prefHeight="460.0" prefWidth="528.0" style="-fx-background-color: white;" visible="false" />
++            </children>
++        </Pane>
++    </center>
++    <top>
++        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
++            <children>
++                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
++                    <image>
++                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
++                    </image>
++                </ImageView>
++                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Admin">
++                    <items>
++                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsAdmin" text="Godkend Krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddCreditsAdmin" text="Tilføj krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddUserAdmin" text="Tilføj bruger" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
++                    </items>
++                </SplitMenuButton>
++            </children></Pane>
++    </top>
++</BorderPane>
+\ No newline at end of file
+Index: src/main/resources/AdminAddUsers.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/AdminAddUsers.fxml b/src/main/resources/AdminAddUsers.fxml
+new file mode 100644
+--- /dev/null	(date 1617657239214)
++++ b/src/main/resources/AdminAddUsers.fxml	(date 1617657239214)
+@@ -0,0 +1,78 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.scene.control.Accordion?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.ChoiceBox?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.control.MenuItem?>
++<?import javafx.scene.control.PasswordField?>
++<?import javafx.scene.control.SplitMenuButton?>
++<?import javafx.scene.control.TextField?>
++<?import javafx.scene.control.TitledPane?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.BorderPane?>
++<?import javafx.scene.layout.Pane?>
++
++<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
++    <center>
++        <Pane prefHeight="713.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
++         <children>
++            <Accordion layoutX="285.0" layoutY="14.0" prefHeight="340.0" prefWidth="454.0">
++              <panes>
++                <TitledPane animated="false" prefHeight="307.0" prefWidth="454.0" text="Tilføj bruger">
++                  <content>
++                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="287.0" prefWidth="452.0">
++                           <children>
++                              <Label layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="151.0" text="Brugernavn" />
++                              <Label layoutX="14.0" layoutY="54.0" prefHeight="26.0" prefWidth="151.0" text="Adgangskode" />
++                              <TextField layoutX="226.0" layoutY="14.0" prefHeight="27.0" prefWidth="214.0" />
++                              <TextField layoutX="226.0" layoutY="53.0" prefHeight="27.0" prefWidth="214.0" />
++                              <ChoiceBox layoutX="226.0" layoutY="96.0" prefHeight="27.0" prefWidth="212.0" />
++                              <Label layoutX="14.0" layoutY="97.0" prefHeight="26.0" prefWidth="151.0" text="Brugerrettighed" />
++                              <Button layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddUserButtonAdmin" prefHeight="54.0" prefWidth="140.0" text="Godked og Tilføj" />
++                           </children>
++                        </AnchorPane>
++                  </content>
++                </TitledPane>
++                  <TitledPane animated="false" prefHeight="307.0" prefWidth="454.0" text="Rediger bruger">
++                     <content>
++                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="287.0" prefWidth="452.0">
++                           <children>
++                              <Label layoutX="13.0" layoutY="70.0" prefHeight="26.0" prefWidth="151.0" text="Brugernavn" />
++                              <Label layoutX="13.0" layoutY="110.0" prefHeight="26.0" prefWidth="151.0" text="Adgangskode" />
++                              <TextField layoutX="225.0" layoutY="70.0" prefHeight="27.0" prefWidth="214.0" />
++                              <ChoiceBox layoutX="225.0" layoutY="152.0" prefHeight="27.0" prefWidth="212.0" />
++                              <Label layoutX="13.0" layoutY="153.0" prefHeight="26.0" prefWidth="151.0" text="Brugerrettighed" />
++                              <Button layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddUserButtonAdmin" prefHeight="54.0" prefWidth="140.0" text="Godkend og overskriv" />
++                              <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Find bruger" />
++                              <PasswordField layoutX="226.0" layoutY="110.0" prefHeight="27.0" prefWidth="212.0" />
++                           </children>
++                        </AnchorPane>
++                     </content>
++                  </TitledPane>
++              </panes>
++            </Accordion>
++         </children>
++        </Pane>
++    </center>
++    <top>
++        <Pane prefHeight="61.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
++            <children>
++                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
++                    <image>
++                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
++                    </image>
++                </ImageView>
++                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Admin">
++                    <items>
++                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsAdmin" text="Godkend Krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddCreditsAdmin" text="Tilføj krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddUserAdmin" text="Tilføj bruger" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
++                    </items>
++                </SplitMenuButton>
++            </children></Pane>
++    </top>
++</BorderPane>
+Index: src/main/resources/Moderator.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/Moderator.fxml b/src/main/resources/Moderator.fxml
+new file mode 100644
+--- /dev/null	(date 1617653458727)
++++ b/src/main/resources/Moderator.fxml	(date 1617653458727)
+@@ -0,0 +1,51 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.MenuItem?>
++<?import javafx.scene.control.SplitMenuButton?>
++<?import javafx.scene.control.TextField?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.BorderPane?>
++<?import javafx.scene.layout.Pane?>
++<?import javafx.scene.text.Font?>
++
++<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.GUIController">
++    <center>
++        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
++            <children>
++                <Button alignment="TOP_LEFT" layoutX="729.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="40.0">
++                    <graphic>
++                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
++                            <image>
++                                <Image url="@search.png" />
++                            </image>
++                        </ImageView>
++                    </graphic>
++                </Button>
++                <TextField alignment="TOP_LEFT" layoutX="258.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="457.0" promptText="Søg">
++                    <font>
++                        <Font size="17.0" />
++                    </font></TextField>
++                <Pane layoutX="222.0" layoutY="39.0" prefHeight="460.0" prefWidth="528.0" style="-fx-background-color: white;" visible="false" />
++            </children>
++        </Pane>
++    </center>
++    <top>
++        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
++            <children>
++                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
++                    <image>
++                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
++                    </image>
++                </ImageView>
++                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Moderator">
++                    <items>
++                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsModerator" text="Godkend Krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleAddCreditsModerator" text="Tilføj krediteringer" />
++                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
++                    </items>
++                </SplitMenuButton>
++            </children></Pane>
++    </top>
++</BorderPane>
