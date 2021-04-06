@@ -36,6 +36,12 @@
 # .idea/modules
 # *.iml
 # *.ipr
+# Maven
+log/
+target/
+
+# Mac
+.DS_Store
 
 # CMake
 cmake-build-*/
