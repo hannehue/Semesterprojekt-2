@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.GUIController">
+    <top>
+        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+                    <image>
+                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
+                    </image>
+                </ImageView>
+                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Admin">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsAdmin" text="Godkend Krediteringer" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAddCreditsAdmin" text="Tilføj krediteringer" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleAddUserAdmin" text="Tilføj bruger" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
+                    </items>
+                </SplitMenuButton>
+            </children></Pane>
+    </top>
+    <center>
+        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <Accordion layoutX="276.0" prefHeight="467.0" prefWidth="473.0">
+                    <panes>
+                        <TitledPane animated="false" text="Serie 1">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" text="Serie 2">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" text="Serie 3">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            </content>
+                        </TitledPane>
+                    </panes>
+                </Accordion>
+            </children>
+        </Pane>
+    </center>
+</BorderPane>
