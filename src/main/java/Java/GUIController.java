@@ -29,29 +29,29 @@ public class GUIController implements Initializable {
     @FXML
     protected void handleLogin(ActionEvent Event) throws IOException {
         //redirect til Login side
-        Main.setRoot("Login");
+        CreditSystemController.setRoot("Login");
     }
 
     //---- Login Typer
     @FXML
     protected  void handleLoggingIn(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ind på en konto
-        Main.setRoot("CreditPerson");
+        CreditSystemController.setRoot("CreditPerson");
     }
     @FXML
     protected  void handleLoggingInProducer(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ind på en konto
-        Main.setRoot("Producer");
+        CreditSystemController.setRoot("Producer");
     }
     @FXML
     protected  void handleLoggingInModerator(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ind på en konto
-        Main.setRoot("Moderator");
+        CreditSystemController.setRoot("Moderator");
     }
     @FXML
     protected  void handleLoggingInAdmin(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ind på en konto
-        Main.setRoot("Admin");
+        CreditSystemController.setRoot("Admin");
     }
     //-----
 
@@ -59,21 +59,21 @@ public class GUIController implements Initializable {
     @FXML
     protected  void handleLogout(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ud fra en konto
-        Main.setRoot("GUI");
+        CreditSystemController.setRoot("GUI");
     }
     @FXML
     protected void ToFrontpage(MouseEvent Event) throws IOException {
         //denne bruges på billedet af TV 2
         //hver gang billedet klikkes ryges der til forsiden
-        Main.setRoot("GUI");
+        CreditSystemController.setRoot("GUI");
     }
     @FXML
     protected  void handleSendPersonButton(ActionEvent Event) throws IOException{
-        Main.setRoot("GUI");
+        CreditSystemController.setRoot("GUI");
     } // Tilføj kode der sende til fil
     @FXML
     protected void handleAddCreditButton(ActionEvent Event) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(Main.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
         Stage stage = new Stage();
         stage.setTitle("Tilføj person");
         stage.setScene(scene);
@@ -81,78 +81,78 @@ public class GUIController implements Initializable {
     } // Opens new window for adding person
     @FXML
     protected  void handleSendProgramButton(ActionEvent Event) throws IOException{
-        Main.setRoot("GUI");
+        CreditSystemController.setRoot("GUI");
     } // Tilføj kode der sende til fil
 
 
     //Credit Person
     @FXML
     protected  void handleMyProfile(ActionEvent Event) throws IOException{
-        Main.setRoot("CreditPersonProfile");
+        CreditSystemController.setRoot("CreditPersonProfile");
     }
     @FXML
     protected  void handleEditProfile(ActionEvent Event) throws IOException{
         //Tilføj kode der henter brugerens informationer og sætter dem i textfields i stedet for labels
-        Main.setRoot("CreditPersonProfile-edit");
+        CreditSystemController.setRoot("CreditPersonProfile-edit");
     }
     @FXML
     protected  void handleSaveProfile(ActionEvent Event) throws IOException{
         //Tilføj kode der tager det information brugeren har indtastet i textfields og overskriv brugerens gamle informationer i json-fil
-        Main.setRoot("CreditPersonProfile");
+        CreditSystemController.setRoot("CreditPersonProfile");
     }
 
     //Producer
     @FXML
     protected  void handleMyProfileProducer(ActionEvent Event) throws IOException{
-        Main.setRoot("ProducerProfile");
+        CreditSystemController.setRoot("ProducerProfile");
     }
     @FXML
     protected  void handleEditProfileProducer(ActionEvent Event) throws IOException{
-        Main.setRoot("ProducerProfile-edit");
+        CreditSystemController.setRoot("ProducerProfile-edit");
     }
     @FXML
     protected  void handleAddCreditProducer(ActionEvent Event) throws IOException{
-        Main.setRoot("ProducerAddCredit");
+        CreditSystemController.setRoot("ProducerAddCredit");
     }
     @FXML
     protected  void handleSaveProfileProducer(ActionEvent Event) throws IOException{
-        Main.setRoot("ProducerProfile");
+        CreditSystemController.setRoot("ProducerProfile");
     } // tilføj kode der redigere profil
     @FXML
     protected  void handleAddPersonToProgram(ActionEvent Event) throws IOException{
-        Main.setRoot("ProducerAddCredit");
+        CreditSystemController.setRoot("ProducerAddCredit");
     } // Tilføj kode der tilføjere person til tekstfelt
 
     // Moderator
     @FXML
     protected  void handleApproveCreditsModerator(ActionEvent Event) throws IOException{
-        Main.setRoot("ModeratorApproveCredits");
+        CreditSystemController.setRoot("ModeratorApproveCredits");
     }
     @FXML
     protected  void handleAddCreditsModerator(ActionEvent Event) throws IOException{
-        Main.setRoot("ModeratorAddCredits");
+        CreditSystemController.setRoot("ModeratorAddCredits");
     }
 
     //Admin
     @FXML
     protected  void handleAddCreditsAdmin(ActionEvent Event) throws IOException{
-        Main.setRoot("AdminAddCredits");
+        CreditSystemController.setRoot("AdminAddCredits");
     }
     @FXML
     protected  void handleApproveCreditsAdmin(ActionEvent Event) throws IOException{
-        Main.setRoot("AdminApproveCredits");
+        CreditSystemController.setRoot("AdminApproveCredits");
     }
     @FXML
     protected  void handleAddUserAdmin(ActionEvent Event) throws IOException{
-        Main.setRoot("AdminAddUsers");
+        CreditSystemController.setRoot("AdminAddUsers");
     }
     @FXML
     protected  void handleUserRightsAdmin(ActionEvent Event) throws IOException{
-        Main.setRoot("AdminUserRights");
+        CreditSystemController.setRoot("AdminUserRights");
     }
     @FXML
     protected  void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
-        Main.setRoot("GUI");
+        CreditSystemController.setRoot("GUI");
     }
 
 

@@ -1,4 +1,4 @@
-package sample;
+package Java;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +29,7 @@ public class CreditSystemController extends Application {
     }
     //metode til at indlæse den nye .fxml fil som skal vises
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(CreditSystemController.class.getClassLoader().getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
