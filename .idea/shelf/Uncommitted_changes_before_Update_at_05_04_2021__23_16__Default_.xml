@@ -1,0 +1,9 @@
+<changelist name="Uncommitted_changes_before_Update_at_05_04_2021,_23_16_[Default]" date="1617657411746" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2021,_23_16_[Default]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 05/04/2021, 23.16 [Default]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/sample/GUIController.class" />
+    <option name="AFTER_PATH" value="target/classes/sample/GUIController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_05_04_2021,_23_16_[Default]/GUIController.class" />
+  </binary>
+</changelist>
