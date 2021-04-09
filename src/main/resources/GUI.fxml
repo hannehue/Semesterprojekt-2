@@ -25,15 +25,15 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <TextField fx:id="searchField" layoutX="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" text="foeunfgek" />
+                  <TextField fx:id="searchField" layoutX="8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#handleSearchEnter" prefHeight="32.0" prefWidth="300.0" promptText="Søg" />
                </children>
             </Pane>
             <Pane fx:id="searchContent" layoutX="80.0" layoutY="3.0" prefHeight="534.0" prefWidth="664.0" style="-fx-background-color: white;" visible="false">
                <children>
-                  <Label layoutX="317.0" layoutY="35.0" text="Personer" />
-                  <Label layoutX="308.0" layoutY="259.0" text="Programmer" />
-                  <Label fx:id="personLabel" layoutX="255.0" layoutY="67.0" text="Der er ikke fundet nogen bruger" />
-                  <Label fx:id="showLabel" layoutX="255.0" layoutY="293.0" text="Der er ikke fundet nogen programmer" />
+                  <Label layoutX="317.0" layoutY="43.0" text="Personer" />
+                  <Label layoutX="308.0" layoutY="309.0" text="Programmer" />
+                  <Label fx:id="personLabel" layoutX="308.0" layoutY="76.0" />
+                  <Label fx:id="showLabel" layoutX="307.0" layoutY="354.0" text="Programmer" />
                </children></Pane>
          </children>
       </Pane>

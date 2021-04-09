@@ -7,12 +7,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import javafx.stage.Stage;
@@ -38,6 +37,10 @@ public class GUIController implements Initializable {
     protected Label personLabel;
     @FXML
     protected Label showLabel;
+    @FXML
+    protected Accordion approveAcc;
+    @FXML
+    protected AnchorPane personToApprove;
 
 
 
@@ -83,11 +86,7 @@ public class GUIController implements Initializable {
         //denne bruges på billedet af TV 2
         //hver gang billedet klikkes ryges der til forsiden
         CreditSystemController.setRoot("GUI");
-
-
     }
-
-
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
         Person person = new Person(
@@ -103,10 +102,6 @@ public class GUIController implements Initializable {
         CreditSystemController.personList.add(person);
         System.out.println(person.getName());
     } // Tilføj kode der sende til fil
-
-
-
-
     @FXML
     protected void handleAddCreditButton(ActionEvent Event) throws IOException {
         Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
@@ -168,6 +163,17 @@ public class GUIController implements Initializable {
     protected  void handleAddCreditsModerator(ActionEvent Event) throws IOException{
         CreditSystemController.setRoot("ModeratorAddCredits");
     }
+    @FXML
+    protected void handlePersonToReload(ActionEvent Event) throws IOException{
+        int offset = 20;
+        for (Person person: CreditSystemController.personList) {
+            Label personLabel = new Label("Name: " + person.getName());
+            personLabel.setLayoutX(20);
+            personLabel.setLayoutY(offset);
+            personToApprove.getChildren().add(personLabel);
+            offset += 20;
+        }
+    }
 
     //Admin
     @FXML
@@ -190,6 +196,9 @@ public class GUIController implements Initializable {
     protected  void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
         CreditSystemController.setRoot("GUI");
     }
+    @FXML
+    protected void handleSearchEnter(ActionEvent Event) throws  IOException {
+        ; }
 
 
 
@@ -212,11 +221,12 @@ public class GUIController implements Initializable {
             }); }
 
         if (searchField.getText() != "") {
+            String temp = "";
             for (Credit person: CreditSystemController.personList) {
                 if (person.getName().contains(searchField.getText())) {
-                    personLabel.setText(person.getName());
+                    temp += person.getName() + "\n";
                 }
-            }
+            } personLabel.setText(temp);
         }
 
 
