@@ -7,13 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 
 public class CreditSystemController extends Application {
     private static Scene scene;
     private int idTracker; //should be moved to database
     private DatabaseLoader dataLoader;
+    public static ArrayList<Person> personList = new ArrayList<>();
     private static Stage primaryStage;
 
     @Override
@@ -28,7 +29,7 @@ public class CreditSystemController extends Application {
     //sætter root for scenen, så den ved hvilken fil der skal vises
     static void setRoot(String fxml) throws IOException {
         primaryStage.setScene(new Scene(loadFXML(fxml)));
-        
+
     }
     //metode til at indlæse den nye .fxml fil som skal vises
     private static Parent loadFXML(String fxml) throws IOException {
@@ -41,6 +42,8 @@ public class CreditSystemController extends Application {
         idTracker++;
         return temp;
     }
+
+
 
     public static void main(String[] args) {
         launch(args);

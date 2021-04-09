@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,6 +26,20 @@ public class GUIController implements Initializable {
     protected Pane searchPane;
     @FXML
     protected Pane searchContent;
+    @FXML
+    protected TextField personName;
+    @FXML
+    protected TextField personEmail;
+    @FXML
+    protected TextField personPhone;
+    @FXML
+    protected TextField searchField;
+    @FXML
+    protected Label personLabel;
+    @FXML
+    protected Label showLabel;
+
+
 
 
 
@@ -68,11 +83,30 @@ public class GUIController implements Initializable {
         //denne bruges på billedet af TV 2
         //hver gang billedet klikkes ryges der til forsiden
         CreditSystemController.setRoot("GUI");
+
+
     }
+
+
     @FXML
-    protected  void handleSendPersonButton(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("GUI");
+    protected void handleSendPersonButton(ActionEvent Event) throws IOException{
+        Person person = new Person(
+                personName.getText(),
+                null,
+                1,
+                false,
+                null,
+                1,
+                personPhone.getText(),
+                null,
+                personEmail.getText());
+        CreditSystemController.personList.add(person);
+        System.out.println(person.getName());
     } // Tilføj kode der sende til fil
+
+
+
+
     @FXML
     protected void handleAddCreditButton(ActionEvent Event) throws IOException {
         Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
@@ -162,21 +196,32 @@ public class GUIController implements Initializable {
     @FXML
     protected void handleSearch(ActionEvent Event) throws IOException, InterruptedException {
         //Når der bliver klikket på søg skal søge bar og knap rykkes op
-        TranslateTransition moveSearch= new TranslateTransition();
-        moveSearch.setDuration(Duration.millis(500));
-        moveSearch.setToY(-120);
-        moveSearch.setNode(searchPane);
-        moveSearch.play();
-        //Sætter søge boxen til at være i fronten så den kan interaggeres med
-        searchPane.setViewOrder(-1.0);
-        moveSearch.setOnFinished(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                searchContent.setVisible(true);
-            }
-        });
+        if (!searchContent.isVisible()) {
+            TranslateTransition moveSearch= new TranslateTransition();
+            moveSearch.setDuration(Duration.millis(500));
+            moveSearch.setToY(-120);
+            moveSearch.setNode(searchPane);
+            moveSearch.play();
+            //Sætter søge boxen til at være i fronten så den kan interaggeres med
+            searchPane.setViewOrder(-1.0);
+            moveSearch.setOnFinished(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    searchContent.setVisible(true);
+                }
+            }); }
 
-        //TODO tilføj safemeasure så man ikke bare kan trykke søg hele tiden og den kører ud over skærmen
+        if (searchField.getText() != "") {
+            for (Credit person: CreditSystemController.personList) {
+                if (person.getName().contains(searchField.getText())) {
+                    personLabel.setText(person.getName());
+                }
+            }
+        }
+
+
+
+
     }
 
     @Override
