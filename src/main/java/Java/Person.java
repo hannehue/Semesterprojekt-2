@@ -8,14 +8,16 @@ public class Person extends Credit{
     private ArrayList<Job> jobs;
     private String phoneNumber;
     private String personalInfo;
+    private String personEmail;
 
     public Person(String name, Date dateAdded, int creditId, boolean approved,
-                        String description, int personId, String phoneNumber, String personalInfo){
+                        String description, int personId, String phoneNumber, String personalInfo, String personEmail){
         super(name, dateAdded, creditId, approved, description);
         this.personId = personId;
         this.jobs = new ArrayList<Job>();
         this.phoneNumber = phoneNumber;
         this.personalInfo = personalInfo;
+        this.personEmail = personEmail;
     }
 
     public int getPersonId() {
@@ -48,5 +50,13 @@ public class Person extends Credit{
 
     public void setPersonalInfo(String personalInfo) {
         this.personalInfo = personalInfo;
+    }
+
+    public String getPersonEmail() {
+        return personEmail;
+    }
+
+    public void setPersonEmail(String personEmail) {
+        this.personEmail = personEmail;
     }
 }
