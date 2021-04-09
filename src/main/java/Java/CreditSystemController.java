@@ -14,6 +14,7 @@ public class CreditSystemController extends Application {
     private static Scene scene;
     private int idTracker; //should be moved to database
     private DatabaseLoader dataLoader;
+    private static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -21,11 +22,13 @@ public class CreditSystemController extends Application {
         primaryStage.setTitle("TV2-Krediteringer");
         primaryStage.setScene(scene);
         primaryStage.show();
+        this.primaryStage = primaryStage;
     }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
     static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+        primaryStage.setScene(new Scene(loadFXML(fxml)));
+        
     }
     //metode til at indlæse den nye .fxml fil som skal vises
     private static Parent loadFXML(String fxml) throws IOException {

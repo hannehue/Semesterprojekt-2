@@ -26,6 +26,8 @@ public class GUIController implements Initializable {
     @FXML
     protected Pane searchContent;
 
+
+
     @FXML
     protected void handleLogin(ActionEvent Event) throws IOException {
         //redirect til Login side
@@ -125,7 +127,7 @@ public class GUIController implements Initializable {
 
     // Moderator
     @FXML
-    protected  void handleApproveCreditsModerator(ActionEvent Event) throws IOException{
+    protected void handleApproveCreditsModerator(ActionEvent Event) throws IOException{
         CreditSystemController.setRoot("ModeratorApproveCredits");
     }
     @FXML
