@@ -43,9 +43,6 @@ public class GUIController implements Initializable {
     protected AnchorPane personToApprove;
 
 
-
-
-
     @FXML
     protected void handleLogin(ActionEvent Event) throws IOException {
         //redirect til Login side
@@ -89,18 +86,7 @@ public class GUIController implements Initializable {
     }
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
-        Person person = new Person(
-                personName.getText(),
-                null,
-                1,
-                false,
-                null,
-                1,
-                personPhone.getText(),
-                null,
-                personEmail.getText());
-        CreditSystemController.personList.add(person);
-        System.out.println(person.getName());
+        CreditSystemController.addPerson(personName.getText(), null, personPhone.getText(), personEmail.getText());
     } // Tilføj kode der sende til fil
     @FXML
     protected void handleAddCreditButton(ActionEvent Event) throws IOException {
@@ -166,7 +152,7 @@ public class GUIController implements Initializable {
     @FXML
     protected void handlePersonToReload(ActionEvent Event) throws IOException{
         int offset = 20;
-        for (Person person: CreditSystemController.personList) {
+        for (Person person: CreditSystemController.getCreditList()) {
             Label personLabel = new Label("Name: " + person.getName());
             personLabel.setLayoutX(20);
             personLabel.setLayoutY(offset);
@@ -222,7 +208,7 @@ public class GUIController implements Initializable {
 
         if (searchField.getText() != "") {
             String temp = "";
-            for (Credit person: CreditSystemController.personList) {
+            for (Credit person: CreditSystemController.getCreditList()) {
                 if (person.getName().contains(searchField.getText())) {
                     temp += person.getName() + "\n";
                 }
