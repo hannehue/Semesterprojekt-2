@@ -1,6 +1,5 @@
 package Java;
 
-import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -144,21 +142,25 @@ public class GUIController implements Initializable {
     @FXML
     protected void handleApproveCreditsModerator(ActionEvent Event) throws IOException{
         CreditSystemController.setRoot("ModeratorApproveCredits");
+        reload();
     }
     @FXML
     protected  void handleAddCreditsModerator(ActionEvent Event) throws IOException{
         CreditSystemController.setRoot("ModeratorAddCredits");
     }
     @FXML
-    protected void handlePersonToReload(ActionEvent Event) throws IOException{
-        int offset = 20;
-        for (Person person: CreditSystemController.getCreditList()) {
-            Label personLabel = new Label("Name: " + person.getName());
-            personLabel.setLayoutX(20);
-            personLabel.setLayoutY(offset);
-            personToApprove.getChildren().add(personLabel);
-            offset += 20;
-        }
+    public void hanldeReload(MouseEvent mouseEvent) {
+        reload();
+    }
+    protected EventHandler<ActionEvent> handleApproveButton(int Event) {
+        System.out.println("før");
+        CreditSystemController.getApprovedPersonList().add(CreditSystemController.getUnApprovedPersonList().get(Event));
+        CreditSystemController.getUnApprovedPersonList().remove(Event);
+
+
+        reload();
+        System.out.println("efter" + Event);
+        return null;
     }
 
     //Admin
@@ -208,7 +210,7 @@ public class GUIController implements Initializable {
 
         if (searchField.getText() != "") {
             String temp = "";
-            for (Credit person: CreditSystemController.getCreditList()) {
+            for (Credit person: CreditSystemController.getUnApprovedPersonList()) {
                 if (person.getName().contains(searchField.getText())) {
                     temp += person.getName() + "\n";
                 }
@@ -223,6 +225,37 @@ public class GUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
     }
+
+    private void reload() {
+        personToApprove.getChildren().clear();
+
+        int offset = 20;
+        int buttonCounter = 0;
+        for (Person person: CreditSystemController.getUnApprovedPersonList()) {
+            Pane personPane = new Pane();
+            personToApprove.getChildren().add(personPane);
+            personPane.setLayoutY(offset);
+            personPane.setId(String.valueOf(buttonCounter));
+
+            Label personLabel = new Label("Name: " + person.getName());
+            personLabel.setLayoutX(20);
+            personPane.getChildren().add(personLabel);
+
+
+            Button approveButton = new Button();
+            approveButton.setText("Godkend");
+            approveButton.setLayoutX(300);
+            personPane.getChildren().add(approveButton);
+            int finalButtonCounter = buttonCounter;
+            approveButton.setOnAction(actionEvent -> handleApproveButton(finalButtonCounter));
+
+            buttonCounter ++;
+
+            offset += 30;
+
+
+        }
+    }
+
 }
