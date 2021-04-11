@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.GUIController">
     <center>
@@ -21,28 +20,19 @@
             <children>
             <Accordion layoutX="259.0" layoutY="21.0" prefHeight="585.0" prefWidth="541.0">
               <panes>
-                <TitledPane animated="false" prefHeight="533.0" prefWidth="541.0" text="Tilføj Program">
+                <TitledPane animated="false" prefHeight="533.0" prefWidth="541.0" text="Tilføj Film">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField layoutX="200.0" prefHeight="26.0" prefWidth="295.0" />
-                              <TextField layoutX="200.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
+                              <TextField fx:id="movieId" layoutX="200.0" prefHeight="26.0" prefWidth="295.0" />
+                              <TextField fx:id="movieDescriptionId" layoutX="200.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
                               <TextField layoutX="200.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
-                              <TextField layoutX="200.0" layoutY="90.0" prefHeight="26.0" prefWidth="295.0" />
                               <Label layoutX="10.0" prefHeight="26.0" prefWidth="199.0" text="Titel" />
-                              <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" prefWidth="199.0" text="År:" />
-                              <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" prefWidth="199.0" text="Sted:" />
-                              <Label layoutX="10.0" layoutY="90.0" prefHeight="26.0" prefWidth="199.0" text="Kategori:" />
-                              <Label layoutX="10.0" layoutY="120.0" prefHeight="26.0" prefWidth="199.0" text="Krediteringer">
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="10.0" layoutY="150.0" prefHeight="26.0" prefWidth="199.0" text="Producer:" />
-                              <TextField layoutX="200.0" layoutY="150.0" prefHeight="26.0" prefWidth="295.0" />
+                              <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" prefWidth="199.0" text="Beskrivelse:" />
+                              <Label fx:id="movieLengthId" layoutX="10.0" layoutY="60.0" prefHeight="26.0" prefWidth="199.0" text="Længede:" />
                               <Button contentDisplay="CENTER" layoutX="195.0" layoutY="197.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
-                              <TextArea disable="true" layoutX="9.0" layoutY="244.0" prefHeight="238.0" prefWidth="522.0" />
-                              <Button contentDisplay="CENTER" layoutX="405.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleSendProgramButton" text="Godkend og send" />
+                              <TextArea fx:id="moviePersonAdded" disable="true" layoutX="9.0" layoutY="244.0" prefHeight="238.0" prefWidth="522.0" />
+                              <Button contentDisplay="CENTER" layoutX="405.0" layoutY="488.0" mnemonicParsing="false" onAction="#handleSendMovieButton" text="Godkend og send" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -54,9 +44,9 @@
                               <Label layoutX="14.0" prefHeight="26.0" text="Navn:" />
                               <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Email:" />
                               <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Telefon:" />
-                              <TextField fx:id="personName" layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
-                              <TextField fx:id="personEmail" layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
-                              <TextField fx:id="personPhone" layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
+                              <TextField layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
+                              <TextField layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
+                              <TextField layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
                               <Button contentDisplay="CENTER" layoutX="405.0" layoutY="482.0" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" />
                            </children>
                         </AnchorPane>

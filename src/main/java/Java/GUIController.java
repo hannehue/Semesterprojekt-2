@@ -142,7 +142,6 @@ public class GUIController implements Initializable {
     @FXML
     protected void handleApproveCreditsModerator(ActionEvent Event) throws IOException{
         CreditSystemController.setRoot("ModeratorApproveCredits");
-        reload();
     }
     @FXML
     protected  void handleAddCreditsModerator(ActionEvent Event) throws IOException{
@@ -156,8 +155,6 @@ public class GUIController implements Initializable {
         System.out.println("før");
         CreditSystemController.getApprovedPersonList().add(CreditSystemController.getUnApprovedPersonList().get(Event));
         CreditSystemController.getUnApprovedPersonList().remove(Event);
-
-
         reload();
         System.out.println("efter" + Event);
         return null;
