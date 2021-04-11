@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
@@ -18,12 +19,15 @@ public class DashboardController implements Initializable {
     protected MenuItem addCredits;
     @FXML
     protected MenuItem addUser;
+    @FXML
+    protected SplitMenuButton menuButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         approveCredit.setVisible(CreditSystemController.getUserType().getApproveCredit());
         addCredits.setVisible(CreditSystemController.getUserType().getAddCredit());
         addUser.setVisible(CreditSystemController.getUserType().getAddUser());
+        menuButton.setText(CreditSystemController.getUserType().toString());
     }
 
     @FXML

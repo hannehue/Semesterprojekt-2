@@ -39,7 +39,7 @@
                         <Image url="@TV_2_PLAY_Hvid_RGB.png" />
                     </image>
                 </ImageView>
-                <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Admin" >
+                <SplitMenuButton fx:id="menuButton" layoutX="880.0" layoutY="20.0" mnemonicParsing="false">
                     <items>
                         <MenuItem fx:id="approveCredit" mnemonicParsing="false" onAction="#handleApproveCredits" text="Godkend Krediteringer"/>
                         <MenuItem fx:id="addCredits" mnemonicParsing="false" onAction="#handleAddCredits" text="Tilføj krediteringer" />
