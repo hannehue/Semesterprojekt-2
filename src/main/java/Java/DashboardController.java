@@ -45,19 +45,19 @@ public class DashboardController implements Initializable {
 
     @FXML
     protected  void handleAddCredits(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("AdminAddCredits");
+        CreditSystemController.setRoot("AddCredits");
     }
     @FXML
     protected  void handleApproveCredits(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("AdminApproveCredits");
+        CreditSystemController.setRoot("ApproveCredits");
     }
     @FXML
     protected  void handleAddUser(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("AdminAddUsers");
+        CreditSystemController.setRoot("AddUsers");
     }
     @FXML
     protected  void handleUserRightsAdmin(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("AdminUserRights");
+        CreditSystemController.setRoot("UserRights");
     }
     @FXML
     protected  void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
