@@ -70,7 +70,7 @@
     <top>
         <Pane prefHeight="61.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
+                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#toFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
                     <image>
                         <Image url="@TV_2_PLAY_Hvid_RGB.png" />
                     </image>

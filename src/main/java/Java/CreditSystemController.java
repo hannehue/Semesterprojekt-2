@@ -18,6 +18,7 @@ public class CreditSystemController extends Application {
     private static ArrayList<Person> unApprovedPersonList = new ArrayList<>();
     private static ArrayList<Person> approvedPersonList = new ArrayList<>();
     private static Stage primaryStage;
+    private static UserType userType;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -75,5 +76,13 @@ public class CreditSystemController extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public static UserType getUserType() {
+        return userType;
+    }
+
+    public static void setUserType(UserType userTypeSetter) {
+        userType = userTypeSetter;
     }
 }

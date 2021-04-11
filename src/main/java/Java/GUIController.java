@@ -41,6 +41,7 @@ public class GUIController implements Initializable {
     protected AnchorPane personToApprove;
 
 
+
     @FXML
     protected void handleLogin(ActionEvent Event) throws IOException {
         //redirect til Login side
@@ -51,24 +52,30 @@ public class GUIController implements Initializable {
     @FXML
     protected  void handleLoggingIn(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ind på en konto
-        CreditSystemController.setRoot("CreditPerson");
+        loginManager(UserType.PERSON);
     }
     @FXML
     protected  void handleLoggingInProducer(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ind på en konto
-        CreditSystemController.setRoot("Producer");
+        loginManager(UserType.PRODUCER);
     }
     @FXML
     protected  void handleLoggingInModerator(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ind på en konto
-        CreditSystemController.setRoot("Moderator");
+        loginManager(UserType.MODERATOR);
     }
     @FXML
     protected  void handleLoggingInAdmin(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ind på en konto
+        loginManager(UserType.ADMIN);
+    }
+
+    protected static void loginManager(UserType userType) throws IOException{
+        CreditSystemController.setUserType(userType);
         CreditSystemController.setRoot("Admin");
     }
-    //-----
+
+
 
     // General features
     @FXML
@@ -77,11 +84,12 @@ public class GUIController implements Initializable {
         CreditSystemController.setRoot("GUI");
     }
     @FXML
-    protected void ToFrontpage(MouseEvent Event) throws IOException {
+    protected void toFrontpage(MouseEvent Event) throws IOException {
         //denne bruges på billedet af TV 2
         //hver gang billedet klikkes ryges der til forsiden
         CreditSystemController.setRoot("GUI");
     }
+
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
         CreditSystemController.addPerson(personName.getText(), null, personPhone.getText(), personEmail.getText());
