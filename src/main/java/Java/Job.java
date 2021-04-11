@@ -3,12 +3,12 @@ package Java;
 public class Job {
 
     private Role[] roles;
-    private Production program;
+    private int productionID;
     private String[] characterNames;
 
-    public Job(Role[] roles, Production program, String[] characterNames) {
+    public Job(Role[] roles, int productionID, String[] characterNames) {
         this.roles = roles;
-        this.program = program;
+        this.productionID = productionID;
         this.characterNames = characterNames;
     }
 
@@ -20,12 +20,12 @@ public class Job {
         this.roles = roles;
     }
 
-    public Production getProgram() {
-        return program;
+    public int getProgram() {
+        return productionID;
     }
 
-    public void setProgram(Production program) {
-        this.program = program;
+    public void setProgram(int program) {
+        this.productionID = productionID;
     }
 
     public String[] getCharacterNames() {

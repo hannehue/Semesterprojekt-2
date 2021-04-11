@@ -3,18 +3,18 @@ package Java;
 import java.util.Date;
 
 public class Group extends Credit {
-    private int groupId;
+    private int groupID;
 
-    public Group(String name, Date dateAdded, int creditId, boolean approved, String description, int groupId){
+    public Group(String name, Date dateAdded, int creditId, boolean approved, String description, int groupID){
         super(name, dateAdded, creditId, approved, description);
-        this.groupId = groupId;
+        this.groupID = groupID;
     }
 
-    public int getGroupId() {
-        return groupId;
+    public int getGroupID() {
+        return groupID;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public void setGroupID(int groupID) {
+        this.groupID = groupID;
     }
 }

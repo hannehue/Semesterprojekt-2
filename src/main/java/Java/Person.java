@@ -4,26 +4,28 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Person extends Credit{
-    private int personId;
+    private int personID;
     private ArrayList<Job> jobs;
     private String phoneNumber;
     private String personalInfo;
+    private String email;
 
-    public Person(String name, Date dateAdded, int creditId, boolean approved,
-                        String description, int personId, String phoneNumber, String personalInfo){
-        super(name, dateAdded, creditId, approved, description);
-        this.personId = personId;
+    public Person(String name, Date dateAdded, int creditID, boolean approved,
+                  String description, int personID, String phoneNumber, String personalInfo, String email){
+        super(name, dateAdded, creditID, approved, description);
+        this.personID = personID;
         this.jobs = new ArrayList<Job>();
         this.phoneNumber = phoneNumber;
         this.personalInfo = personalInfo;
+        this.email = email;
     }
 
-    public int getPersonId() {
-        return personId;
+    public int getPersonID() {
+        return personID;
     }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
+    public void setPersonID(int personID) {
+        this.personID = personID;
     }
 
     public ArrayList<Job> getJobs() {

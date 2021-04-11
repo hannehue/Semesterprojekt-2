@@ -19,11 +19,11 @@ public abstract class Credit {
         this.description = description;
     }
 
-
+    /*
     @Override
     public String toString() {
         throw new UnsupportedOperationException("Not implemented yet");
-    }
+    }*/
 
     public String getName() {
         return name;
