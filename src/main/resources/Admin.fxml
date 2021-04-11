@@ -41,7 +41,7 @@
                 </ImageView>
                 <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Admin">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsAdmin" text="Godkend Krediteringer" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleApproveCreditsAdmin" text="Godkend Krediteringer"  />
                         <MenuItem mnemonicParsing="false" onAction="#handleAddCreditsAdmin" text="Tilføj krediteringer" />
                         <MenuItem mnemonicParsing="false" onAction="#handleAddUserAdmin" text="Tilføj bruger" />
                         <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
