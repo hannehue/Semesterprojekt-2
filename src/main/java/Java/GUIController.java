@@ -40,43 +40,6 @@ public class GUIController implements Initializable {
     @FXML
     protected AnchorPane personToApprove;
 
-
-
-    @FXML
-    protected void handleLogin(ActionEvent Event) throws IOException {
-        //redirect til Login side
-        CreditSystemController.setRoot("Login");
-    }
-
-    //---- Login Typer
-    @FXML
-    protected  void handleLoggingIn(ActionEvent Event) throws IOException{
-        //Tilføj kode der faktisk logger ind på en konto
-        loginManager(UserType.PERSON);
-    }
-    @FXML
-    protected  void handleLoggingInProducer(ActionEvent Event) throws IOException{
-        //Tilføj kode der faktisk logger ind på en konto
-        loginManager(UserType.PRODUCER);
-    }
-    @FXML
-    protected  void handleLoggingInModerator(ActionEvent Event) throws IOException{
-        //Tilføj kode der faktisk logger ind på en konto
-        loginManager(UserType.MODERATOR);
-    }
-    @FXML
-    protected  void handleLoggingInAdmin(ActionEvent Event) throws IOException{
-        //Tilføj kode der faktisk logger ind på en konto
-        loginManager(UserType.ADMIN);
-    }
-
-    protected static void loginManager(UserType userType) throws IOException{
-        CreditSystemController.setUserType(userType);
-        CreditSystemController.setRoot("Admin");
-    }
-
-
-
     // General features
     @FXML
     protected  void handleLogout(ActionEvent Event) throws IOException{

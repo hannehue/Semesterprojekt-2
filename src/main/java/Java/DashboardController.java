@@ -3,6 +3,7 @@ package Java;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.input.MouseEvent;
@@ -21,13 +22,20 @@ public class DashboardController implements Initializable {
     protected MenuItem addUser;
     @FXML
     protected SplitMenuButton menuButton;
+    @FXML
+    protected Button loginButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        approveCredit.setVisible(CreditSystemController.getUserType().getApproveCredit());
-        addCredits.setVisible(CreditSystemController.getUserType().getAddCredit());
-        addUser.setVisible(CreditSystemController.getUserType().getAddUser());
-        menuButton.setText(CreditSystemController.getUserType().toString());
+        if (CreditSystemController.getUserType() != null) {
+            menuButton.setVisible(true);
+            approveCredit.setVisible(CreditSystemController.getUserType().getApproveCredit());
+            addCredits.setVisible(CreditSystemController.getUserType().getAddCredit());
+            addUser.setVisible(CreditSystemController.getUserType().getAddUser());
+            menuButton.setText(CreditSystemController.getUserType().toString());
+        } else {
+           loginButton.setVisible(true);
+        }
     }
 
     @FXML
@@ -38,9 +46,15 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
+    protected void handleLogin(ActionEvent Event) throws  IOException{
+        CreditSystemController.setRoot("Login");
+    }
+
+    @FXML
     protected  void handleLogout(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ud fra en konto
-        CreditSystemController.setRoot("GUI");
+        CreditSystemController.setUserType(null);
+        CreditSystemController.setRoot("Dashboard");
     }
 
     @FXML
