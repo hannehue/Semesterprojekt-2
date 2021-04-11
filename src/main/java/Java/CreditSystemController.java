@@ -15,7 +15,8 @@ public class CreditSystemController extends Application {
     private static Scene scene;
     private int idTracker; //should be moved to database
     private DatabaseLoader dataLoader;
-    private static ArrayList<Person> creditList = new ArrayList<>();
+    private static ArrayList<Person> unApprovedPersonList = new ArrayList<>();
+    private static ArrayList<Person> approvedPersonList = new ArrayList<>();
     private static Stage primaryStage;
 
     @Override
@@ -44,9 +45,18 @@ public class CreditSystemController extends Application {
         return temp;
     }
 
-    public static ArrayList<Person> getCreditList() {
-        return creditList;
+    public static ArrayList<Person> getUnApprovedPersonList() {
+        return unApprovedPersonList;
     }
+
+    public static ArrayList<Person> getApprovedPersonList() {
+        return approvedPersonList;
+    }
+
+    public static void setApprovedPersonList(ArrayList<Person> approvedPersonList) {
+        CreditSystemController.approvedPersonList = approvedPersonList;
+    }
+
 
     public static void addPerson(String name, String description, String phoneNumber, String email){
         Person person = new Person(
@@ -59,7 +69,7 @@ public class CreditSystemController extends Application {
                 phoneNumber,
                 null,
                 email);
-        creditList.add(person);
+        unApprovedPersonList.add(person);
         System.out.println(person.getName());
     }
 
