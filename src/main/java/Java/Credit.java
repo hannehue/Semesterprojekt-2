@@ -22,7 +22,7 @@ public abstract class Credit {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return name;
     }
 
     public String getName() {

@@ -54,7 +54,9 @@ public class MenuController implements Initializable {
     }
     @FXML
     protected void handleSearch(ActionEvent Event) throws IOException, InterruptedException {
-        
+        //Når der bliver klikket på søg skal søge bar og knap rykkes op
+        SearchController.setSearchString(searchField.getText());
+        CreditSystemController.setRoot("SearchResult");
     }
 
     @FXML
