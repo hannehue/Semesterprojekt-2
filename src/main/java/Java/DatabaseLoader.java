@@ -25,37 +25,41 @@ public class DatabaseLoader {
         personArraylist = readPersons();
     }
 
-    public void writePersons(ArrayList list) throws IOException {
+    public void writePersons() throws IOException {
         outputStream = new FileWriter(personFile, false);
 
-        for(int row = 0; row < personArraylist.size(); row++){
-            String line = "";
-            for(int column = 0; column < personArraylist.get(row).length; column++){
-                line += personArraylist.get(row)[column] + ",";
-            }
-            outputStream.append(line + "\n");
+        for (int row = 0; row < personArraylist.size(); row++) {
+            outputStream.append(stringArraytoString(personArraylist.get(row)) + "\n");
         }
         outputStream.close();
+    }
+
+    public String stringArraytoString(String[] strings){
+        String line = "";
+        for (int column = 0; column < strings.length; column++) {
+            line += strings[column] + ",";
+        }
+        return line;
     }
 
     public ArrayList<String[]> readPersons() {
 
         ArrayList<String[]> personList = new ArrayList<>();
-        while (inputStream.hasNext()){
+        while (inputStream.hasNext()) {
             personList.add(inputStream.nextLine().split(","));
         }
         return personList;
     }
 
-    public Person stringsToPerson(String[] vals){
+    public Person stringsToPerson(String[] vals) {
         Person tempPerson = null;
-        try{
-            tempPerson = new Person(vals[0], formatter.parse(vals[1]),Integer.parseInt(vals[2]),
-                                    Boolean.parseBoolean(vals[3]),vals[4],Integer.parseInt(vals[5]),vals[6],vals[7],vals[8]);
-            if (vals[9].equals("null")){
+        try {
+            tempPerson = new Person(vals[0], formatter.parse(vals[1]), Integer.parseInt(vals[2]),
+                    Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
+            if (vals[9].equals("null")) {
                 return tempPerson;
             }
-        } catch (java.text.ParseException e){
+        } catch (java.text.ParseException e) {
             e.printStackTrace();
             System.err.println("Failed when initializing person from string array");
             return null;
@@ -76,11 +80,11 @@ public class DatabaseLoader {
             }
 
             String[] characterNames = jobValues[2].split(";");
-            if(jobValues[2].equals("null")){
+            if (jobValues[2].equals("null")) {
                 characterNames = null;
             }
 
-            jobs.add(new Job(roles,Integer.parseInt(jobValues[1]),characterNames));
+            jobs.add(new Job(roles, Integer.parseInt(jobValues[1]), characterNames));
 
         }
 
@@ -88,11 +92,63 @@ public class DatabaseLoader {
         return tempPerson;
     }
 
+    public String personToString(Person person) {
+
+        String personString = person.getName() + "," + person.getDateAdded() + "," + person.getCreditID() + "," + person.isApproved() +
+                "," + person.getDescription() + "," + person.getPersonID() + "," + person.getPhoneNumber() + "," +
+                person.getPersonalInfo() + "," + person.getEmail() + ",";
+
+        //Koreografi;Fotografer--165--Mand i hættetrøje ved tanken;Hans Jensen,
+        String jobString = "";
+
+        for (Job j : person.getJobs()) {
+            String roles = "";
+            String characterNames = "";
+
+            for (Role role : j.getRoles()) {
+                roles += role.toString() + ";";
+            }
+            roles = roles.substring(0, roles.length() - 1);
+
+            for (String characterName : j.getCharacterNames()) {
+                characterNames += characterName + ";";
+            }
+            characterNames = characterNames.substring(0, characterNames.length() - 1);
+
+            jobString += roles + "--" + j.getProgram() + "--" + characterNames + ",";
+        }
+        personString += jobString;
+
+        System.out.println(personString);
+        return personString;
+    }
+
+    public String[] personToStringArray(Person person) {
+
+        String[] personArray = personToString(person).split(",");
+        return personArray;
+    }
+
+    public void addPerson(Person person){
+        personArraylist.add(personToStringArray(person));
+    }
+
+    public void addPersons(ArrayList<Person> list){
+        for (Person person: list){
+            personArraylist.add(personToStringArray(person));
+        }
+    }
+
+
     public static void main(String[] args) throws IOException, ParseException {
         DatabaseLoader dbload = new DatabaseLoader();
 
-        System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(0)));
-        System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(1)));
+        //System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(0)));
+        //System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(1)));
+
+        dbload.personToString(dbload.stringsToPerson(dbload.personArraylist.get(0)));
+
+
     }
 
 }

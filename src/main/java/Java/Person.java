@@ -52,6 +52,10 @@ public class Person extends Credit{
         this.personalInfo = personalInfo;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     @Override
     public String toString() {
         String jobString = "";

@@ -18,12 +18,12 @@ public class CreditSystemController extends Application {
     private static Scene scene;
     private int idTracker; //should be moved to database
     private DatabaseLoader dataLoader;
-    private static ArrayList<Credit> creditList;
+    private static ArrayList<Person> personList;
     private static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        creditList = new ArrayList<>();
+        personList = new ArrayList<>();
 
         /** TEST MILJØ **/
 
@@ -31,7 +31,18 @@ public class CreditSystemController extends Application {
 
         dataLoader = new DatabaseLoader();
         //creditList.addAll(dataLoader.readPersons());
-        dataLoader.writePersons(creditList);
+
+        /** Dette skal virkelig laves om :) **/
+        ArrayList<Job> sdsd = new ArrayList<>();
+        sdsd.add(new Job(new Role[]{Role.getRoleFromString("Koreografi")}, 651, new String[] {"Pissboi"} ));
+        personList.get(0).setJobs(sdsd);
+        //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
+        /** :) **/
+
+        dataLoader.addPersons(personList);
+
+        dataLoader.writePersons();
+
 
         /** TEST MILJØ **/
 
@@ -64,7 +75,7 @@ public class CreditSystemController extends Application {
                 phoneNumber,
                 null,
                 email);
-        creditList.add(person);
+        personList.add(person);
     }
 
     public int nextId() {
