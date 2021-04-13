@@ -11,19 +11,7 @@
         <fx:include fx:id="Menu" source="include/Menu.fxml" />
     </top>
     <center>
-        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <children>
 
-                <Pane fx:id="searchContent" layoutX="80.0" layoutY="3.0" prefHeight="534.0" prefWidth="664.0" style="-fx-background-color: white;" visible="false">
-                    <children>
-                        <Label layoutX="317.0" layoutY="43.0" text="Personer" textAlignment="CENTER" />
-                        <Label layoutX="308.0" layoutY="309.0" text="Programmer" textAlignment="CENTER" />
-                        <Label fx:id="personLabel" layoutX="308.0" layoutY="76.0" textAlignment="CENTER" />
-                        <Label fx:id="showLabel" layoutX="307.0" layoutY="354.0" textAlignment="CENTER" />
-                    </children>
-                </Pane>
-            </children>
-        </Pane>
     </center>
    <right>
       <VBox prefHeight="668.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
