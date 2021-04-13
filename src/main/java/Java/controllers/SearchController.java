@@ -10,7 +10,6 @@ import javafx.scene.control.ListView;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 
@@ -22,9 +21,9 @@ public class SearchController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<Credit> yeet = FXCollections.observableArrayList();
-        yeet.addAll(search(searchString));
-        SearchList.setItems(yeet);
+        ObservableList<Credit> observableResults = FXCollections.observableArrayList();
+        observableResults.addAll(search(searchString));
+        SearchList.setItems(observableResults);
     }
 
     public static void setSearchString(String searchFieldString) {
