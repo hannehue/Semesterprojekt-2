@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
-
-</AnchorPane>
+<GridPane alignment="CENTER" hgap="5" vgap="5" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.MenuController">
+    <padding>
+        <Insets bottom="5" left="5" right="5" top="5" />
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints halignment="RIGHT" hgrow="NEVER" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
+    </columnConstraints>
+    <Pane GridPane.halignment="RIGHT" viewOrder="-1" >
+        <children>
+            <SplitMenuButton fx:id="menuButton" layoutX="880.0" layoutY="20.0" mnemonicParsing="false" visible="false" viewOrder="-Infinity">
+                <items>
+                    <MenuItem fx:id="personalProfile" mnemonicParsing="false" onAction="#handlePersonalProfile" text="Profil" />
+                    <MenuItem fx:id="approveCredit" mnemonicParsing="false" onAction="#handleApproveCredits" text="Godkend Krediteringer" />
+                    <MenuItem fx:id="addCredits" mnemonicParsing="false" onAction="#handleAddCredits" text="Tilføj krediteringer" />
+                    <MenuItem fx:id="addUser" mnemonicParsing="false" onAction="#handleAddUser" text="Tilføj bruger" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
+                </items>
+            </SplitMenuButton>
+            <Button fx:id="loginButton" layoutX="880.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" visible="false"  />
+        </children>
+    </Pane>
+    <Pane GridPane.halignment="LEFT">
+        <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#toFrontpage" preserveRatio="true">
+                <image >
+                    <Image url="@../TV_2_PLAY_Hvid_RGB.png" />
+                </image>
+            </ImageView>
+        </children>
+    </Pane>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
