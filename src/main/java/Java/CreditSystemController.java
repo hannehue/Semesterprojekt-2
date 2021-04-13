@@ -18,6 +18,7 @@ public class CreditSystemController extends Application {
     private static ArrayList<Credit> creditList = new ArrayList<>();
     private static Stage primaryStage;
     private static UserType userType;
+    private static String searchFieldPlaceholder = "";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -81,5 +82,13 @@ public class CreditSystemController extends Application {
 
     public static void setUserType(UserType userTypeSetter) {
         userType = userTypeSetter;
+    }
+
+    public static String getSearchFieldPlaceholder() {
+        return searchFieldPlaceholder;
+    }
+
+    public static void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
+        CreditSystemController.searchFieldPlaceholder = searchFieldPlaceholder;
     }
 }
