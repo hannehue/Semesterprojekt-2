@@ -27,7 +27,11 @@ public class GUIController implements Initializable {
     @FXML
     protected TextField personPhone;
     @FXML
-    protected AnchorPane personToApprove;
+    protected TextField movieTitle;
+    @FXML
+    protected TextField movieDescription;
+    @FXML
+    protected TextField movieLength;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,6 +52,15 @@ public class GUIController implements Initializable {
                 personEmail.getText());
     }
     @FXML
+    protected void handleSendMovieButton(ActionEvent Event) throws IOException{
+        CreditSystemController.addMovie(
+                movieTitle.getText(),
+                movieDescription.getText(),
+                Integer.parseInt(movieLength.getText()));
+    }
+
+
+    @FXML
     protected void handleAddCreditButton(ActionEvent Event) throws IOException {
         // Opens new window for adding person
         Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
@@ -56,10 +69,6 @@ public class GUIController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    @FXML
-    protected  void handleSendProgramButton(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("Dashboard");
-    } // Tilføj kode der sende til fil
 
     //Credit Person
     @FXML
@@ -68,18 +77,6 @@ public class GUIController implements Initializable {
         CreditSystemController.setRoot("CreditPersonProfile-edit");
     }
 
-    //Producer
-
-
-    // Moderator
-    @FXML
-    protected void handleApproveCreditsModerator(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("ModeratorApproveCredits");
-    }
-    @FXML
-    protected  void handleAddCreditsModerator(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("ModeratorAddCredits");
-    }
 
 
     //Admin
@@ -87,9 +84,4 @@ public class GUIController implements Initializable {
     protected  void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
         CreditSystemController.setRoot("Dashboard");
     }
-
-    private void reload() {
-        System.out.println("in dashboardController");
-    }
-
 }

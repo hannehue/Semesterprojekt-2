@@ -13,9 +13,10 @@ import java.util.Date;
 
 public class CreditSystemController extends Application {
     private static Scene scene;
-    private static int idTracker = 0; //should be moved to database
+    private static int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
-    private static ArrayList<Credit> creditList = new ArrayList<>();
+    private static ArrayList<Credit> creditList = new ArrayList<>(); // omdøbes til movieList
+    private static ArrayList<Credit> movieList= new ArrayList<>();
     private static Stage primaryStage;
     private static UserType userType;
     private static String searchFieldPlaceholder = "";
@@ -37,8 +38,8 @@ public class CreditSystemController extends Application {
     //sætter root for scenen, så den ved hvilken fil der skal vises
     public static void setRoot(String fxml) throws IOException {
         primaryStage.setScene(new Scene(loadFXML(fxml)));
-
     }
+
     //metode til at indlæse den nye .fxml fil som skal vises
     private static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CreditSystemController.class.getClassLoader().getResource(fxml + ".fxml"));
@@ -49,10 +50,7 @@ public class CreditSystemController extends Application {
         int temp = idTracker;
         idTracker++;
         return temp;
-
     }
-
-
 
     public static void addPerson(String name, String description, String phoneNumber, String email){
         Person person = new Person(
@@ -69,8 +67,28 @@ public class CreditSystemController extends Application {
         System.out.println(person.getName());
     }
 
+    public static void addMovie(String name, String description, int length) {
+        Movie movie = new Movie(
+                name,
+                null,
+                nextId(),
+                false,
+                description,
+                1, // Change later
+                length,
+                null,
+                1, //Change later
+                null);
+        movieList.add(movie);
+        System.out.println(movie.getName());
+    }
+
     public static ArrayList<Credit> getCreditList() {
         return creditList;
+    }
+
+    public static ArrayList<Credit> getMovieList() {
+        return movieList;
     }
 
     public static void main(String[] args) {
