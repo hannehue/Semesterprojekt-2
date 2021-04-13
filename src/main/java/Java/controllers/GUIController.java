@@ -48,12 +48,6 @@ public class GUIController implements Initializable {
         //Tilføj kode der faktisk logger ud fra en konto
         CreditSystemController.setRoot("Dashboard");
     }
-    @FXML
-    protected void toFrontpage(MouseEvent Event) throws IOException {
-        //denne bruges på billedet af TV 2
-        //hver gang billedet klikkes ryges der til forsiden
-        CreditSystemController.setRoot("Dashboard");
-    }
 
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{

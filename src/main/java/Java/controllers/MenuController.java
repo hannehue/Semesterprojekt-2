@@ -75,6 +75,7 @@ public class MenuController implements Initializable {
     protected void toFrontpage(MouseEvent Event) throws IOException {
         //denne bruges på billedet af TV 2
         //hver gang billedet klikkes ryges der til forsiden
+        System.out.println("go to frontsf");
         CreditSystemController.setRoot("Dashboard");
     }
 

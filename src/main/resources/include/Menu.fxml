@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="CENTER" hgap="5" vgap="5" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.MenuController">
+<GridPane alignment="CENTER" hgap="5" maxHeight="150.0" maxWidth="1024.0" vgap="5" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.MenuController">
     <padding>
         <Insets bottom="5" left="5" right="5" top="5" />
     </padding>
@@ -13,9 +13,9 @@
         <ColumnConstraints halignment="RIGHT" hgrow="NEVER" />
         <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" />
     </columnConstraints>
-    <Pane GridPane.halignment="RIGHT" viewOrder="-1" >
+    <Pane maxHeight="150.0" maxWidth="200.0" viewOrder="0" GridPane.halignment="RIGHT">
         <children>
-            <SplitMenuButton fx:id="menuButton" layoutX="880.0" layoutY="20.0" mnemonicParsing="false" visible="false" viewOrder="-Infinity">
+            <SplitMenuButton fx:id="menuButton" layoutX="880.0" layoutY="20.0" mnemonicParsing="false" viewOrder="-Infinity" visible="false">
                 <items>
                     <MenuItem fx:id="personalProfile" mnemonicParsing="false" onAction="#handlePersonalProfile" text="Profil" />
                     <MenuItem fx:id="approveCredit" mnemonicParsing="false" onAction="#handleApproveCredits" text="Godkend Krediteringer" />
@@ -24,15 +24,16 @@
                     <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
                 </items>
             </SplitMenuButton>
-            <Button fx:id="loginButton" layoutX="880.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" visible="false"  />
+            <Button fx:id="loginButton" layoutX="880.0" layoutY="20.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" visible="false" />
         </children>
     </Pane>
-    <Pane GridPane.halignment="LEFT">
+    <Pane viewOrder="0" GridPane.halignment="LEFT">
         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#toFrontpage" preserveRatio="true">
-                <image >
-                    <Image url="@../TV_2_PLAY_Hvid_RGB.png" />
-                </image>
+            <ImageView fx:id="logobutton" fitHeight="150.0" fitWidth="200.0" onMouseClicked="#toFrontpage" preserveRatio="true">
+                <Image url="@TV_2_PLAY_Hvid_RGB.png" />
+            <viewport>
+               <Rectangle2D />
+            </viewport>
             </ImageView>
         </children>
     </Pane>
