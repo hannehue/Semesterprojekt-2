@@ -30,9 +30,17 @@ public class GUIController implements Initializable {
     @FXML
     protected AnchorPane personToApprove;
 
+<<<<<<< HEAD
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+=======
+    // General features
+    @FXML
+    protected  void handleLogout(ActionEvent Event) throws IOException{
+        //Tilføj kode der faktisk logger ud fra en konto
+        CreditSystemController.setRoot("Dashboard");
+>>>>>>> fxml-refactor
     }
 
     @FXML
