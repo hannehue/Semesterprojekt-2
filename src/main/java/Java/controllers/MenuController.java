@@ -72,7 +72,7 @@ public class MenuController implements Initializable {
 
         if (!searchField.getText().equals("")) {
             String temp = "";
-            for (Credit person: CreditSystemController.getUnApprovedPersonList()) {
+            for (Credit person: CreditSystemController.getCreditList()) {
                 if (person.getName().contains(searchField.getText())) {
                     temp += person.getName() + "\n";
                 }
