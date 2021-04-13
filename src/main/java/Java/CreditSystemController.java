@@ -32,7 +32,6 @@ public class CreditSystemController extends Application {
         dataLoader = new DatabaseLoader();
         //creditList.addAll(dataLoader.readPersons());
         dataLoader.writePersons(creditList);
-        System.out.println(Arrays.toString(creditList.toArray()));
 
         /** TEST MILJØ **/
 
@@ -66,7 +65,6 @@ public class CreditSystemController extends Application {
                 null,
                 email);
         creditList.add(person);
-        System.out.println(person.getName());
     }
 
     public int nextId() {

@@ -1,5 +1,7 @@
 package Java;
 
+import java.util.Arrays;
+
 public class Job {
 
     private Role[] roles;
@@ -34,5 +36,11 @@ public class Job {
 
     public void setCharacterNames(String[] characterNames) {
         this.characterNames = characterNames;
+    }
+
+    @Override
+    public String toString() {
+        return "Production ID: " + productionID + ", Roles on production: " + Arrays.toString(roles) +
+                (characterNames != null ? " as " + Arrays.toString(characterNames) : "");
     }
 }

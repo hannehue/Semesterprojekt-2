@@ -51,4 +51,17 @@ public class Person extends Credit{
     public void setPersonalInfo(String personalInfo) {
         this.personalInfo = personalInfo;
     }
+
+    @Override
+    public String toString() {
+        String jobString = "";
+        for (Job job : jobs) {
+            jobString += "\t" + job.toString() + "\n";
+        }
+        return "Name: " + getName() + ", PersonID: " + personID + "\n" +
+                "Email: " + email + "\n" +
+                "Phone number: " + phoneNumber + "\n" +
+                "Jobs:\n" + jobString +
+                "PersonalInfo: " + personalInfo  + "\n";
+    }
 }

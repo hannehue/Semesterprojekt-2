@@ -1,2 +1,2 @@
-Jens Peter,Sun Apr 11 14:55:59 CEST 2021,1,false,Jens er en kameramand,2,21222123,Det her har jens selv skrevet,jens@test.com,Kameramand;Lydmand$$(badehotelletID)$$Mand i hættetrøje ved tanken,
-Peter Jens,Sun Apr 11 14:56:59 CEST 2021,3,false,Peter er ikke en kameramand,4,21222123,Det her har Peter selv skrevet,Peter@test.com,Lydmand$$(badehotelletID)$$null||Lydmand$$(minkavlerne)$$null
+Jens Peter,Sun Apr 11 14:55:59 CEST 2021,1,false,Jens er en kameramand,2,21222123,Det her har jens selv skrevet,jens@test.com,Koreografi;Fotografer--165--Mand i hættetrøje ved tanken;Hans Jensen,
+Peter Jensen,Sun Apr 11 14:56:59 CEST 2021,3,false,Peter er ikke en kameramand,4,21222123,Det her har Peter selv skrevet,Peter@test.com,Fotografer--57--null##Fotografer--295--null
