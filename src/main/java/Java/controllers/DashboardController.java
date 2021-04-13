@@ -63,7 +63,7 @@ public class DashboardController implements Initializable {
 
         if (!searchField.getText().equals("")) {
             String temp = "";
-            for (Credit person: CreditSystemController.getUnApprovedPersonList()) {
+            for (Credit person: CreditSystemController.getCreditList()) {
                 if (person.getName().contains(searchField.getText())) {
                     temp += person.getName() + "\n";
                 }
@@ -78,10 +78,18 @@ public class DashboardController implements Initializable {
     /* ------------------------------------------------------------------------------------------------------------------
         Metoder
     ------------------------------------------------------------------------------------------------------------------ */
+    @FXML
+    public void handleReloadPerson(MouseEvent mouseEvent) {
+        reload();
+    }
+
     protected EventHandler<ActionEvent> handleApproveButton(int Event) {
         System.out.println("før");
-        CreditSystemController.getApprovedPersonList().add(CreditSystemController.getUnApprovedPersonList().get(Event));
-        CreditSystemController.getUnApprovedPersonList().remove(Event);
+        for (Credit personCredit: CreditSystemController.getCreditList()) {
+            if (personCredit.getCreditID() == Event) {
+                CreditSystemController.getCreditList().get(Event).setApproved(true);
+            }
+        }
         reload();
         System.out.println("efter" + Event);
         return null;
@@ -92,31 +100,27 @@ public class DashboardController implements Initializable {
         personToApprove.getChildren().clear();
 
         int offset = 20;
-        int buttonCounter = 0;
-        for (Person person: CreditSystemController.getUnApprovedPersonList()) {
-            Pane personPane = new Pane();
-            personToApprove.getChildren().add(personPane);
-            personPane.setLayoutY(offset);
-            personPane.setId(String.valueOf(buttonCounter));
+        for (Credit personCredit: CreditSystemController.getCreditList()) {
+            if (!personCredit.isApproved()) {
+                Pane personPane = new Pane();
+                personToApprove.getChildren().add(personPane);
+                personPane.setLayoutY(offset);
+                personPane.setId(String.valueOf(personCredit.getCreditID()));
 
-            Label personLabel = new Label("Name: " + person.getName());
-            personLabel.setLayoutX(20);
-            personPane.getChildren().add(personLabel);
-
-
-            Button approveButton = new Button();
-            approveButton.setText("Godkend");
-            approveButton.setLayoutX(300);
-            personPane.getChildren().add(approveButton);
-            int finalButtonCounter = buttonCounter;
-            approveButton.setOnAction(actionEvent -> handleApproveButton(finalButtonCounter));
-
-            buttonCounter ++;
-
-            offset += 30;
+                Label personLabel = new Label("Name: " + personCredit.getName());
+                personLabel.setLayoutX(20);
+                personPane.getChildren().add(personLabel);
 
 
+                Button approveButton = new Button();
+                approveButton.setText("Godkend");
+                approveButton.setLayoutX(300);
+                personPane.getChildren().add(approveButton);
+                int finalButtonCounter = personCredit.getCreditID();
+                approveButton.setOnAction(actionEvent -> handleApproveButton(finalButtonCounter));
+
+                offset += 30;
+            }
         }
     }
-
 }

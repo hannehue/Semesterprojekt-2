@@ -13,10 +13,9 @@ import java.util.Date;
 
 public class CreditSystemController extends Application {
     private static Scene scene;
-    private int idTracker; //should be moved to database
+    private static int idTracker = 0; //should be moved to database
     private DatabaseLoader dataLoader;
-    private static ArrayList<Person> unApprovedPersonList = new ArrayList<>();
-    private static ArrayList<Person> approvedPersonList = new ArrayList<>();
+    private static ArrayList<Credit> creditList = new ArrayList<>();
     private static Stage primaryStage;
     private static UserType userType;
 
@@ -27,6 +26,10 @@ public class CreditSystemController extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         this.primaryStage = primaryStage;
+
+        creditList.add(new Person("Peter Petesdafasdf", null, 12342, true, "this is the desc", 2342,"31330913",null, null));
+        creditList.add(new Person("New pers", null, 123, true, "this is the desc", 2342,"31330913",null, null));
+
     }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
@@ -40,38 +43,32 @@ public class CreditSystemController extends Application {
         return fxmlLoader.load();
     }
 
-    public int nextId() {
+    public static int nextId() {
         int temp = idTracker;
         idTracker++;
         return temp;
+
     }
 
-    public static ArrayList<Person> getUnApprovedPersonList() {
-        return unApprovedPersonList;
-    }
-
-    public static ArrayList<Person> getApprovedPersonList() {
-        return approvedPersonList;
-    }
-
-    public static void setApprovedPersonList(ArrayList<Person> approvedPersonList) {
-        CreditSystemController.approvedPersonList = approvedPersonList;
-    }
 
 
     public static void addPerson(String name, String description, String phoneNumber, String email){
         Person person = new Person(
                 name,
-                new Date(),
-                1, // change later
+                new Date(), // change later
+                nextId(),
                 false,
                 description,
                 1,
                 phoneNumber,
                 null,
                 email);
-        unApprovedPersonList.add(person);
+        creditList.add(person);
         System.out.println(person.getName());
+    }
+
+    public static ArrayList<Credit> getCreditList() {
+        return creditList;
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package Java.controllers;
 
+import Java.Credit;
 import Java.CreditSystemController;
 import Java.Person;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -39,8 +41,12 @@ public class GUIController implements Initializable {
 
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
-        CreditSystemController.addPerson(personName.getText(), null, personPhone.getText(), personEmail.getText());
-    } // Tilføj kode der sende til fil
+        CreditSystemController.addPerson(
+                personName.getText(),
+                null,
+                personPhone.getText(),
+                personEmail.getText());
+    }
     @FXML
     protected void handleAddCreditButton(ActionEvent Event) throws IOException {
         // Opens new window for adding person
@@ -66,14 +72,15 @@ public class GUIController implements Initializable {
 
 
     // Moderator
-    protected EventHandler<ActionEvent> handleApproveButton(int Event) {
-        System.out.println("før");
-        CreditSystemController.getApprovedPersonList().add(CreditSystemController.getUnApprovedPersonList().get(Event));
-        CreditSystemController.getUnApprovedPersonList().remove(Event);
-        reload();
-        System.out.println("efter" + Event);
-        return null;
+    @FXML
+    protected void handleApproveCreditsModerator(ActionEvent Event) throws IOException{
+        CreditSystemController.setRoot("ModeratorApproveCredits");
     }
+    @FXML
+    protected  void handleAddCreditsModerator(ActionEvent Event) throws IOException{
+        CreditSystemController.setRoot("ModeratorAddCredits");
+    }
+
 
     //Admin
     @FXML
@@ -82,31 +89,7 @@ public class GUIController implements Initializable {
     }
 
     private void reload() {
-        personToApprove.getChildren().clear();
-
-        int offset = 20;
-        int buttonCounter = 0;
-        for (Person person: CreditSystemController.getUnApprovedPersonList()) {
-            Pane personPane = new Pane();
-            personPane.setLayoutY(offset);
-            personPane.setId(String.valueOf(buttonCounter));
-            personToApprove.getChildren().add(personPane);
-
-            Label personLabel = new Label("Name: " + person.getName());
-            personLabel.setLayoutX(20);
-            personPane.getChildren().add(personLabel);
-
-            Button approveButton = new Button();
-            approveButton.setText("Godkend");
-            approveButton.setLayoutX(300);
-            personPane.getChildren().add(approveButton);
-
-            int finalButtonCounter = buttonCounter;
-            approveButton.setOnAction(actionEvent -> handleApproveButton(finalButtonCounter));
-
-            buttonCounter ++;
-            offset += 30;
-        }
+        System.out.println("in dashboardController");
     }
 
 }
