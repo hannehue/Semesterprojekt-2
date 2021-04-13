@@ -2,7 +2,6 @@ package Java.controllers;
 
 import Java.CreditSystemController;
 import Java.Person;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,10 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,17 +27,14 @@ public class GUIController implements Initializable {
     @FXML
     protected AnchorPane personToApprove;
 
-<<<<<<< HEAD
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-=======
+    }
     // General features
     @FXML
     protected  void handleLogout(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ud fra en konto
         CreditSystemController.setRoot("Dashboard");
->>>>>>> fxml-refactor
     }
 
     @FXML

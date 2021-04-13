@@ -33,27 +33,23 @@
     </Pane>
     <Pane prefHeight="90.0" prefWidth="122.0" GridPane.columnIndex="2" GridPane.halignment="LEFT">
       <children>
-          <Pane layoutX="77.0" layoutY="11.0" prefHeight="69.0" prefWidth="145.0">
-              <children>
-                  <SplitMenuButton fx:id="menuButton" layoutX="32.0" layoutY="5.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="78.0" visible="false">
-                      <items>
-                          <MenuItem fx:id="personalProfile" mnemonicParsing="false" onAction="#handlePersonalProfile" text="Profil" />
-                          <MenuItem fx:id="approveCredit" mnemonicParsing="false" onAction="#handleApproveCredits" text="Godkend Krediteringer" />
-                          <MenuItem fx:id="addCredits" mnemonicParsing="false" onAction="#handleAddCredits" text="Tilføj krediteringer" />
-                          <MenuItem fx:id="addUser" mnemonicParsing="false" onAction="#handleAddUser" text="Tilføj bruger" />
-                          <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
-                      </items>
-                  </SplitMenuButton>
-                  <Button fx:id="loginButton" layoutX="71.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" visible="false" />
-              </children>
-          </Pane>
+            <SplitMenuButton fx:id="menuButton" mnemonicParsing="false" prefHeight="44.0" prefWidth="100.0" visible="false">
+                <items>
+                    <MenuItem fx:id="personalProfile" mnemonicParsing="false" onAction="#handlePersonalProfile" text="Profil" />
+                    <MenuItem fx:id="approveCredit" mnemonicParsing="false" onAction="#handleApproveCredits" text="Godkend Krediteringer" />
+                    <MenuItem fx:id="addCredits" mnemonicParsing="false" onAction="#handleAddCredits" text="Tilføj krediteringer" />
+                    <MenuItem fx:id="addUser" mnemonicParsing="false" onAction="#handleAddUser" text="Tilføj bruger" />
+                    <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
+                </items>
+            </SplitMenuButton>
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#handleLogin" text="Login" visible="false" />
       </children>
     </Pane>
    <Pane prefHeight="90.0" prefWidth="204.0">
       <children>
             <ImageView fitHeight="90.0" fitWidth="247.0" onMouseClicked="#toFrontpage" preserveRatio="true">
                 <image>
-                    <Image url="@../TV_2_PLAY_Hvid_RGB.png" />
+                    <Image url="@TV_2_PLAY_Hvid_RGB.png" />
                 </image>
             </ImageView>
       </children>

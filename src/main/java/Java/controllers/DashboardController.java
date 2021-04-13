@@ -87,7 +87,6 @@ public class DashboardController implements Initializable {
         return null;
     }
 
-    protected 
 
     private void reload() {
         personToApprove.getChildren().clear();
