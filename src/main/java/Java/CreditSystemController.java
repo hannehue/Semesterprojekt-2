@@ -29,6 +29,7 @@ public class CreditSystemController extends Application {
 
         creditList.add(new Person("Peter Petesdafasdf", null, 12342, true, "this is the desc", 2342,"31330913",null, null));
         creditList.add(new Person("New pers", null, 123, true, "this is the desc", 2342,"31330913",null, null));
+        creditList.add(new Person("New pers 1", null, 123, true, "this is the desc", 2342,"31330913",null, null));
 
     }
 
