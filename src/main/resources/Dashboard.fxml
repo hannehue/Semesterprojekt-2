@@ -6,10 +6,13 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.DashboardController">
+    <top>
+        <fx:include source="include/Menu.fxml" fx:id="Menu" />
+    </top>
     <center>
         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <Button alignment="TOP_LEFT" layoutX="729.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="40.0">
+                <Button alignment="TOP_LEFT" layoutX="729.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="40.0" onAction="#handleSearch">
                     <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -21,29 +24,17 @@
                 <TextField alignment="TOP_LEFT" layoutX="258.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="457.0" promptText="Søg">
                     <font>
                         <Font size="17.0" />
-                    </font></TextField>
-                <Pane layoutX="222.0" layoutY="39.0" prefHeight="460.0" prefWidth="528.0" style="-fx-background-color: white;" visible="false" />
+                    </font>
+                </TextField>
+                <Pane fx:id="searchContent" layoutX="222.0" layoutY="39.0" prefHeight="460.0" prefWidth="528.0" style="-fx-background-color: white;" visible="false">
+                    <children>
+                        <Label layoutX="317.0" layoutY="43.0" text="Personer" />
+                        <Label layoutX="308.0" layoutY="309.0" text="Programmer" />
+                        <Label fx:id="personLabel" layoutX="308.0" layoutY="76.0" />
+                        <Label fx:id="showLabel" layoutX="307.0" layoutY="354.0" text="Programmer" />
+                    </children>
+                </Pane>
             </children>
         </Pane>
     </center>
-    <top>
-        <Pane fx:id="functionalityPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#toFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
-                    <image>
-                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
-                    </image>
-                </ImageView>
-                <SplitMenuButton fx:id="menuButton" layoutX="880.0" layoutY="20.0" mnemonicParsing="false" visible="false">
-                    <items>
-                        <MenuItem fx:id="approveCredit" mnemonicParsing="false" onAction="#handleApproveCredits" text="Godkend Krediteringer" />
-                        <MenuItem fx:id="addCredits" mnemonicParsing="false" onAction="#handleAddCredits" text="Tilføj krediteringer" />
-                        <MenuItem fx:id="addUser" mnemonicParsing="false" onAction="#handleAddUser" text="Tilføj bruger" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
-                    </items>
-                </SplitMenuButton>
-                <Button fx:id="loginButton" layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="Login" visible="false" onAction="#handleLogin"/>
-            </children>
-        </Pane>
-    </top>
 </BorderPane>

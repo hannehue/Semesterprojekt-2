@@ -44,13 +44,13 @@ public class GUIController implements Initializable {
     @FXML
     protected  void handleLogout(ActionEvent Event) throws IOException{
         //Tilføj kode der faktisk logger ud fra en konto
-        CreditSystemController.setRoot("GUI");
+        CreditSystemController.setRoot("Dashboard");
     }
     @FXML
     protected void toFrontpage(MouseEvent Event) throws IOException {
         //denne bruges på billedet af TV 2
         //hver gang billedet klikkes ryges der til forsiden
-        CreditSystemController.setRoot("GUI");
+        CreditSystemController.setRoot("Dashboard");
     }
 
     @FXML
@@ -67,7 +67,7 @@ public class GUIController implements Initializable {
     } // Opens new window for adding person
     @FXML
     protected  void handleSendProgramButton(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("GUI");
+        CreditSystemController.setRoot("Dashboard");
     } // Tilføj kode der sende til fil
 
 
@@ -150,43 +150,10 @@ public class GUIController implements Initializable {
     }
     @FXML
     protected  void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("GUI");
+        CreditSystemController.setRoot("Dashboard");
     }
     @FXML
     protected void handleSearchEnter(ActionEvent Event) throws  IOException {
-        ; }
-
-
-
-    @FXML
-    protected void handleSearch(ActionEvent Event) throws IOException, InterruptedException {
-        //Når der bliver klikket på søg skal søge bar og knap rykkes op
-        if (!searchContent.isVisible()) {
-            TranslateTransition moveSearch= new TranslateTransition();
-            moveSearch.setDuration(Duration.millis(500));
-            moveSearch.setToY(-120);
-            moveSearch.setNode(searchPane);
-            moveSearch.play();
-            //Sætter søge boxen til at være i fronten så den kan interaggeres med
-            searchPane.setViewOrder(-1.0);
-            moveSearch.setOnFinished(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    searchContent.setVisible(true);
-                }
-            }); }
-
-        if (searchField.getText() != "") {
-            String temp = "";
-            for (Credit person: CreditSystemController.getUnApprovedPersonList()) {
-                if (person.getName().contains(searchField.getText())) {
-                    temp += person.getName() + "\n";
-                }
-            } personLabel.setText(temp);
-        }
-
-
-
 
     }
 

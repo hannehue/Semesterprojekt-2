@@ -3,11 +3,18 @@ package Java;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+/* ------------------------------------------------------------------------------------------------------------------
+Denne Controller bruges til at logge ind på en konto
+------------------------------------------------------------------------------------------------------------------ */
 
 public class LoginController implements Initializable {
 
@@ -42,7 +49,6 @@ public class LoginController implements Initializable {
         CreditSystemController.setUserType(userType);
         CreditSystemController.setRoot("Dashboard");
     }
-
 
     @FXML
     protected void toFrontpage(MouseEvent Event) throws IOException {
