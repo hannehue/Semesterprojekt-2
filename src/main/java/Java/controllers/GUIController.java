@@ -1,5 +1,7 @@
-package Java;
+package Java.controllers;
 
+import Java.CreditSystemController;
+import Java.Person;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

@@ -30,7 +30,7 @@ public class CreditSystemController extends Application {
     }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException {
         primaryStage.setScene(new Scene(loadFXML(fxml)));
 
     }
