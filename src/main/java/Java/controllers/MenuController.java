@@ -42,6 +42,12 @@ public class MenuController implements Initializable {
     protected Label personLabel;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (CreditSystemController.getSearchFieldPlaceholder().equalsIgnoreCase("")){
+            CreditSystemController.setSearchFieldPlaceholder("Søg");
+            searchField.setPromptText(CreditSystemController.getSearchFieldPlaceholder());
+        } else {
+            searchField.setPromptText(CreditSystemController.getSearchFieldPlaceholder());
+        }
         if (CreditSystemController.getUserType() != null) {
             menuButton.setVisible(true);
             approveCredit.setVisible(CreditSystemController.getUserType().getApproveCredit());
@@ -55,8 +61,14 @@ public class MenuController implements Initializable {
     @FXML
     protected void handleSearch(ActionEvent Event) throws IOException, InterruptedException {
         //Når der bliver klikket på søg skal søge bar og knap rykkes op
-        SearchController.setSearchString(searchField.getText());
-        CreditSystemController.setRoot("SearchResult");
+        if (!searchField.getText().equalsIgnoreCase("")) {
+            searchField.setPromptText(searchField.getText());
+            CreditSystemController.setSearchFieldPlaceholder(searchField.getText());
+            SearchController.setSearchString(searchField.getText());
+            CreditSystemController.setRoot("SearchResult");
+        } else {
+            searchField.setPromptText("Indtast noget");
+        }
     }
 
     @FXML

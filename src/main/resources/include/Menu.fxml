@@ -25,7 +25,7 @@
                 </ImageView>
             </graphic>
         </Button>
-        <TextField fx:id="searchField" alignment="TOP_LEFT" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="457.0" promptText="Søg">
+        <TextField fx:id="searchField" alignment="TOP_LEFT" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="457.0">
             <font>
                 <Font size="17.0" />
             </font>

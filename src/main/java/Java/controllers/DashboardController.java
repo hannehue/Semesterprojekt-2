@@ -24,51 +24,11 @@ Denne Controller alt funktionalitet på de forskellige sider
 
 public class DashboardController implements Initializable {
     @FXML
-    protected Pane searchPane;
-    @FXML
-    protected Pane searchContent;
-    @FXML
-    protected TextField searchField;
-    @FXML
-    protected Label personLabel;
-    @FXML
     protected AnchorPane personToApprove;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }
-
-    @FXML
-    protected void handleSearchEnter(ActionEvent Event) throws  IOException {
-
-    }
-    @FXML
-    protected void handleSearch(ActionEvent Event) throws IOException, InterruptedException {
-        //Når der bliver klikket på søg skal søge bar og knap rykkes op
-        if (!searchContent.isVisible()) {
-            TranslateTransition moveSearch= new TranslateTransition();
-            moveSearch.setDuration(Duration.millis(500));
-            moveSearch.setToY(-75);
-            moveSearch.setNode(searchPane);
-            moveSearch.play();
-            //Sætter søge boxen til at være i fronten så den kan interaggeres med
-            searchPane.setViewOrder(-1.0);
-            moveSearch.setOnFinished(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    searchContent.setVisible(true);
-                }
-            }); }
-
-        if (!searchField.getText().equals("")) {
-            String temp = "";
-            for (Credit person: CreditSystemController.getCreditList()) {
-                if (person.getName().contains(searchField.getText())) {
-                    temp += person.getName() + "\n";
-                }
-            } personLabel.setText(temp);
-        }
     }
 
 
