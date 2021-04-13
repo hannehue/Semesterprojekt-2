@@ -49,7 +49,7 @@ public class DashboardController implements Initializable {
         if (!searchContent.isVisible()) {
             TranslateTransition moveSearch= new TranslateTransition();
             moveSearch.setDuration(Duration.millis(500));
-            moveSearch.setToY(-120);
+            moveSearch.setToY(-75);
             moveSearch.setNode(searchPane);
             moveSearch.play();
             //Sætter søge boxen til at være i fronten så den kan interaggeres med
@@ -86,6 +86,9 @@ public class DashboardController implements Initializable {
         System.out.println("efter" + Event);
         return null;
     }
+
+    protected 
+
     private void reload() {
         personToApprove.getChildren().clear();
 

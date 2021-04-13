@@ -8,34 +8,27 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.DashboardController">
 
     <top>
-        <fx:include source="include/Menu.fxml" fx:id="Menu" />
+        <fx:include fx:id="Menu" source="include/Menu.fxml" />
     </top>
     <center>
         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <Button alignment="TOP_LEFT" layoutX="729.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="40.0" onAction="#handleSearch">
-                    <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@search.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                <TextField alignment="TOP_LEFT" layoutX="258.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="457.0" promptText="Søg">
-                    <font>
-                        <Font size="17.0" />
-                    </font>
-                </TextField>
-                <Pane fx:id="searchContent" layoutX="222.0" layoutY="39.0" prefHeight="460.0" prefWidth="528.0" style="-fx-background-color: white;" visible="false">
+
+                <Pane fx:id="searchContent" layoutX="80.0" layoutY="3.0" prefHeight="534.0" prefWidth="664.0" style="-fx-background-color: white;" visible="false">
                     <children>
-                        <Label layoutX="317.0" layoutY="43.0" text="Personer" />
-                        <Label layoutX="308.0" layoutY="309.0" text="Programmer" />
-                        <Label fx:id="personLabel" layoutX="308.0" layoutY="76.0" />
-                        <Label fx:id="showLabel" layoutX="307.0" layoutY="354.0" text="Programmer" />
+                        <Label layoutX="317.0" layoutY="43.0" text="Personer" textAlignment="CENTER" />
+                        <Label layoutX="308.0" layoutY="309.0" text="Programmer" textAlignment="CENTER" />
+                        <Label fx:id="personLabel" layoutX="308.0" layoutY="76.0" textAlignment="CENTER" />
+                        <Label fx:id="showLabel" layoutX="307.0" layoutY="354.0" textAlignment="CENTER" />
                     </children>
                 </Pane>
             </children>
         </Pane>
     </center>
+   <right>
+      <VBox prefHeight="668.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+   </right>
+   <left>
+      <VBox prefHeight="668.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+   </left>
 </BorderPane>
