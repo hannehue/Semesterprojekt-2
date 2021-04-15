@@ -111,7 +111,7 @@ public class CreditSystemController extends Application {
                 1,
                 new ArrayList<>());
         showList.add(show);
-        System.out.println(show.getName());
+        System.out.println("Added show: " + show.getName());
     }
 
     public static void addSeason(String description, String show) {

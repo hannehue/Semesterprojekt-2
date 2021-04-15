@@ -53,7 +53,7 @@ public class DashboardController implements Initializable {
     protected ChoiceBox choiceBoxSeason;
     @FXML
     protected TextField showTitleSE;
-    protected String showName;
+    protected static String showName;
     protected String seasonName;
     protected String episodeName;
 
@@ -122,6 +122,7 @@ public class DashboardController implements Initializable {
     }
     @FXML
     protected void handleAddSeason(ActionEvent Event) throws IOException {
+        System.out.println("trying to add season with showname " + this.showName);
         CreditSystemController.addSeason(seasonDescription.getText(), this.showName);
         System.out.println("handling: " + this.showName);
 
