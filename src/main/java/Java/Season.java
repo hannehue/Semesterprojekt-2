@@ -1,18 +1,23 @@
 package Java;
 
+import java.util.ArrayList;
+
 public class
 Season {
 
     private int seasonID;
     private String description;
-    private Episode[] episodes;
+    private ArrayList<Episode> episodes;
     private String seasonName;
+    private int numberOfEpisode;
 
-    public Season(int seasonID, String description, Episode[] episodes, String seasonName){
+    public Season(int seasonID, String description, ArrayList<Episode> episodes, String seasonName, int numberOfEpisode){
         this.seasonID = seasonID;
         this.description = description;
         this.episodes = episodes;
         this.seasonName = seasonName;
+        this.numberOfEpisode = numberOfEpisode;
+
 
     }
 
@@ -24,12 +29,20 @@ Season {
         return description;
     }
 
-    public Episode[] getEpisodes() {
+    public ArrayList<Episode> getEpisodes() {
         return episodes;
     }
 
     public String getSeasonName() {
         return seasonName;
+    }
+
+    public void addNumberOfEpisode() {
+        this.numberOfEpisode++;
+    }
+
+    public int getNumberOfEpisode() {
+        return numberOfEpisode;
     }
 
     public void setSeasonID(int seasonID) {
@@ -40,7 +53,7 @@ Season {
         this.description = description;
     }
 
-    public void setEpisodes(Episode[] episodes) {
+    public void setEpisodes(ArrayList<Episode> episodes) {
         this.episodes = episodes;
     }
 
