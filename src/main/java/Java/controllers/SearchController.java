@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
 import javax.security.auth.callback.Callback;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -31,7 +32,14 @@ public class SearchController implements Initializable {
         SearchList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("clicked" + SearchList.getSelectionModel().getSelectedItem());
+                Credit item = (Credit) SearchList.getSelectionModel().getSelectedItem();
+                System.out.println("clicked" + item);
+                CreditViewController.setCurrentCredit(item);
+                try {
+                    CreditSystemController.setRoot("CreditView");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
