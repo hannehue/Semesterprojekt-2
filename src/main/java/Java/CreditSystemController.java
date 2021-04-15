@@ -30,9 +30,10 @@ public class CreditSystemController extends Application {
         primaryStage.show();
         this.primaryStage = primaryStage;
 
-        personList.add(new Person("Peter Petesdafasdf", null, 12342, true, "this is the desc", 2342,"31330913","this is personnifo for pete", null));
+        personList.add(new Person("Peter Petesdafasdf", null, 12342, true, "this is the desc", 2342,"31330913", "this is persinfo", null));
         personList.add(new Person("New pers", null, 123, true, "this is the desc", 2342,"31330913","this is the persinfo", null));
         personList.add(new Person("New pers 1", null, 123, true, "this is the desc", 2342,"31330913","this is personinfo new ", null));
+        personList.add(new Movie("The Movie", null, 1231, true, "the secsdf", 12312, 1231235, null, 123, null));
     }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
