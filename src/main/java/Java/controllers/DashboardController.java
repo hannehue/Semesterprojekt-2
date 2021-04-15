@@ -51,6 +51,11 @@ public class DashboardController implements Initializable {
     protected TextArea seasonDescription;
     @FXML
     protected ChoiceBox choiceBoxSeason;
+    @FXML
+    protected TextField showTitleSE;
+    protected String showName;
+    protected String seasonName;
+    protected String episodeName;
 
 
     @Override
@@ -103,8 +108,6 @@ public class DashboardController implements Initializable {
 
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
-
-
     }
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
@@ -113,14 +116,24 @@ public class DashboardController implements Initializable {
         stage.setTitle("Opret Sæsson");
         stage.setScene(scene);
         stage.show();
+
+
+
     }
     @FXML
     protected void handleAddSeason(ActionEvent Event) throws IOException {
-        System.out.println(" før" + choiceBoxShow.getItems().toString());
-        CreditSystemController.addSeason(seasonDescription.getText(), choiceBoxShow.getSelectionModel().getSelectedItem().toString());
-        System.out.println(choiceBoxShow.getSelectionModel().getSelectedItem().toString());
+        CreditSystemController.addSeason(seasonDescription.getText(), this.showName);
+        System.out.println("handling: " + this.showName);
+
 
     }
+
+    public void handleSetShows(ActionEvent actionEvent) {
+        this.showName = choiceBoxShow.getValue().toString();
+        System.out.println("setshow: " + this.showName);
+    }
+
+
     @FXML
     protected void handleAddPersonEpisode(ActionEvent Event) throws IOException {
 
@@ -131,15 +144,25 @@ public class DashboardController implements Initializable {
     }
 
     public void handleGetShows(MouseEvent mouseEvent) {
+        choiceBoxShow.getItems().clear();
         for (Show e: CreditSystemController.getShowList()){
             choiceBoxShow.getItems().add(e.getName());
-            if (e.getSeasons() != null) {
-            for (Season s: e.getSeasons()) {
-                choiceBoxSeason.getItems().add(s.getSeasonName());
-            }
+        }
+    }
+
+    public void handleGetSeason(MouseEvent Event) {
+        for (Show e : CreditSystemController.getShowList()) {
+            if (e.getName() == showName) {
+                System.out.println("" + e.getSeasons().toString());
+                if (e.getSeasons() != null) {
+                    for (Season s : e.getSeasons()) {
+                        choiceBoxSeason.getItems().add(s.getSeasonName());
+                    }
+                }
             }
         }
     }
+
 
 
 
@@ -236,4 +259,6 @@ public class DashboardController implements Initializable {
             }
         }
     }
+
+
 }

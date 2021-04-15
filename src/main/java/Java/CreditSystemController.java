@@ -94,7 +94,7 @@ public class CreditSystemController extends Application {
                 1,
                 null,
                 1,
-                null);
+                new ArrayList<>());
         showList.add(show);
         System.out.println(show.getName());
     }
@@ -105,10 +105,12 @@ public class CreditSystemController extends Application {
                 i,
                 description,
                 null,
-                " " + i);  // Sæsson id!!
+                "hej " + i);  // Sæsson id!!
         for (Show s: showList) {
+            System.out.println(s.getName());
             if (s.getName() == show) {
                 s.getSeasons().add(season);
+                System.out.println("tilføjet til liste");
             }
         }
     }
