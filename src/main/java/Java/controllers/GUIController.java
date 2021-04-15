@@ -20,18 +20,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GUIController implements Initializable {
-    @FXML
-    protected TextField personName;
-    @FXML
-    protected TextField personEmail;
-    @FXML
-    protected TextField personPhone;
-    @FXML
-    protected TextField movieTitle;
-    @FXML
-    protected TextField movieDescription;
-    @FXML
-    protected TextField movieLength;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -43,32 +32,10 @@ public class GUIController implements Initializable {
         CreditSystemController.setRoot("Dashboard");
     }
 
-    @FXML
-    protected void handleSendPersonButton(ActionEvent Event) throws IOException{
-        CreditSystemController.addPerson(
-                personName.getText(),
-                null,
-                personPhone.getText(),
-                personEmail.getText());
-    }
-    @FXML
-    protected void handleSendMovieButton(ActionEvent Event) throws IOException{
-        CreditSystemController.addMovie(
-                movieTitle.getText(),
-                movieDescription.getText(),
-                Integer.parseInt(movieLength.getText()));
-    }
 
 
-    @FXML
-    protected void handleAddCreditButton(ActionEvent Event) throws IOException {
-        // Opens new window for adding person
-        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
-        Stage stage = new Stage();
-        stage.setTitle("Tilføj person");
-        stage.setScene(scene);
-        stage.show();
-    }
+
+
 
     //Credit Person
     @FXML

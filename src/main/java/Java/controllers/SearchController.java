@@ -7,11 +7,9 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 
-import javax.security.auth.callback.Callback;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -53,7 +51,7 @@ public class SearchController implements Initializable {
     private ArrayList<Credit> search(String search){
         String searchStringChecked = search.toLowerCase();
         ArrayList<Credit> creditList = new ArrayList<>();
-        for(Credit person : CreditSystemController.getCreditList()) {
+        for(Credit person : CreditSystemController.getPersonList()) {
             if (person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
                 creditList.add(person);
             }
