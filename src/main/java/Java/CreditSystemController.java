@@ -129,4 +129,8 @@ public class CreditSystemController extends Application {
     public static void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
         CreditSystemController.searchFieldPlaceholder = searchFieldPlaceholder;
     }
+
+    public static ArrayList<Credit> getShowList() {
+        return showList;
+    }
 }

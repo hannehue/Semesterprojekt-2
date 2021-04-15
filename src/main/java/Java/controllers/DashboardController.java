@@ -43,9 +43,12 @@ public class DashboardController implements Initializable {
     protected TextField showTitle;
     @FXML
     protected TextArea showDescription;
+    @FXML
+    protected ChoiceBox choiceBoxShow;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
     }
 
     @FXML
@@ -108,8 +111,12 @@ public class DashboardController implements Initializable {
     }
     @FXML
     protected void handleCreateEpisode(ActionEvent Event) throws IOException {
+    }
 
-
+    public void handleGetShows(MouseEvent mouseEvent) {
+        for (Credit e: CreditSystemController.getShowList()){
+            choiceBoxShow.getItems().add(e.getName());
+        }
     }
 
 
