@@ -12,6 +12,21 @@ public class Job {
         this.characterNames = characterNames;
     }
 
+    @Override
+    public String toString(){
+        String allRoles = "Roles: ";
+        for (Role role : roles){
+            allRoles += role.toString() + ", ";
+        }
+        allRoles.substring(0, allRoles.length() - 3);
+        allRoles += " Played: ";
+        for (String str : characterNames) {
+            allRoles += str + ", ";
+        }
+        allRoles.substring(0, allRoles.length() - 3);
+        return program.toString() + ": " + allRoles;
+    }
+
     public Role[] getRoles() {
         return roles;
     }
