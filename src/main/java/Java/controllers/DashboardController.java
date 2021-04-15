@@ -44,18 +44,24 @@ public class DashboardController implements Initializable {
     @FXML
     protected TextField showTitle;
     @FXML
-    protected TextArea showDescription;
+    protected TextField episodeTitle;
     @FXML
-    protected ChoiceBox choiceBoxShow;
+    protected TextField episodeLength;
+    @FXML
+    protected TextField episodeId;
+    @FXML
+    protected TextArea showDescription;
     @FXML
     protected TextArea seasonDescription;
     @FXML
-    protected ChoiceBox choiceBoxSeason;
+    protected ChoiceBox choiceBoxShow;
     @FXML
-    protected TextField showTitleSE;
+    protected ChoiceBox choiceBoxSeason;
+
+
+
     protected static String showName;
-    protected String seasonName;
-    protected String episodeName;
+    protected static String seasonName;
 
 
     @Override
@@ -87,6 +93,8 @@ public class DashboardController implements Initializable {
                 personPhone.getText(),
                 personEmail.getText());
     }
+
+    // Programmer
     @FXML
     protected void handleCreateShow(ActionEvent Event) throws IOException {
         // Opens new window for adding person
@@ -103,65 +111,70 @@ public class DashboardController implements Initializable {
                 showDescription.getText()
         );
     }
-
-
-
     @FXML
-    protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
+    public void handleSetShows(ActionEvent actionEvent) {
+        showName = choiceBoxShow.getValue().toString();
+        System.out.println("setshow: " + showName);
     }
+
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
         Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("CreateSeason.fxml")));
         Stage stage = new Stage();
-        stage.setTitle("Opret Sæsson");
+        stage.setTitle("Opret Sæsson til " + showName);
         stage.setScene(scene);
         stage.show();
-
-
-
     }
     @FXML
     protected void handleAddSeason(ActionEvent Event) throws IOException {
-        System.out.println("trying to add season with showname " + this.showName);
-        CreditSystemController.addSeason(seasonDescription.getText(), this.showName);
-        System.out.println("handling: " + this.showName);
-
-
+        System.out.println("trying to add season with showname: " + showName);
+        CreditSystemController.addSeason(seasonDescription.getText(), showName);
     }
-
-    public void handleSetShows(ActionEvent actionEvent) {
-        this.showName = choiceBoxShow.getValue().toString();
-        System.out.println("setshow: " + this.showName);
+    @FXML
+    public void handleSetSeason(ActionEvent actionEvent) {
+        seasonName = choiceBoxSeason.getValue().toString();
+        System.out.println("setSeason: " + seasonName);
     }
 
 
     @FXML
     protected void handleAddPersonEpisode(ActionEvent Event) throws IOException {
 
-
     }
     @FXML
-    protected void handleCreateEpisode(ActionEvent Event) throws IOException {
+    protected void handleGetEpisodeName(ActionEvent Event) throws IOException {
+        reloadNextEpisode();
     }
+
+
 
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
+        choiceBoxSeason.getItems().clear();
         for (Show e: CreditSystemController.getShowList()){
             choiceBoxShow.getItems().add(e.getName());
         }
     }
 
     public void handleGetSeason(MouseEvent Event) {
-        for (Show e : CreditSystemController.getShowList()) {
-            if (e.getName() == showName) {
-                System.out.println("" + e.getSeasons().toString());
-                if (e.getSeasons() != null) {
-                    for (Season s : e.getSeasons()) {
-                        choiceBoxSeason.getItems().add(s.getSeasonName());
+        choiceBoxSeason.getItems().clear();
+        if (showName != null) {
+            for (Show e : CreditSystemController.getShowList()) {
+                if (e.getName() == showName) {
+                    if (e.getSeasons() != null) {
+                        for (Season s : e.getSeasons()) {
+                            choiceBoxSeason.getItems().add(s.getSeasonName());
+                        }
                     }
                 }
             }
         }
+    }
+    @FXML
+    protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
+        System.out.println("trying to add episode to" + showName + " . " + seasonName);
+        CreditSystemController.addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName );
+        reloadNextEpisode();
     }
 
 
@@ -204,6 +217,11 @@ public class DashboardController implements Initializable {
         reloadMovie();
         System.out.println("efter" + Event);
         return null;
+    }
+
+    private void reloadNextEpisode() {
+        episodeId.setText(CreditSystemController.getNextEpisode(showName, seasonName));
+
     }
 
     private void reloadPerson() {
