@@ -2,6 +2,8 @@ package Java.controllers;
 
 import Java.Credit;
 import Java.CreditSystemController;
+import Java.Season;
+import Java.Show;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -43,9 +45,17 @@ public class DashboardController implements Initializable {
     protected TextField showTitle;
     @FXML
     protected TextArea showDescription;
+    @FXML
+    protected ChoiceBox choiceBoxShow;
+    @FXML
+    protected TextArea seasonDescription;
+    @FXML
+    protected ChoiceBox choiceBoxSeason;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
     }
 
     @FXML
@@ -98,7 +108,17 @@ public class DashboardController implements Initializable {
     }
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
-
+        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("CreateSeason.fxml")));
+        Stage stage = new Stage();
+        stage.setTitle("Opret Sæsson");
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    protected void handleAddSeason(ActionEvent Event) throws IOException {
+        System.out.println(" før" + choiceBoxShow.getItems().toString());
+        CreditSystemController.addSeason(seasonDescription.getText(), choiceBoxShow.getSelectionModel().getSelectedItem().toString());
+        System.out.println(choiceBoxShow.getSelectionModel().getSelectedItem().toString());
 
     }
     @FXML
@@ -108,8 +128,17 @@ public class DashboardController implements Initializable {
     }
     @FXML
     protected void handleCreateEpisode(ActionEvent Event) throws IOException {
+    }
 
-
+    public void handleGetShows(MouseEvent mouseEvent) {
+        for (Show e: CreditSystemController.getShowList()){
+            choiceBoxShow.getItems().add(e.getName());
+            if (e.getSeasons() != null) {
+            for (Season s: e.getSeasons()) {
+                choiceBoxSeason.getItems().add(s.getSeasonName());
+            }
+            }
+        }
     }
 
 

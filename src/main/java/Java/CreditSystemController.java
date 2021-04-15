@@ -17,7 +17,7 @@ public class CreditSystemController extends Application {
     private DatabaseLoader dataLoader;
     private static ArrayList<Credit> personList = new ArrayList<>(); // omdøbes til personList
     private static ArrayList<Credit> movieList= new ArrayList<>();
-    private static ArrayList<Credit> showList = new ArrayList<>();
+    private static ArrayList<Show> showList = new ArrayList<>();
     private static Stage primaryStage;
     private static UserType userType;
     private static String searchFieldPlaceholder = "";
@@ -100,6 +100,20 @@ public class CreditSystemController extends Application {
         System.out.println(show.getName());
     }
 
+    public static void addSeason(String description, String show) {
+        int i = nextId();
+        Season season = new Season(
+                i,
+                description,
+                null,
+                " " + i);  // Sæsson id!!
+        for (Show s: showList) {
+            if (s.getName() == show) {
+                s.getSeasons().add(season);
+            }
+        }
+    }
+
 
 
     public static ArrayList<Credit> getPersonList() {
@@ -128,5 +142,9 @@ public class CreditSystemController extends Application {
 
     public static void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
         CreditSystemController.searchFieldPlaceholder = searchFieldPlaceholder;
+    }
+
+    public static ArrayList<Show> getShowList() {
+        return showList;
     }
 }
