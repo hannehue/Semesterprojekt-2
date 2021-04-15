@@ -15,8 +15,9 @@ public class CreditSystemController extends Application {
     private static Scene scene;
     private static int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
-    private static ArrayList<Credit> creditList = new ArrayList<>(); // omdøbes til movieList
+    private static ArrayList<Credit> personList = new ArrayList<>(); // omdøbes til personList
     private static ArrayList<Credit> movieList= new ArrayList<>();
+    private static ArrayList<Credit> showList = new ArrayList<>();
     private static Stage primaryStage;
     private static UserType userType;
     private static String searchFieldPlaceholder = "";
@@ -29,9 +30,9 @@ public class CreditSystemController extends Application {
         primaryStage.show();
         this.primaryStage = primaryStage;
 
-        creditList.add(new Person("Peter Petesdafasdf", null, 12342, true, "this is the desc", 2342,"31330913",null, null));
-        creditList.add(new Person("New pers", null, 123, true, "this is the desc", 2342,"31330913",null, null));
-        creditList.add(new Person("New pers 1", null, 123, true, "this is the desc", 2342,"31330913",null, null));
+        personList.add(new Person("Peter Petesdafasdf", null, 12342, true, "this is the desc", 2342,"31330913",null, null));
+        personList.add(new Person("New pers", null, 123, true, "this is the desc", 2342,"31330913",null, null));
+        personList.add(new Person("New pers 1", null, 123, true, "this is the desc", 2342,"31330913",null, null));
 
     }
 
@@ -63,7 +64,7 @@ public class CreditSystemController extends Application {
                 phoneNumber,
                 null,
                 email);
-        creditList.add(person);
+        personList.add(person);
         System.out.println(person.getName());
     }
 
@@ -83,8 +84,26 @@ public class CreditSystemController extends Application {
         System.out.println(movie.getName());
     }
 
-    public static ArrayList<Credit> getCreditList() {
-        return creditList;
+    public static void addShow(String title, String description) {
+        Show show = new Show(
+                title,
+                null,
+                nextId(),
+                false,
+                description,
+                1,
+                1,
+                null,
+                1,
+                null);
+        showList.add(show);
+        System.out.println(show.getName());
+    }
+
+
+
+    public static ArrayList<Credit> getPersonList() {
+        return personList;
     }
 
     public static ArrayList<Credit> getMovieList() {

@@ -2,16 +2,17 @@ package Java.controllers;
 
 import Java.Credit;
 import Java.CreditSystemController;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,11 +27,91 @@ public class DashboardController implements Initializable {
     protected AnchorPane personToApprove;
     @FXML
     protected AnchorPane movieToApprove;
+    @FXML
+    protected TextField personName;
+    @FXML
+    protected TextField personEmail;
+    @FXML
+    protected TextField personPhone;
+    @FXML
+    protected TextField movieTitle;
+    @FXML
+    protected TextField movieDescription;
+    @FXML
+    protected TextField movieLength;
+    @FXML
+    protected TextField showTitle;
+    @FXML
+    protected TextArea showDescription;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    }
+
+    @FXML
+    protected void handleAddCreditButton(ActionEvent Event) throws IOException {
+        // Opens new window for adding person
+        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
+        Stage stage = new Stage();
+        stage.setTitle("Tilføj person");
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    protected void handleSendMovieButton(ActionEvent Event) throws IOException{
+        CreditSystemController.addMovie(
+                movieTitle.getText(),
+                movieDescription.getText(),
+                Integer.parseInt(movieLength.getText()));
+    }
+    @FXML
+    protected void handleSendPersonButton(ActionEvent Event) throws IOException{
+        CreditSystemController.addPerson(
+                personName.getText(),
+                null,
+                personPhone.getText(),
+                personEmail.getText());
+    }
+    @FXML
+    protected void handleCreateShow(ActionEvent Event) throws IOException {
+        // Opens new window for adding person
+        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("CreateShow.fxml")));
+        Stage stage = new Stage();
+        stage.setTitle("Opret Serie");
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    protected void handleAddShow(ActionEvent Event) throws IOException {
+        CreditSystemController.addShow(
+                showTitle.getText(),
+                showDescription.getText()
+        );
+    }
+
+
+
+    @FXML
+    protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
+
 
     }
+    @FXML
+    protected void handleCreateSeason(ActionEvent Event) throws IOException {
+
+
+    }
+    @FXML
+    protected void handleAddPersonEpisode(ActionEvent Event) throws IOException {
+
+
+    }
+    @FXML
+    protected void handleCreateEpisode(ActionEvent Event) throws IOException {
+
+
+    }
+
 
 
 
@@ -50,7 +131,7 @@ public class DashboardController implements Initializable {
 
     protected EventHandler<ActionEvent> handleApprovePerson(int Event) {
         System.out.println("før");
-        for (Credit personCredit: CreditSystemController.getCreditList()) {
+        for (Credit personCredit: CreditSystemController.getPersonList()) {
             if (personCredit.getCreditID() == Event) {
                 personCredit.setApproved(true);
             }
@@ -76,7 +157,7 @@ public class DashboardController implements Initializable {
         personToApprove.getChildren().clear();
 
         int offset = 20;
-        for (Credit personCredit: CreditSystemController.getCreditList()) {
+        for (Credit personCredit: CreditSystemController.getPersonList()) {
             if (!personCredit.isApproved()) {
                 Pane personPane = new Pane();
                 personToApprove.getChildren().add(personPane);
