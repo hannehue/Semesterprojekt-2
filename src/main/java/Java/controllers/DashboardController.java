@@ -20,12 +20,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/*
-------------------------------------------------------------------------------------------------------------------
+/* ------------------------------------------------------------------------------------------------------------------
 Denne Controller alt funktionalitet på de forskellige sider
-------------------------------------------------------------------------------------------------------------------
-*/
-
+------------------------------------------------------------------------------------------------------------------ */
 
 public class DashboardController implements Initializable {
     @FXML
@@ -56,8 +53,9 @@ public class DashboardController implements Initializable {
     protected ChoiceBox choiceBoxSeason;
     @FXML
     protected TextField showTitleSE;
-
-    private static String showName;
+    protected static String showName;
+    protected String seasonName;
+    protected String episodeName;
 
 
     @Override
@@ -74,7 +72,7 @@ public class DashboardController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    /*@FXML
+    @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
         CreditSystemController.addMovie(
                 movieTitle.getText(),
@@ -104,7 +102,7 @@ public class DashboardController implements Initializable {
                 showTitle.getText(),
                 showDescription.getText()
         );
-    }*/
+    }
 
 
 
@@ -118,13 +116,18 @@ public class DashboardController implements Initializable {
         stage.setTitle("Opret Sæsson");
         stage.setScene(scene);
         stage.show();
-        showTitleSE.setText(showName);
+
+
+
     }
-    /*@FXML
+    @FXML
     protected void handleAddSeason(ActionEvent Event) throws IOException {
-        CreditSystemController.addSeason(seasonDescription.getText(), showTitleSE.getText());
+        System.out.println("trying to add season with showname " + this.showName);
+        CreditSystemController.addSeason(seasonDescription.getText(), this.showName);
         System.out.println("handling: " + this.showName);
-    }*/
+
+
+    }
 
     public void handleSetShows(ActionEvent actionEvent) {
         this.showName = choiceBoxShow.getValue().toString();
@@ -141,7 +144,7 @@ public class DashboardController implements Initializable {
     protected void handleCreateEpisode(ActionEvent Event) throws IOException {
     }
 
-    /*public void handleGetShows(MouseEvent mouseEvent) {
+    public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         for (Show e: CreditSystemController.getShowList()){
             choiceBoxShow.getItems().add(e.getName());
@@ -149,31 +152,27 @@ public class DashboardController implements Initializable {
     }
 
     public void handleGetSeason(MouseEvent Event) {
-        choiceBoxSeason.getItems().clear();
         for (Show e : CreditSystemController.getShowList()) {
-            if (e.getName().equals(showName)) {
+            if (e.getName() == showName) {
                 System.out.println("" + e.getSeasons().toString());
-                if (!e.getSeasons().isEmpty()) {
+                if (e.getSeasons() != null) {
                     for (Season s : e.getSeasons()) {
                         choiceBoxSeason.getItems().add(s.getSeasonName());
                     }
                 }
             }
         }
-    }*/
+    }
 
 
 
 
 
 
-/*
-------------------------------------------------------------------------------------------------------------------
+
+    /* ------------------------------------------------------------------------------------------------------------------
         Metoder
-------------------------------------------------------------------------------------------------------------------
-*/
-/*
-
+    ------------------------------------------------------------------------------------------------------------------ */
     @FXML
     public void handleReloadPerson(MouseEvent mouseEvent) {
         reloadPerson();
@@ -261,7 +260,6 @@ public class DashboardController implements Initializable {
             }
         }
     }
-*/
 
 
 }
