@@ -1,3 +1,4 @@
+/*
 package Java.controllers;
 
 import Java.Credit;
@@ -59,3 +60,4 @@ public class SearchController implements Initializable {
         return creditList;
     }
 }
+*/

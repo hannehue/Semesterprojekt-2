@@ -24,13 +24,15 @@ public class CreditSystemController extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        scene = new Scene(loadFXML("Dashboard"), 1024,768);
+        scene = new Scene(loadFXML("Menu2"), 1024,768);
         primaryStage.setTitle("TV2-Krediteringer");
         primaryStage.setScene(scene);
+        primaryStage.minWidthProperty().set(300);
+        primaryStage.minHeightProperty().set(130);
         primaryStage.show();
         this.primaryStage = primaryStage;
 
-        personList.add(new Person("Peter Petesdafasdf", null, 12342, true,
+        /*personList.add(new Person("Peter Petesdafasdf", null, 12342, true,
                 "this is the desc", 2342,"31330913", "this is persinfo", null));
         personList.add(new Person("New pers", null, 123, true, "this is the desc",
                 2342,"31330913","this is the persinfo", null));
@@ -47,7 +49,7 @@ public class CreditSystemController extends Application {
             )
         );
         Person thisa = (Person) personList.get(0);
-        thisa.setJobs(jobs);
+        thisa.setJobs(jobs);*/
     }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
@@ -61,7 +63,7 @@ public class CreditSystemController extends Application {
         return fxmlLoader.load();
     }
 
-    public static int nextId() {
+    /*public static int nextId() {
         int temp = idTracker;
         idTracker++;
         return temp;
@@ -123,7 +125,7 @@ public class CreditSystemController extends Application {
                 "hej " + i);  // Sæsson id!!
         for (Show s: showList) {
             System.out.println(s.getName());
-            if (s.getName() == show) {
+            if (s.getName().equals(show)) {
                 s.getSeasons().add(season);
                 System.out.println("tilføjet til liste");
             }
@@ -162,5 +164,5 @@ public class CreditSystemController extends Application {
 
     public static ArrayList<Show> getShowList() {
         return showList;
-    }
+    }*/
 }

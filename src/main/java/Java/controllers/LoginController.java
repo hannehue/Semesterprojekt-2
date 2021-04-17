@@ -1,3 +1,4 @@
+/*
 package Java.controllers;
 
 import Java.CreditSystemController;
@@ -14,9 +15,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+*/
 /* ------------------------------------------------------------------------------------------------------------------
 Denne Controller bruges til at logge ind på en konto
------------------------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------ *//*
+
 
 public class LoginController implements Initializable {
 
@@ -60,3 +63,4 @@ public class LoginController implements Initializable {
     }
 
 }
+*/

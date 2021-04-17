@@ -1,3 +1,4 @@
+/*
 package Java.controllers;
 
 import Java.Credit;
@@ -17,9 +18,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+*/
 /* ------------------------------------------------------------------------------------------------------------------
 Denne Controller bruges til Menuen
------------------------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------ *//*
+
 
 public class MenuController implements Initializable {
     @FXML
@@ -113,3 +116,4 @@ public class MenuController implements Initializable {
         CreditSystemController.setRoot("PersonalProfile");
     }
 }
+*/

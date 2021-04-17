@@ -1,3 +1,4 @@
+/*
 package Java.controllers;
 
 import Java.Credit;
@@ -20,9 +21,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/* ------------------------------------------------------------------------------------------------------------------
+ ------------------------------------------------------------------------------------------------------------------
 Denne Controller alt funktionalitet på de forskellige sider
------------------------------------------------------------------------------------------------------------------- */
+------------------------------------------------------------------------------------------------------------------
+
 
 public class DashboardController implements Initializable {
     @FXML
@@ -53,9 +55,8 @@ public class DashboardController implements Initializable {
     protected ChoiceBox choiceBoxSeason;
     @FXML
     protected TextField showTitleSE;
-    protected String showName;
-    protected String seasonName;
-    protected String episodeName;
+
+    private static String showName;
 
 
     @Override
@@ -116,16 +117,12 @@ public class DashboardController implements Initializable {
         stage.setTitle("Opret Sæsson");
         stage.setScene(scene);
         stage.show();
-
-
-
+        showTitleSE.setText(showName);
     }
     @FXML
     protected void handleAddSeason(ActionEvent Event) throws IOException {
-        CreditSystemController.addSeason(seasonDescription.getText(), this.showName);
+        CreditSystemController.addSeason(seasonDescription.getText(), showTitleSE.getText());
         System.out.println("handling: " + this.showName);
-
-
     }
 
     public void handleSetShows(ActionEvent actionEvent) {
@@ -151,10 +148,11 @@ public class DashboardController implements Initializable {
     }
 
     public void handleGetSeason(MouseEvent Event) {
+        choiceBoxSeason.getItems().clear();
         for (Show e : CreditSystemController.getShowList()) {
-            if (e.getName() == showName) {
+            if (e.getName().equals(showName)) {
                 System.out.println("" + e.getSeasons().toString());
-                if (e.getSeasons() != null) {
+                if (!e.getSeasons().isEmpty()) {
                     for (Season s : e.getSeasons()) {
                         choiceBoxSeason.getItems().add(s.getSeasonName());
                     }
@@ -169,9 +167,10 @@ public class DashboardController implements Initializable {
 
 
 
-    /* ------------------------------------------------------------------------------------------------------------------
+ ------------------------------------------------------------------------------------------------------------------
         Metoder
-    ------------------------------------------------------------------------------------------------------------------ */
+    ------------------------------------------------------------------------------------------------------------------
+
     @FXML
     public void handleReloadPerson(MouseEvent mouseEvent) {
         reloadPerson();
@@ -262,3 +261,4 @@ public class DashboardController implements Initializable {
 
 
 }
+*/
