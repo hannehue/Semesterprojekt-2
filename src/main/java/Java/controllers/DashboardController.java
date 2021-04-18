@@ -4,6 +4,7 @@ import Java.Credit;
 import Java.CreditSystemController;
 import Java.Season;
 import Java.Show;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -113,8 +114,11 @@ public class DashboardController implements Initializable {
     }
     @FXML
     public void handleSetShows(ActionEvent actionEvent) {
-        showName = choiceBoxShow.getValue().toString();
-        System.out.println("setshow: " + showName);
+        if (! choiceBoxShow.getSelectionModel().isEmpty()){
+            showName = choiceBoxShow.getValue().toString();
+            System.out.println("setshow: " + showName);
+        }
+        choiceBoxShow.setValue(showName);
     }
 
     @FXML
@@ -132,8 +136,11 @@ public class DashboardController implements Initializable {
     }
     @FXML
     public void handleSetSeason(ActionEvent actionEvent) {
-        seasonName = choiceBoxSeason.getValue().toString();
-        System.out.println("setSeason: " + seasonName);
+         if (! choiceBoxSeason.getSelectionModel().isEmpty()){
+            seasonName = choiceBoxSeason.getValue().toString();
+            System.out.println("setSeason: " + seasonName);
+        }
+         choiceBoxSeason.setValue(seasonName);
     }
 
 
