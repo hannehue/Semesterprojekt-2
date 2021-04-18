@@ -104,13 +104,9 @@ public class CreditSystemController extends Application {
                 null,
                 nextId(),
                 false,
-                description,
-                1,
-                1,
-                null,
-                1,
                 new ArrayList<>(),
-                0);
+                description
+                );
         showList.add(show);
         System.out.println("Added show: " + show.getName());
     }
@@ -118,15 +114,17 @@ public class CreditSystemController extends Application {
     public static void addSeason(String description, String show) {
         for (Show s: showList) {
             if (s.getName() == show) {
-                s.addNumberOfSeason();
                 Season season = new Season(
-                        nextId(),
-                        description,
-                        new ArrayList<>(),
                         "S" + s.getNumberOfSeason(),
-                        0);
+                        show,
+                        null,
+                        nextId(),
+                        false,
+                        new ArrayList<>(),
+                        description
+                        );
                 s.getSeasons().add(season);
-                System.out.println("tilføjet " + season.getSeasonName() + " til show: " + s.getName());
+                System.out.println("tilføjet " + season.getName() + " til show: " + s.getName());
             }
         }
     }
@@ -135,16 +133,20 @@ public class CreditSystemController extends Application {
         for (Show s : showList) {
             if (s.getName() == show) {
                 for (Season seasonToGet : s.getSeasons()) {
-                    if (seasonToGet.getSeasonName() == season) {
-                        seasonToGet.addNumberOfEpisode();
+                    if (seasonToGet.getName() == season) {
                         Episode episode = new Episode(
-                                nextId(),
                                 title,
                                 null,
+                                seasonToGet.getCreditID(),
+                                nextId(),
+                                false,
+                                "description",
+                                nextId(),
                                 length,
-                                seasonToGet.getSeasonName() + "E" + seasonToGet.getNumberOfEpisode());
-                        seasonToGet.getEpisodes().add(episode);
-                        System.out.println("tilføjet " + episode.getEpisodeNameId());
+                                null
+                        );
+                        seasonToGet.addEpisode(episode);
+                        System.out.println("tilføjet " + episode.getName());
                     }
                 }
             }
@@ -156,7 +158,7 @@ public class CreditSystemController extends Application {
         for (Show s: showList) {
             if (s.getName() == show) {
                 for (Season se: s.getSeasons()) {
-                    if (se.getSeasonName() == season) {
+                    if (se.getName() == season) {
                         if (se.getNumberOfEpisode() == 0) {
                             temp = season + "E1";
                         } else {
