@@ -2,8 +2,7 @@ package Java;
 
 import java.util.ArrayList;
 
-public class
-Season {
+public class Season {
 
     private int seasonID;
     private String description;
