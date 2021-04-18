@@ -22,5 +22,8 @@ public class Season extends Credit {
         episodes.add(episode);
     }
 
+    public ArrayList<Episode> getEpisodes() {
+        return episodes;
+    }
 }
 

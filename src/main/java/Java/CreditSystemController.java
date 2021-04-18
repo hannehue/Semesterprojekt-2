@@ -140,7 +140,7 @@ public class CreditSystemController extends Application {
                 for (Season seasonToGet : s.getSeasons()) {
                     if (seasonToGet.getName() == season) {
                         Episode episode = new Episode(
-                                title,
+                                getNextEpisode(show, season) + " - " + title,
                                 null,
                                 seasonToGet.getCreditID(),
                                 nextId(),
