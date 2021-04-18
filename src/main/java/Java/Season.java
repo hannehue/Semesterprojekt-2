@@ -1,64 +1,26 @@
 package Java;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class
-Season {
+public class Season extends Credit {
 
-    private int seasonID;
-    private String description;
     private ArrayList<Episode> episodes;
-    private String seasonName;
-    private int numberOfEpisode;
+    private String showID; //the show in which the season is located
 
-    public Season(int seasonID, String description, ArrayList<Episode> episodes, String seasonName, int numberOfEpisode){
-        this.seasonID = seasonID;
-        this.description = description;
+    public Season(String seasonName,  String showID, Date dateadded, int seasonID, boolean approved, ArrayList<Episode> episodes, String description){
+        super(seasonName, dateadded, seasonID, approved, description);
         this.episodes = episodes;
-        this.seasonName = seasonName;
-        this.numberOfEpisode = numberOfEpisode;
-
-
-    }
-
-    public int getSeasonID() {
-        return seasonID;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public ArrayList<Episode> getEpisodes() {
-        return episodes;
-    }
-
-    public String getSeasonName() {
-        return seasonName;
-    }
-
-    public void addNumberOfEpisode() {
-        this.numberOfEpisode++;
+        this.showID = showID;
     }
 
     public int getNumberOfEpisode() {
-        return numberOfEpisode;
+        return episodes.size();
     }
 
-    public void setSeasonID(int seasonID) {
-        this.seasonID = seasonID;
+    public void addEpisode(Episode episode){
+        episodes.add(episode);
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setEpisodes(ArrayList<Episode> episodes) {
-        this.episodes = episodes;
-    }
-
-    public void setSeasonName(String seasonName) {
-        this.seasonName = seasonName;
-    }
 }
 
