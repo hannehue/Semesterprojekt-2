@@ -117,19 +117,59 @@ public class CreditSystemController extends Application {
     }
 
     public static void addSeason(String description, String show) {
-        int i = nextId();
-        Season season = new Season(
-                i,
-                description,
-                null,
-                "hej " + i);  // Sæsson id!!
         for (Show s: showList) {
-            System.out.println(s.getName());
-            if (s.getName().equals(show)) {
+            if (s.getName() == show) {
+                Season season = new Season(
+                        "S" + s.getNumberOfSeason() + 1,
+                        s.getCreditID(),
+                        null,
+                        nextId(),
+                        false,
+                        new ArrayList<>(),
+                        description
+                        );
                 s.getSeasons().add(season);
-                System.out.println("tilføjet til liste");
+                System.out.println("tilføjet " + season.getName() + " til show: " + s.getName());
             }
         }
+    }
+
+    public static void addEpisode(String title, int length, String show, String season) {
+        for (Show s : showList) {
+            if (s.getName() == show) {
+                for (Season seasonToGet : s.getSeasons()) {
+                    if (seasonToGet.getName() == season) {
+                        Episode episode = new Episode(
+                                title,
+                                null,
+                                seasonToGet.getCreditID(),
+                                nextId(),
+                                false,
+                                "description",
+                                nextId(),
+                                length,
+                                null
+                        );
+                        seasonToGet.addEpisode(episode);
+                        System.out.println("tilføjet " + episode.getName());
+                    }
+                }
+            }
+        }
+    }
+
+    public static String getNextEpisode(String show, String season) {
+        String episodeString = "";
+        for (Show s: showList) {
+            if (s.getName() == show) {
+                for (Season se: s.getSeasons()) {
+                    if (se.getName() == season) {
+                        episodeString = season + "E" + (se.getNumberOfEpisode() + 1);
+                    }
+                }
+            }
+        }
+        return episodeString;
     }
 
 

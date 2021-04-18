@@ -112,14 +112,6 @@ public class DashboardController implements Initializable {
                 showDescription.getText()
         );
     }
-    @FXML
-    public void handleSetShows(ActionEvent actionEvent) {
-        if (! choiceBoxShow.getSelectionModel().isEmpty()){
-            showName = choiceBoxShow.getValue().toString();
-            System.out.println("setshow: " + showName);
-        }
-        choiceBoxShow.setValue(showName);
-    }
 
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
@@ -136,10 +128,11 @@ public class DashboardController implements Initializable {
     }
     @FXML
     public void handleSetSeason(ActionEvent actionEvent) {
-        System.out.println(actionEvent.getEventType());
-        System.out.println("called handle setseason");
-        seasonName = choiceBoxSeason.getValue().toString();
-        System.out.println("setSeason: " + seasonName);
+         if (! choiceBoxSeason.getSelectionModel().isEmpty()){
+            seasonName = choiceBoxSeason.getValue().toString();
+            System.out.println("setSeason: " + seasonName);
+         }
+         choiceBoxSeason.setValue(seasonName);
     }
 
 
@@ -153,13 +146,30 @@ public class DashboardController implements Initializable {
     }
 
 
+    @FXML
+    public void handleSetShows(ActionEvent actionEvent) {
+        if (!choiceBoxShow.getSelectionModel().isEmpty()){
+            showName = choiceBoxShow.getValue().toString();
+        }
+        choiceBoxShow.setValue(showName);
+    }
 
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         choiceBoxSeason.getItems().clear();
-        for (Show e: CreditSystemController.getShowList()){
-            choiceBoxShow.getItems().add(e.getName());
+        for (Show show: CreditSystemController.getShowList()){
+            choiceBoxShow.getItems().add(show.getName());
         }
+        choiceBoxShow.show();
+    }
+
+    @FXML
+    public void handleSetSeason(ActionEvent actionEvent) {
+        if (! choiceBoxSeason.getSelectionModel().isEmpty()){
+            seasonName = choiceBoxSeason.getValue().toString();
+            System.out.println("setSeason: " + seasonName);
+        }
+        choiceBoxSeason.setValue(seasonName);
     }
 
     public void handleGetSeason(MouseEvent Event) {
@@ -175,6 +185,8 @@ public class DashboardController implements Initializable {
                 }
             }
         }
+        System.out.println("Showing choicebox wiht conttens " + choiceBoxSeason.getItems());
+        choiceBoxSeason.show();
     }
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
