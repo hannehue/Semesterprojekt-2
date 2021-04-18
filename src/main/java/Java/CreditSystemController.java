@@ -115,7 +115,7 @@ public class CreditSystemController extends Application {
         for (Show s: showList) {
             if (s.getName() == show) {
                 Season season = new Season(
-                        "S" + s.getNumberOfSeason(),
+                        "S" + s.getNumberOfSeason() + 1,
                         s.getCreditID(),
                         null,
                         nextId(),
@@ -154,21 +154,17 @@ public class CreditSystemController extends Application {
     }
 
     public static String getNextEpisode(String show, String season) {
-        String temp = "WTF";
+        String episodeString = "";
         for (Show s: showList) {
             if (s.getName() == show) {
                 for (Season se: s.getSeasons()) {
                     if (se.getName() == season) {
-                        if (se.getNumberOfEpisode() == 0) {
-                            temp = season + "E1";
-                        } else {
-                            temp = season + "E" + (se.getNumberOfEpisode() + 1);
-                        }
+                        episodeString = season + "E" + (se.getNumberOfEpisode() + 1);
                     }
                 }
             }
         }
-        return temp;
+        return episodeString;
     }
 
 
