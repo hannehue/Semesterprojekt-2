@@ -1,4 +1,3 @@
-/*
 package Java.controllers;
 
 import Java.Credit;
@@ -21,9 +20,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
- ------------------------------------------------------------------------------------------------------------------
+/*
+------------------------------------------------------------------------------------------------------------------
 Denne Controller alt funktionalitet på de forskellige sider
 ------------------------------------------------------------------------------------------------------------------
+*/
 
 
 public class DashboardController implements Initializable {
@@ -73,7 +74,7 @@ public class DashboardController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    @FXML
+    /*@FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
         CreditSystemController.addMovie(
                 movieTitle.getText(),
@@ -103,7 +104,7 @@ public class DashboardController implements Initializable {
                 showTitle.getText(),
                 showDescription.getText()
         );
-    }
+    }*/
 
 
 
@@ -119,11 +120,11 @@ public class DashboardController implements Initializable {
         stage.show();
         showTitleSE.setText(showName);
     }
-    @FXML
+    /*@FXML
     protected void handleAddSeason(ActionEvent Event) throws IOException {
         CreditSystemController.addSeason(seasonDescription.getText(), showTitleSE.getText());
         System.out.println("handling: " + this.showName);
-    }
+    }*/
 
     public void handleSetShows(ActionEvent actionEvent) {
         this.showName = choiceBoxShow.getValue().toString();
@@ -140,7 +141,7 @@ public class DashboardController implements Initializable {
     protected void handleCreateEpisode(ActionEvent Event) throws IOException {
     }
 
-    public void handleGetShows(MouseEvent mouseEvent) {
+    /*public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         for (Show e: CreditSystemController.getShowList()){
             choiceBoxShow.getItems().add(e.getName());
@@ -159,17 +160,19 @@ public class DashboardController implements Initializable {
                 }
             }
         }
-    }
+    }*/
 
 
 
 
 
 
-
- ------------------------------------------------------------------------------------------------------------------
+/*
+------------------------------------------------------------------------------------------------------------------
         Metoder
-    ------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+*/
+/*
 
     @FXML
     public void handleReloadPerson(MouseEvent mouseEvent) {
@@ -258,7 +261,7 @@ public class DashboardController implements Initializable {
             }
         }
     }
+*/
 
 
 }
-*/

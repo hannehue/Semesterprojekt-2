@@ -1,4 +1,3 @@
-/*
 package Java.controllers;
 
 import Java.Credit;
@@ -19,38 +18,28 @@ import java.util.ResourceBundle;
 
 public class SearchController implements Initializable {
     @FXML
-    protected ListView SearchList;
+    protected static ListView SearchList;
 
     private static String searchString;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    public static void setSearchContent(){
         ObservableList<Credit> observableResults = FXCollections.observableArrayList();
-        observableResults.addAll(search(searchString));
-
-        SearchList.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Credit item = (Credit) SearchList.getSelectionModel().getSelectedItem();
-                System.out.println("clicked" + item);
-                CreditViewController.setCurrentCredit(item);
-                try {
-                    CreditSystemController.setRoot("CreditView");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
+        observableResults.addAll(search("p"));
         SearchList.setItems(observableResults);
     }
+
 
     public static void setSearchString(String searchFieldString) {
         searchString = searchFieldString;
     }
 
-    private ArrayList<Credit> search(String search){
-        String searchStringChecked = search.toLowerCase();
+    private static ArrayList<Credit> search(String getsearchString){
+        String searchStringChecked = getsearchString.toLowerCase();
         ArrayList<Credit> creditList = new ArrayList<>();
         for(Credit person : CreditSystemController.getPersonList()) {
             if (person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
@@ -59,5 +48,15 @@ public class SearchController implements Initializable {
         }
         return creditList;
     }
+
+    public void handleClickedItem(MouseEvent mouseEvent) {
+        Credit item = (Credit) SearchList.getSelectionModel().getSelectedItem();
+        System.out.println("clicked" + item);
+        CreditViewController.setCurrentCredit(item);
+        try {
+            CreditSystemController.setRoot("CreditView");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
-*/

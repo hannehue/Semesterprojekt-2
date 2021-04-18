@@ -32,7 +32,7 @@ public class CreditSystemController extends Application {
         primaryStage.show();
         this.primaryStage = primaryStage;
 
-        /*personList.add(new Person("Peter Petesdafasdf", null, 12342, true,
+        personList.add(new Person("Peter Petesdafasdf", null, 12342, true,
                 "this is the desc", 2342,"31330913", "this is persinfo", null));
         personList.add(new Person("New pers", null, 123, true, "this is the desc",
                 2342,"31330913","this is the persinfo", null));
@@ -49,7 +49,7 @@ public class CreditSystemController extends Application {
             )
         );
         Person thisa = (Person) personList.get(0);
-        thisa.setJobs(jobs);*/
+        thisa.setJobs(jobs);
     }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
@@ -63,7 +63,7 @@ public class CreditSystemController extends Application {
         return fxmlLoader.load();
     }
 
-    /*public static int nextId() {
+    public static int nextId() {
         int temp = idTracker;
         idTracker++;
         return temp;
@@ -164,5 +164,5 @@ public class CreditSystemController extends Application {
 
     public static ArrayList<Show> getShowList() {
         return showList;
-    }*/
+    }
 }
