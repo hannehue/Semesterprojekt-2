@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="default.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.Menu2Controller">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="default.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.Menu2Controller">
    <children>
       <AnchorPane prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #009ceb#009ceb;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -87,16 +87,6 @@
                </children>
             </VBox>
          </children>
-      </AnchorPane>
-      <AnchorPane fx:id="ContentPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="69.0">
-         <!--<fx:include source="Login.fxml" visible="false" />
-         <fx:include source="AddCredits.fxml" visible="false" />
-         <fx:include source="AddPersonToCredit.fxml" visible="false" />
-         <fx:include source="AddUsers.fxml" visible="false" />
-         <fx:include source="ApproveCredits.fxml" visible="false" />
-         <fx:include source="PersonalProfile.fxml" visible="false" />-->
-         <fx:include source="SearchResult.fxml" visible="false" fx:id="SearchResultInclude" />
-         <!--<fx:include source="Dashboard.fxml" visible="false" />-->
       </AnchorPane>
       <AnchorPane visible="false" fx:id="MenuLabels" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="70.0">
          <children>

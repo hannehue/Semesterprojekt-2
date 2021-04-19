@@ -5,9 +5,9 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.SearchController">
     <center>
-        <Pane prefHeight="713.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+        <Pane fx:id="searchPane" prefHeight="713.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
          <children>
-            <ListView onMouseClicked="#handleClickedItem" fx:id="SearchList" layoutX="282.0" layoutY="127.0" prefHeight="353.0" prefWidth="424.0" />
-         </children></Pane>
+         </children>
+        </Pane>
     </center>
 </BorderPane>

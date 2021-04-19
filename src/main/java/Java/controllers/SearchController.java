@@ -6,9 +6,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,26 +20,35 @@ import java.util.ResourceBundle;
 
 
 public class SearchController implements Initializable {
-    @FXML
-    protected static ListView SearchList;
+    private static ListView SearchList;
 
-    private static String searchString;
+    @FXML
+    protected Pane searchPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        SearchList = new ListView();
+        SearchList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                handleClickedItem(event);
+            }
+        });
+        SearchList.setId("SearchList");
+        SearchList.setLayoutX(282);
+        SearchList.setLayoutY(127);
+        SearchList.setPrefHeight(353);
+        SearchList.setPrefWidth(424);
+        searchPane.getChildren().add(SearchList);
     }
 
-    public static void setSearchContent(){
+    public static void setContent() {
         ObservableList<Credit> observableResults = FXCollections.observableArrayList();
-        observableResults.addAll(search("p"));
+        observableResults.addAll(search(Menu2Controller.getSearchString()));
+        System.out.println(observableResults);
         SearchList.setItems(observableResults);
     }
 
-
-    public static void setSearchString(String searchFieldString) {
-        searchString = searchFieldString;
-    }
 
     private static ArrayList<Credit> search(String getsearchString){
         String searchStringChecked = getsearchString.toLowerCase();
@@ -54,7 +66,7 @@ public class SearchController implements Initializable {
         System.out.println("clicked" + item);
         CreditViewController.setCurrentCredit(item);
         try {
-            CreditSystemController.setRoot("CreditView");
+            Menu2Controller.setContentPane("CreditView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
