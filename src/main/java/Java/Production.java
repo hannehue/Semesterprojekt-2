@@ -1,5 +1,6 @@
 package Java;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -10,7 +11,7 @@ public abstract class Production extends Credit {
     private int lengthInSecs;
     private Date releaseDate;
     private HashMap<String, Person> cast;
-    private HashMap<Role, Person[]> productionTeam;
+    private HashMap<Role, ArrayList<Person>> productionTeam;
 
     public Production(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID, int lengthInSecs, Date releaseDate){
        //Husk at implementér category.
@@ -54,12 +55,12 @@ public abstract class Production extends Credit {
         cast.get(charactherName);
     }
 
-    public Person[] getProductionTeamRole(Role role) {
-        return productionTeam.get(role);
+    public HashMap<Role, ArrayList<Person>> getProductionTeam() {
+        return productionTeam;
     }
 
-    public void setRolesInProduction(Role role, Person person[]) {
-        productionTeam.put(role, person);
+    public void setProductionTeam(HashMap<Role, ArrayList<Person>> productionTeam) {
+        this.productionTeam = productionTeam;
     }
 }
 
