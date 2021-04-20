@@ -18,6 +18,8 @@ public abstract class Production extends Credit {
         this.productionID = productionID;
         this.lengthInSecs = lengthInSecs;
         this.releaseDate = releaseDate;
+        cast = new HashMap<>();
+        productionTeam = new HashMap<>();
     }
 
     public int getProgramID() {
