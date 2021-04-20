@@ -41,6 +41,9 @@ public class AddCreditController implements Initializable {
     @FXML
     protected TextField episodeLength;
 
+    private static Stage createShow;
+    private static Stage createSeason;
+
     private static String showName;
     private static String seasonName;
 
@@ -103,19 +106,19 @@ public class AddCreditController implements Initializable {
     protected void handleCreateShow(ActionEvent Event) throws IOException {
         // Opens new window for adding person
         Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("CreateShow.fxml")));
-        Stage stage = new Stage();
-        stage.setTitle("Opret Serie");
-        stage.setScene(scene);
-        stage.show();
+        createShow = new Stage();
+        createShow.setTitle("Opret Serie");
+        createShow.setScene(scene);
+        createShow.show();
     }
 
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
         Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("CreateSeason.fxml")));
-        Stage stage = new Stage();
-        stage.setTitle("Opret Sæsson til " + showName);
-        stage.setScene(scene);
-        stage.show();
+        createSeason = new Stage();
+        createSeason.setTitle("Opret Sæsson til " + showName);
+        createSeason.setScene(scene);
+        createSeason.show();
     }
 
     @FXML
@@ -173,6 +176,13 @@ public class AddCreditController implements Initializable {
         stage.show();
     }
 
+    public static void disposeCreateShow() {
+        createShow.close();
+    }
+
+    public static void disposeCreateSeason() {
+        createSeason.close();
+    }
 
     private void reloadNextEpisode() {
         episodeId.setText(CreditSystemController.getNextEpisode(showName, seasonName));

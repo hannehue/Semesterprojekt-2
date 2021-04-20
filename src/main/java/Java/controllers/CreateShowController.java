@@ -26,7 +26,6 @@ public class CreateShowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     @FXML
@@ -35,5 +34,6 @@ public class CreateShowController implements Initializable {
                 showTitle.getText(),
                 showDescription.getText()
         );
+        AddCreditController.disposeCreateShow();
     }
 }
