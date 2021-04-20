@@ -14,7 +14,21 @@ public class Movie extends Production{
         //Add cast and productionTeam to constructor when person and role are implemented
 
         super(name, dateAdded, creditID, approved, description, programID, lengthInSecs, releaseDate);
-        //this.cast = cast;
-        //this.productionTeam = productionTeam;
+    }
+
+    public void setPersonInCast(String characterName, Person person) {
+        cast.put(characterName, person);
+    }
+
+    public void getPersonInCast(String charactherName){
+        cast.get(charactherName);
+    }
+
+    public Person[] getProductionTeamRole(Role role) {
+        return productionTeam.get(role);
+    }
+
+    public void setRolesInProduction(Role role, Person person[]) {
+        productionTeam.put(role, person);
     }
 }
