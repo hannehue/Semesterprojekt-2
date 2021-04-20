@@ -32,11 +32,6 @@ public class DashboardController implements Initializable {
     @FXML
     protected AnchorPane programToApprove;
 
-    protected static String showName;
-    protected static String seasonName;
-    protected HashMap<String, Person> castMovie;
-    protected HashMap<Role, ArrayList<Person>> productionTeamMovie;
-
     /* ------------------------------------------------------------------------------------------------------------------
         Metoder
     ------------------------------------------------------------------------------------------------------------------ */
