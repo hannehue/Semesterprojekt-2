@@ -2,6 +2,7 @@ package Java.controllers;
 
 import Java.CreditSystemController;
 import javafx.animation.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -133,4 +134,19 @@ public class MenuController implements Initializable {
         ContentPane.getChildren().add(root);
     }
 
+    //Menu knap til Personlig profil
+    public void handlePersonalProfile(MouseEvent mouseEvent) {
+        try {
+            setContentPane("PersonalProfile.fxml");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //Credit Person
+    @FXML
+    protected  void handleEditProfile(ActionEvent Event) throws IOException{
+        //Tilføj kode der henter brugerens informationer og sætter dem i textfields i stedet for labels
+        CreditSystemController.setRoot("CreditPersonProfile-edit");
+    }
 }
