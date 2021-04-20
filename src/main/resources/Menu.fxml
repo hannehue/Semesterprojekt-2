@@ -50,7 +50,7 @@
                               <Image url="@images/user.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="65.0" layoutY="10.0" text="Profil">
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Profil">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -64,7 +64,7 @@
                               <Image url="@images/check (1).png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="65.0" layoutY="10.0" text="Bekræft krediteringer">
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Bekræft krediteringer">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -78,7 +78,7 @@
                               <Image url="@images/add (1).png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="65.0" layoutY="10.0" text="Tilføj krediteringer">
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Tilføj krediteringer">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -92,7 +92,7 @@
                               <Image url="@images/add-user (1).png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="65.0" layoutY="10.0" text="Administration">
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Administration">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -106,7 +106,7 @@
                               <Image url="@images/exit.png" />
                            </image>
                         </ImageView>
-                        <Label layoutX="65.0" layoutY="10.0" text="Log ud">
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Log ud">
                            <font>
                               <Font size="30.0" />
                            </font>

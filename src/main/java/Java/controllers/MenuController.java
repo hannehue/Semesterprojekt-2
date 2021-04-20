@@ -120,6 +120,7 @@ public class MenuController implements Initializable {
 
     public void handleAddCredit(MouseEvent mouseEvent) throws IOException {
         setContentPane("AddCredits.fxml");
+        hideMenu();
     }
 
     public static String getSearchString() {
