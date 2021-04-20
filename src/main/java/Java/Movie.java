@@ -10,10 +10,10 @@ public class Movie extends Production{
     private HashMap<Role, Person[]> productionTeam;
 
     public Movie(String name, Date dateAdded, int creditID, boolean approved, String description, int programID,
-                 int lengthInSecs, Date releaseDate, int showID, ArrayList<Season> seasons){
+                 String category,int lengthInSecs, Date releaseDate, int showID, ArrayList<Season> seasons){
         //Add cast and productionTeam to constructor when person and role are implemented
 
-        super(name, dateAdded, creditID, approved, description, programID, lengthInSecs, releaseDate);
+        super(name, dateAdded, creditID, approved, description, programID,Category.getCategoriesFromString(category) , lengthInSecs, releaseDate);
         //this.cast = cast;
         //this.productionTeam = productionTeam;
     }

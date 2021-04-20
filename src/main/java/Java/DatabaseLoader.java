@@ -12,7 +12,7 @@ public class DatabaseLoader {
     private Scanner inputStream = null;
     private FileWriter outputStream = null;
 
-    private File personFile;
+    private File currentFile;
     private ArrayList<String[]> personArraylist;
 
     private File groupFile;
@@ -20,17 +20,23 @@ public class DatabaseLoader {
 
     private SimpleDateFormat formatter;
 
-    public DatabaseLoader() throws IOException, ParseException {
-        formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-        personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
-        inputStream = new Scanner(personFile);
+    public void setCurrentFile(String fileName) {
+        this.currentFile = new File(DatabaseLoader.class.getClassLoader().getResource(fileName).getFile());
+    }
 
-        personArraylist = readPersons();
+    public DatabaseLoader(String fileName) throws IOException, ParseException {
+        formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        currentFile = new File(DatabaseLoader.class.getClassLoader().getResource(fileName).getFile());
+        inputStream = new Scanner(currentFile);
+
+        //personArraylist = readPersons();
+        groupArraylist = readGroups();
     }
 
 
+
     public void writePersons() throws IOException {
-        outputStream = new FileWriter(personFile, false);
+        outputStream = new FileWriter(currentFile, false);
 
         for (int row = 0; row < personArraylist.size(); row++) {
             outputStream.append(stringArraytoString(personArraylist.get(row)) + "\n");
@@ -144,6 +150,7 @@ public class DatabaseLoader {
     }
 
     /**Victor has tried to implement groups as discussed. Please read and confirm.**/
+    /*
     public DatabaseLoader() throws IOException, ParseException {
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
@@ -152,8 +159,10 @@ public class DatabaseLoader {
         groupArraylist = readGroups();
     }
 
+     */
+
     public void writeGroups() throws IOException {
-        outputStream = FileWriter(groupFile, false);
+        outputStream = new FileWriter(groupFile, false);
 
         for (int row = 0; row < groupArraylist.size(); row++) {
             outputStream.append(stringArraytoString(groupArraylist.get(row)) + "\n");
@@ -170,14 +179,19 @@ public class DatabaseLoader {
         return groupList;
     }
 
+    public Group stringsToGroup(String[] strings){
+        
+    }
+
     public static void main(String[] args) throws IOException, ParseException {
-        DatabaseLoader dbload = new DatabaseLoader();
+        DatabaseLoader dbload = new DatabaseLoader("Groups.txt");
 
         //System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(0)));
         //System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(1)));
 
-        dbload.personToString(dbload.stringsToPerson(dbload.personArraylist.get(0)));
+        //dbload.personToString(dbload.stringsToPerson(dbload.personArraylist.get(0)));
 
+        System.out.println(dbload.groupArraylist.get(0).toString());
 
     }
 

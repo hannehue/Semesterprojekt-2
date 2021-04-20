@@ -1,5 +1,6 @@
 package Java;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Production extends Credit {
