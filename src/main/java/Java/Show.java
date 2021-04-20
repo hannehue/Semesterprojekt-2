@@ -30,4 +30,9 @@ public class Show extends Production{
     public void setSeasons(ArrayList<Season> seasons) {
         this.seasons = seasons;
     }
+
+    @Override
+    public String toFileString() {
+        return null;
+    }
 }

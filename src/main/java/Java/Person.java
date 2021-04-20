@@ -68,4 +68,34 @@ public class Person extends Credit{
                 "Jobs:\n" + jobString +
                 "PersonalInfo: " + personalInfo  + "\n";
     }
+    @Override
+    public String toFileString(){
+            String personString = getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() +
+                    "," + getDescription() + "," + getPersonID() + "," + getPhoneNumber() + "," +
+                    getPersonalInfo() + "," + getEmail() + ",";
+
+            //Koreografi;Fotografer--165--Mand i hættetrøje ved tanken;Hans Jensen,
+            String jobString = "";
+
+            for (Job j : getJobs()) {
+                String roles = "";
+                String characterNames = "";
+
+                for (Role role : j.getRoles()) {
+                    roles += role.toString() + ";";
+                }
+                roles = roles.substring(0, roles.length() - 1);
+
+                for (String characterName : j.getCharacterNames()) {
+                    characterNames += characterName + ";";
+                }
+                characterNames = characterNames.substring(0, characterNames.length() - 1);
+
+                jobString += roles + "--" + j.getProgram() + "--" + characterNames + ",";
+            }
+            personString += jobString;
+
+            System.out.println(personString);
+            return personString;
+    }
 }

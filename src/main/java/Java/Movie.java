@@ -17,4 +17,9 @@ public class Movie extends Production{
         //this.cast = cast;
         //this.productionTeam = productionTeam;
     }
+
+    @Override
+    public String toFileString() {
+        return null;
+    }
 }

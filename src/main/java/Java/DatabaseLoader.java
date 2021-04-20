@@ -13,6 +13,8 @@ public class DatabaseLoader {
     private FileWriter outputStream = null;
 
     private File currentFile;
+
+    private File personFile;
     private ArrayList<String[]> personArraylist;
 
     private File groupFile;
@@ -20,26 +22,24 @@ public class DatabaseLoader {
 
     private SimpleDateFormat formatter;
 
-    public void setCurrentFile(String fileName) {
-        this.currentFile = new File(DatabaseLoader.class.getClassLoader().getResource(fileName).getFile());
+    public void setCurrentFile(int i) {
     }
 
-    public DatabaseLoader(String fileName) throws IOException, ParseException {
+    public DatabaseLoader() throws IOException, ParseException {
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-        currentFile = new File(DatabaseLoader.class.getClassLoader().getResource(fileName).getFile());
-        inputStream = new Scanner(currentFile);
-
-        //personArraylist = readPersons();
-        groupArraylist = readGroups();
+        this.personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
+        this.groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
+        personArraylist = readCredits(personFile);
+        groupArraylist = readCredits(groupFile);
     }
 
 
 
-    public void writePersons() throws IOException {
-        outputStream = new FileWriter(currentFile, false);
+    public void writeCredits(File file, ArrayList<String[]> creditList) throws IOException {
+        outputStream = new FileWriter(file, false);
 
-        for (int row = 0; row < personArraylist.size(); row++) {
-            outputStream.append(stringArraytoString(personArraylist.get(row)) + "\n");
+        for (int row = 0; row < creditList.size(); row++) {
+            outputStream.append(stringArraytoString(creditList.get(row)) + "\n");
         }
         outputStream.close();
     }
@@ -52,14 +52,34 @@ public class DatabaseLoader {
         return line;
     }
 
-    public ArrayList<String[]> readPersons() {
-
+    public ArrayList<String[]> readCredits(File file) throws FileNotFoundException {
+        inputStream = new Scanner(file);
         ArrayList<String[]> personList = new ArrayList<>();
         while (inputStream.hasNext()) {
             personList.add(inputStream.nextLine().split(","));
         }
         return personList;
     }
+
+
+
+    public String[] creditToStringArray(Credit credit) {
+
+        String[] creditArray = credit.toFileString().split(",");
+        return creditArray;
+    }
+
+    public void addCredit(Credit credit, ArrayList<Credit> creditsList){
+        creditsList.add(credit);
+    }
+
+    public void addCredits(ArrayList<? extends Credit> readList, ArrayList<String[]> writeList ){
+        for (Credit credit: readList){
+            writeList.add(creditToStringArray(credit));
+        }
+    }
+
+    /** Disse to vil jeg gerne rykke i en (facade) klasse for sig selv, sammen med de andre der kommer -Hans **/
 
     public Person stringsToPerson(String[] vals) {
         Person tempPerson = null;
@@ -102,83 +122,6 @@ public class DatabaseLoader {
         return tempPerson;
     }
 
-    public String personToString(Person person) {
-
-        String personString = person.getName() + "," + person.getDateAdded() + "," + person.getCreditID() + "," + person.isApproved() +
-                "," + person.getDescription() + "," + person.getPersonID() + "," + person.getPhoneNumber() + "," +
-                person.getPersonalInfo() + "," + person.getEmail() + ",";
-
-        //Koreografi;Fotografer--165--Mand i hættetrøje ved tanken;Hans Jensen,
-        String jobString = "";
-
-        for (Job j : person.getJobs()) {
-            String roles = "";
-            String characterNames = "";
-
-            for (Role role : j.getRoles()) {
-                roles += role.toString() + ";";
-            }
-            roles = roles.substring(0, roles.length() - 1);
-
-            for (String characterName : j.getCharacterNames()) {
-                characterNames += characterName + ";";
-            }
-            characterNames = characterNames.substring(0, characterNames.length() - 1);
-
-            jobString += roles + "--" + j.getProgram() + "--" + characterNames + ",";
-        }
-        personString += jobString;
-
-        System.out.println(personString);
-        return personString;
-    }
-
-    public String[] personToStringArray(Person person) {
-
-        String[] personArray = personToString(person).split(",");
-        return personArray;
-    }
-
-    public void addPerson(Person person){
-        personArraylist.add(personToStringArray(person));
-    }
-
-    public void addPersons(ArrayList<Person> list){
-        for (Person person: list){
-            personArraylist.add(personToStringArray(person));
-        }
-    }
-
-    /**Victor has tried to implement groups as discussed. Please read and confirm.**/
-    /*
-    public DatabaseLoader() throws IOException, ParseException {
-        formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-        personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
-        inputStream = new Scanner(groupFile);
-
-        groupArraylist = readGroups();
-    }
-
-     */
-
-    public void writeGroups() throws IOException {
-        outputStream = new FileWriter(groupFile, false);
-
-        for (int row = 0; row < groupArraylist.size(); row++) {
-            outputStream.append(stringArraytoString(groupArraylist.get(row)) + "\n");
-        }
-        outputStream.close();
-    }
-
-    public ArrayList<String[]> readGroups() {
-
-        ArrayList<String[]> groupList = new ArrayList<>();
-        while (inputStream.hasNext()) {
-            groupList.add(inputStream.nextLine().split(","));
-        }
-        return groupList;
-    }
-
     public Group stringsToGroup(String[] strings){
         Group tempGroup = null;
         try {
@@ -193,16 +136,18 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args) throws IOException, ParseException {
-        DatabaseLoader dbload = new DatabaseLoader("Groups.txt");
-
+        DatabaseLoader dbload = new DatabaseLoader();
+        dbload.writeCredits(dbload.groupFile, dbload.groupArraylist);
         //System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(0)));
-        //System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(1)));
+        System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(1)));
 
         //dbload.personToString(dbload.stringsToPerson(dbload.personArraylist.get(0)));
 
         System.out.println(dbload.stringsToGroup(dbload.groupArraylist.get(0)));
-        System.out.println(dbload.groupArraylist.get(0).toString());
-
     }
 
+
+    public ArrayList<String[]> getPersonArraylist() {
+        return personArraylist;
+    }
 }
