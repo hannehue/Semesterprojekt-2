@@ -15,7 +15,7 @@ public class CreditSystemController extends Application {
     private static Scene scene;
     private static int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
-    private static ArrayList<Credit> personList = new ArrayList<>(); // omdøbes til personList
+    private static ArrayList<Credit> personList = new ArrayList<>();
     private static ArrayList<Credit> movieList= new ArrayList<>();
     private static ArrayList<Show> showList = new ArrayList<>();
     private static Stage primaryStage;
@@ -120,7 +120,7 @@ public class CreditSystemController extends Application {
         for (Show s: showList) {
             if (s.getName() == show) {
                 Season season = new Season(
-                        "S" + s.getNumberOfSeason() + 1,
+                        "S" + (s.getNumberOfSeason() + 1),
                         s.getCreditID(),
                         null,
                         nextId(),
