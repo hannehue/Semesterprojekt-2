@@ -6,8 +6,6 @@ import java.util.HashMap;
 public class Episode extends Production{
 
     private int seasonID;
-    private HashMap<String, Person> cast;
-    private HashMap<Role, Person[]> productionTeam;
 
     public Episode(String title, Date dateAdded, int seasonID, int creditID,
                    boolean approved, String description, int productionID,
