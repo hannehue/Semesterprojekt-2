@@ -15,6 +15,9 @@ public class DatabaseLoader {
     private File personFile;
     private ArrayList<String[]> personArraylist;
 
+    private File groupFile;
+    private ArrayList<String[]> groupArraylist;
+
     private SimpleDateFormat formatter;
 
     public DatabaseLoader() throws IOException, ParseException {
@@ -24,6 +27,7 @@ public class DatabaseLoader {
 
         personArraylist = readPersons();
     }
+
 
     public void writePersons() throws IOException {
         outputStream = new FileWriter(personFile, false);
@@ -139,6 +143,32 @@ public class DatabaseLoader {
         }
     }
 
+    /**Victor has tried to implement groups as discussed. Please read and confirm.**/
+    public DatabaseLoader() throws IOException, ParseException {
+        formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
+        inputStream = new Scanner(groupFile);
+
+        groupArraylist = readGroups();
+    }
+
+    public void writeGroups() throws IOException {
+        outputStream = FileWriter(groupFile, false);
+
+        for (int row = 0; row < groupArraylist.size(); row++) {
+            outputStream.append(stringArraytoString(groupArraylist.get(row)) + "\n");
+        }
+        outputStream.close();
+    }
+
+    public ArrayList<String[]> readGroups() {
+
+        ArrayList<String[]> groupList = new ArrayList<>();
+        while (inputStream.hasNext()) {
+            groupList.add(inputStream.nextLine().split(","));
+        }
+        return groupList;
+    }
 
     public static void main(String[] args) throws IOException, ParseException {
         DatabaseLoader dbload = new DatabaseLoader();
