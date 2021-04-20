@@ -17,4 +17,10 @@ public class Group extends Credit {
     public void setGroupID(int groupID) {
         this.groupID = groupID;
     }
+
+    @Override
+    public String toString() {
+        return "Name: " + getName() + ", CreditID: " + getCreditID() +
+                ", Description: " + getDescription() + ", GroupID: " + getGroupID();
+    }
 }

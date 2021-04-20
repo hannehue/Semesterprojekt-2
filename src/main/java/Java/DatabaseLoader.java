@@ -180,7 +180,16 @@ public class DatabaseLoader {
     }
 
     public Group stringsToGroup(String[] strings){
-        
+        Group tempGroup = null;
+        try {
+            tempGroup = new Group(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
+                    Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]));
+        } catch (ParseException e){
+            e.printStackTrace();
+            System.err.println("Failed when initializing group from string array");
+            return null;
+        }
+        return tempGroup;
     }
 
     public static void main(String[] args) throws IOException, ParseException {
@@ -191,6 +200,7 @@ public class DatabaseLoader {
 
         //dbload.personToString(dbload.stringsToPerson(dbload.personArraylist.get(0)));
 
+        System.out.println(dbload.stringsToGroup(dbload.groupArraylist.get(0)));
         System.out.println(dbload.groupArraylist.get(0).toString());
 
     }
