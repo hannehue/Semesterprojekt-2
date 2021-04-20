@@ -1,6 +1,7 @@
 package Java;
 
 import java.util.Date;
+import java.util.HashMap;
 
 public abstract class Production extends Credit {
 
@@ -8,6 +9,8 @@ public abstract class Production extends Credit {
     private Category[] categories;
     private int lengthInSecs;
     private Date releaseDate;
+    private HashMap<String, Person> cast;
+    private HashMap<Role, Person[]> productionTeam;
 
     public Production(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID, int lengthInSecs, Date releaseDate){
        //Husk at implementér category.
@@ -39,6 +42,22 @@ public abstract class Production extends Credit {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public void setPersonInCast(String characterName, Person person) {
+        cast.put(characterName, person);
+    }
+
+    public void getPersonInCast(String charactherName){
+        cast.get(charactherName);
+    }
+
+    public Person[] getProductionTeamRole(Role role) {
+        return productionTeam.get(role);
+    }
+
+    public void setRolesInProduction(Role role, Person person[]) {
+        productionTeam.put(role, person);
     }
 }
 
