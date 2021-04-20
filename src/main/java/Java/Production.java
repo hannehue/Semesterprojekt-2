@@ -6,11 +6,11 @@ import java.util.Date;
 public abstract class Production extends Credit {
 
     private int productionID;
-    private Category[] categories;
+    private Category categories;
     private int lengthInSecs;
     private Date releaseDate;
 
-    public Production(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID, Category[] categories, int lengthInSecs, Date releaseDate){
+    public Production(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID, Category categories, int lengthInSecs, Date releaseDate){
        //Husk at implementér category. - Is implemented by Victor: remember to read and confirm.
         super(name, dateAdded, creditID, approved, description);
         this.productionID = productionID;
@@ -23,7 +23,7 @@ public abstract class Production extends Credit {
         return productionID;
     }
 
-    public Category[] getCategories() {
+    public Category getCategories() {
         return categories;
     }
 
@@ -39,7 +39,7 @@ public abstract class Production extends Credit {
         this.productionID = productionID;
     }
 
-    public void setCategories(Java.Category[] categories) {
+    public void setCategories(Java.Category categories) {
         this.categories = categories;
     }
 

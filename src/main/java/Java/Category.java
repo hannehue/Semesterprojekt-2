@@ -20,14 +20,14 @@ public enum Category {
     private String categoryString;
 
 
-    public static Category[] getCategoriesFromString(String categoryString){
-        String[] categoryStrings = categoryString.split(";");
-        Category[] categories = new Category[categoryStrings.length];
-
-        for(int i = 0; i < categories.length; i++){
-            categories[i] = Category.valueOf(categoryStrings[i]);
+    public static Category getCategoriesFromString(String val){
+        Category[] categories = Category.values();
+        for (int i = 0; i < Category.values().length; i++) {
+            if (val.equals(categories[i].toString())){
+                return categories[i];
+            }
         }
-        return categories;
+        return null;
     }
 
     Category(String categoryString){

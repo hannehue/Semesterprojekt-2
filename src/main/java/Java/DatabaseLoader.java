@@ -18,6 +18,9 @@ public class DatabaseLoader {
     private File groupFile;
     private ArrayList<String[]> groupArraylist;
 
+    private File movieFile;
+    private ArrayList<String[]> movieArrayList;
+
     private SimpleDateFormat formatter;
 
     public void setCurrentFile(String fileName) {
@@ -30,7 +33,8 @@ public class DatabaseLoader {
         inputStream = new Scanner(currentFile);
 
         //personArraylist = readPersons();
-        groupArraylist = readGroups();
+        //groupArraylist = readGroups();
+        movieArrayList = readMovies();
     }
 
 
@@ -192,16 +196,50 @@ public class DatabaseLoader {
         return tempGroup;
     }
 
+    public void writeMovies() throws IOException {
+        outputStream = new FileWriter(movieFile, false);
+
+        for (int row = 0; row < groupArraylist.size(); row++){
+            outputStream.append(stringArraytoString(movieArrayList.get(row)) + "\n");
+        }
+        outputStream.close();
+    }
+
+    public ArrayList<String[]> readMovies(){
+
+        ArrayList<String[]> movieList = new ArrayList<>();
+        while (inputStream.hasNext()){
+            movieList.add(inputStream.nextLine().split(","));
+        }
+        return movieList;
+    }
+
+    public Movie stringsToMovie(String[] strings){
+        Movie tempMovie = null;
+        try {
+            tempMovie = new Movie(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
+                    Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
+                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8]));
+        } catch (ParseException e){
+            e.printStackTrace();
+            System.err.println("Failed when initializing movie from string array");
+            return null;
+        }
+        return tempMovie;
+    }
+
     public static void main(String[] args) throws IOException, ParseException {
-        DatabaseLoader dbload = new DatabaseLoader("Groups.txt");
+        DatabaseLoader dbload = new DatabaseLoader("Movie.txt");
 
         //System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(0)));
         //System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(1)));
 
         //dbload.personToString(dbload.stringsToPerson(dbload.personArraylist.get(0)));
 
-        System.out.println(dbload.stringsToGroup(dbload.groupArraylist.get(0)));
-        System.out.println(dbload.groupArraylist.get(0).toString());
+        //System.out.println(dbload.stringsToGroup(dbload.groupArraylist.get(0)));
+        //System.out.println(dbload.groupArraylist.get(0).toString());
+
+        System.out.println(dbload.stringsToMovie(dbload.movieArrayList.get(0)).toString());
 
     }
 
