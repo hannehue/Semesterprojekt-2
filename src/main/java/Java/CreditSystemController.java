@@ -24,7 +24,7 @@ public class CreditSystemController extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        scene = new Scene(loadFXML("Menu2"), 1024,768);
+        scene = new Scene(loadFXML("Menu"), 1024,768);
         primaryStage.setTitle("TV2-Krediteringer");
         primaryStage.setScene(scene);
         primaryStage.minWidthProperty().set(300);

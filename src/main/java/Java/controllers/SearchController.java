@@ -6,9 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -44,7 +42,7 @@ public class SearchController implements Initializable {
 
     public static void setContent() {
         ObservableList<Credit> observableResults = FXCollections.observableArrayList();
-        observableResults.addAll(search(Menu2Controller.getSearchString()));
+        observableResults.addAll(search(MenuController.getSearchString()));
         System.out.println(observableResults);
         SearchList.setItems(observableResults);
     }
@@ -66,7 +64,7 @@ public class SearchController implements Initializable {
         System.out.println("clicked" + item);
         CreditViewController.setCurrentCredit(item);
         try {
-            Menu2Controller.setContentPane("CreditView.fxml");
+            MenuController.setContentPane("CreditView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
