@@ -143,10 +143,6 @@ public class DashboardController implements Initializable {
     protected void handleAddPersonEpisode(ActionEvent Event) throws IOException {
 
     }
-    @FXML
-    protected void handleGetEpisodeName(ActionEvent Event) throws IOException {
-        reloadNextEpisode();
-    }
 
 
     @FXML
@@ -191,17 +187,6 @@ public class DashboardController implements Initializable {
         System.out.println("Showing choicebox wiht conttens " + choiceBoxSeason.getItems());
         choiceBoxSeason.show();
     }
-    @FXML
-    protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
-        System.out.println("trying to add episode to" + showName + " . " + seasonName);
-        CreditSystemController.addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName );
-        reloadNextEpisode();
-    }
-
-
-
-
-
 
 
     /* ------------------------------------------------------------------------------------------------------------------
