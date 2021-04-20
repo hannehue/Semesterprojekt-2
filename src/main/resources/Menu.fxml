@@ -43,7 +43,7 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="59.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <Pane prefHeight="100.0" prefWidth="200.0">
+                  <Pane prefHeight="100.0" prefWidth="200.0" onMouseClicked="#handlePersonalProfile">
                      <children>
                         <ImageView fx:id="User" fitWidth="56.0" onMouseEntered="#MenuItemShow" preserveRatio="true">
                            <image>
