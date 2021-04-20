@@ -115,7 +115,7 @@ public class CreditSystemController extends Application {
         for (Show s: showList) {
             if (s.getName() == show) {
                 Season season = new Season(
-                        "S" + s.getNumberOfSeason() + 1,
+                        "S" + (s.getNumberOfSeason() + 1),
                         s.getCreditID(),
                         null,
                         nextId(),
