@@ -48,6 +48,8 @@ public class Menu2Controller implements Initializable {
         rootPane.setLeftAnchor(ContentPane, 0.0);
         rootPane.setRightAnchor(ContentPane, 0.0);
         rootPane.getChildren().add(ContentPane);
+        Menu.toFront();
+        MenuLabels.toFront();
     }
 
 

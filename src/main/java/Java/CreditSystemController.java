@@ -106,12 +106,8 @@ public class CreditSystemController extends Application {
                 null,
                 nextId(),
                 false,
-                description,
-                1,
-                1,
                 null,
-                1,
-                new ArrayList<>());
+                "desc");
         showList.add(show);
         System.out.println("Added show: " + show.getName());
     }
