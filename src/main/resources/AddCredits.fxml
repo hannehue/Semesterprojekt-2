@@ -57,7 +57,7 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                  <TitledPane animated="false" onMouseClicked="#handleGetShows" prefHeight="369.0" prefWidth="498.0" text="Tilføj Program">
+                  <TitledPane animated="false" onMouseClicked="#handleGetShows" prefHeight="369.0" prefWidth="498.0" text="Tilføj Episode">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>

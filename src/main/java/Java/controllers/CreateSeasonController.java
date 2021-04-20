@@ -24,5 +24,6 @@ public class CreateSeasonController implements Initializable {
     protected void handleAddSeason(ActionEvent Event) throws IOException {
         System.out.println("trying to add season with showname: " + AddCreditController.getShowName());
         CreditSystemController.addSeason(seasonDescription.getText(), AddCreditController.getShowName());
+        AddCreditController.disposeCreateSeason();
     }
 }
