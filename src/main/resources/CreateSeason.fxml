@@ -6,14 +6,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="createSeason" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.DashboardController">
+<AnchorPane fx:id="createSeason" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.DashboardController">
     <children>
         <Button layoutX="371.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleAddSeason" prefHeight="37.0" prefWidth="135.0" text="Tilføj">
             <font>
-                <Font size="26.0" />
+                <Font size="18.0" />
             </font>
         </Button>
-        <Label layoutX="72.0" layoutY="76.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-color: #FFFFFF;" text="Beskrivelse">
+        <Label layoutX="72.0" layoutY="76.0" prefHeight="27.0" prefWidth="206.0" style="-fx-text-fill: #FFFFFF;" text="Beskrivelse">
             <font>
                 <Font size="15.0" />
             </font>
