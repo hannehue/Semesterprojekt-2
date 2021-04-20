@@ -13,6 +13,12 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.AddCreditController">
+<<<<<<< HEAD
+=======
+    <top>
+        <fx:include fx:id="Menu" source="include/Menu.fxml" />
+    </top>
+>>>>>>> 9d578648e2173fdc7f09cf3d6f5c686b2bfcfe5b
     <center>
         <Pane prefHeight="713.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
             <children>

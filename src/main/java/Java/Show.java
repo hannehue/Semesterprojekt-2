@@ -3,7 +3,11 @@ package Java;
 import java.util.ArrayList;
 import java.util.Date;
 
+<<<<<<< HEAD
 public class Show extends Credit {
+=======
+public class Show extends Credit{
+>>>>>>> 9d578648e2173fdc7f09cf3d6f5c686b2bfcfe5b
 
     private ArrayList <Season> seasons;
 
