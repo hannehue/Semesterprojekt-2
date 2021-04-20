@@ -57,7 +57,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="100.0" prefWidth="200.0">
+                  <Pane prefHeight="100.0" prefWidth="200.0" onMouseClicked="#approveCreditHandler">
                      <children>
                         <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
                            <image>

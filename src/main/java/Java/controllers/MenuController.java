@@ -134,6 +134,11 @@ public class MenuController implements Initializable {
         ContentPane.getChildren().add(root);
     }
 
+    public void approveCreditHandler(MouseEvent mouseEvent) throws IOException {
+       setContentPane("ApproveCredits.fxml");
+       hideMenu();
+    }
+
     //Menu knap til Personlig profil
     public void handlePersonalProfile(MouseEvent mouseEvent) {
         try {
