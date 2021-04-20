@@ -2,21 +2,21 @@ package Java.controllers;
 
 import Java.CreditSystemController;
 import javafx.animation.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Menu;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.cert.PolicyNode;
 import java.util.ResourceBundle;
 
 public class Menu2Controller implements Initializable {
@@ -29,12 +29,44 @@ public class Menu2Controller implements Initializable {
     @FXML
     protected ImageView Searchicon;
     @FXML
-    protected ImageView User;
-    @FXML
     protected AnchorPane rootPane;
+    @FXML
+    protected VBox VBoxMenu;
+    @FXML
+    protected VBox VBoxMenuLabels;
+
+
+    @FXML
+    protected ImageView profileImageview;
+    @FXML
+    protected ImageView approveCreditImageview;
+    @FXML
+    protected ImageView addCreditsImageview;
+    @FXML
+    protected ImageView addUserImageview;
+    @FXML
+    protected ImageView logoutButtonImageview;
+    @FXML
+    protected Label profileLabel;
+    @FXML
+    protected Label approveCreditLabel;
+    @FXML
+    protected Label addCreditsLabel;
+    @FXML
+    protected Label addUserLabel;
+    @FXML
+    protected Label logoutButtonLabel;
+
+
+
+    @FXML
+    protected ImageView loginButtonImageview;
+    @FXML
+    protected Label loginButtonLabel;
+
+
 
     private static AnchorPane ContentPane;
-
     private static String searchString;
 
 
@@ -52,6 +84,7 @@ public class Menu2Controller implements Initializable {
 
 
     public void handleOpenMenu(MouseEvent mouseEvent) {
+        //Animation til at åbne menu
         ParallelTransition parallelTransition = new ParallelTransition();
         if (!MenuLabels.isVisible()){
             System.out.println("clicked");
@@ -75,10 +108,37 @@ public class Menu2Controller implements Initializable {
 
             parallelTransition.play();
             parallelTransition.getChildren().clear();
+
+            //Menu load----------------
+            //Hvis der er logget ind, hvis menu i forhold til brugerens UserType
+            if (CreditSystemController.getUserType() != null) {
+                if (!CreditSystemController.getUserType().getPersonalProfile()){
+                    VBoxMenu.getChildren().removeAll(profileImageview);
+                    VBoxMenuLabels.getChildren().removeAll(profileLabel);
+                }
+                if (!CreditSystemController.getUserType().getAddCredit()){
+                    VBoxMenu.getChildren().removeAll(addCreditsImageview);
+                    VBoxMenuLabels.getChildren().removeAll(addCreditsLabel);
+                }
+                if (!CreditSystemController.getUserType().getAddUser()){
+                    VBoxMenu.getChildren().removeAll(addUserImageview);
+                    VBoxMenuLabels.getChildren().removeAll(addUserLabel);
+                }
+                if (!CreditSystemController.getUserType().getApproveCredit()){
+                    VBoxMenu.getChildren().removeAll(approveCreditImageview);
+                    VBoxMenuLabels.getChildren().removeAll(approveCreditLabel);
+                }
+                VBoxMenu.getChildren().removeAll(loginButtonImageview);
+                VBoxMenuLabels.getChildren().removeAll(loginButtonLabel);
+            } else { //Hvis ikke der er logget ind skal der kun vises login
+                VBoxMenu.getChildren().removeAll(profileImageview, approveCreditImageview, addCreditsImageview,addUserImageview, logoutButtonImageview);
+                VBoxMenuLabels.getChildren().removeAll(profileLabel, approveCreditLabel, approveCreditLabel, addCreditsLabel,addUserLabel,logoutButtonLabel);
+                VBoxMenu.toFront();
+                VBoxMenuLabels.toFront();
+            }
+
         } else {
-
-            System.out.println("clicked2");
-
+            //Animation til at lukke menu
             Timeline timeline1 = new Timeline();
             KeyValue keyValue1 = new KeyValue(Menu.translateYProperty(), -1000, Interpolator.EASE_OUT);
             KeyFrame keyFrame1 = new KeyFrame(Duration.millis(200), keyValue1);
@@ -96,28 +156,31 @@ public class Menu2Controller implements Initializable {
             parallelTransition.getChildren().clear();
         }
     }
-
+    //Metode der bare sætter menuen til at være usyndelig
     private void hideMenu(){
         Menu.setVisible(false);
         MenuLabels.setVisible(false);
     }
-
+    //Søge felt
     public void handleOpenSearch(MouseEvent mouseEvent) {
+        //Hvis søgefeltet er synligt
         if (searchField.visibleProperty().get()){
+            //Ignorer at der skal søge hvis brugeren ikke har indtastet noget
             if (!searchField.getText().equalsIgnoreCase("")) {
-                //searchField.setPromptText(searchField.getText());
-                //CreditSystemController.setSearchFieldPlaceholder(searchField.getText());
+                //gemmer søgestrengen
                 searchString = searchField.getText();
-                        System.out.println("getting text " + searchField.getText());
+                //prøver at åbne søgeresultat ind i content
                 try {
                     setContentPane("SearchResult.fxml");
                     SearchController.setContent();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            //Hvis der ikke er indtastet noget
             } else {
                 searchField.setPromptText("Indtast noget");
             }
+        //Hvis søgefeltet ikke er åbent, så start animation
         } else {
             searchField.setVisible(true);
             Timeline timeline = new Timeline();
@@ -129,22 +192,42 @@ public class Menu2Controller implements Initializable {
         }
     }
 
-
-
-
-
-    public void MenuItemShow(MouseEvent mouseEvent) {
-
+    //Gå til login
+    @FXML
+    private void handleLogin(MouseEvent mouseEvent){
+        try {
+            setContentPane("Login.fxml");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
+    //Getter for søgestrengen
     public static String getSearchString() {
         return searchString;
     }
 
+    //Metode til at loaded fxml fil ind på ContentPane, så de hele kan køres fra Menu2.fxml
     public static void setContentPane(String fxml) throws IOException {
         ContentPane.getChildren().clear();
         Parent root = FXMLLoader.load(Menu2Controller.class.getClassLoader().getResource(fxml));
         ContentPane.getChildren().add(root);
     }
 
+
+    //Menu knap til Personlig profil
+    public void handlePersonalProfile(MouseEvent mouseEvent) {
+        try {
+            setContentPane("PersonalProfile.fxml");
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //Credit Person
+    @FXML
+    protected  void handleEditProfile(ActionEvent Event) throws IOException{
+        //Tilføj kode der henter brugerens informationer og sætter dem i textfields i stedet for labels
+        CreditSystemController.setRoot("CreditPersonProfile-edit");
+    }
 }
