@@ -29,7 +29,7 @@ public class CreditSystemController extends Application {
 
         addPerson("Jens Hans", "Elsker min hund", "45624585", "boi@gmail.com");
 
-        dataLoader = new DatabaseLoader("Person.txt");
+        dataLoader = new DatabaseLoader();
         //creditList.addAll(dataLoader.readPersons());
 
         /** Dette skal virkelig laves om :) **/
@@ -39,9 +39,9 @@ public class CreditSystemController extends Application {
         //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
         /** :) **/
 
-        dataLoader.addPersons(personList);
+        dataLoader.addCredits(personList, dataLoader.getPersonArraylist());
 
-        dataLoader.writePersons();
+        //dataLoader.writePersons();
 
 
         /** TEST MILJØ **/

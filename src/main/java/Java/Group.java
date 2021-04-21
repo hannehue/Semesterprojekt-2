@@ -23,4 +23,9 @@ public class Group extends Credit {
         return "Name: " + getName() + ", CreditID: " + getCreditID() +
                 ", Description: " + getDescription() + ", GroupID: " + getGroupID();
     }
+
+    @Override
+    public String toFileString() {
+        return null;
+    }
 }

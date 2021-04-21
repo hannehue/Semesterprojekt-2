@@ -25,4 +25,9 @@ public class Movie extends Production{
                ", Category: " + getCategories() + ", Movie length: " + getLengthInSecs() +
                ", Release date: " + getReleaseDate();
     }
+
+    @Override
+    public String toFileString() {
+        return null;
+    }
 }
