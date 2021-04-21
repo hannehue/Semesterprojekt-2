@@ -12,8 +12,6 @@ public class DatabaseLoader {
     private Scanner inputStream = null;
     private FileWriter outputStream = null;
 
-    private File currentFile;
-
     private File personFile;
     private ArrayList<String[]> personArraylist;
 
@@ -25,9 +23,6 @@ public class DatabaseLoader {
 
     private SimpleDateFormat formatter;
 
-    public void setCurrentFile(int i) {
-    }
-
     public DatabaseLoader() throws IOException, ParseException {
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
@@ -37,8 +32,6 @@ public class DatabaseLoader {
         groupArraylist = readCredits(groupFile);
         movieArrayList = readCredits(movieFile);
     }
-
-
 
     public void writeCredits(File file, ArrayList<String[]> creditList) throws IOException {
         outputStream = new FileWriter(file, false);
@@ -160,12 +153,21 @@ public class DatabaseLoader {
         System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(1)));
         System.out.println(dbload.stringsToGroup(dbload.groupArraylist.get(0)));
         System.out.println(dbload.stringsToMovie(dbload.movieArrayList.get(0)));
-
-
     }
-
 
     public ArrayList<String[]> getPersonArraylist() {
         return personArraylist;
+    }
+
+    public File getPersonFile() {
+        return personFile;
+    }
+
+    public File getGroupFile() {
+        return groupFile;
+    }
+
+    public File getMovieFile() {
+        return movieFile;
     }
 }

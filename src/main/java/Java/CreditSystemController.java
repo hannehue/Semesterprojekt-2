@@ -40,7 +40,7 @@ public class CreditSystemController extends Application {
         /** :) **/
 
         dataLoader.addCredits(personList, dataLoader.getPersonArraylist());
-
+        dataLoader.writeCredits(dataLoader.getPersonFile(), dataLoader.getPersonArraylist());
         //dataLoader.writePersons();
 
 
