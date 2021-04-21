@@ -1,16 +1,18 @@
 package Java;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
 public class Movie extends Production{
 
+
     //private HashMap<String, Person> cast;
     //private HashMap<Role, Person[]> productionTeam;
 
     public Movie(String name, Date dateAdded, int creditID, boolean approved, String description, int programID,
-                 Category category, int lengthInSecs, Date releaseDate) {
+                 Category[] category, int lengthInSecs, Date releaseDate) {
         //Add cast and productionTeam to constructor when person and role are implemented
 
         super(name, dateAdded, creditID, approved, description, programID, category, lengthInSecs, releaseDate);
@@ -22,7 +24,8 @@ public class Movie extends Production{
     public String toString() {
         return "Name: " + getName() + ", CreditID: " + getCreditID() +
                ", Description: " + getDescription() + ", MovieID: " + getProgramID() +
-               ", Category: " + getCategories() + ", Movie length: " + getLengthInSecs() +
+               ", Categories: " + Arrays.toString(getCategories()).substring(1,Arrays.toString(getCategories()).length() - 1) +
+               ", Movie length: " + (getLengthInSecs() / 60 / 60) + " hours " + getLengthInSecs() / 60 % 60  + " minutes " +
                ", Release date: " + getReleaseDate();
     }
 

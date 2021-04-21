@@ -30,10 +30,12 @@ public class DatabaseLoader {
 
     public DatabaseLoader() throws IOException, ParseException {
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-        this.personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
-        this.groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
+        personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
+        groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
+        movieFile = new File(DatabaseLoader.class.getClassLoader().getResource("Movies.txt").getFile());
         personArraylist = readCredits(personFile);
         groupArraylist = readCredits(groupFile);
+        movieArrayList = readCredits(movieFile);
     }
 
 
@@ -64,8 +66,6 @@ public class DatabaseLoader {
         return personList;
     }
 
-
-
     public String[] creditToStringArray(Credit credit) {
 
         String[] creditArray = credit.toFileString().split(",");
@@ -82,7 +82,7 @@ public class DatabaseLoader {
         }
     }
 
-    /** Disse to vil jeg gerne rykke i en (facade) klasse for sig selv, sammen med de andre der kommer -Hans **/
+    /** Disse 3 vil jeg gerne rykke i en (facade) klasse for sig selv, sammen med de andre der kommer -Hans **/
 
     public Person stringsToPerson(String[] vals) {
         Person tempPerson = null;
@@ -138,24 +138,6 @@ public class DatabaseLoader {
         return tempGroup;
     }
 
-    public void writeMovies() throws IOException {
-        outputStream = new FileWriter(movieFile, false);
-
-        for (int row = 0; row < groupArraylist.size(); row++){
-            outputStream.append(stringArraytoString(movieArrayList.get(row)) + "\n");
-        }
-        outputStream.close();
-    }
-
-    public ArrayList<String[]> readMovies(){
-
-        ArrayList<String[]> movieList = new ArrayList<>();
-        while (inputStream.hasNext()){
-            movieList.add(inputStream.nextLine().split(","));
-        }
-        return movieList;
-    }
-
     public Movie stringsToMovie(String[] strings){
         Movie tempMovie = null;
         try {
@@ -171,19 +153,15 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args) throws IOException, ParseException {
+        //Production kan lige nu kun have en category, skal laves om
         DatabaseLoader dbload = new DatabaseLoader();
         dbload.writeCredits(dbload.groupFile, dbload.groupArraylist);
-        //System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(0)));
+        System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(0)));
         System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(1)));
-
-        //dbload.personToString(dbload.stringsToPerson(dbload.personArraylist.get(0)));
-
-        //System.out.println(dbload.stringsToGroup(dbload.groupArraylist.get(0)));
-        //System.out.println(dbload.groupArraylist.get(0).toString());
-
-        System.out.println(dbload.stringsToMovie(dbload.movieArrayList.get(0)).toString());
-
         System.out.println(dbload.stringsToGroup(dbload.groupArraylist.get(0)));
+        System.out.println(dbload.stringsToMovie(dbload.movieArrayList.get(0)));
+
+
     }
 
 
