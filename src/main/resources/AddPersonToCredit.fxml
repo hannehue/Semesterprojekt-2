@@ -21,7 +21,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="72.0" layoutY="244.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="434.0" text="Tilføj">
+      <Button layoutX="72.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleSearch" prefHeight="69.0" prefWidth="434.0" text="Tilføj">
          <font>
             <Font size="26.0" />
          </font>

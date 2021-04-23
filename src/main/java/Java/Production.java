@@ -10,8 +10,7 @@ public abstract class Production extends Credit {
     private Category[] categories;
     private int lengthInSecs;
     private Date releaseDate;
-    private HashMap<String, Person> cast;
-    private HashMap<Role, ArrayList<Person>> productionTeam;
+    private ArrayList staff;
 
     public Production(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID, int lengthInSecs, Date releaseDate){
        //Husk at implementér category.
@@ -19,8 +18,7 @@ public abstract class Production extends Credit {
         this.productionID = productionID;
         this.lengthInSecs = lengthInSecs;
         this.releaseDate = releaseDate;
-        cast = new HashMap<>();
-        productionTeam = new HashMap<>();
+        this.staff = new ArrayList();
     }
 
     public int getProgramID() {
@@ -47,20 +45,13 @@ public abstract class Production extends Credit {
         this.releaseDate = releaseDate;
     }
 
-    public void setPersonInCast(String characterName, Person person) {
-        cast.put(characterName, person);
+    public ArrayList getStaff() {
+        return staff;
     }
 
-    public void getPersonInCast(String charactherName){
-        cast.get(charactherName);
-    }
-
-    public HashMap<Role, ArrayList<Person>> getProductionTeam() {
-        return productionTeam;
-    }
-
-    public void setProductionTeam(HashMap<Role, ArrayList<Person>> productionTeam) {
-        this.productionTeam = productionTeam;
+    public void setStaff(ArrayList staff) {
+        this.staff = staff;
     }
 }
+
 

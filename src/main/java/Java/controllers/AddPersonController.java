@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddPersonController implements Initializable{
@@ -34,6 +36,8 @@ public class AddPersonController implements Initializable{
     protected Pane jobPane;
     @FXML
     protected Label creditTo;
+    @FXML
+    protected static AnchorPane contentPane;
 
 
     public void handleChoiceBoxJob(MouseEvent mouseEvent) {
@@ -71,6 +75,7 @@ public class AddPersonController implements Initializable{
         }
         jobPane.getChildren().add(roleChoiceBox);
         roleChoiceBox.setPrefWidth(300);
+        roleChoiceBox.setLayoutY(360);
         addTeam();
     }
 
@@ -79,4 +84,28 @@ public class AddPersonController implements Initializable{
     }
 
 
+    public void handleSearch(ActionEvent actionEvent) throws IOException {
+        setContentPane("searchResult.fxml");
+
+
+
+        search(personName.getText());
+    }
+
+    public static void setContentPane(String fxml) throws IOException {
+        contentPane.getChildren().clear();
+        Parent root = FXMLLoader.load(MenuController.class.getClassLoader().getResource(fxml));
+        contentPane.getChildren().add(root);
+    }
+
+    private static ArrayList<Credit> search(String getSearchString){
+        String searchStringChecked = getSearchString.toLowerCase();
+        ArrayList<Credit> creditList = new ArrayList<>();
+        for(Credit person : CreditSystemController.getPersonList()) {
+            if (person.getName().toLowerCase().contains(searchStringChecked)){
+                creditList.add(person);
+            }
+        }
+        return creditList;
+    }
 }
