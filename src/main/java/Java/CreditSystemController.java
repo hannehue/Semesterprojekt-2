@@ -44,8 +44,8 @@ public class CreditSystemController extends Application {
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job(
                 new Role[]{Role.MEDVIRKENDE, Role.INDTALERE},
-                new Movie("Disney Sjov", null, 123, true , "desc", 123, 23453, null, 123, null),
-                new String[] {"mickey"}
+                new String[] {"mickey"},
+                1
             )
         );
         Person thisa = (Person) personList.get(0);

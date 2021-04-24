@@ -4,6 +4,7 @@ import Java.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,91 +22,105 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class AddPersonController implements Initializable{
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
-    
-    @FXML
-    protected ChoiceBox choiceBoxJob;
-    @FXML
-    protected TextField personName;
-    @FXML
-    protected Pane jobPane;
-    @FXML
-    protected Label creditTo;
-    @FXML
-    protected static AnchorPane contentPane;
-
-
-    public void handleChoiceBoxJob(MouseEvent mouseEvent) {
-            choiceBoxJob.getItems().clear();
-            choiceBoxJob.getItems().add("Skuespiller");
-            choiceBoxJob.getItems().add("Produktionshold");
-            choiceBoxJob.show();
-
-
-    }
+public class AddPersonController implements Initializable {
 
     @FXML
-    private void handleSetJob(ActionEvent Event) {
-        switch (choiceBoxJob.getValue().toString()) {
-            case "Skuespiller":
-                handleAddCast();
-                break;
-            case "Produktionshold":
-                handleAddTeam();
-        }
-    }
+    protected ChoiceBox<Role> jobRole;
+    @FXML
+    protected TextField findPerson;
+    @FXML
+    protected AnchorPane characterNamePane;
+    @FXML
+    protected AnchorPane contentPane;
+
+    protected TextField characterName = new TextField();
+    private static ListView SearchList;
+    private Credit personToCredit;
 
 
-    private void handleAddCast() {
-
-
-    }
-
-    private void handleAddTeam() {
-        jobPane.getChildren().clear();
-        ChoiceBox<Role> roleChoiceBox = new ChoiceBox<>();
+    public void handleJob(MouseEvent mouseEvent) {
+        jobRole.getItems().clear();
         Role[] roles = Role.values();
-        for (Role role: roles) {
-            roleChoiceBox.getItems().add(role);
+        for (Role role : roles) {
+            jobRole.getItems().add(role);
         }
-        jobPane.getChildren().add(roleChoiceBox);
-        roleChoiceBox.setPrefWidth(300);
-        roleChoiceBox.setLayoutY(360);
-        addTeam();
+        jobRole.show();
     }
 
-    private void addTeam() {
+    public void handleFindPerson(ActionEvent actionEvent) {
+        searchPerson();
+        setCharacterNameField();
+    }
+
+    public void handleAddPerson(ActionEvent actionEvent) {
 
     }
 
-
-    public void handleSearch(ActionEvent actionEvent) throws IOException {
-        setContentPane("searchResult.fxml");
-
-
-
-        search(personName.getText());
-    }
-
-    public static void setContentPane(String fxml) throws IOException {
-        contentPane.getChildren().clear();
-        Parent root = FXMLLoader.load(MenuController.class.getClassLoader().getResource(fxml));
-        contentPane.getChildren().add(root);
-    }
-
-    private static ArrayList<Credit> search(String getSearchString){
-        String searchStringChecked = getSearchString.toLowerCase();
+    private void searchPerson() {
+        String searchString = findPerson.getText().toLowerCase();
         ArrayList<Credit> creditList = new ArrayList<>();
-        for(Credit person : CreditSystemController.getPersonList()) {
-            if (person.getName().toLowerCase().contains(searchStringChecked)){
+        for (Credit person : CreditSystemController.getPersonList()) {
+            if (person.getName().toLowerCase().contains(searchString)) {
                 creditList.add(person);
             }
         }
-        return creditList;
+        setContent(creditList);
+    }
+
+    public static void setContent(ArrayList<Credit> creditList) {
+        ObservableList<Credit> observableResults = FXCollections.observableArrayList();
+        observableResults.addAll(creditList);
+        System.out.println(observableResults);
+        SearchList.setItems(observableResults);
+        SearchList.setVisible(true);
+    }
+
+
+    private void setCharacterNameField() {
+        characterNamePane.getChildren().clear();
+        if (jobRole.getValue() == Role.SKUESPILLER) {
+            characterName.setPrefWidth(495);
+            characterName.setPrefHeight(33);
+            characterName.setPromptText("Role navn");
+            characterNamePane.getChildren().add(characterName);
+        }
+    }
+
+    private void handleClickedItem(MouseEvent event) {
+        personToCredit = (Credit) SearchList.getSelectionModel().getSelectedItem();
+        findPerson.setText(personToCredit.getName());
+        SearchList.setVisible(false);
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+
+        SearchList = new ListView();
+        SearchList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                handleClickedItem(event);
+            }
+        });
+        SearchList.setId("SearchList");
+        SearchList.setPrefHeight(337);
+        SearchList.setPrefWidth(495);
+        SearchList.setVisible(false);
+        contentPane.getChildren().add(SearchList);
     }
 }
+
+
+
+
+
+
+
+
+
+

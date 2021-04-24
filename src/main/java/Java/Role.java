@@ -1,6 +1,7 @@
 package Java;
 
 public enum Role {
+  SKUESPILLER("Skuespiller"),
   BILLEDKUNSTNERE("Billedkunstnere"),
   BILLED_OG_LYDREDIGERING("Billed- og lydredigering"),
   CASTING("Casting"),
