@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import Java.controllers.AddCreditController;
+
 
 public class AddPersonController implements Initializable {
 
@@ -56,7 +58,13 @@ public class AddPersonController implements Initializable {
     }
 
     public void handleAddPerson(ActionEvent actionEvent) {
-
+        Job job;
+        if (jobRole.getValue() == Role.SKUESPILLER) {
+            job = new Job(personToCredit.getCreditID(), jobRole.getValue(), characterName.getText());
+        } else {
+            job = new Job(personToCredit.getCreditID(), jobRole.getValue());
+        }
+        CreditSystemController.addTempJob(job);
     }
 
     private void searchPerson() {

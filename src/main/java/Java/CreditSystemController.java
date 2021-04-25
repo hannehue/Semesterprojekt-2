@@ -15,9 +15,10 @@ public class CreditSystemController extends Application {
     private static Scene scene;
     private static int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
-    private static ArrayList<Credit> personList = new ArrayList<>();
+    private static ArrayList<Person> personList = new ArrayList<>();
     private static ArrayList<Credit> movieList= new ArrayList<>();
     private static ArrayList<Show> showList = new ArrayList<>();
+    private static ArrayList<Job> tempList = new ArrayList<>();
     private static Stage primaryStage;
     private static UserType userType;
     private static String searchFieldPlaceholder = "";
@@ -42,12 +43,7 @@ public class CreditSystemController extends Application {
                 1231235, null, 123, null));
 
         ArrayList<Job> jobs = new ArrayList<>();
-        jobs.add(new Job(
-                new Role[]{Role.MEDVIRKENDE, Role.INDTALERE},
-                new String[] {"mickey"},
-                1
-            )
-        );
+        jobs.add(new Job(Role.MEDVIRKENDE, "mickey", 1));
         Person thisa = (Person) personList.get(0);
         thisa.setJobs(jobs);
     }
@@ -84,11 +80,34 @@ public class CreditSystemController extends Application {
         System.out.println(person.getName());
     }
 
-    public static void addMovie(String name, String description, int length) {
+    public static void addTempJob(Job job) {
+        tempList.add(job);
+
+    }
+
+    public static void addJob(int productionId) {
+        for (int i = tempList.size()-1; i > -1; i--) {
+            Job job = tempList.get(i);
+            for (Person person: personList) {
+                if (person.getCreditID() == job.getPersonId()) {
+                    Job newJob;
+                    if (job.getRole() == Role.SKUESPILLER) {
+                        newJob = new Job(job.getRole(), job.getCharacterNames(), productionId);
+                    } else {
+                        newJob = new Job(job.getRole(), productionId);
+                    }
+                    person.getJobs().add(newJob);
+                }
+            }
+            tempList.remove(i);
+        }
+    }
+
+    public static void addMovie(String name, String description, int id, int length) {
         Movie movie = new Movie(
                 name,
                 null,
-                nextId(),
+                id,
                 false,
                 description,
                 1, // Change later
@@ -169,7 +188,7 @@ public class CreditSystemController extends Application {
 
 
 
-    public static ArrayList<Credit> getPersonList() {
+    public static ArrayList<Person> getPersonList() {
         return personList;
     }
 
@@ -199,5 +218,29 @@ public class CreditSystemController extends Application {
 
     public static ArrayList<Show> getShowList() {
         return showList;
+    }
+
+    public static String tempListToString() {
+        String temp = "Ingen personer tilføjet";
+        if (!tempList.isEmpty()) {
+            temp = "";
+            for (Job job: tempList) {
+                for (Credit person: personList) {
+                    if (person.getCreditID() == job.getPersonId()){
+                        if (job.getRole() == Role.SKUESPILLER) {
+                            temp += job.getRole() + ": " + person.getName() + " - " + job.getCharacterNames() + "\n";
+                        } else {
+                            temp += job.getRole() + ": " + person.getName() + "\n";
+                        }
+                    }
+                }
+            }
+        } return temp;
+    }
+
+    public static void deleteTempList() {
+        for (int i = tempList.size()-1; i > -1; i--) {
+            tempList.remove(i);
+        }
     }
 }

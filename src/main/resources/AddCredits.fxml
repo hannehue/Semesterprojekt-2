@@ -33,8 +33,10 @@
                                         </Label>
                                         <TextField fx:id="movieLength" layoutX="200.0" layoutY="69.0" prefHeight="26.0" prefWidth="295.0" />
                                         <Button contentDisplay="CENTER" layoutX="200.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
-                                        <TextArea disable="true" layoutX="9.0" layoutY="244.0" prefHeight="214.0" prefWidth="522.0" />
+                                        <TextArea fx:id="personsToMovie" disable="true" layoutX="9.0" layoutY="244.0" prefHeight="214.0" prefWidth="522.0" />
                                         <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendMovieButton" text="Godkend og send" />
+                              <Button layoutX="348.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleReloadPersonToMovie" text="Reload" />
+                              <Button layoutX="410.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" />
                                     </children>
                                 </AnchorPane>
                             </content>
