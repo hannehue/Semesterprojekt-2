@@ -28,14 +28,22 @@ public class CreditSystemController extends Application {
 
         /** TEST MILJØ **/
 
-        addPerson("Jens Hans", "Elsker min hund", "45624585", "boi@gmail.com");
+        //addPerson("Jens Hans", "Elsker min hund", "45624585", "boi@gmail.com");
 
         dataLoader = new DatabaseLoader();
         //creditList.addAll(dataLoader.readPersons());
         //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
         /** :) **/
 
+        for (String[] strings: dataLoader.getPersonArraylist()){
+            personList.add(dataLoader.stringsToPerson(strings));
+        }
+        for (String[] strings: dataLoader.getMovieArrayList()){
+            movieList.add(dataLoader.stringsToMovie(strings));
+        }
+
         dataLoader.addCreditsToDatabase(personList);
+
         dataLoader.writeCredits(dataLoader.getPersonFile(), dataLoader.getPersonArraylist());
         //dataLoader.writePersons();
 
