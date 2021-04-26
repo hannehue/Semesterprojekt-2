@@ -2,15 +2,16 @@ package Java.controllers;
 
 import Java.CreditSystemController;
 import javafx.animation.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -21,16 +22,47 @@ public class MenuController implements Initializable {
     @FXML
     protected AnchorPane Menu;
     @FXML
+    protected AnchorPane MenuLabels;
+    @FXML
     protected TextField searchField;
     @FXML
     protected ImageView Searchicon;
     @FXML
-    protected ImageView User;
-    @FXML
     protected AnchorPane rootPane;
 
-    private static AnchorPane ContentPane;
+    @FXML
+    protected VBox VBoxMenu;
+    @FXML
+    protected VBox VBoxMenuLabels;
 
+
+    @FXML
+    protected ImageView profileImageview;
+    @FXML
+    protected ImageView approveCreditImageview;
+    @FXML
+    protected ImageView addCreditsImageview;
+    @FXML
+    protected ImageView addUserImageview;
+    @FXML
+    protected ImageView logoutButtonImageview;
+    @FXML
+    protected Label profileLabel;
+    @FXML
+    protected Label approveCreditLabel;
+    @FXML
+    protected Label addCreditsLabel;
+    @FXML
+    protected Label addUserLabel;
+    @FXML
+    protected Label logoutButtonLabel;
+
+    @FXML
+    protected ImageView loginButtonImageview;
+    @FXML
+    protected Label loginButtonLabel;
+
+    private static AnchorPane ContentPane;
     private static String searchString;
 
 
@@ -54,52 +86,100 @@ public class MenuController implements Initializable {
             System.out.println("clicked");
             Menu.translateYProperty().set(-30);
             Menu.setVisible(true);
+            MenuLabels.translateYProperty().set(-30);
+            MenuLabels.setVisible(true);
 
             Timeline timeline1 = new Timeline();
             KeyValue keyValue1 = new KeyValue(Menu.translateYProperty(), 0, Interpolator.EASE_IN);
             KeyFrame keyFrame1 = new KeyFrame(Duration.millis(500), keyValue1);
             timeline1.getKeyFrames().add(keyFrame1);
+
+            Timeline timeline2 = new Timeline();
+            KeyValue keyValue2 = new KeyValue(MenuLabels.translateYProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame keyFrame2 = new KeyFrame(Duration.millis(500), keyValue2);
+            timeline2.getKeyFrames().add(keyFrame2);
+
             parallelTransition.getChildren().add(timeline1);
+            parallelTransition.getChildren().add(timeline2);
 
             parallelTransition.play();
             parallelTransition.getChildren().clear();
+
+            //Menu load----------------
+            //Hvis der er logget ind, hvis menu i forhold til brugerens UserType
+            if (CreditSystemController.getUserType() != null) {
+                if (!CreditSystemController.getUserType().getPersonalProfile()){
+                    VBoxMenu.getChildren().removeAll(profileImageview);
+                    VBoxMenuLabels.getChildren().removeAll(profileLabel);
+                }
+                if (!CreditSystemController.getUserType().getAddCredit()){
+                    VBoxMenu.getChildren().removeAll(addCreditsImageview);
+                    VBoxMenuLabels.getChildren().removeAll(addCreditsLabel);
+                }
+                if (!CreditSystemController.getUserType().getAddUser()){
+                    VBoxMenu.getChildren().removeAll(addUserImageview);
+                    VBoxMenuLabels.getChildren().removeAll(addUserLabel);
+                }
+                if (!CreditSystemController.getUserType().getApproveCredit()){
+                    VBoxMenu.getChildren().removeAll(approveCreditImageview);
+                    VBoxMenuLabels.getChildren().removeAll(approveCreditLabel);
+                }
+                VBoxMenu.getChildren().removeAll(loginButtonImageview);
+                VBoxMenuLabels.getChildren().removeAll(loginButtonLabel);
+            } else { //Hvis ikke der er logget ind skal der kun vises login
+                VBoxMenu.getChildren().removeAll(profileImageview, approveCreditImageview, addCreditsImageview,addUserImageview, logoutButtonImageview);
+                VBoxMenuLabels.getChildren().removeAll(profileLabel, approveCreditLabel, approveCreditLabel, addCreditsLabel,addUserLabel,logoutButtonLabel);
+                VBoxMenu.toFront();
+                VBoxMenuLabels.toFront();
+            }
+
         } else {
 
-            System.out.println("clicked2");
-
+            //Animation til at lukke menu
             Timeline timeline1 = new Timeline();
             KeyValue keyValue1 = new KeyValue(Menu.translateYProperty(), -1000, Interpolator.EASE_OUT);
             KeyFrame keyFrame1 = new KeyFrame(Duration.millis(200), keyValue1);
             timeline1.getKeyFrames().add(keyFrame1);
 
+            Timeline timeline2 = new Timeline();
+            KeyValue keyValue2 = new KeyValue(MenuLabels.translateYProperty(), -1000, Interpolator.EASE_OUT);
+            KeyFrame keyFrame2 = new KeyFrame(Duration.millis(200), keyValue2);
+            timeline2.getKeyFrames().add(keyFrame2);
 
             parallelTransition.getChildren().add(timeline1);
+            parallelTransition.getChildren().add(timeline2);
             parallelTransition.setOnFinished(event -> hideMenu());
             parallelTransition.play();
             parallelTransition.getChildren().clear();
         }
     }
 
+    //Metode der bare sætter menuen til at være usyndelig
     private void hideMenu(){
         Menu.setVisible(false);
+        MenuLabels.setVisible(false);
     }
 
+    //Søge felt
     public void handleOpenSearch(MouseEvent mouseEvent) {
+        //Hvis søgefeltet er synligt
         if (searchField.visibleProperty().get()){
+            //Ignorer at der skal søge hvis brugeren ikke har indtastet noget
             if (!searchField.getText().equalsIgnoreCase("")) {
-                //searchField.setPromptText(searchField.getText());
-                //CreditSystemController.setSearchFieldPlaceholder(searchField.getText());
+                //gemmer søgestrengen
                 searchString = searchField.getText();
-                        System.out.println("getting text " + searchField.getText());
+                //prøver at åbne søgeresultat ind i content
                 try {
                     setContentPane("SearchResult.fxml");
                     SearchController.setContent();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                //Hvis der ikke er indtastet noget
             } else {
                 searchField.setPromptText("Indtast noget");
             }
+            //Hvis søgefeltet ikke er åbent, så start animation
         } else {
             searchField.setVisible(true);
             Timeline timeline = new Timeline();
@@ -111,12 +191,15 @@ public class MenuController implements Initializable {
         }
     }
 
-
-
-
-
-    public void MenuItemShow(MouseEvent mouseEvent) {
-
+    //Gå til login
+    @FXML
+    private void handleLogin(MouseEvent mouseEvent){
+        try {
+            setContentPane("Login.fxml");
+            hideMenu();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void handleAddCredit(MouseEvent mouseEvent) throws IOException {
@@ -149,4 +232,8 @@ public class MenuController implements Initializable {
         }
     }
 
+    public void handleLogout(MouseEvent mouseEvent) throws IOException {
+        CreditSystemController.setUserType(null);
+        CreditSystemController.setRoot("Menu");
+    }
 }

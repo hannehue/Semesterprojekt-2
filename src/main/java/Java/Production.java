@@ -21,7 +21,7 @@ public abstract class Production extends Credit {
         this.staff = new ArrayList();
     }
 
-    public int getProgramID() {
+    public int getProductionID() {
         return productionID;
     }
 
@@ -33,7 +33,7 @@ public abstract class Production extends Credit {
         return releaseDate;
     }
 
-    public void setProgramID(int programID) {
+    public void setProductionID(int programID) {
         this.productionID = productionID;
     }
 

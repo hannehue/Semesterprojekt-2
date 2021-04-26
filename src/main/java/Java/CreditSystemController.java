@@ -16,7 +16,7 @@ public class CreditSystemController extends Application {
     private static int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
     private static ArrayList<Person> personList = new ArrayList<>();
-    private static ArrayList<Credit> movieList= new ArrayList<>();
+    private static ArrayList<Movie> movieList= new ArrayList<>();
     private static ArrayList<Show> showList = new ArrayList<>();
     private static ArrayList<Job> tempList = new ArrayList<>();
     private static Stage primaryStage;
@@ -43,7 +43,8 @@ public class CreditSystemController extends Application {
                 1231235, null, 123, null));
 
         ArrayList<Job> jobs = new ArrayList<>();
-        jobs.add(new Job(Role.MEDVIRKENDE, "mickey", 1));
+        jobs.add(new Job(Role.MEDVIRKENDE, "mickey", 12312));
+        jobs.add(new Job(Role.BILLED_OG_LYDREDIGERING, 12312) );
         Person thisa = (Person) personList.get(0);
         thisa.setJobs(jobs);
     }
@@ -192,7 +193,7 @@ public class CreditSystemController extends Application {
         return personList;
     }
 
-    public static ArrayList<Credit> getMovieList() {
+    public static ArrayList<Movie> getMovieList() {
         return movieList;
     }
 
@@ -242,5 +243,23 @@ public class CreditSystemController extends Application {
         for (int i = tempList.size()-1; i > -1; i--) {
             tempList.remove(i);
         }
+    }
+
+    public static Production getProduction(int productionID) {
+        for (Movie movie : movieList) {
+            if (movie.getProductionID() == productionID) {
+                return movie;
+            }
+        }
+        for (Show show : showList) {
+            for (Season season : show.getSeasons()) {
+                for (Episode episode : season.getEpisodes()) {
+                    if (episode.getProductionID() == productionID) {
+                        return episode;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
