@@ -95,7 +95,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="75.0" prefWidth="200.0">
+                  <Pane fx:id="logout" prefHeight="75.0" prefWidth="200.0">
                      <children>
                         <ImageView fx:id="logoutButtonImageview" fitHeight="56.0" fitWidth="56.0" onMouseClicked="#handleLogout" preserveRatio="true">
                            <image>
@@ -109,7 +109,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane prefHeight="75.0" prefWidth="200.0">
+                  <Pane fx:id="login" prefHeight="75.0" prefWidth="200.0">
                      <children>
                         <ImageView fx:id="loginButtonImageview" fitHeight="56.0" fitWidth="56.0" onMouseClicked="#handleLogin" preserveRatio="true">
                            <image>

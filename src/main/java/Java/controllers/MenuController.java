@@ -32,27 +32,18 @@ public class MenuController implements Initializable {
     @FXML
     protected VBox VBoxMenu;
 
-
+    @FXML
+    protected Pane login;
+    @FXML
+    protected Pane logout;
+    @FXML
+    protected Pane addUserI;
     @FXML
     protected Pane profile;
     @FXML
     protected Pane approveCredit;
     @FXML
     protected Pane addCredits;
-    @FXML
-    protected Pane addUser;
-    @FXML
-    protected Pane logoutButton;
-    @FXML
-    protected Label profileLabel;
-    @FXML
-    protected Label approveCreditLabel;
-    @FXML
-    protected Label addCreditsLabel;
-    @FXML
-    protected Label addUserLabel;
-    @FXML
-    protected Label logoutButtonLabel;
 
     @FXML
     protected ImageView loginButton;
@@ -105,14 +96,14 @@ public class MenuController implements Initializable {
                     VBoxMenu.getChildren().removeAll(addCredits);
                 }
                 if (!CreditSystemController.getUserType().getAddUser()){
-                    VBoxMenu.getChildren().removeAll(addUser);
+                    VBoxMenu.getChildren().removeAll(addUserI);
                 }
                 if (!CreditSystemController.getUserType().getApproveCredit()){
                     VBoxMenu.getChildren().removeAll(approveCredit);
                 }
-                VBoxMenu.getChildren().removeAll(loginButton);
+                VBoxMenu.getChildren().removeAll(login);
             } else { //Hvis ikke der er logget ind skal der kun vises login
-                VBoxMenu.getChildren().removeAll(profile, approveCredit, addCredits,addUser, logoutButton);
+                VBoxMenu.getChildren().removeAll(profile, approveCredit, addCredits,addUserI, logout);
                 VBoxMenu.toFront();
             }
 
