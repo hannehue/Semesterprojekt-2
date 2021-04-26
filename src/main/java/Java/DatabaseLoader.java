@@ -105,15 +105,18 @@ public class DatabaseLoader {
         try {
             tempPerson = new Person(vals[0], formatter.parse(vals[1]), Integer.parseInt(vals[2]),
                     Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
-            if (vals[9].equals("null")) {
+            /* if (vals[9].equals("null")) {
                 return tempPerson;
             }
+
+             */
         } catch (java.text.ParseException e) {
             e.printStackTrace();
             System.err.println("Failed when initializing person from string array");
             return null;
         }
         // Loads one persons jobs into strings
+        /*
         String[] jobsStrings = vals[9].split("##");
         ArrayList<Job> jobs = new ArrayList<>();
 
@@ -134,6 +137,8 @@ public class DatabaseLoader {
         }
 
         tempPerson.setJobs(jobs);
+
+         */
         return tempPerson;
     }
 
@@ -202,6 +207,22 @@ public class DatabaseLoader {
 
     public ArrayList<String[]> getPersonArraylist() {
         return personArraylist;
+    }
+
+    public ArrayList<String[]> getEpisodeArrayList() {
+        return episodeArrayList;
+    }
+
+    public ArrayList<String[]> getGroupArraylist() {
+        return groupArraylist;
+    }
+
+    public ArrayList<String[]> getMovieArrayList() {
+        return movieArrayList;
+    }
+
+    public ArrayList<String[]> getShowArrayList() {
+        return showArrayList;
     }
 
     public File getPersonFile() {
