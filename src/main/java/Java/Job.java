@@ -33,10 +33,15 @@ public class Job {
 
     @Override
     public String toString(){
-        if (characterName != null) {
-           return role.toString() + " som " + characterName + " i " + CreditSystemController.getProduction(productionID).getName();
+        try {
+            if (characterName != null) {
+                return role.toString() + " som " + characterName + " i " + CreditSystemController.getProduction(productionID).getName();
+            }
+            return role.toString() + " i " + CreditSystemController.getProduction(productionID).getName();
         }
-        return role.toString() + " i " + CreditSystemController.getProduction(productionID).getName();
+        catch (NullPointerException e) {
+            return "";
+        }
     }
 
     public int getProgram() {
