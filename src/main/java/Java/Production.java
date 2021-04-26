@@ -19,7 +19,7 @@ public abstract class Production extends Credit {
         this.releaseDate = releaseDate;
     }
 
-    public int getProgramID() {
+    public int getProductionID() {
         return productionID;
     }
 
