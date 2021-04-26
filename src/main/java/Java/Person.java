@@ -63,10 +63,7 @@ public class Person extends Credit{
             jobString += "\t" + job.toString() + "\n";
         }
         return "Name: " + getName() + ", PersonID: " + personID + "\n" +
-                "Email: " + personEmail + "\n" +
-                "Phone number: " + phoneNumber + "\n" +
-                "Jobs:\n" + jobString +
-                "PersonalInfo: " + personalInfo  + "\n";
+                "Jobs:\n" + jobString;
     }
     @Override
     public String toFileString() {
