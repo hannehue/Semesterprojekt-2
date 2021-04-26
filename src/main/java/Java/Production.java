@@ -5,6 +5,7 @@ import java.util.Date;
 
 public abstract class Production extends Credit {
 
+    private String name;
     private int productionID;
     private Category[] categories;
     private int lengthInSecs;
@@ -14,7 +15,8 @@ public abstract class Production extends Credit {
     public Production(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID,
                       Category[] categories, int lengthInSecs, Date releaseDate, ArrayList<String> staffIDs){
        //Husk at implementér category. - Is implemented by Victor: remember to read and confirm.
-        super(name, dateAdded, creditID, approved, description);
+        super(dateAdded, creditID, approved, description);
+        this.name = name;
         this.productionID = productionID;
         this.categories = categories;
         this.lengthInSecs = lengthInSecs;
@@ -61,6 +63,11 @@ public abstract class Production extends Credit {
 
     public ArrayList<String> getStaffIDs() {
         return staffIDs;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }
 

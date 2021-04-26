@@ -23,6 +23,10 @@ public class DatabaseLoader {
     private File movieFile;
     private ArrayList<String[]> movieArrayList;
 
+    private File episodesFile;
+    private ArrayList<String[]> episodeArrayList;
+
+
     private SimpleDateFormat formatter;
 
     public DatabaseLoader() throws IOException, ParseException {
@@ -30,9 +34,11 @@ public class DatabaseLoader {
         personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
         groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
         movieFile = new File(DatabaseLoader.class.getClassLoader().getResource("Movies.txt").getFile());
+        episodesFile = new File(DatabaseLoader.class.getClassLoader().getResource("Episodes.txt").getFile());
         personArraylist = readCredits(personFile);
         groupArraylist = readCredits(groupFile);
         movieArrayList = readCredits(movieFile);
+        episodeArrayList = readCredits(episodesFile);
     }
 
     public void writeCredits(File file, ArrayList<String[]> creditList) throws IOException {
@@ -65,10 +71,12 @@ public class DatabaseLoader {
         String[] creditArray = credit.toFileString().split(",");
         return creditArray;
     }
-
-    public void addCredit(Credit credit, ArrayList<Credit> creditsList){
+    /*
+    public void addCredit(Credit credit, ArrayList<? extends Credit> creditsList){
         creditsList.add(credit);
     }
+
+     */
 
     public void addCredits(ArrayList<? extends Credit> readList, ArrayList<String[]> writeList ){
         for (Credit credit: readList){
@@ -147,14 +155,26 @@ public class DatabaseLoader {
         return tempMovie;
     }
 
+    public Episode stringsToEpisode(String[] strings){
+        Episode tempEpisode = null;
+        try {
+            tempEpisode = new Episode(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
+                    Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
+                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8]),
+                    new ArrayList<String>(Arrays.asList(strings[9].split(";"))), strings[10]);
+        } catch (ParseException e){
+            e.printStackTrace();
+            System.err.println("Failed when initializing movie from string array");
+            return null;
+        }
+        return tempEpisode;
+    }
+
     public static void main(String[] args) throws IOException, ParseException {
         //Production kan lige nu kun have en category, skal laves om
         DatabaseLoader dbload = new DatabaseLoader();
-        for (String[] arr : dbload.groupArraylist) {
-            System.out.println(dbload.stringsToGroup(arr).toString());
-        }
-        dbload.groupArraylist.add(dbload.creditToStringArray(new Group("Et eller andet band 2", new Date(),2,false,"Band fra Esbjerg",3)));
-        dbload.writeCredits(dbload.groupFile, dbload.groupArraylist);
+
+        System.out.println(dbload.stringsToEpisode(dbload.episodeArrayList.get(0)));
     }
 
     public ArrayList<String[]> getPersonArraylist() {
@@ -172,5 +192,7 @@ public class DatabaseLoader {
     public File getMovieFile() {
         return movieFile;
     }
+
+
 
 }

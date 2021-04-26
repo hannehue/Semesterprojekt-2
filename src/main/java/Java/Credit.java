@@ -11,8 +11,7 @@ public abstract class Credit {
     private String description;
 
 
-    public Credit(String name, Date dateAdded, int creditID, boolean approved, String description){
-        this.name = name;
+    public Credit(Date dateAdded, int creditID, boolean approved, String description){
         this.dateAdded = dateAdded;
         this.creditID = creditID;
         this.approved = approved;

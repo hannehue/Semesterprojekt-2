@@ -6,13 +6,15 @@ import java.util.Date;
 
 public class Season extends Credit {
 
-    private int showID;
+    private String showID;
     private ArrayList<Episode> episodes;
+    private boolean allEpisodesApproved;
 
-    public Season(String name, Date dateAdded, int creditID, boolean approved, String description , int showID, ArrayList<Episode> episodes){
-        super(name, dateAdded, creditID, approved, description);
+    public Season(Date dateAdded, int creditID, boolean approved, String description , String showID, ArrayList<Episode> episodes, Boolean allEpisodesApproved){
+        super(dateAdded, creditID, approved, description);
         this.showID = showID;
         this.episodes = episodes;
+        this.allEpisodesApproved = allEpisodesApproved;
     }
 
     public ArrayList<Episode> getEpisodes() {
@@ -23,17 +25,40 @@ public class Season extends Credit {
         this.episodes = episodes;
     }
 
-    public int getShowID() {
+    public String getShowID() {
         return showID;
     }
 
-    public void setShowID(int showID) {
+    public void setShowID(String showID) {
         this.showID = showID;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Season{" +
+                "showID='" + showID + '\'' +
+                ", episodes=" + episodes +
+                '}';
     }
 
     @Override
     public String toFileString() {
-        return null;
+        String seasonFileString = "";
+
+        seasonFileString += getDateAdded() + "," + getCreditID() + "," + isApproved() + "," + getDescription() + "," +
+                getShowID() + ",";
+
+        for (Episode episode: getEpisodes()){
+            seasonFileString += episode.toFileString();
+        }
+        seasonFileString += "--," + isAllEpisodesApproved() + ",";
+
+        return "";
+    }
+
+    public boolean isAllEpisodesApproved() {
+        return allEpisodesApproved;
     }
 }
 
