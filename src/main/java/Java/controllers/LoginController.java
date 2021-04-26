@@ -43,6 +43,6 @@ public class LoginController implements Initializable {
 
     protected static void loginManager(UserType userType) throws IOException{
         CreditSystemController.setUserType(userType);
-        CreditSystemController.setRoot("Menu2");
+        CreditSystemController.setRoot("Menu");
     }
 }
