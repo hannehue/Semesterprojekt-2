@@ -72,6 +72,19 @@ public class CreditSystemController extends Application {
         Person thisa = (Person) personList.get(0);
         thisa.setJobs(jobs);
     }
+    
+    @Override
+    public void stop() {
+        dataLoader.addCreditsToDatabase(personList);
+        dataLoader.addCreditsToDatabase(movieList);
+        dataLoader.addCreditsToDatabase(showList);
+
+        try {
+            dataLoader.writeAllCredits();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
     public static void setRoot(String fxml) throws IOException {

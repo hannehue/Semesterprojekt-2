@@ -26,10 +26,6 @@ public class DatabaseLoader {
     private File showFile;
     private ArrayList<String[]> showArrayList;
 
-    private File episodesFile;
-    private ArrayList<String[]> episodeArrayList;
-
-
     private SimpleDateFormat formatter;
 
     public DatabaseLoader() throws IOException, ParseException {
@@ -37,13 +33,11 @@ public class DatabaseLoader {
         personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
         groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
         movieFile = new File(DatabaseLoader.class.getClassLoader().getResource("Movies.txt").getFile());
-        episodesFile = new File(DatabaseLoader.class.getClassLoader().getResource("Episodes.txt").getFile());
         showFile = new File(DatabaseLoader.class.getClassLoader().getResource("Shows.txt").getFile());
         personArraylist = readCredits(personFile);
         groupArraylist = readCredits(groupFile);
         movieArrayList = readCredits(movieFile);
         showArrayList = readCredits(showFile);
-        episodeArrayList = readCredits(episodesFile);
     }
 
     public void writeCredits(File file, ArrayList<String[]> creditList) throws IOException {
@@ -53,6 +47,15 @@ public class DatabaseLoader {
             outputStream.append(stringArraytoString(creditList.get(row)) + "\n");
         }
         outputStream.close();
+    }
+
+    public void writeAllCredits() throws IOException {
+        for (int i = 0; i < 4; i++) {
+            writeCredits(personFile,personArraylist);
+            writeCredits(groupFile, groupArraylist);
+            writeCredits(movieFile, movieArrayList);
+            writeCredits(showFile,showArrayList);
+        }
     }
 
     public String stringArraytoString(String[] strings){
@@ -202,7 +205,6 @@ public class DatabaseLoader {
         //dbload.groupArraylist.add(dbload.creditToStringArray(new Group("Et eller andet band 2", new Date(),2,false,"Band fra Esbjerg",3)));
         //dbload.writeCredits(dbload.groupFile, dbload.groupArraylist);
 
-        System.out.println(dbload.stringsToEpisode(dbload.episodeArrayList.get(0)));
     }
 
     public ArrayList<String[]> getPersonArraylist() {
