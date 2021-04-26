@@ -83,6 +83,7 @@ public class CreditSystemController extends Application {
 
     public static void addTempJob(Job job) {
         tempList.add(job);
+        System.out.println("temp job added");
 
     }
 
@@ -149,7 +150,7 @@ public class CreditSystemController extends Application {
         }
     }
 
-    public static void addEpisode(String title, int length, String show, String season) {
+    public static void addEpisode(String title, int length, String show, String season, int id) {
         for (Show s : showList) {
             if (s.getName() == show) {
                 for (Season seasonToGet : s.getSeasons()) {
@@ -158,7 +159,7 @@ public class CreditSystemController extends Application {
                                 getNextEpisode(show, season) + " - " + title,
                                 null,
                                 seasonToGet.getCreditID(),
-                                nextId(),
+                                id,
                                 false,
                                 "description",
                                 nextId(),

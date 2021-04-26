@@ -44,7 +44,9 @@ public class AddCreditController implements Initializable {
     @FXML
     protected TextField episodeLength;
     @FXML
-    protected TextArea personsToMovie;
+    protected TextArea personsToCreditM;
+    @FXML
+    protected TextArea personsToCreditE;
 
     private static Stage createShow;
     private static Stage createSeason;
@@ -90,8 +92,10 @@ public class AddCreditController implements Initializable {
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
         System.out.println("trying to add episode to" + showName + " . " + seasonName);
-        CreditSystemController.addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName);
+        int id = CreditSystemController.nextId();
+        CreditSystemController.addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName, id);
         reloadNextEpisode();
+        CreditSystemController.addJob(id);
     }
 
 
@@ -141,7 +145,6 @@ public class AddCreditController implements Initializable {
         choiceBoxShow.setValue(showName);
     }
 
-
     @FXML
     public void handleSetSeason(ActionEvent actionEvent) {
         if (!choiceBoxSeason.getSelectionModel().isEmpty()) {
@@ -168,10 +171,6 @@ public class AddCreditController implements Initializable {
         choiceBoxSeason.show();
     }
 
-    @FXML
-    protected void handleAddPersonEpisode(ActionEvent Event) throws IOException {
-
-    }
 
     @FXML
     protected void handleGetEpisodeName(ActionEvent Event) throws IOException {
@@ -201,11 +200,14 @@ public class AddCreditController implements Initializable {
     }
 
     public void handleReloadPersonToMovie(ActionEvent actionEvent) {
-        personsToMovie.setText(CreditSystemController.tempListToString());
+        personsToCreditM.setText(CreditSystemController.tempListToString());
+        personsToCreditE.setText(CreditSystemController.tempListToString());
+        System.out.println(CreditSystemController.tempListToString());
     }
 
     public void handleRemovePersons(ActionEvent actionEvent) {
         CreditSystemController.deleteTempList();
-        personsToMovie.setText(CreditSystemController.tempListToString());
+        personsToCreditM.setText(CreditSystemController.tempListToString());
+        personsToCreditE.setText(CreditSystemController.tempListToString());
     }
 }
