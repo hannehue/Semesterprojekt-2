@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,39 +18,38 @@ import java.util.ResourceBundle;
 
 
 public class SearchController implements Initializable {
-    @FXML
-    protected ListView SearchList;
+    private static ListView SearchList;
 
-    private static String searchString;
+    @FXML
+    protected Pane searchPane;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<Credit> observableResults = FXCollections.observableArrayList();
-        observableResults.addAll(search(searchString));
-
+        SearchList = new ListView();
         SearchList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Credit item = (Credit) SearchList.getSelectionModel().getSelectedItem();
-                System.out.println("clicked" + item);
-                CreditViewController.setCurrentCredit(item);
-                try {
-                    CreditSystemController.setRoot("CreditView");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                handleClickedItem(event);
             }
         });
+        SearchList.setId("SearchList");
+        SearchList.setLayoutX(282);
+        SearchList.setLayoutY(127);
+        SearchList.setPrefHeight(353);
+        SearchList.setPrefWidth(424);
+        searchPane.getChildren().add(SearchList);
+    }
 
+    public static void setContent() {
+        ObservableList<Credit> observableResults = FXCollections.observableArrayList();
+        observableResults.addAll(search(MenuController.getSearchString()));
+        System.out.println(observableResults);
         SearchList.setItems(observableResults);
     }
 
-    public static void setSearchString(String searchFieldString) {
-        searchString = searchFieldString;
-    }
 
-    private ArrayList<Credit> search(String search){
-        String searchStringChecked = search.toLowerCase();
+    private static ArrayList<Credit> search(String getsearchString){
+        String searchStringChecked = getsearchString.toLowerCase();
         ArrayList<Credit> creditList = new ArrayList<>();
         for(Credit person : CreditSystemController.getPersonList()) {
             if (person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
@@ -57,5 +57,16 @@ public class SearchController implements Initializable {
             }
         }
         return creditList;
+    }
+
+    public void handleClickedItem(MouseEvent mouseEvent) {
+        Credit item = (Credit) SearchList.getSelectionModel().getSelectedItem();
+        System.out.println("clicked" + item);
+        CreditViewController.setCurrentCredit(item);
+        try {
+            MenuController.setContentPane("CreditView.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

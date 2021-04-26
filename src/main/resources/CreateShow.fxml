@@ -7,24 +7,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="462.0" prefWidth="603.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.CreateShowController">
     <children>
-        <TextField fx:id="showTitle" layoutX="300.0" layoutY="56.0" prefHeight="27.0" prefWidth="206.0" promptText="Title" />
-        <Label layoutX="72.0" layoutY="56.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-color: #FFFFFF;" text="Title">
+        <TextField fx:id="showTitle" layoutX="72.0" layoutY="50.0" prefHeight="27.0" prefWidth="206.0" promptText="Title">
+         <font>
+            <Font size="20.0" />
+         </font></TextField>
+        <Label layoutX="72.0" layoutY="23.0" prefHeight="27.0" prefWidth="206.0" style="-fx-text-fill: #FFFFFF;" text="Title">
             <font>
                 <Font size="15.0" />
             </font>
         </Label>
-        <Button onAction="#handleAddShow" layoutX="371.0" layoutY="336.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="135.0" text="Tilføj">
+        <Button layoutX="371.0" layoutY="364.0" mnemonicParsing="false" onAction="#handleAddShow" prefHeight="37.0" prefWidth="135.0" text="Tilføj">
             <font>
-                <Font size="26.0" />
+                <Font size="18.0" />
             </font>
         </Button>
-      <Label layoutX="72.0" layoutY="97.0" prefHeight="27.0" prefWidth="206.0" style="-fx-background-color: #FFFFFF;" text="Beskrivelse">
+      <Label layoutX="72.0" layoutY="110.0" prefHeight="27.0" prefWidth="206.0" style="-fx-text-fill: #FFFFFF;" text="Beskrivelse">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextArea fx:id="showDescription" layoutX="72.0" layoutY="132.0" prefHeight="195.0" prefWidth="434.0" />
+      <TextArea fx:id="showDescription" layoutX="72.0" layoutY="144.0" prefHeight="195.0" prefWidth="434.0" />
     </children>
 </AnchorPane>

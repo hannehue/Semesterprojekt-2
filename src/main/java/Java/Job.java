@@ -2,16 +2,35 @@ package Java;
 
 public class Job {
 
-    private Role[] roles;
-    private Production program;
-    private String[] characterNames;
+    private Role role;
+    private int programId;
+    private String characterNames;
+    private int personId;
 
-    public Job(Role[] roles, Production program, String[] characterNames) {
-        this.roles = roles;
-        this.program = program;
+    public Job(Role role, String characterNames, int programId) {
+        this.role = role;
+        this.programId = programId;
         this.characterNames = characterNames;
     }
 
+    public Job(int personId, Role roles, String characterNames) {
+        this.role = roles;
+        this.personId = personId;
+        this.characterNames = characterNames;
+    }
+
+    public Job(Role role, int programId) {
+        this.role = role;
+        this.programId = programId;
+
+    }
+
+    public Job(int personId, Role roles) {
+        this.role = roles;
+        this.personId = personId;
+    }
+
+    /*
     @Override
     public String toString(){
         String allRoles = "Roles: ";
@@ -27,27 +46,26 @@ public class Job {
         return program.toString() + ": " + allRoles;
     }
 
-    public Role[] getRoles() {
-        return roles;
+     */
+
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Role[] roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
-    public Production getProgram() {
-        return program;
-    }
-
-    public void setProgram(Production program) {
-        this.program = program;
-    }
-
-    public String[] getCharacterNames() {
+    public String getCharacterNames() {
         return characterNames;
     }
 
-    public void setCharacterNames(String[] characterNames) {
+    public void setCharacterNames(String characterNames) {
         this.characterNames = characterNames;
     }
+
+    public int getPersonId() {
+        return personId;
+    }
+
 }

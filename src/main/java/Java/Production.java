@@ -1,6 +1,8 @@
 package Java;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public abstract class Production extends Credit {
 
@@ -8,6 +10,7 @@ public abstract class Production extends Credit {
     private Category[] categories;
     private int lengthInSecs;
     private Date releaseDate;
+    private ArrayList staff;
 
     public Production(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID, int lengthInSecs, Date releaseDate){
        //Husk at implementér category.
@@ -15,6 +18,7 @@ public abstract class Production extends Credit {
         this.productionID = productionID;
         this.lengthInSecs = lengthInSecs;
         this.releaseDate = releaseDate;
+        this.staff = new ArrayList();
     }
 
     public int getProgramID() {
@@ -40,5 +44,14 @@ public abstract class Production extends Credit {
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    public ArrayList getStaff() {
+        return staff;
+    }
+
+    public void setStaff(ArrayList staff) {
+        this.staff = staff;
+    }
 }
+
 

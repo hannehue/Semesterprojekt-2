@@ -25,24 +25,8 @@ public class GUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
-    // General features
-    @FXML
-    protected  void handleLogout(ActionEvent Event) throws IOException{
-        //Tilføj kode der faktisk logger ud fra en konto
-        CreditSystemController.setRoot("Dashboard");
-    }
 
 
-
-
-
-
-    //Credit Person
-    @FXML
-    protected  void handleEditProfile(ActionEvent Event) throws IOException{
-        //Tilføj kode der henter brugerens informationer og sætter dem i textfields i stedet for labels
-        CreditSystemController.setRoot("CreditPersonProfile-edit");
-    }
 
 
 
