@@ -39,7 +39,7 @@
          <children>
             <VBox fx:id="VBoxMenu" prefHeight="200.0" prefWidth="59.0" viewOrder="-3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <Pane fx:id="approveCredit" prefHeight="75.0" prefWidth="200.0">
+                  <Pane fx:id="approveCredit" onMouseClicked="#approveCreditHandler" prefHeight="75.0" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
                            <image>
@@ -67,7 +67,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane fx:id="addCredits" prefHeight="75.0" prefWidth="200.0">
+                  <Pane fx:id="addCredits" onMouseClicked="#handleAddCredit" prefHeight="75.0" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
                            <image>
