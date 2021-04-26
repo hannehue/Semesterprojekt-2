@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.geometry.Insets?>
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="default.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.MenuController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="default.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.MenuController">
    <children>
       <AnchorPane prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #009ceb;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -40,111 +35,94 @@
             </Pane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="Menu" prefHeight="200.0" prefWidth="40.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="70.0" viewOrder="-2">
+      <AnchorPane fx:id="Menu" prefHeight="200.0" prefWidth="40.0" viewOrder="-2" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="70.0">
          <children>
-            <VBox fx:id="VBoxMenu" prefHeight="200.0" prefWidth="59.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0" viewOrder="-3">
+            <VBox fx:id="VBoxMenu" prefHeight="200.0" prefWidth="59.0" viewOrder="-3" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <ImageView onMouseClicked="#handlePersonalProfile" fx:id="profileImageview" fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
-                     <image>
-                        <Image url="@images/user.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ImageView>
-                  <ImageView fx:id="approveCreditImageview" fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
-                     <image>
-                        <Image url="@images/check (1).png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <ImageView fx:id="addCreditsImageview" fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
-                     <image>
-                        <Image url="@images/add (1).png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <ImageView fx:id="addUserImageview" fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
-                     <image>
-                        <Image url="@images/add-user (1).png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <ImageView onMouseClicked="#handleLogout" fx:id="logoutButtonImageview" fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
-                     <image>
-                        <Image url="@images/exit.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <ImageView onMouseClicked="#handleLogin" fx:id="loginButtonImageview" fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
-                     <image>
-                        <Image url="@images/enter.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="MenuLabels" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: white lightgrey white white; -fx-border-width: 0 1 0 0;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="66.0" AnchorPane.topAnchor="70.0">
-         <children>
-            <VBox fx:id="VBoxMenuLabels" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label onMouseClicked="#handlePersonalProfile" fx:id="profileLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" style="-fx-text-alignment: center;" text="Profile" textAlignment="CENTER" visible="false">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="approveCreditLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" style="-fx-text-alignment: center;" text="Godkend kreditering" textAlignment="CENTER">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="addCreditsLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" style="-fx-text-alignment: center;" text="Tilføj kreditering" textAlignment="CENTER">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="addUserLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" style="-fx-text-alignment: center;" text="Tilføj bruger" textAlignment="CENTER">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="logoutButtonLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" style="-fx-text-alignment: center;" text="Logout" textAlignment="CENTER">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label onMouseClicked="#handleLogin" fx:id="loginButtonLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" style="-fx-text-alignment: center;" text="Login" textAlignment="CENTER">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
+                  <Pane fx:id="approveCredit" prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/check (1).png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="approveCreditLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" prefHeight="56.0" style="-fx-text-alignment: center;" text="Godkend kreditering" textAlignment="CENTER">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="profile" prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" onMouseClicked="#handlePersonalProfile" preserveRatio="true">
+                           <image>
+                              <Image url="@images/user.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="profileLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" onMouseClicked="#handlePersonalProfile" prefHeight="56.0" style="-fx-text-alignment: center;" text="Profile" textAlignment="CENTER" visible="false">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="addCredits" prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/add (1).png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="addCreditsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" prefHeight="56.0" style="-fx-text-alignment: center;" text="Tilføj kreditering" textAlignment="CENTER">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="addUserI" prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/add-user (1).png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="addUserLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" prefHeight="56.0" style="-fx-text-alignment: center;" text="Tilføj bruger" textAlignment="CENTER">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="logoutButtonImageview" fitHeight="56.0" fitWidth="56.0" onMouseClicked="#handleLogout" preserveRatio="true">
+                           <image>
+                              <Image url="@images/exit.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="logoutButtonLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" prefHeight="56.0" style="-fx-text-alignment: center;" text="Logout" textAlignment="CENTER">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="loginButtonImageview" fitHeight="56.0" fitWidth="56.0" onMouseClicked="#handleLogin" preserveRatio="true">
+                           <image>
+                              <Image url="@images/enter.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="loginButtonLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" onMouseClicked="#handleLogin" prefHeight="56.0" style="-fx-text-alignment: center;" text="Login" textAlignment="CENTER">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
                </children>
             </VBox>
          </children>

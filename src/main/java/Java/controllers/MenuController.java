@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -22,8 +23,6 @@ public class MenuController implements Initializable {
     @FXML
     protected AnchorPane Menu;
     @FXML
-    protected AnchorPane MenuLabels;
-    @FXML
     protected TextField searchField;
     @FXML
     protected ImageView Searchicon;
@@ -32,20 +31,18 @@ public class MenuController implements Initializable {
 
     @FXML
     protected VBox VBoxMenu;
-    @FXML
-    protected VBox VBoxMenuLabels;
 
 
     @FXML
-    protected ImageView profileImageview;
+    protected Pane profile;
     @FXML
-    protected ImageView approveCreditImageview;
+    protected Pane approveCredit;
     @FXML
-    protected ImageView addCreditsImageview;
+    protected Pane addCredits;
     @FXML
-    protected ImageView addUserImageview;
+    protected Pane addUser;
     @FXML
-    protected ImageView logoutButtonImageview;
+    protected Pane logoutButton;
     @FXML
     protected Label profileLabel;
     @FXML
@@ -58,7 +55,7 @@ public class MenuController implements Initializable {
     protected Label logoutButtonLabel;
 
     @FXML
-    protected ImageView loginButtonImageview;
+    protected ImageView loginButton;
     @FXML
     protected Label loginButtonLabel;
 
@@ -86,21 +83,14 @@ public class MenuController implements Initializable {
             System.out.println("clicked");
             Menu.translateYProperty().set(-30);
             Menu.setVisible(true);
-            MenuLabels.translateYProperty().set(-30);
-            MenuLabels.setVisible(true);
 
             Timeline timeline1 = new Timeline();
             KeyValue keyValue1 = new KeyValue(Menu.translateYProperty(), 0, Interpolator.EASE_IN);
             KeyFrame keyFrame1 = new KeyFrame(Duration.millis(500), keyValue1);
             timeline1.getKeyFrames().add(keyFrame1);
 
-            Timeline timeline2 = new Timeline();
-            KeyValue keyValue2 = new KeyValue(MenuLabels.translateYProperty(), 0, Interpolator.EASE_IN);
-            KeyFrame keyFrame2 = new KeyFrame(Duration.millis(500), keyValue2);
-            timeline2.getKeyFrames().add(keyFrame2);
 
             parallelTransition.getChildren().add(timeline1);
-            parallelTransition.getChildren().add(timeline2);
 
             parallelTransition.play();
             parallelTransition.getChildren().clear();
@@ -109,28 +99,21 @@ public class MenuController implements Initializable {
             //Hvis der er logget ind, hvis menu i forhold til brugerens UserType
             if (CreditSystemController.getUserType() != null) {
                 if (!CreditSystemController.getUserType().getPersonalProfile()){
-                    VBoxMenu.getChildren().removeAll(profileImageview);
-                    VBoxMenuLabels.getChildren().removeAll(profileLabel);
+                    VBoxMenu.getChildren().removeAll(profile);
                 }
                 if (!CreditSystemController.getUserType().getAddCredit()){
-                    VBoxMenu.getChildren().removeAll(addCreditsImageview);
-                    VBoxMenuLabels.getChildren().removeAll(addCreditsLabel);
+                    VBoxMenu.getChildren().removeAll(addCredits);
                 }
                 if (!CreditSystemController.getUserType().getAddUser()){
-                    VBoxMenu.getChildren().removeAll(addUserImageview);
-                    VBoxMenuLabels.getChildren().removeAll(addUserLabel);
+                    VBoxMenu.getChildren().removeAll(addUser);
                 }
                 if (!CreditSystemController.getUserType().getApproveCredit()){
-                    VBoxMenu.getChildren().removeAll(approveCreditImageview);
-                    VBoxMenuLabels.getChildren().removeAll(approveCreditLabel);
+                    VBoxMenu.getChildren().removeAll(approveCredit);
                 }
-                VBoxMenu.getChildren().removeAll(loginButtonImageview);
-                VBoxMenuLabels.getChildren().removeAll(loginButtonLabel);
+                VBoxMenu.getChildren().removeAll(loginButton);
             } else { //Hvis ikke der er logget ind skal der kun vises login
-                VBoxMenu.getChildren().removeAll(profileImageview, approveCreditImageview, addCreditsImageview,addUserImageview, logoutButtonImageview);
-                VBoxMenuLabels.getChildren().removeAll(profileLabel, approveCreditLabel, approveCreditLabel, addCreditsLabel,addUserLabel,logoutButtonLabel);
+                VBoxMenu.getChildren().removeAll(profile, approveCredit, addCredits,addUser, logoutButton);
                 VBoxMenu.toFront();
-                VBoxMenuLabels.toFront();
             }
 
         } else {
@@ -141,13 +124,7 @@ public class MenuController implements Initializable {
             KeyFrame keyFrame1 = new KeyFrame(Duration.millis(200), keyValue1);
             timeline1.getKeyFrames().add(keyFrame1);
 
-            Timeline timeline2 = new Timeline();
-            KeyValue keyValue2 = new KeyValue(MenuLabels.translateYProperty(), -1000, Interpolator.EASE_OUT);
-            KeyFrame keyFrame2 = new KeyFrame(Duration.millis(200), keyValue2);
-            timeline2.getKeyFrames().add(keyFrame2);
-
             parallelTransition.getChildren().add(timeline1);
-            parallelTransition.getChildren().add(timeline2);
             parallelTransition.setOnFinished(event -> hideMenu());
             parallelTransition.play();
             parallelTransition.getChildren().clear();
@@ -157,7 +134,6 @@ public class MenuController implements Initializable {
     //Metode der bare sætter menuen til at være usyndelig
     private void hideMenu(){
         Menu.setVisible(false);
-        MenuLabels.setVisible(false);
     }
 
     //Søge felt
