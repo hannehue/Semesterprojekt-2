@@ -75,11 +75,15 @@ public class DashboardController implements Initializable {
     }
 
     protected EventHandler<ActionEvent> handleApproveSeason(int showId, int season) {
-        for (Show showCredit: CreditSystemController.getShowList()) {
-            if (showCredit.getCreditID() == showId) {
-                for (Season s: showCredit.getSeasons()) {
+        for (Show show: CreditSystemController.getShowList()) {
+            if (show.getCreditID() == showId) {
+                for (Season s: show.getSeasons()) {
                     if (s.getCreditID() == season) {
                         s.setApproved(true);
+                    }
+                    show.setAllSeasonApproved(true);
+                    if (!show.isApproved() || !s.isAllEpisodeApproved()) {
+                        show.setAllSeasonApproved(false);
                     }
                 }
             }
@@ -96,6 +100,10 @@ public class DashboardController implements Initializable {
                         for (Episode e: s.getEpisodes()) {
                             if (e.getCreditID() == episode) {
                                 e.setApproved(true);
+                            }
+                            s.setAllEpisodeApproved(true);
+                            if (!e.isApproved()) {
+                                s.setAllEpisodeApproved(false);
                             }
                         }
                     }
@@ -186,7 +194,8 @@ public class DashboardController implements Initializable {
                 approveButton.setOnAction(actionEvent -> handleApproveShow(finalButtonCounter));
 
                 offset += 30;
-            } else if (true) {
+                System.out.println(1);
+            } else if (!show.isAllSeasonApproved()) {
                 for (Season season: show.getSeasons()) {
                     if (!season.isApproved()) {
                         Pane pane = new Pane();
@@ -206,7 +215,8 @@ public class DashboardController implements Initializable {
                         approveButton.setOnAction(actionEvent -> handleApproveSeason(showID, finalButtonCounter));
 
                         offset += 30;
-                    } else if (true) {
+                        System.out.println(2);
+                    } else if (!season.isAllEpisodeApproved()) {
                         for (Episode episode: season.getEpisodes()) {
                             if (!episode.isApproved()) {
                                 Pane pane = new Pane();
@@ -227,6 +237,7 @@ public class DashboardController implements Initializable {
                                 approveButton.setOnAction(actionEvent -> handleApproveEpisode(showID, seasonId, finalButtonCounter));
 
                                 offset += 30;
+                                System.out.println(3);
                             }
                         }
                     }

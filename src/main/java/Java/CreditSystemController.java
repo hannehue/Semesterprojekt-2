@@ -127,7 +127,8 @@ public class CreditSystemController extends Application {
                 null,
                 nextId(),
                 false,
-                "desc");
+                "desc",
+                true);
         showList.add(show);
         System.out.println("Added show: " + show.getName());
     }
@@ -142,9 +143,10 @@ public class CreditSystemController extends Application {
                         nextId(),
                         false,
                         new ArrayList<>(),
-                        description
-                        );
+                        description,
+                        true);
                 s.getSeasons().add(season);
+                s.setAllSeasonApproved(false);
                 System.out.println("tilføjet " + season.getName() + " til show: " + s.getName());
             }
         }
@@ -167,6 +169,7 @@ public class CreditSystemController extends Application {
                                 null
                         );
                         seasonToGet.addEpisode(episode);
+                        seasonToGet.setAllEpisodeApproved(false);
                         System.out.println("tilføjet " + episode.getName());
                     }
                 }
