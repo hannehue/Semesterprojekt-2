@@ -23,6 +23,9 @@ public class DatabaseLoader {
     private File movieFile;
     private ArrayList<String[]> movieArrayList;
 
+    private File showFile;
+    private ArrayList<String[]> showArrayList;
+
     private File episodesFile;
     private ArrayList<String[]> episodeArrayList;
 
@@ -35,9 +38,11 @@ public class DatabaseLoader {
         groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
         movieFile = new File(DatabaseLoader.class.getClassLoader().getResource("Movies.txt").getFile());
         episodesFile = new File(DatabaseLoader.class.getClassLoader().getResource("Episodes.txt").getFile());
+        showFile = new File(DatabaseLoader.class.getClassLoader().getResource("Shows.txt").getFile());
         personArraylist = readCredits(personFile);
         groupArraylist = readCredits(groupFile);
         movieArrayList = readCredits(movieFile);
+        showArrayList = readCredits(showFile);
         episodeArrayList = readCredits(episodesFile);
     }
 
@@ -71,16 +76,25 @@ public class DatabaseLoader {
         String[] creditArray = credit.toFileString().split(",");
         return creditArray;
     }
-    /*
-    public void addCredit(Credit credit, ArrayList<? extends Credit> creditsList){
-        creditsList.add(credit);
+
+    public void addCreditToDatabase(Credit credit){
+        if (Person.class.equals(credit.getClass())) {
+            personArraylist.add(creditToStringArray(credit));
+
+        } else if (Movie.class.equals(credit.getClass())){
+            movieArrayList.add(creditToStringArray(credit));
+
+        } else if (Group.class.equals(credit.getClass())){
+            groupArraylist.add(creditToStringArray(credit));
+
+        } else if (Show.class.equals(credit.getClass())){
+            showArrayList.add(creditToStringArray(credit));
+        }
     }
 
-     */
-
-    public void addCredits(ArrayList<? extends Credit> readList, ArrayList<String[]> writeList ){
-        for (Credit credit: readList){
-            writeList.add(creditToStringArray(credit));
+    public void addCreditsToDatabase(ArrayList<? extends Credit> readList){
+        for (Credit credit : readList){
+            addCreditToDatabase(credit);
         }
     }
 
@@ -173,6 +187,11 @@ public class DatabaseLoader {
     public static void main(String[] args) throws IOException, ParseException {
         //Production kan lige nu kun have en category, skal laves om
         DatabaseLoader dbload = new DatabaseLoader();
+        for (String[] arr : dbload.groupArraylist) {
+            System.out.println(dbload.stringsToGroup(arr).toString());
+        }
+        //dbload.groupArraylist.add(dbload.creditToStringArray(new Group("Et eller andet band 2", new Date(),2,false,"Band fra Esbjerg",3)));
+        //dbload.writeCredits(dbload.groupFile, dbload.groupArraylist);
 
         System.out.println(dbload.stringsToEpisode(dbload.episodeArrayList.get(0)));
     }
