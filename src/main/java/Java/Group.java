@@ -26,6 +26,6 @@ public class Group extends Credit {
 
     @Override
     public String toFileString() {
-        return null;
+        return "" + getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() + "," + getDescription() + "," + getGroupID();
     }
 }
