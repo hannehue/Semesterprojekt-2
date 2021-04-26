@@ -4,6 +4,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -136,7 +137,8 @@ public class DatabaseLoader {
         try {
             tempMovie = new Movie(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
-                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8]));
+                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8]),
+                    new ArrayList<>(Arrays.asList(strings[9].split(";"))));
         } catch (ParseException e){
             e.printStackTrace();
             System.err.println("Failed when initializing movie from string array");
@@ -170,4 +172,5 @@ public class DatabaseLoader {
     public File getMovieFile() {
         return movieFile;
     }
+
 }

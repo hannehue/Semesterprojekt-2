@@ -1,15 +1,17 @@
 package Java;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
 public class Episode extends Production {
 
     private int seasonID;
+    private ArrayList<String> staffIDs;
 
     public Episode(String name, Date dateAdded, int creditID, boolean approved, String description, int programID,
-                   Category[] category, int lengthInSecs, Date releaseDate, int seasonID){
-        super(name, dateAdded, creditID, approved, description, programID, category, lengthInSecs, releaseDate);
+                   Category[] category, int lengthInSecs, Date releaseDate, int seasonID, ArrayList<String> staffIDs){
+        super(name, dateAdded, creditID, approved, description, programID, category, lengthInSecs, releaseDate, staffIDs);
         this.seasonID = seasonID;
     }
 

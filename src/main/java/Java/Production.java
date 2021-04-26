@@ -9,15 +9,23 @@ public abstract class Production extends Credit {
     private Category[] categories;
     private int lengthInSecs;
     private Date releaseDate;
+    private ArrayList<String> staffIDs;
 
-    public Production(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID, Category[] categories, int lengthInSecs, Date releaseDate){
+    public Production(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID,
+                      Category[] categories, int lengthInSecs, Date releaseDate, ArrayList<String> staffIDs){
        //Husk at implementér category. - Is implemented by Victor: remember to read and confirm.
         super(name, dateAdded, creditID, approved, description);
         this.productionID = productionID;
         this.categories = categories;
         this.lengthInSecs = lengthInSecs;
         this.releaseDate = releaseDate;
+        this.staffIDs = staffIDs;
     }
+
+
+
+
+
 
     public int getProductionID() {
         return productionID;
@@ -49,6 +57,10 @@ public abstract class Production extends Credit {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public ArrayList<String> getStaffIDs() {
+        return staffIDs;
     }
 }
 
