@@ -105,8 +105,10 @@ public class AddCreditController implements Initializable {
         CreditSystemController.addMovie(
                 movieTitle.getText(),
                 movieDescription.getText(),
-                Integer.parseInt(movieLength.getText()),
-                id);
+                null,
+                id,
+                Integer.parseInt(movieLength.getText())
+                );
         CreditSystemController.addJob(id);
     }
     @FXML

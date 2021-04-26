@@ -62,12 +62,6 @@ public abstract class Production extends Credit {
     public void addStaffID(int id){
         staffIDs.add(id);
     }
-
-    @Override
-    public String getName() {
-        return name;
-
-    }
 }
 
 

@@ -7,7 +7,6 @@ import java.util.Date;
 public class Episode extends Production {
 
     private int seasonID;
-    private ArrayList<String> staffIDs;
 
     public Episode(String name, Date dateAdded, int creditID, boolean approved, String description, int programID,
                    Category[] category, int lengthInSecs, Date releaseDate, int seasonID){
@@ -50,11 +49,11 @@ public class Episode extends Production {
     }
 
 
-    public String getSeasonID() {
+    public int getSeasonID() {
         return seasonID;
     }
 
-    public void setSeasonID(String seasonID) {
+    public void setSeasonID(int seasonID) {
         this.seasonID = seasonID;
     }
 }

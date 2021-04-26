@@ -23,11 +23,11 @@ public class Season extends Credit {
         this.episodes = episodes;
     }
 
-    public String getShowID() {
+    public int getShowID() {
         return showID;
     }
 
-    public void setShowID(String showID) {
+    public void setShowID(int showID) {
         this.showID = showID;
     }
 

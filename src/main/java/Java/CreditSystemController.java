@@ -32,11 +32,6 @@ public class CreditSystemController extends Application {
 
         dataLoader = new DatabaseLoader();
         //creditList.addAll(dataLoader.readPersons());
-
-        /** Dette skal virkelig laves om :) **/
-        ArrayList<Job> sdsd = new ArrayList<>();
-        sdsd.add(new Job(new Role[]{Role.getRoleFromString("Koreografi")}, 651, new String[] {"Pissboi"} ));
-        personList.get(0).setJobs(sdsd);
         //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
         /** :) **/
 

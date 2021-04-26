@@ -4,9 +4,6 @@ import java.util.*;
 
 public class Movie extends Production{
 
-
-
-
     public Movie(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID,
                  Category[] category, int lengthInSecs, Date releaseDate) {
         //Add cast and productionTeam to constructor when person and role are implemented

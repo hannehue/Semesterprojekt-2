@@ -120,20 +120,16 @@ public class DatabaseLoader {
         // Job handling
         for (int i = 0; i < jobsStrings.length; i++) { // Loops over all jobs
             String[] jobValues = jobsStrings[i].split("--"); // Splits all values in the job
-            String[] rolesStrings = jobValues[0].split(";"); // Splits all roles on the job (first value)
-
-            Role[] roles = new Role[rolesStrings.length];
-
-            for (int j = 0; j < roles.length; j++) {
-                roles[j] = Role.getRoleFromString(rolesStrings[j]);
-            }
 
             String[] characterNames = jobValues[2].split(";");
             if (jobValues[2].equals("null")) {
                 characterNames = null;
+                jobs.add(new Job(Role.getRoleFromString(jobValues[0]), Integer.parseInt(jobValues[1])));
+            }
+            else {
+                jobs.add(new Job(Role.getRoleFromString(jobValues[0]), characterNames[0], Integer.parseInt(jobValues[1])));
             }
 
-            jobs.add(new Job(roles, Integer.parseInt(jobValues[1]), characterNames));
 
         }
 
@@ -159,8 +155,11 @@ public class DatabaseLoader {
         try {
             tempMovie = new Movie(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
-                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8]),
-                    new ArrayList<>(Arrays.asList(strings[9].split(";"))));
+                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8])
+                    );
+            for (String staff : new ArrayList<>(Arrays.asList(strings[9].split(";"))) ) {
+                tempMovie.addStaffID(Integer.parseInt(staff));
+            }
         } catch (ParseException e){
             e.printStackTrace();
             System.err.println("Failed when initializing movie from string array");
@@ -174,8 +173,13 @@ public class DatabaseLoader {
         try {
             tempEpisode = new Episode(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
-                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8]),
-                    new ArrayList<String>(Arrays.asList(strings[9].split(";"))), strings[10]);
+                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8])
+                    , Integer.parseInt(strings[10]));
+
+            for (String staff : new ArrayList<String>(Arrays.asList(strings[9].split(";")))) {
+                tempEpisode.addStaffID(Integer.parseInt(staff));
+            }
+
         } catch (ParseException e){
             e.printStackTrace();
             System.err.println("Failed when initializing movie from string array");

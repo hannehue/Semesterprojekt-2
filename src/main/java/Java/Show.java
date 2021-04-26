@@ -32,7 +32,7 @@ public class Show extends Credit {
 
     @Override
     public String toFileString() {
-        String showString = "" + getName() + "::" + getDateAdded() + "::" + getCreditID() + "::" + isApproved() + "::" + getDescription() + "::" + showID + "::";
+        String showString = "" + getName() + "::" + getDateAdded() + "::" + getCreditID() + "::" + isApproved() + "::" + getDescription() + "::" + getCreditID() + "::";
 
         for (Season s : seasons){
             showString += s.toFileString() + "++";
