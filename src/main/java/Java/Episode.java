@@ -6,12 +6,12 @@ import java.util.Date;
 
 public class Episode extends Production {
 
-    private String seasonID;
+    private int seasonID;
     private ArrayList<String> staffIDs;
 
     public Episode(String name, Date dateAdded, int creditID, boolean approved, String description, int programID,
-                   Category[] category, int lengthInSecs, Date releaseDate, ArrayList<String> staffIDs, String seasonID){
-        super(name, dateAdded, creditID, approved, description, programID, category, lengthInSecs, releaseDate, staffIDs);
+                   Category[] category, int lengthInSecs, Date releaseDate, int seasonID){
+        super(name, dateAdded, creditID, approved, description, programID, category, lengthInSecs, releaseDate);
         this.seasonID = seasonID;
     }
 
@@ -39,7 +39,7 @@ public class Episode extends Production {
         EpisodeFileString += getLengthInSecs() + "," + getReleaseDate() + ",";
 
         String staffIDString = "";
-        for(String staffId: getStaffIDs()){
+        for(Integer staffId: getStaffIDs()){
             staffIDString += staffId + ";";
         }
         EpisodeFileString += staffIDString.substring(0, staffIDString.length() - 1) + ",";

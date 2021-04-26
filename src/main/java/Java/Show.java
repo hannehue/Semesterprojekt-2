@@ -3,17 +3,23 @@ package Java;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Show extends Credit{
+public class Show extends Credit {
 
-    private String title;
-    private int showID;
     private ArrayList <Season> seasons;
+    private boolean allSeasonApproved;
 
-    public Show(String title, Date dateAdded, int creditID, boolean approved, String description, int showID, ArrayList <Season> seasons){
-        super(dateAdded, creditID, approved, description);
-        this.title = title;
-        this.showID = showID;
-        this.seasons = seasons;
+    public Show(String showName, Date dateadded, int showID, boolean approved,  String description, boolean allSeasonApproved){
+        super(showName, dateadded, showID, approved, description);
+        this.seasons = new ArrayList<>();
+        this.allSeasonApproved = allSeasonApproved;
+    }
+
+    public boolean isAllSeasonApproved() {
+        return allSeasonApproved;
+    }
+
+    public void setAllSeasonApproved(boolean allSeasonApproved) {
+        this.allSeasonApproved = allSeasonApproved;
     }
 
     public ArrayList<Season> getSeasons() {
@@ -26,7 +32,7 @@ public class Show extends Credit{
 
     @Override
     public String toFileString() {
-        String showString = "" + title + "::" + getDateAdded() + "::" + getCreditID() + "::" + isApproved() + "::" + getDescription() + "::" + showID + "::";
+        String showString = "" + getName() + "::" + getDateAdded() + "::" + getCreditID() + "::" + isApproved() + "::" + getDescription() + "::" + showID + "::";
 
         for (Season s : seasons){
             showString += s.toFileString() + "++";
@@ -34,4 +40,10 @@ public class Show extends Credit{
 
         return showString;
     }
+
+    public void addSeason(Season season) {
+        this.seasons.add(season);
+    }
+
+    public int getNumberOfSeason() { return seasons.size();};
 }

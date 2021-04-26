@@ -8,9 +8,9 @@ public class Movie extends Production{
 
 
     public Movie(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID,
-                 Category[] category, int lengthInSecs, Date releaseDate, ArrayList<String> staffIDs) {
+                 Category[] category, int lengthInSecs, Date releaseDate) {
         //Add cast and productionTeam to constructor when person and role are implemented
-        super(name, dateAdded, creditID, approved, description, productionID, category, lengthInSecs, releaseDate, staffIDs);
+        super(name, dateAdded, creditID, approved, description, productionID, category, lengthInSecs, releaseDate);
     }
     //Overloaded constructor to send a string to production to get a
 
@@ -38,7 +38,7 @@ public class Movie extends Production{
         movieFileString += getLengthInSecs() + "," + getReleaseDate() + ",";
 
         String staffIDString = "";
-        for(String staffId: getStaffIDs()){
+        for(Integer staffId: getStaffIDs()){
             staffIDString += staffId + ";";
         }
         movieFileString += staffIDString.substring(0, staffIDString.length() - 1) + ",";

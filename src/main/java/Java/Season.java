@@ -1,19 +1,17 @@
 package Java;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Season extends Credit {
-
-    private String showID;
+    private int showID;
     private ArrayList<Episode> episodes;
     private boolean allEpisodesApproved;
 
-    public Season(Date dateAdded, int creditID, boolean approved, String description , String showID, ArrayList<Episode> episodes, Boolean allEpisodesApproved){
-        super(dateAdded, creditID, approved, description);
+    public Season(String name, Date dateAdded, int creditID, boolean approved, String description , int showID,  Boolean allEpisodesApproved){
+        super(name,dateAdded, creditID, approved, description);
         this.showID = showID;
-        this.episodes = episodes;
+        this.episodes = new ArrayList<>();
         this.allEpisodesApproved = allEpisodesApproved;
     }
 
@@ -61,6 +59,19 @@ public class Season extends Credit {
 
     public boolean isAllEpisodesApproved() {
         return allEpisodesApproved;
+    }
+
+
+    public void setAllEpisodeApproved(boolean allEpisodeApproved) {
+        this.allEpisodesApproved = allEpisodeApproved;
+    }
+
+    public int getNumberOfEpisode() {
+        return episodes.size();
+    }
+
+    public void addEpisode(Episode episode){
+        episodes.add(episode);
     }
 }
 
