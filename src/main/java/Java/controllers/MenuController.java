@@ -212,4 +212,13 @@ public class MenuController implements Initializable {
         CreditSystemController.setUserType(null);
         CreditSystemController.setRoot("Menu");
     }
+
+    public void handleAddUser(MouseEvent mouseEvent) {
+        try {
+            setContentPane("AddUsers.fxml");
+            hideMenu();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
