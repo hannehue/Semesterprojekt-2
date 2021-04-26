@@ -23,7 +23,7 @@ public class Movie extends Production{
     @Override
     public String toString() {
         return "Name: " + getName() + ", CreditID: " + getCreditID() +
-               ", Description: " + getDescription() + ", MovieID: " + getProgramID() +
+               ", Description: " + getDescription() + ", MovieID: " + getProductionID() +
                ", Categories: " + Arrays.toString(getCategories()).substring(1,Arrays.toString(getCategories()).length() - 1) +
                ", Movie length: " + (getLengthInSecs() / 60 / 60) + " hours " + getLengthInSecs() / 60 % 60  + " minutes " +
                ", Release date: " + getReleaseDate();

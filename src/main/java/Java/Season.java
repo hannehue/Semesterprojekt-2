@@ -1,51 +1,39 @@
 package Java;
 
-public class
-Season {
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Date;
 
-    private int seasonID;
-    private String description;
-    private Episode[] episodes;
-    private String seasonName;
+public class Season extends Credit {
 
-    public Season(int seasonID, String description, Episode[] episodes, String seasonName){
-        this.seasonID = seasonID;
-        this.description = description;
+    private int showID;
+    private ArrayList<Episode> episodes;
+
+    public Season(String name, Date dateAdded, int creditID, boolean approved, String description , int showID, ArrayList<Episode> episodes){
+        super(name, dateAdded, creditID, approved, description);
+        this.showID = showID;
         this.episodes = episodes;
-        this.seasonName = seasonName;
-
     }
 
-    public int getSeasonID() {
-        return seasonID;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Episode[] getEpisodes() {
+    public ArrayList<Episode> getEpisodes() {
         return episodes;
     }
 
-    public String getSeasonName() {
-        return seasonName;
-    }
-
-    public void setSeasonID(int seasonID) {
-        this.seasonID = seasonID;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setEpisodes(Episode[] episodes) {
+    public void setEpisodes(ArrayList<Episode> episodes) {
         this.episodes = episodes;
     }
 
-    public void setSeasonName(String seasonName) {
-        this.seasonName = seasonName;
+    public int getShowID() {
+        return showID;
+    }
+
+    public void setShowID(int showID) {
+        this.showID = showID;
+    }
+
+    @Override
+    public String toFileString() {
+        return null;
     }
 }
 
