@@ -44,7 +44,7 @@ public class Episode extends Production {
         }
         EpisodeFileString += staffIDString.substring(0, staffIDString.length() - 1) + ",";
 
-        EpisodeFileString += getSeasonID() + ",";
+        EpisodeFileString += getSeasonID();
 
         return EpisodeFileString;
     }

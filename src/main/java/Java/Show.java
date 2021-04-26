@@ -5,18 +5,20 @@ import java.util.Date;
 
 public class Show extends Credit{
 
+    private String title;
+    private int showID;
     private ArrayList <Season> seasons;
 
-    public Show(String name, Date dateAdded, int creditID, boolean approved, String description, int showID, ArrayList <Season> seasons){
-        super(name, dateAdded, creditID, approved, description);
+    public Show(String title, Date dateAdded, int creditID, boolean approved, String description, int showID, ArrayList <Season> seasons){
+        super(dateAdded, creditID, approved, description);
+        this.title = title;
+        this.showID = showID;
         this.seasons = seasons;
     }
-
 
     public ArrayList<Season> getSeasons() {
         return seasons;
     }
-
 
     public void setSeasons(ArrayList<Season> seasons) {
         this.seasons = seasons;
@@ -24,6 +26,12 @@ public class Show extends Credit{
 
     @Override
     public String toFileString() {
-        return null;
+        String showString = "" + title + "::" + getDateAdded() + "::" + getCreditID() + "::" + isApproved() + "::" + getDescription() + "::" + showID + "::";
+
+        for (Season s : seasons){
+            showString += s.toFileString() + "++";
+        }
+
+        return showString;
     }
 }
