@@ -43,7 +43,6 @@ public class CreditSystemController extends Application {
         /** TEST MILJØ **/
 
         /** GUI Setup*/
-        scene = new Scene(loadFXML("GUI"), 1024,768);
         scene = new Scene(loadFXML("Menu"), 1024,768);
         primaryStage.setTitle("TV2-Krediteringer");
         primaryStage.setScene(scene);

@@ -21,6 +21,11 @@ public class Job {
         this.characterName = characterName;
     }
 
+    public Job(int personId, Role roles) {
+        this.role = roles;
+        this.personId = personId;
+    }
+
     public Job(Role role, int productionID) {
         this.role = role;
         this.productionID = productionID;
