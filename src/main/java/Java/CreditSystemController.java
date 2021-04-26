@@ -39,9 +39,9 @@ public class CreditSystemController extends Application {
         //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
         /** :) **/
 
-        dataLoader.addPersons(personList);
-
-        dataLoader.writePersons();
+        dataLoader.addCredits(personList, dataLoader.getPersonArraylist());
+        dataLoader.writeCredits(dataLoader.getPersonFile(), dataLoader.getPersonArraylist());
+        //dataLoader.writePersons();
 
 
         /** TEST MILJØ **/

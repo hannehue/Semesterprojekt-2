@@ -1,38 +1,38 @@
 package Java;
 
-public class Episode {
+import java.util.Arrays;
+import java.util.Date;
 
-    private int episodeID;
-    private String episodeName;
-    private String episodeDescription;
+public class Episode extends Production {
 
-    public Episode(int episodeID, String episodeName, String episodeDescription){
-        this.episodeID = episodeID;
-        this.episodeName = episodeName;
-        this.episodeDescription = episodeDescription;
+    private int seasonID;
+
+    public Episode(String name, Date dateAdded, int creditID, boolean approved, String description, int programID,
+                   Category[] category, int lengthInSecs, Date releaseDate, int seasonID){
+        super(name, dateAdded, creditID, approved, description, programID, category, lengthInSecs, releaseDate);
+        this.seasonID = seasonID;
     }
 
-    public int getEpisodeID() {
-        return episodeID;
+    @Override
+    public String toString() {
+        return "Name: " + getName() + ", CreditID: " + getCreditID() +
+                ", Description: " + getDescription() + ", EpidoseID: " + getProductionID() + ", SeasonID" + getSeasonID() +
+                ", Categories: " + Arrays.toString(getCategories()).substring(1,Arrays.toString(getCategories()).length() - 1) +
+                ", Episode length: " + (getLengthInSecs() / 60 / 60) + " hours " + getLengthInSecs() / 60 % 60  + " minutes " +
+                ", Release date: " + getReleaseDate();
     }
 
-    public String getEpisodeName() {
-        return episodeName;
+    @Override
+    public String toFileString() {
+        return null;
     }
 
-    public String getEpisodeDescription() {
-        return episodeDescription;
+
+    public int getSeasonID() {
+        return seasonID;
     }
 
-    public void setEpisodeID(int episodeID) {
-        this.episodeID = episodeID;
-    }
-
-    public void setEpisodeName(String episodeName) {
-        this.episodeName = episodeName;
-    }
-
-    public void setEpisodeDescription(String episodeDescription) {
-        this.episodeDescription = episodeDescription;
+    public void setSeasonID(int seasonID) {
+        this.seasonID = seasonID;
     }
 }

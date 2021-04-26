@@ -64,4 +64,6 @@ public abstract class Credit {
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
+
+    public abstract String toFileString();
 }

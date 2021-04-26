@@ -1,5 +1,7 @@
 package Java;
 
+import java.util.ArrayList;
+
 public enum Category {
     AKTUALITET("Aktualitet"),
     DOKUMENTAR("Dokumentar"),
@@ -16,6 +18,27 @@ public enum Category {
     FILM("Film");
 
     private String categoryString;
+
+
+    public static Category getCategoryFromString(String val){
+        Category[] categories = Category.values();
+        for (int i = 0; i < Category.values().length; i++) {
+            if (val.equals(categories[i].toString())){
+                return categories[i];
+            }
+        }
+        return null;
+    }
+
+    public static Category[] getCategoriesFromString(String categoryString){
+        String[] splitCategories = categoryString.split(";");
+        Category[] categories = new Category[splitCategories.length];
+        for (int i = 0; i < splitCategories.length; i++){
+            categories[i] = getCategoryFromString(splitCategories[i]);
+        }
+        return categories;
+    }
+
 
     Category(String categoryString){
         this.categoryString = categoryString;

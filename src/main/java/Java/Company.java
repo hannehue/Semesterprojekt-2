@@ -18,4 +18,10 @@ public class Company extends Credit{
     public void setCompanyID(int companyID) {
         this.companyID = companyID;
     }
+
+
+    @Override
+    public String toFileString() {
+        return null;
+    }
 }
