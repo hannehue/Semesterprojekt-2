@@ -49,8 +49,10 @@ public class Season extends Credit {
         seasonFileString += getDateAdded() + "," + getCreditID() + "," + isApproved() + "," + getDescription() + "," +
                 getShowID() + ",";
 
+        seasonFileString += "--";
+
         for (Episode episode: getEpisodes()){
-            seasonFileString += episode.toFileString();
+            seasonFileString += episode.toFileString() + "##";
         }
         seasonFileString += "--," + isAllEpisodesApproved() + ",";
 
