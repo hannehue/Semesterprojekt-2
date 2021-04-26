@@ -3,8 +3,8 @@ package Java;
 public enum UserType {
     ADMIN("Admin", true, true, true, false),
     MODERATOR("Moderator", false, true, true, false),
-    PRODUCER("Producer", false, true, false, false),
-    PERSON("Person", false, false, false, false);
+    PRODUCER("Producer", false, true, false, true),
+    PERSON("Person", false, false, false, true);
 
     private final String userType;
     private final boolean addUser;

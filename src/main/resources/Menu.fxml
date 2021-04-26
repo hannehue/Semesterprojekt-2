@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" stylesheets="default.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.MenuController">
+   <children>
+      <AnchorPane prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #009ceb#009ceb;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fitHeight="39.0" fitWidth="88.0" layoutX="910.0" layoutY="-3.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="15.0">
+               <image>
+                  <Image url="@images/TV_2_PLAY_Hvid_RGB.png" />
+               </image>
+            </ImageView>
+            <AnchorPane onMouseClicked="#handleOpenSearch" prefHeight="28.0" prefWidth="216.0" AnchorPane.bottomAnchor="21.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="21.0">
+               <children>
+                  <TextField fx:id="searchField" prefHeight="28.0" prefWidth="232.0" style="-fx-background-color: none; -fx-border-color: #ffb5b5#ffb5b5; -fx-border-radius: 30px;" visible="false" />
+                  <ImageView fx:id="Searchicon" fitHeight="19" fitWidth="19" AnchorPane.bottomAnchor="4.5" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="4.5">
+                     <image>
+                        <Image url="@images/magnifying-glass.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <Pane onMouseClicked="#handleOpenMenu" prefHeight="49.0" prefWidth="49.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <ImageView fitHeight="49.0" fitWidth="49.0">
+                     <image>
+                        <Image url="@images/menu.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="Menu" prefHeight="200.0" prefWidth="40.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="70.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="59.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="200.0" onMouseClicked="#handlePersonalProfile">
+                     <children>
+                        <ImageView fx:id="User" fitWidth="56.0" onMouseEntered="#MenuItemShow" preserveRatio="true">
+                           <image>
+                              <Image url="@images/user.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Profil">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="200.0" onMouseClicked="#approveCreditHandler">
+                     <children>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/check (1).png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Bekræft krediteringer">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane onMouseClicked="#handleAddCredit" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/add (1).png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Tilføj krediteringer">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/add-user (1).png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Administration">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/exit.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="65.0" layoutY="10.0" style="-fx-text-fill: #FFFFFF;" text="Log ud">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
