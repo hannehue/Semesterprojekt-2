@@ -53,7 +53,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane fx:id="profile" prefHeight="75.0" prefWidth="200.0">
+                  <Pane fx:id="profile" onMouseClicked="#handlePersonalProfile" prefHeight="75.0" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="56.0" fitWidth="56.0" onMouseClicked="#handlePersonalProfile" preserveRatio="true">
                            <image>
@@ -81,7 +81,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane fx:id="addUserI" prefHeight="75.0" prefWidth="200.0">
+                  <Pane fx:id="addUserI" onMouseClicked="#handleAddUser" prefHeight="75.0" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
                            <image>
@@ -95,9 +95,9 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane fx:id="logout" prefHeight="75.0" prefWidth="200.0">
+                  <Pane fx:id="logout" onMouseClicked="#handleLogout" prefHeight="75.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="logoutButtonImageview" fitHeight="56.0" fitWidth="56.0" onMouseClicked="#handleLogout" preserveRatio="true">
+                        <ImageView fx:id="logoutButtonImageview" fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
                            <image>
                               <Image url="@images/exit.png" />
                            </image>
