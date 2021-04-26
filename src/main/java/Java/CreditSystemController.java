@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 
@@ -39,7 +36,7 @@ public class CreditSystemController extends Application {
         //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
         /** :) **/
 
-        dataLoader.addCredits(personList, dataLoader.getPersonArraylist());
+        dataLoader.addCreditsToDatabase(personList);
         dataLoader.writeCredits(dataLoader.getPersonFile(), dataLoader.getPersonArraylist());
         //dataLoader.writePersons();
 
