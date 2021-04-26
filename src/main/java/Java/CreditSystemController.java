@@ -42,12 +42,7 @@ public class CreditSystemController extends Application {
             movieList.add(dataLoader.stringsToMovie(strings));
         }
 
-        dataLoader.addCreditsToDatabase(personList);
-
-        dataLoader.writeCredits(dataLoader.getPersonFile(), dataLoader.getPersonArraylist());
-        //dataLoader.writePersons();
-
-
+        System.out.println(personList.toString());
         /** TEST MILJØ **/
 
         /** GUI Setup*/
@@ -59,13 +54,14 @@ public class CreditSystemController extends Application {
         primaryStage.show();
         this.primaryStage = primaryStage;
 
+        /*
         personList.add(new Person("Peter Petesdafasdf", null, 12342, true,
                 "this is the desc", 2342,"31330913", "this is persinfo", null));
         personList.add(new Person("New pers", null, 123, true, "this is the desc",
                 2342,"31330913","this is the persinfo", null));
         personList.add(new Person("New pers 1", null, 123, true, "this is the desc",
                 2342,"31330913","this is personinfo new ", null));
-
+         */
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job(Role.MEDVIRKENDE, "mickey", 12312));
         jobs.add(new Job(Role.BILLED_OG_LYDREDIGERING, 12312) );

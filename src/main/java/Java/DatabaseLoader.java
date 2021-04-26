@@ -44,7 +44,7 @@ public class DatabaseLoader {
         outputStream = new FileWriter(file, false);
 
         for (int row = 0; row < creditList.size(); row++) {
-            outputStream.append(stringArraytoString(creditList.get(row)) + "\n");
+            outputStream.write(stringArraytoString(creditList.get(row)) + "\n");
         }
         outputStream.close();
     }
@@ -96,8 +96,26 @@ public class DatabaseLoader {
     }
 
     public void addCreditsToDatabase(ArrayList<? extends Credit> readList){
-        for (Credit credit : readList){
-            addCreditToDatabase(credit);
+        if(readList.size() == 0 || readList == null){
+            return;
+        }
+
+        ArrayList<String[]> tempList = new ArrayList<>();
+        for (Credit p: readList){
+            if (p != null){
+                tempList.add(creditToStringArray(p));
+            }
+        }
+        if (readList.get(0) instanceof Person) {
+            personArraylist = tempList;
+
+        } else if (readList.get(0) instanceof Movie){
+            movieArrayList = tempList;
+
+        } else if (readList.get(0) instanceof Group){
+            groupArraylist = tempList;
+        } else if (readList.get(0) instanceof Show){
+            showArrayList = tempList;
         }
     }
 
@@ -106,8 +124,13 @@ public class DatabaseLoader {
     public Person stringsToPerson(String[] vals) {
         Person tempPerson = null;
         try {
-            tempPerson = new Person(vals[0], formatter.parse(vals[1]), Integer.parseInt(vals[2]),
-                    Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
+            if (vals[1].equals("null")){
+                tempPerson = new Person(vals[0], null, Integer.parseInt(vals[2]),
+                        Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
+            } else {
+                tempPerson = new Person(vals[0], formatter.parse(vals[1]), Integer.parseInt(vals[2]),
+                        Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
+            }
             /* if (vals[9].equals("null")) {
                 return tempPerson;
             }
@@ -209,10 +232,6 @@ public class DatabaseLoader {
 
     public ArrayList<String[]> getPersonArraylist() {
         return personArraylist;
-    }
-
-    public ArrayList<String[]> getEpisodeArrayList() {
-        return episodeArrayList;
     }
 
     public ArrayList<String[]> getGroupArraylist() {

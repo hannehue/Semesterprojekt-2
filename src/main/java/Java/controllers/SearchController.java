@@ -52,7 +52,7 @@ public class SearchController implements Initializable {
         String searchStringChecked = getsearchString.toLowerCase();
         ArrayList<Credit> creditList = new ArrayList<>();
         for(Credit person : CreditSystemController.getPersonList()) {
-            if (person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
+            if (person != null && person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
                 creditList.add(person);
             }
         }
