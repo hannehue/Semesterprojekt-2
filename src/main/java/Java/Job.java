@@ -3,25 +3,25 @@ package Java;
 public class Job {
 
     private Role role;
-    private int programId;
-    private String characterNames;
+    private int productionId;
+    private String characterName;
     private int personId;
 
-    public Job(Role role, String characterNames, int programId) {
+    public Job(Role role, String characterName, int productionId) {
         this.role = role;
-        this.programId = programId;
-        this.characterNames = characterNames;
+        this.productionId = productionId;
+        this.characterName = characterName;
     }
 
-    public Job(int personId, Role roles, String characterNames) {
-        this.role = roles;
+    public Job(int personId, Role role, String characterName) {
+        this.role = role;
         this.personId = personId;
-        this.characterNames = characterNames;
+        this.characterName = characterName;
     }
 
-    public Job(Role role, int programId) {
+    public Job(Role role, int productionId) {
         this.role = role;
-        this.programId = programId;
+        this.productionId = productionId;
 
     }
 
@@ -30,23 +30,13 @@ public class Job {
         this.personId = personId;
     }
 
-    /*
     @Override
     public String toString(){
-        String allRoles = "Roles: ";
-        for (Role role : roles){
-            allRoles += role.toString() + ", ";
+        if (characterName != null) {
+           return role.toString() + " som " + characterName + " i " + CreditSystemController.getProduction(productionId).getName();
         }
-        allRoles.substring(0, allRoles.length() - 3);
-        allRoles += " Played: ";
-        for (String str : characterNames) {
-            allRoles += str + ", ";
-        }
-        allRoles.substring(0, allRoles.length() - 3);
-        return program.toString() + ": " + allRoles;
+        return role.toString() + " i " + CreditSystemController.getProduction(productionId).getName();
     }
-
-     */
 
     public Role getRole() {
         return role;
@@ -57,11 +47,11 @@ public class Job {
     }
 
     public String getCharacterNames() {
-        return characterNames;
+        return characterName;
     }
 
-    public void setCharacterNames(String characterNames) {
-        this.characterNames = characterNames;
+    public void setCharacterNames(String characterName) {
+        this.characterName = characterName;
     }
 
     public int getPersonId() {
