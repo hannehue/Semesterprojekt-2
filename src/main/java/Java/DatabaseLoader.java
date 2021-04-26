@@ -4,6 +4,7 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -52,15 +53,14 @@ public class DatabaseLoader {
 
     public ArrayList<String[]> readCredits(File file) throws FileNotFoundException {
         inputStream = new Scanner(file);
-        ArrayList<String[]> personList = new ArrayList<>();
+        ArrayList<String[]> creditList = new ArrayList<>();
         while (inputStream.hasNext()) {
-            personList.add(inputStream.nextLine().split(","));
+            creditList.add(inputStream.nextLine().split(","));
         }
-        return personList;
+        return creditList;
     }
 
     public String[] creditToStringArray(Credit credit) {
-
         String[] creditArray = credit.toFileString().split(",");
         return creditArray;
     }
@@ -148,11 +148,11 @@ public class DatabaseLoader {
     public static void main(String[] args) throws IOException, ParseException {
         //Production kan lige nu kun have en category, skal laves om
         DatabaseLoader dbload = new DatabaseLoader();
+        for (String[] arr : dbload.groupArraylist) {
+            System.out.println(dbload.stringsToGroup(arr).toString());
+        }
+        dbload.groupArraylist.add(dbload.creditToStringArray(new Group("Et eller andet band 2", new Date(),2,false,"Band fra Esbjerg",3)));
         dbload.writeCredits(dbload.groupFile, dbload.groupArraylist);
-        System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(0)));
-        System.out.println(dbload.stringsToPerson(dbload.personArraylist.get(1)));
-        System.out.println(dbload.stringsToGroup(dbload.groupArraylist.get(0)));
-        System.out.println(dbload.stringsToMovie(dbload.movieArrayList.get(0)));
     }
 
     public ArrayList<String[]> getPersonArraylist() {
