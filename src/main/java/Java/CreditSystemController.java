@@ -12,16 +12,16 @@ import java.util.Date;
 
 
 public class CreditSystemController extends Application {
-    private static Scene scene;
+    private Scene scene;
     private static int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
-    private static ArrayList<Person> personList = new ArrayList<>();
-    private static ArrayList<Movie> movieList= new ArrayList<>();
-    private static ArrayList<Show> showList = new ArrayList<>();
-    private static ArrayList<Job> tempList = new ArrayList<>();
-    private static Stage primaryStage;
-    private static UserType userType;
-    private static String searchFieldPlaceholder = "";
+    private ArrayList<Person> personList = new ArrayList<>();
+    private ArrayList<Movie> movieList= new ArrayList<>();
+    private ArrayList<Show> showList = new ArrayList<>();
+    private ArrayList<Job> tempList = new ArrayList<>();
+    private Stage primaryStage;
+    private UserType userType;
+    private String searchFieldPlaceholder = "";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -83,7 +83,7 @@ public class CreditSystemController extends Application {
     }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
-    public static void setRoot(String fxml) throws IOException {
+    public void setRoot(String fxml) throws IOException {
         primaryStage.setScene(new Scene(loadFXML(fxml)));
     }
 
@@ -93,7 +93,7 @@ public class CreditSystemController extends Application {
         return fxmlLoader.load();
     }
 
-    public static void addPerson(String name, String description, String phoneNumber, String email){
+    public void addPerson(String name, String description, String phoneNumber, String email){
         Person person = new Person(
                 name,
                 new Date(),
