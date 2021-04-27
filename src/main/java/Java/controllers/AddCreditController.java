@@ -48,11 +48,11 @@ public class AddCreditController implements Initializable {
     @FXML
     protected TextArea personsToCreditE;
 
-    private static Stage createShow;
-    private static Stage createSeason;
+    private Stage createShow;
+    private Stage createSeason;
 
-    private static String showName;
-    private static String seasonName;
+    private String showName;
+    private String seasonName;
 
 
     @Override
@@ -64,19 +64,19 @@ public class AddCreditController implements Initializable {
 
 
 
-    public static void setShowName(String showname) {
+    public void setShowName(String showname) {
         showName = showname;
     }
 
-    public static String getShowName() {
+    public String getShowName() {
         return showName;
     }
 
-    public static void setSeasonName(String seasonname){
+    public void setSeasonName(String seasonname){
         seasonName = seasonname;
     }
 
-    public static String getSeasonName() {
+    public String getSeasonName() {
         return seasonName;
     }
 
@@ -189,11 +189,11 @@ public class AddCreditController implements Initializable {
         stage.show();
     }
 
-    public static void disposeCreateShow() {
+    public void disposeCreateShow() {
         createShow.close();
     }
 
-    public static void disposeCreateSeason() {
+    public void disposeCreateSeason() {
         createSeason.close();
     }
 

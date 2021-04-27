@@ -50,8 +50,8 @@ public class MenuController implements Initializable {
     @FXML
     protected Label loginButtonLabel;
 
-    private static AnchorPane ContentPane;
-    private static String searchString;
+    private AnchorPane ContentPane;
+    private String searchString;
 
 
     @Override
@@ -174,11 +174,11 @@ public class MenuController implements Initializable {
         hideMenu();
     }
 
-    public static String getSearchString() {
+    public String getSearchString() {
         return searchString;
     }
 
-    public static void setContentPane(String fxml) throws IOException {
+    public void setContentPane(String fxml) throws IOException {
         ContentPane.getChildren().clear();
         Parent root = FXMLLoader.load(MenuController.class.getClassLoader().getResource(fxml));
         ContentPane.getChildren().add(root);

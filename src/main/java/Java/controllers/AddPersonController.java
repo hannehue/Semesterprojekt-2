@@ -39,7 +39,7 @@ public class AddPersonController implements Initializable {
     protected AnchorPane contentPane;
 
     protected TextField characterName = new TextField();
-    private static ListView SearchList;
+    private ListView SearchList;
     private Credit personToCredit;
 
 
@@ -78,7 +78,7 @@ public class AddPersonController implements Initializable {
         setContent(creditList);
     }
 
-    public static void setContent(ArrayList<Credit> creditList) {
+    public void setContent(ArrayList<Credit> creditList) {
         ObservableList<Credit> observableResults = FXCollections.observableArrayList();
         observableResults.addAll(creditList);
         System.out.println(observableResults);

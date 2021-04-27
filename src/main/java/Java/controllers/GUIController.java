@@ -26,13 +26,9 @@ public class GUIController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
-
-
-
-
     //Admin
     @FXML
-    protected  void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
+    protected void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
         CreditSystemController.setRoot("Dashboard");
     }
 }

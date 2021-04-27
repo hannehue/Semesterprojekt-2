@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class CreditSystemController extends Application {
     private Scene scene;
-    private static int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
+    private int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
     private ArrayList<Person> personList = new ArrayList<>();
     private ArrayList<Movie> movieList= new ArrayList<>();
@@ -88,7 +88,7 @@ public class CreditSystemController extends Application {
     }
 
     //metode til at indlæse den nye .fxml fil som skal vises
-    private static Parent loadFXML(String fxml) throws IOException {
+    private Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CreditSystemController.class.getClassLoader().getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
@@ -107,19 +107,19 @@ public class CreditSystemController extends Application {
         personList.add(person);
     }
 
-    public static int nextId() {
+    public int nextId() {
         int temp = idTracker;
         idTracker++;
         return temp;
     }
 
-    public static void addTempJob(Job job) {
+    public void addTempJob(Job job) {
         tempList.add(job);
         System.out.println("temp job added");
 
     }
 
-    public static void addJob(int productionId) {
+    public void addJob(int productionId) {
         for (int i = tempList.size()-1; i > -1; i--) {
             Job job = tempList.get(i);
             for (Person person: personList) {
@@ -137,7 +137,7 @@ public class CreditSystemController extends Application {
         }
     }
 
-    public static void addMovie(String name, String description, Category[] categories, int id, int length) {
+    public void addMovie(String name, String description, Category[] categories, int id, int length) {
         Movie movie = new Movie(
                 name,
                 null,
@@ -152,7 +152,7 @@ public class CreditSystemController extends Application {
         System.out.println(movie.getName());
     }
 
-    public static void addShow(String title, String description) {
+    public void addShow(String title, String description) {
         Show show = new Show(
                 title,
                 null,
@@ -164,7 +164,7 @@ public class CreditSystemController extends Application {
         System.out.println("Added show: " + show.getName());
     }
 
-    public static void addSeason(String description, String show) {
+    public void addSeason(String description, String show) {
         for (Show s: showList) {
             if (s.getName() == show) {
                 Season season = new Season(
@@ -183,7 +183,7 @@ public class CreditSystemController extends Application {
         }
     }
 
-    public static void addEpisode(String title, int length, String show, String season, int id) {
+    public void addEpisode(String title, int length, String show, String season, int id) {
         for (Show s : showList) {
             if (s.getName() == show) {
                 for (Season seasonToGet : s.getSeasons()) {
@@ -209,7 +209,7 @@ public class CreditSystemController extends Application {
         }
     }
 
-    public static String getNextEpisode(String show, String season) {
+    public String getNextEpisode(String show, String season) {
         String episodeString = "";
         for (Show s: showList) {
             if (s.getName() == show) {
@@ -225,39 +225,39 @@ public class CreditSystemController extends Application {
 
 
 
-    public static ArrayList<Person> getPersonList() {
+    public ArrayList<Person> getPersonList() {
         return personList;
     }
 
-    public static ArrayList<Movie> getMovieList() {
+    public ArrayList<Movie> getMovieList() {
         return movieList;
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         launch(args);
     }
 
-    public static UserType getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public static void setUserType(UserType userTypeSetter) {
+    public void setUserType(UserType userTypeSetter) {
         userType = userTypeSetter;
     }
 
-    public static String getSearchFieldPlaceholder() {
+    public String getSearchFieldPlaceholder() {
         return searchFieldPlaceholder;
     }
 
-    public static void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
+    public void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
         CreditSystemController.searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
-    public static ArrayList<Show> getShowList() {
+    public ArrayList<Show> getShowList() {
         return showList;
     }
 
-    public static String tempListToString() {
+    public String tempListToString() {
         String temp = "Ingen personer tilføjet";
         if (!tempList.isEmpty()) {
             temp = "";
@@ -275,13 +275,13 @@ public class CreditSystemController extends Application {
         } return temp;
     }
 
-    public static void deleteTempList() {
+    public void deleteTempList() {
         for (int i = tempList.size()-1; i > -1; i--) {
             tempList.remove(i);
         }
     }
 
-    public static Production getProduction(int productionID) {
+    public Production getProduction(int productionID) {
         for (Movie movie : movieList) {
             if (movie.getProductionID() == productionID) {
                 return movie;

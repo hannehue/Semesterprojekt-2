@@ -20,7 +20,7 @@ public enum Category {
     private String categoryString;
 
 
-    public static Category getCategoryFromString(String val){
+    public Category getCategoryFromString(String val){
         Category[] categories = Category.values();
         for (int i = 0; i < Category.values().length; i++) {
             if (val.equals(categories[i].toString())){
@@ -30,7 +30,7 @@ public enum Category {
         return null;
     }
 
-    public static Category[] getCategoriesFromString(String categoryString){
+    public Category[] getCategoriesFromString(String categoryString){
         String[] splitCategories = categoryString.split(";");
         Category[] categories = new Category[splitCategories.length];
         for (int i = 0; i < splitCategories.length; i++){

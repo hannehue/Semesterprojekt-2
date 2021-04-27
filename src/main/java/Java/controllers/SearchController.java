@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 
 public class SearchController implements Initializable {
-    private static ListView SearchList;
+    private ListView SearchList;
 
     @FXML
     protected Pane searchPane;
@@ -40,7 +40,7 @@ public class SearchController implements Initializable {
         searchPane.getChildren().add(SearchList);
     }
 
-    public static void setContent() {
+    public void setContent() {
         ObservableList<Credit> observableResults = FXCollections.observableArrayList();
         observableResults.addAll(search(MenuController.getSearchString()));
         System.out.println(observableResults);
@@ -48,7 +48,7 @@ public class SearchController implements Initializable {
     }
 
 
-    private static ArrayList<Credit> search(String getsearchString){
+    private ArrayList<Credit> search(String getsearchString){
         String searchStringChecked = getsearchString.toLowerCase();
         ArrayList<Credit> creditList = new ArrayList<>();
         for(Credit person : CreditSystemController.getPersonList()) {

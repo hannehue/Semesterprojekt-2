@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static javafx.collections.FXCollections.*;
+import javafx.collections.FXCollections.*;
 
 public class CreditViewController implements Initializable {
 
@@ -29,9 +29,9 @@ public class CreditViewController implements Initializable {
     @FXML
     Label descriptionLabel;
 
-    private static Credit currentCredit;
+    private Credit currentCredit;
 
-    public static void setCurrentCredit(Credit inputCredit) {
+    public void setCurrentCredit(Credit inputCredit) {
         currentCredit = inputCredit;
     }
 

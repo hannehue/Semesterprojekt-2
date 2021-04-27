@@ -41,7 +41,7 @@ public class LoginController implements Initializable {
         loginManager(UserType.ADMIN);
     }
 
-    protected static void loginManager(UserType userType) throws IOException{
+    private void loginManager(UserType userType) throws IOException{
         CreditSystemController.setUserType(userType);
         CreditSystemController.setRoot("Menu");
     }
