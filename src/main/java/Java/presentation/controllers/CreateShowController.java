@@ -23,10 +23,10 @@ public class CreateShowController implements Initializable {
 
     @FXML
     protected void handleAddShow(ActionEvent Event) throws IOException {
-        CreditSystemController.addShow(
+        CreditSystemController.getInstance().addShow(
                 showTitle.getText(),
                 showDescription.getText()
         );
-        AddCreditController.disposeCreateShow();
+        AddCreditController.getInstance().disposeCreateShow();
     }
 }

@@ -30,7 +30,11 @@ public class AddPersonController implements Initializable {
     protected TextField characterName = new TextField();
     private ListView SearchList;
     private Credit personToCredit;
+    private static AddPersonController addPersonController = new AddPersonController();
 
+    private static AddPersonController getInstance() {
+        return addPersonController;
+    }
 
     public void handleJob(MouseEvent mouseEvent) {
         jobRole.getItems().clear();
@@ -53,13 +57,13 @@ public class AddPersonController implements Initializable {
         } else {
             job = new Job(personToCredit.getCreditID(), jobRole.getValue());
         }
-        CreditSystemController.addTempJob(job);
+        CreditSystemController.getInstance().addTempJob(job);
     }
 
     private void searchPerson() {
         String searchString = findPerson.getText().toLowerCase();
         ArrayList<Credit> creditList = new ArrayList<>();
-        for (Credit person : CreditSystemController.getPersonList()) {
+        for (Credit person : CreditSystemController.getInstance().getPersonList()) {
             if (person.getName().toLowerCase().contains(searchString)) {
                 creditList.add(person);
             }

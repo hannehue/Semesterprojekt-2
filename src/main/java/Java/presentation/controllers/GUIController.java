@@ -29,6 +29,6 @@ public class GUIController implements Initializable {
     //Admin
     @FXML
     protected void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
-        CreditSystemController.setRoot("Dashboard");
+        CreditSystemController.getInstance().setRoot("Dashboard");
     }
 }

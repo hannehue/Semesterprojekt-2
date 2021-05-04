@@ -1,6 +1,7 @@
 package Java.presentation.controllers;
 
 import Java.Credit;
+import Java.CreditSystemController;
 import Java.Job;
 import Java.Person;
 import javafx.collections.FXCollections;
@@ -28,8 +29,17 @@ public class CreditViewController implements Initializable {
     Label nameLabel;
     @FXML
     Label descriptionLabel;
+    private static CreditViewController creditViewController = new CreditViewController();
 
     private Credit currentCredit;
+
+    private CreditViewController() {
+
+    }
+
+    public static CreditViewController getInstance() {
+        return creditViewController;
+    }
 
     public void setCurrentCredit(Credit inputCredit) {
         currentCredit = inputCredit;
@@ -63,7 +73,7 @@ public class CreditViewController implements Initializable {
             jobLabel.setStyle("-fx-font-weight: bold");
             jobLabel.setPadding(padding);
 
-            ObservableList<Job> observableJobs = observableArrayList();
+            ObservableList<Job> observableJobs = FXCollections.observableArrayList();
             observableJobs.addAll(personCredit.getJobs());
             jobView.setItems(observableJobs);
 

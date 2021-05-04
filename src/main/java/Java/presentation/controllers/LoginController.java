@@ -42,7 +42,7 @@ public class LoginController implements Initializable {
     }
 
     private void loginManager(UserType userType) throws IOException{
-        CreditSystemController.setUserType(userType);
-        CreditSystemController.setRoot("Menu");
+        CreditSystemController.getInstance().setUserType(userType);
+        CreditSystemController.getInstance().setRoot("Menu");
     }
 }

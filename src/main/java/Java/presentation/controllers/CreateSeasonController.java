@@ -14,6 +14,15 @@ public class CreateSeasonController implements Initializable {
 
     @FXML
     protected TextArea seasonDescription;
+    private static CreateSeasonController createSeasonController = new CreateSeasonController();
+
+    private CreateSeasonController() {
+
+    }
+
+    public static CreateSeasonController getInstance(){
+        return createSeasonController;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -22,8 +31,8 @@ public class CreateSeasonController implements Initializable {
 
     @FXML
     protected void handleAddSeason(ActionEvent Event) throws IOException {
-        System.out.println("trying to add season with showname: " + AddCreditController.getShowName());
-        CreditSystemController.addSeason(seasonDescription.getText(), AddCreditController.getShowName());
-        AddCreditController.disposeCreateSeason();
+        System.out.println("trying to add season with showname: " + AddCreditController.getInstance().getShowName());
+        CreditSystemController.getInstance().addSeason(seasonDescription.getText(), AddCreditController.getInstance().getShowName());
+        AddCreditController.getInstance().disposeCreateSeason();
     }
 }

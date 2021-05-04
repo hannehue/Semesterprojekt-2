@@ -23,6 +23,16 @@ public class SearchController implements Initializable {
     @FXML
     protected Pane searchPane;
 
+    private static SearchController searchController = new SearchController();
+
+    private SearchController() {
+
+    }
+
+    public static SearchController getInstance() {
+        return searchController;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         SearchList = new ListView();
@@ -42,7 +52,7 @@ public class SearchController implements Initializable {
 
     public void setContent() {
         ObservableList<Credit> observableResults = FXCollections.observableArrayList();
-        observableResults.addAll(search(MenuController.getSearchString()));
+        observableResults.addAll(search(MenuController.getInstance().getSearchString()));
         System.out.println(observableResults);
         SearchList.setItems(observableResults);
     }
@@ -51,7 +61,7 @@ public class SearchController implements Initializable {
     private ArrayList<Credit> search(String getsearchString){
         String searchStringChecked = getsearchString.toLowerCase();
         ArrayList<Credit> creditList = new ArrayList<>();
-        for(Credit person : CreditSystemController.getPersonList()) {
+        for(Credit person : CreditSystemController.getInstance().getPersonList()) {
             if (person != null && person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
                 creditList.add(person);
             }
@@ -62,9 +72,9 @@ public class SearchController implements Initializable {
     public void handleClickedItem(MouseEvent mouseEvent) {
         Credit item = (Credit) SearchList.getSelectionModel().getSelectedItem();
         System.out.println("clicked" + item);
-        CreditViewController.setCurrentCredit(item);
+        CreditViewController.getInstance().setCurrentCredit(item);
         try {
-            MenuController.setContentPane("CreditView.fxml");
+            MenuController.getInstance().setContentPane("CreditView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }

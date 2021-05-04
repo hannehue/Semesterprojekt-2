@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -52,7 +53,15 @@ public class MenuController implements Initializable {
 
     private AnchorPane ContentPane;
     private String searchString;
+    private static MenuController menuController = new MenuController();
 
+    private MenuController() {
+
+    }
+
+    public static MenuController getInstance() {
+        return menuController;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -88,17 +97,17 @@ public class MenuController implements Initializable {
 
             //Menu load----------------
             //Hvis der er logget ind, hvis menu i forhold til brugerens UserType
-            if (CreditSystemController.getUserType() != null) {
-                if (!CreditSystemController.getUserType().getPersonalProfile()){
+            if (CreditSystemController.getInstance().getUserType() != null) {
+                if (!CreditSystemController.getInstance().getUserType().getPersonalProfile()){
                     VBoxMenu.getChildren().removeAll(profile);
                 }
-                if (!CreditSystemController.getUserType().getAddCredit()){
+                if (!CreditSystemController.getInstance().getUserType().getAddCredit()){
                     VBoxMenu.getChildren().removeAll(addCredits);
                 }
-                if (!CreditSystemController.getUserType().getAddUser()){
+                if (!CreditSystemController.getInstance().getUserType().getAddUser()){
                     VBoxMenu.getChildren().removeAll(addUserI);
                 }
-                if (!CreditSystemController.getUserType().getApproveCredit()){
+                if (!CreditSystemController.getInstance().getUserType().getApproveCredit()){
                     VBoxMenu.getChildren().removeAll(approveCredit);
                 }
                 VBoxMenu.getChildren().removeAll(login);
@@ -137,8 +146,9 @@ public class MenuController implements Initializable {
                 searchString = searchField.getText();
                 //prøver at åbne søgeresultat ind i content
                 try {
+
                     setContentPane("SearchResult.fxml");
-                    SearchController.setContent();
+                    SearchController.getInstance().setContent();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -154,7 +164,7 @@ public class MenuController implements Initializable {
             KeyFrame keyFrame = new KeyFrame(Duration.millis(3000), keyValue);
             timeline.getKeyFrames().add(keyFrame);
             timeline.play();
-            timeline.setOnFinished(event -> searchField.setPromptText(CreditSystemController.getSearchFieldPlaceholder()));
+            timeline.setOnFinished(event -> searchField.setPromptText(CreditSystemController.getInstance().getSearchFieldPlaceholder()));
         }
     }
 
@@ -200,8 +210,8 @@ public class MenuController implements Initializable {
     }
 
     public void handleLogout(MouseEvent mouseEvent) throws IOException {
-        CreditSystemController.setUserType(null);
-        CreditSystemController.setRoot("Menu");
+        CreditSystemController.getInstance().setUserType(null);
+        CreditSystemController.getInstance().setRoot("Menu");
     }
 
     public void handleAddUser(MouseEvent mouseEvent) {

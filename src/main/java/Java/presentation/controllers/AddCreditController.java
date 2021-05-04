@@ -54,6 +54,17 @@ public class AddCreditController implements Initializable {
     private String showName;
     private String seasonName;
 
+    private static AddCreditController addCreditController = new AddCreditController();
+
+
+    private AddCreditController() {
+
+    }
+
+    public static AddCreditController getInstance() {
+        return addCreditController;
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,7 +94,7 @@ public class AddCreditController implements Initializable {
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         choiceBoxSeason.getItems().clear();
-        for (Show show : CreditSystemController.getShowList()) {
+        for (Show show : CreditSystemController.getInstance().getShowList()) {
             choiceBoxShow.getItems().add(show.getName());
         }
         choiceBoxShow.show();
@@ -92,28 +103,28 @@ public class AddCreditController implements Initializable {
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
         System.out.println("trying to add episode to" + showName + " . " + seasonName);
-        int id = CreditSystemController.nextId();
-        CreditSystemController.addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName, id);
+        int id = CreditSystemController.getInstance().nextId();
+        CreditSystemController.getInstance().addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName, id);
         reloadNextEpisode();
-        CreditSystemController.addJob(id);
+        CreditSystemController.getInstance().addJob(id);
     }
 
 
     @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
-        int id = CreditSystemController.nextId();
-        CreditSystemController.addMovie(
+        int id = CreditSystemController.getInstance().nextId();
+        CreditSystemController.getInstance().addMovie(
                 movieTitle.getText(),
                 movieDescription.getText(),
                 null,
                 id,
                 Integer.parseInt(movieLength.getText())
                 );
-        CreditSystemController.addJob(id);
+        CreditSystemController.getInstance().addJob(id);
     }
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
-        CreditSystemController.addPerson(
+        CreditSystemController.getInstance().addPerson(
                 personName.getText(),
                 null,
                 personPhone.getText(),
@@ -159,7 +170,7 @@ public class AddCreditController implements Initializable {
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
         if (showName != null) {
-            for (Show show : CreditSystemController.getShowList()) {
+            for (Show show : CreditSystemController.getInstance().getShowList()) {
                 if (show.getName() == showName) {
                     if (show.getSeasons() != null) {
                         for (Season season : show.getSeasons()) {
@@ -198,18 +209,18 @@ public class AddCreditController implements Initializable {
     }
 
     private void reloadNextEpisode() {
-        episodeId.setText(CreditSystemController.getNextEpisode(showName, seasonName));
+        episodeId.setText(CreditSystemController.getInstance().getNextEpisode(showName, seasonName));
     }
 
     public void handleReloadPersonToMovie(ActionEvent actionEvent) {
-        personsToCreditM.setText(CreditSystemController.tempListToString());
-        personsToCreditE.setText(CreditSystemController.tempListToString());
-        System.out.println(CreditSystemController.tempListToString());
+        personsToCreditM.setText(CreditSystemController.getInstance().tempListToString());
+        personsToCreditE.setText(CreditSystemController.getInstance().tempListToString());
+        System.out.println(CreditSystemController.getInstance().tempListToString());
     }
 
     public void handleRemovePersons(ActionEvent actionEvent) {
-        CreditSystemController.deleteTempList();
-        personsToCreditM.setText(CreditSystemController.tempListToString());
-        personsToCreditE.setText(CreditSystemController.tempListToString());
+        CreditSystemController.getInstance().deleteTempList();
+        personsToCreditM.setText(CreditSystemController.getInstance().tempListToString());
+        personsToCreditE.setText(CreditSystemController.getInstance().tempListToString());
     }
 }

@@ -24,6 +24,15 @@ public class CreditSystemController extends Application {
     private Stage primaryStage;
     private UserType userType;
     private String searchFieldPlaceholder = "";
+    private static CreditSystemController instance = new CreditSystemController();
+
+    private CreditSystemController() {
+
+    }
+
+    public static CreditSystemController getInstance() {
+        return instance;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -252,7 +261,7 @@ public class CreditSystemController extends Application {
     }
 
     public void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
-        CreditSystemController.searchFieldPlaceholder = searchFieldPlaceholder;
+        CreditSystemController.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
     public ArrayList<Show> getShowList() {

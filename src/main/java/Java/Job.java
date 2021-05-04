@@ -35,9 +35,9 @@ public class Job {
     public String toString(){
         try {
             if (characterName != null) {
-                return role.toString() + " som " + characterName + " i " + CreditSystemController.getProduction(productionID).getName();
+                return role.toString() + " som " + characterName + " i " + CreditSystemController.getInstance().getProduction(productionID).getName();
             }
-            return role.toString() + " i " + CreditSystemController.getProduction(productionID).getName();
+            return role.toString() + " i " + CreditSystemController.getInstance().getProduction(productionID).getName();
         }
         catch (NullPointerException e) {
             return "";
