@@ -25,10 +25,6 @@ public class SearchController implements Initializable {
 
     private static SearchController searchController = new SearchController();
 
-    private SearchController() {
-
-    }
-
     public static SearchController getInstance() {
         return searchController;
     }

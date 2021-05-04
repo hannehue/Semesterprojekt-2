@@ -56,11 +56,6 @@ public class AddCreditController implements Initializable {
 
     private static AddCreditController addCreditController = new AddCreditController();
 
-
-    private AddCreditController() {
-
-    }
-
     public static AddCreditController getInstance() {
         return addCreditController;
     }

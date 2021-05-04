@@ -33,10 +33,6 @@ public class CreditViewController implements Initializable {
 
     private Credit currentCredit;
 
-    private CreditViewController() {
-
-    }
-
     public static CreditViewController getInstance() {
         return creditViewController;
     }
