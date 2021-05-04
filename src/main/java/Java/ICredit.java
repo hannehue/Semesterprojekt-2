@@ -5,7 +5,7 @@ import java.util.Date;
 
 public interface ICredit {
 
-    //getters/setters for credit class
+    //getters/setters for Credit class
     String getName();
     void setName(String name);
 
@@ -21,8 +21,8 @@ public interface ICredit {
     boolean isApproved();
     void setApproved(boolean approved);
 
-
-    //getters/setters for person class
+/**
+    //getters/setters for Person class
     int getPersonID();
     void setPersonID(int personID);
 
@@ -38,4 +38,21 @@ public interface ICredit {
     String getEmail();
     void setEmail(String email);
 
+
+    //getter/setter for Episode class
+    int getSeasonID();
+    void setSeasonID(int seasonID);
+
+    //getters/setters for Season class
+    ArrayList<Episode> getEpisodes();
+    void setEpisodes(ArrayList<Episode> episodes);
+
+    int getShowID();
+    void setShowID(int showID);
+
+
+    //getter/setter for Show class
+    ArrayList<Season> getSeasons();
+    void setSeasons(ArrayList<Season> seasons);
+    **/
 }

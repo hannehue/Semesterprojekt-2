@@ -27,11 +27,12 @@ public class Episode extends Production {
         return null;
     }
 
-
+    @Override
     public int getSeasonID() {
         return seasonID;
     }
 
+    @Override
     public void setSeasonID(int seasonID) {
         this.seasonID = seasonID;
     }

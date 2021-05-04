@@ -15,18 +15,22 @@ public class Season extends Credit {
         this.episodes = episodes;
     }
 
+    @Override
     public ArrayList<Episode> getEpisodes() {
         return episodes;
     }
 
+    @Override
     public void setEpisodes(ArrayList<Episode> episodes) {
         this.episodes = episodes;
     }
 
+    @Override
     public int getShowID() {
         return showID;
     }
 
+    @Override
     public void setShowID(int showID) {
         this.showID = showID;
     }

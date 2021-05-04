@@ -12,11 +12,12 @@ public class Show extends Credit{
         this.seasons = seasons;
     }
 
-
+    @Override
     public ArrayList<Season> getSeasons() {
         return seasons;
     }
 
+    @Override
     public void setSeasons(ArrayList<Season> seasons) {
         this.seasons = seasons;
     }
