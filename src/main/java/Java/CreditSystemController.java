@@ -239,7 +239,7 @@ public class CreditSystemController extends Application {
         return movieList;
     }
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         launch(args);
     }
 
