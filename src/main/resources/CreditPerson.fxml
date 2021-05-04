@@ -6,7 +6,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.GUIController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.GUIController">
+    <top>
+        <fx:include source="include/Menu.fxml" fx:id="Menu" />
+    </top>
     <center>
         <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
@@ -27,20 +30,4 @@
             </children>
         </Pane>
     </center>
-    <top>
-        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <children>
-                <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#ToFrontpage" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT">
-                    <image>
-                        <Image url="@TV_2_PLAY_Hvid_RGB.png" />
-                    </image>
-                </ImageView>
-            <SplitMenuButton layoutX="880.0" layoutY="20.0" mnemonicParsing="false" text="krediteret person">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleMyProfile" text="Min profil" />
-                <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
-              </items>
-            </SplitMenuButton>
-            </children></Pane>
-    </top>
 </BorderPane>

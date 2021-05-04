@@ -8,16 +8,16 @@ public class Person extends Credit{
     private ArrayList<Job> jobs;
     private String phoneNumber;
     private String personalInfo;
-    private String email;
+    private String personEmail;
 
-    public Person(String name, Date dateAdded, int creditID, boolean approved,
-                  String description, int personID, String phoneNumber, String personalInfo, String email){
-        super(name, dateAdded, creditID, approved, description);
+    public Person(String name, Date dateAdded, int creditId, boolean approved,
+                        String description, int personID, String phoneNumber, String personalInfo, String personEmail){
+        super(name, dateAdded, creditId, approved, description);
         this.personID = personID;
         this.jobs = new ArrayList<Job>();
         this.phoneNumber = phoneNumber;
         this.personalInfo = personalInfo;
-        this.email = email;
+        this.personEmail = personEmail;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class Person extends Credit{
 
     @Override
     public String getEmail() {
-        return email;
+        return personEmail;
     }
 
     @Override
@@ -77,39 +77,38 @@ public class Person extends Credit{
             jobString += "\t" + job.toString() + "\n";
         }
         return "Name: " + getName() + ", PersonID: " + personID + "\n" +
-                "Email: " + email + "\n" +
-                "Phone number: " + phoneNumber + "\n" +
-                "Jobs:\n" + jobString +
-                "PersonalInfo: " + personalInfo  + "\n";
+                "Jobs:\n" + jobString;
     }
     @Override
-    public String toFileString(){
-            String personString = getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() +
-                    "," + getDescription() + "," + getPersonID() + "," + getPhoneNumber() + "," +
-                    getPersonalInfo() + "," + getEmail() + ",";
+    public String toFileString() {
+        String personString = getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() +
+                "," + getDescription() + "," + getPersonID() + "," + getPhoneNumber() + "," +
+                getPersonalInfo() + "," + getEmail() + ",";
 
-            //Koreografi;Fotografer--165--Mand i hættetrøje ved tanken;Hans Jensen,
-            String jobString = "";
+        //Koreografi;Fotografer--165--Mand i hættetrøje ved tanken;Hans Jensen,
+        String jobString = "";
 
-            for (Job j : getJobs()) {
-                String roles = "";
-                String characterNames = "";
+        for (Job j : getJobs()) {
+            String roles = "";
+            String characterNames = "";
 
-                for (Role role : j.getRoles()) {
-                    roles += role.toString() + ";";
-                }
-                roles = roles.substring(0, roles.length() - 1);
+            roles = j.getRole().toString();
 
-                for (String characterName : j.getCharacterNames()) {
-                    characterNames += characterName + ";";
-                }
-                characterNames = characterNames.substring(0, characterNames.length() - 1);
+            characterNames = j.getCharacterName();
 
-                jobString += roles + "--" + j.getProgram() + "--" + characterNames + ",";
-            }
-            personString += jobString;
+            jobString += roles + "--" + j.getProgram() + "--" + characterNames + ",";
+        }
+        personString += jobString;
 
-            System.out.println(personString);
-            return personString;
+        System.out.println(personString);
+        return personString;
+    }
+
+    public String getPersonEmail() {
+        return personEmail;
+    }
+
+    public void setPersonEmail(String personEmail) {
+        this.personEmail = personEmail;
     }
 }

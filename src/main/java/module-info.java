@@ -3,4 +3,6 @@ module Java {
     requires javafx.fxml;
     opens Java to javafx.fxml;
     exports Java;
+    exports Java.controllers;
+    opens Java.controllers to javafx.fxml;
 }

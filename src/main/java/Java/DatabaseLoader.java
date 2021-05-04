@@ -4,11 +4,15 @@ import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class DatabaseLoader {
+
+    private static DatabaseLoader instance;
+
 
     private Scanner inputStream = null;
     private FileWriter outputStream = null;
@@ -22,25 +26,46 @@ public class DatabaseLoader {
     private File movieFile;
     private ArrayList<String[]> movieArrayList;
 
+    private File showFile;
+    private ArrayList<String[]> showArrayList;
+
     private SimpleDateFormat formatter;
 
-    public DatabaseLoader() throws IOException, ParseException {
+    private DatabaseLoader() throws IOException {
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
         groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
         movieFile = new File(DatabaseLoader.class.getClassLoader().getResource("Movies.txt").getFile());
+        showFile = new File(DatabaseLoader.class.getClassLoader().getResource("Shows.txt").getFile());
         personArraylist = readCredits(personFile);
         groupArraylist = readCredits(groupFile);
         movieArrayList = readCredits(movieFile);
+        showArrayList = readCredits(showFile);
+    }
+
+    public static DatabaseLoader getInstance() throws IOException {
+        if (instance == null){
+            instance = new DatabaseLoader();
+        }
+        return instance;
     }
 
     public void writeCredits(File file, ArrayList<String[]> creditList) throws IOException {
         outputStream = new FileWriter(file, false);
 
         for (int row = 0; row < creditList.size(); row++) {
-            outputStream.append(stringArraytoString(creditList.get(row)) + "\n");
+            outputStream.write(stringArraytoString(creditList.get(row)) + "\n");
         }
         outputStream.close();
+    }
+
+    public void writeAllCredits() throws IOException {
+        for (int i = 0; i < 4; i++) {
+            writeCredits(personFile,personArraylist);
+            writeCredits(groupFile, groupArraylist);
+            writeCredits(movieFile, movieArrayList);
+            writeCredits(showFile,showArrayList);
+        }
     }
 
     public String stringArraytoString(String[] strings){
@@ -65,13 +90,42 @@ public class DatabaseLoader {
         return creditArray;
     }
 
-    public void addCredit(Credit credit, ArrayList<Credit> creditsList){
-        creditsList.add(credit);
+    public void addCreditToDatabase(Credit credit){
+        if (Person.class.equals(credit.getClass())) {
+            personArraylist.add(creditToStringArray(credit));
+
+        } else if (Movie.class.equals(credit.getClass())){
+            movieArrayList.add(creditToStringArray(credit));
+
+        } else if (Group.class.equals(credit.getClass())){
+            groupArraylist.add(creditToStringArray(credit));
+
+        } else if (Show.class.equals(credit.getClass())){
+            showArrayList.add(creditToStringArray(credit));
+        }
     }
 
-    public void addCredits(ArrayList<? extends Credit> readList, ArrayList<String[]> writeList ){
-        for (Credit credit: readList){
-            writeList.add(creditToStringArray(credit));
+    public void addCreditsToDatabase(ArrayList<? extends Credit> readList){
+        if(readList.size() == 0 || readList == null){
+            return;
+        }
+
+        ArrayList<String[]> tempList = new ArrayList<>();
+        for (Credit p: readList){
+            if (p != null){
+                tempList.add(creditToStringArray(p));
+            }
+        }
+        if (readList.get(0) instanceof Person) {
+            personArraylist = tempList;
+
+        } else if (readList.get(0) instanceof Movie){
+            movieArrayList = tempList;
+
+        } else if (readList.get(0) instanceof Group){
+            groupArraylist = tempList;
+        } else if (readList.get(0) instanceof Show){
+            showArrayList = tempList;
         }
     }
 
@@ -80,41 +134,47 @@ public class DatabaseLoader {
     public Person stringsToPerson(String[] vals) {
         Person tempPerson = null;
         try {
-            tempPerson = new Person(vals[0], formatter.parse(vals[1]), Integer.parseInt(vals[2]),
-                    Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
-            if (vals[9].equals("null")) {
+            if (vals[1].equals("null")){
+                tempPerson = new Person(vals[0], null, Integer.parseInt(vals[2]),
+                        Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
+            } else {
+                tempPerson = new Person(vals[0], formatter.parse(vals[1]), Integer.parseInt(vals[2]),
+                        Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
+            }
+            /* if (vals[9].equals("null")) {
                 return tempPerson;
             }
+
+             */
         } catch (java.text.ParseException e) {
             e.printStackTrace();
             System.err.println("Failed when initializing person from string array");
             return null;
         }
         // Loads one persons jobs into strings
+        /*
         String[] jobsStrings = vals[9].split("##");
         ArrayList<Job> jobs = new ArrayList<>();
 
         // Job handling
         for (int i = 0; i < jobsStrings.length; i++) { // Loops over all jobs
             String[] jobValues = jobsStrings[i].split("--"); // Splits all values in the job
-            String[] rolesStrings = jobValues[0].split(";"); // Splits all roles on the job (first value)
-
-            Role[] roles = new Role[rolesStrings.length];
-
-            for (int j = 0; j < roles.length; j++) {
-                roles[j] = Role.getRoleFromString(rolesStrings[j]);
-            }
 
             String[] characterNames = jobValues[2].split(";");
             if (jobValues[2].equals("null")) {
                 characterNames = null;
+                jobs.add(new Job(Role.getRoleFromString(jobValues[0]), Integer.parseInt(jobValues[1])));
+            }
+            else {
+                jobs.add(new Job(Role.getRoleFromString(jobValues[0]), characterNames[0], Integer.parseInt(jobValues[1])));
             }
 
-            jobs.add(new Job(roles, Integer.parseInt(jobValues[1]), characterNames));
 
         }
 
         tempPerson.setJobs(jobs);
+
+         */
         return tempPerson;
     }
 
@@ -136,7 +196,11 @@ public class DatabaseLoader {
         try {
             tempMovie = new Movie(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
-                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8]));
+                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8])
+                    );
+            for (String staff : new ArrayList<>(Arrays.asList(strings[9].split(";"))) ) {
+                tempMovie.addStaffID(Integer.parseInt(staff));
+            }
         } catch (ParseException e){
             e.printStackTrace();
             System.err.println("Failed when initializing movie from string array");
@@ -145,18 +209,51 @@ public class DatabaseLoader {
         return tempMovie;
     }
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public Episode stringsToEpisode(String[] strings){
+        Episode tempEpisode = null;
+        try {
+            tempEpisode = new Episode(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
+                    Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
+                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8])
+                    , Integer.parseInt(strings[10]));
+
+            for (String staff : new ArrayList<String>(Arrays.asList(strings[9].split(";")))) {
+                tempEpisode.addStaffID(Integer.parseInt(staff));
+            }
+
+        } catch (ParseException e){
+            e.printStackTrace();
+            System.err.println("Failed when initializing movie from string array");
+            return null;
+        }
+        return tempEpisode;
+    }
+
+    public static void main(String[] args) throws IOException {
         //Production kan lige nu kun have en category, skal laves om
         DatabaseLoader dbload = new DatabaseLoader();
         for (String[] arr : dbload.groupArraylist) {
             System.out.println(dbload.stringsToGroup(arr).toString());
         }
-        dbload.groupArraylist.add(dbload.creditToStringArray(new Group("Et eller andet band 2", new Date(),2,false,"Band fra Esbjerg",3)));
-        dbload.writeCredits(dbload.groupFile, dbload.groupArraylist);
+        //dbload.groupArraylist.add(dbload.creditToStringArray(new Group("Et eller andet band 2", new Date(),2,false,"Band fra Esbjerg",3)));
+        //dbload.writeCredits(dbload.groupFile, dbload.groupArraylist);
+
     }
 
     public ArrayList<String[]> getPersonArraylist() {
         return personArraylist;
+    }
+
+    public ArrayList<String[]> getGroupArraylist() {
+        return groupArraylist;
+    }
+
+    public ArrayList<String[]> getMovieArrayList() {
+        return movieArrayList;
+    }
+
+    public ArrayList<String[]> getShowArrayList() {
+        return showArrayList;
     }
 
     public File getPersonFile() {
@@ -170,4 +267,7 @@ public class DatabaseLoader {
     public File getMovieFile() {
         return movieFile;
     }
+
+
+
 }

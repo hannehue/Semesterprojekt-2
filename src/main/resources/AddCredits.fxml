@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.controllers.AddCreditController">
+    <center>
+        <Pane prefHeight="713.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
+            <children>
+                <Accordion layoutX="259.0" layoutY="21.0" prefHeight="585.0" prefWidth="541.0">
+                    <panes>
+                        <TitledPane animated="false" prefHeight="533.0" prefWidth="541.0" text="Tilføj Film">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <TextField fx:id="movieTitle" layoutX="200.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <TextField fx:id="movieDescription" layoutX="200.0" layoutY="34.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <Label layoutX="10.0" prefHeight="26.0" prefWidth="199.0" text="Titel" />
+                                        <Label layoutX="10.0" layoutY="35.0" prefHeight="26.0" prefWidth="199.0" text="Beskrivelse:" />
+                                        <Label layoutX="10.0" layoutY="70.0" prefHeight="26.0" prefWidth="199.0" text="Længde i sekunder:">
+                                            <font>
+                                                <Font name="System Bold" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="movieLength" layoutX="200.0" layoutY="69.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <Button contentDisplay="CENTER" layoutX="200.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
+                                        <TextArea fx:id="personsToCreditM" disable="true" layoutX="9.0" layoutY="244.0" prefHeight="214.0" prefWidth="522.0" />
+                                        <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendMovieButton" text="Godkend og send" />
+                              <Button layoutX="348.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleReloadPersonToMovie" text="Reload" />
+                              <Button layoutX="410.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" />
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" prefHeight="369.0" prefWidth="498.0" text="Tilføj Person">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <Label layoutX="14.0" prefHeight="26.0" text="Navn:" />
+                                        <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Email:" />
+                                        <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Telefon:" />
+                                        <TextField fx:id="personName" layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <TextField fx:id="personEmail" layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <TextField fx:id="personPhone" layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" />
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                  <TitledPane animated="false" onMouseClicked="#handleGetShows" prefHeight="369.0" prefWidth="498.0" text="Tilføj Episode">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="10.0" layoutY="1.0" prefHeight="26.0" text="Serie" />
+                              <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Sæsson" />
+                              <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Episode:" />
+                              <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendEpisodeButton" text="Godkend og send" />
+                              <Button layoutX="488.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleCreateShow" text="+" />
+                              <ChoiceBox fx:id="choiceBoxShow" layoutX="230.0" layoutY="1.0" onAction="#handleSetShows" onMouseClicked="#handleGetShows" prefHeight="27.0" prefWidth="249.0" />
+                              <ChoiceBox fx:id="choiceBoxSeason" layoutX="230.0" layoutY="30.0" onAction="#handleSetSeason" onMouseClicked="#handleGetSeason" prefHeight="27.0" prefWidth="249.0" />
+                              <Button layoutX="488.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleCreateSeason" text="+" />
+                              <Label layoutX="10.0" layoutY="90.0" prefHeight="26.0" prefWidth="48.0" text="Title" />
+                              <TextField fx:id="episodeTitle" layoutX="230.0" layoutY="90.0" prefHeight="27.0" prefWidth="283.0" />
+                              <Label layoutX="14.0" layoutY="120.0" prefHeight="26.0" prefWidth="48.0" text="Længde" />
+                              <TextField fx:id="episodeLength" layoutX="230.0" layoutY="120.0" prefHeight="27.0" prefWidth="283.0" />
+                              <TextArea fx:id="personsToCreditE" disable="true" layoutX="28.0" layoutY="252.0" prefHeight="200.0" prefWidth="493.0" />
+                              <Button layoutX="488.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleGetEpisodeName" text="+" />
+                              <TextField fx:id="episodeId" disable="true" layoutX="230.0" layoutY="60.0" prefHeight="27.0" prefWidth="248.0" />
+                              <Button layoutX="336.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleReloadPersonToMovie" text="Reload" />
+                              <Button layoutX="397.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" />
+                              <Button contentDisplay="CENTER" layoutX="190.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </TitledPane>
+                    </panes>
+                </Accordion>
+            </children>
+        </Pane>
+    </center>
+</BorderPane>
