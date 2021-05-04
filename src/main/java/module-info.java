@@ -3,6 +3,10 @@ module Java {
     requires javafx.fxml;
     opens Java to javafx.fxml;
     exports Java;
-    exports Java.controllers;
-    opens Java.controllers to javafx.fxml;
+    exports Java.presentation.controllers;
+    opens Java.presentation.controllers to javafx.fxml;
+    exports Java.domainlayer;
+    opens Java.domainlayer to javafx.fxml;
+    exports Java.persistencelayer;
+    opens Java.persistencelayer to javafx.fxml;
 }

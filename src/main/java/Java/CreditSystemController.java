@@ -1,5 +1,6 @@
 package Java;
 
+import Java.persistencelayer.DatabaseLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 
 public class CreditSystemController extends Application {
+
     private Scene scene;
     private int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
@@ -24,7 +26,7 @@ public class CreditSystemController extends Application {
     private String searchFieldPlaceholder = "";
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         /** TEST MILJØ **/
 
