@@ -3,7 +3,7 @@ package Java;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Person extends Credit{
+public class Person extends Credit implements IPerson{
     private int personID;
     private ArrayList<Job> jobs;
     private String phoneNumber;
@@ -67,7 +67,7 @@ public class Person extends Credit{
 
     @Override
     public void setEmail(String email){
-        this.email = email;
+        this.personEmail = email;
     }
 
     @Override

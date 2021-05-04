@@ -3,7 +3,7 @@ package Java;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Season extends Credit {
+public class Season extends Credit implements ISeason{
     private int showID;
     private ArrayList<Episode> episodes;
     private boolean allEpisodesApproved;

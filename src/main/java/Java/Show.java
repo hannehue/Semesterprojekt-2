@@ -3,7 +3,7 @@ package Java;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Show extends Credit {
+public class Show extends Credit implements IShow {
 
     private ArrayList <Season> seasons;
     private boolean allSeasonApproved;
@@ -14,26 +14,22 @@ public class Show extends Credit {
         this.allSeasonApproved = allSeasonApproved;
     }
 
-<<<<<<< HEAD
     @Override
-=======
     public boolean isAllSeasonApproved() {
         return allSeasonApproved;
     }
 
+    @Override
     public void setAllSeasonApproved(boolean allSeasonApproved) {
         this.allSeasonApproved = allSeasonApproved;
     }
 
->>>>>>> Hans_Structure
+    @Override
     public ArrayList<Season> getSeasons() {
         return seasons;
     }
 
-<<<<<<< HEAD
     @Override
-=======
->>>>>>> Hans_Structure
     public void setSeasons(ArrayList<Season> seasons) {
         this.seasons = seasons;
     }
