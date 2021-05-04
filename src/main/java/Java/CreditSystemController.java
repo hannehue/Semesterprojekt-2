@@ -1,6 +1,7 @@
 package Java;
 
 import Java.persistencelayer.DatabaseLoader;
+import Java.presentation.controllers.CreditViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,14 +25,21 @@ public class CreditSystemController extends Application {
     private Stage primaryStage;
     private UserType userType;
     private String searchFieldPlaceholder = "";
-    private static CreditSystemController instance = new CreditSystemController();
+    private static CreditSystemController instance;
 
     public static CreditSystemController getInstance() {
         return instance;
     }
 
+    public CreditSystemController(){}
+
+    private CreditSystemController(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
+        instance = new CreditSystemController(primaryStage);
 
         /** TEST MILJØ **/
 
