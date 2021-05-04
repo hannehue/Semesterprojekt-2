@@ -16,12 +16,8 @@ Denne Controller bruges til at logge ind på en konto
 ------------------------------------------------------------------------------------------------------------------ */
 
 
-public class LoginController implements Initializable {
+public class LoginController {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
 
     //---- Login Typer
     @FXML
@@ -43,6 +39,6 @@ public class LoginController implements Initializable {
 
     private void loginManager(UserType userType) throws IOException{
         CreditSystemController.getInstance().setUserType(userType);
-        CreditSystemController.getInstance().setRoot("Menu");
+        //CreditSystemController.getInstance().setRoot("Menu");
     }
 }

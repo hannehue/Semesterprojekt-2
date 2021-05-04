@@ -32,7 +32,8 @@ public class CreditSystemController extends Application {
     }
 
     public CreditSystemController(){
-
+        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
+        instance = this;
     }
 
 
@@ -97,7 +98,8 @@ public class CreditSystemController extends Application {
 
     //metode til at indlæse den nye .fxml fil som skal vises
     private Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CreditSystemController.class.getClassLoader().getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 

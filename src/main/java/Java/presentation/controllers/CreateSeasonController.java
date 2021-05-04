@@ -10,23 +10,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CreateSeasonController implements Initializable {
+public class CreateSeasonController {
 
     @FXML
     protected TextArea seasonDescription;
-    private static CreateSeasonController createSeasonController = new CreateSeasonController();
+    private static CreateSeasonController instance;
 
-    private CreateSeasonController() {
-
+    public CreateSeasonController() {
+        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
+        instance = this;
     }
 
     public static CreateSeasonController getInstance(){
-        return createSeasonController;
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        return instance;
     }
 
     @FXML

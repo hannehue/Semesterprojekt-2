@@ -1,10 +1,14 @@
 package Java.presentation.controllers;
 
+import Java.Credit;
 import Java.CreditSystemController;
 import javafx.animation.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -53,10 +57,15 @@ public class MenuController implements Initializable {
 
     private AnchorPane ContentPane;
     private String searchString;
-    private static MenuController menuController = new MenuController();
+    private static MenuController instance;
+
+    public MenuController() {
+        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be created");
+        instance = this;
+    }
 
     public static MenuController getInstance() {
-        return menuController;
+        return instance;
     }
 
     @Override
@@ -73,6 +82,7 @@ public class MenuController implements Initializable {
     }
 
 
+    ObservableList<Node> tempChildren = FXCollections.observableArrayList();
     public void handleOpenMenu(MouseEvent mouseEvent) {
         ParallelTransition parallelTransition = new ParallelTransition();
         if (!Menu.isVisible()){
@@ -91,23 +101,36 @@ public class MenuController implements Initializable {
             parallelTransition.play();
             parallelTransition.getChildren().clear();
 
+            if (tempChildren.size() == 0) {
+                tempChildren.addAll(VBoxMenu.getChildren());
+            } else {
+                VBoxMenu.getChildren().clear();
+                VBoxMenu.getChildren().setAll(tempChildren);
+            }
+
+
             //Menu load----------------
             //Hvis der er logget ind, hvis menu i forhold til brugerens UserType
             if (CreditSystemController.getInstance().getUserType() != null) {
                 if (!CreditSystemController.getInstance().getUserType().getPersonalProfile()){
+                    System.out.println("personal legal");
                     VBoxMenu.getChildren().removeAll(profile);
                 }
                 if (!CreditSystemController.getInstance().getUserType().getAddCredit()){
+                    System.out.println("credit legal");
                     VBoxMenu.getChildren().removeAll(addCredits);
                 }
                 if (!CreditSystemController.getInstance().getUserType().getAddUser()){
+                    System.out.println("add user legal");
                     VBoxMenu.getChildren().removeAll(addUserI);
                 }
                 if (!CreditSystemController.getInstance().getUserType().getApproveCredit()){
+                    System.out.println("approve credit legal");
                     VBoxMenu.getChildren().removeAll(approveCredit);
                 }
                 VBoxMenu.getChildren().removeAll(login);
             } else { //Hvis ikke der er logget ind skal der kun vises login
+                System.out.println("usertype is null");
                 VBoxMenu.getChildren().removeAll(profile, approveCredit, addCredits,addUserI, logout);
                 VBoxMenu.toFront();
             }

@@ -1,4 +1,4 @@
 package Java.presentation;
 
-public class StageHandler {
+public class empty {
 }

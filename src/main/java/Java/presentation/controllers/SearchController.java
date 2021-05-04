@@ -23,10 +23,15 @@ public class SearchController implements Initializable {
     @FXML
     protected Pane searchPane;
 
-    private static SearchController searchController = new SearchController();
+    private static SearchController instance;
+
+    public SearchController() {
+        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
+        instance = this;
+    }
 
     public static SearchController getInstance() {
-        return searchController;
+        return instance;
     }
 
     @Override

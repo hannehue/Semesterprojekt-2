@@ -29,12 +29,17 @@ public class CreditViewController implements Initializable {
     Label nameLabel;
     @FXML
     Label descriptionLabel;
-    private static CreditViewController creditViewController = new CreditViewController();
+    private static CreditViewController instance;
 
     private Credit currentCredit;
 
+    public CreditViewController() {
+        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
+        instance = this;
+    }
+
     public static CreditViewController getInstance() {
-        return creditViewController;
+        return instance;
     }
 
     public void setCurrentCredit(Credit inputCredit) {

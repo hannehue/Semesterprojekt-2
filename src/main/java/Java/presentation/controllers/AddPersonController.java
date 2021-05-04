@@ -30,10 +30,15 @@ public class AddPersonController implements Initializable {
     protected TextField characterName = new TextField();
     private ListView SearchList;
     private Credit personToCredit;
-    private static AddPersonController addPersonController = new AddPersonController();
+    private static AddPersonController instance = new AddPersonController();
+
+    public AddPersonController() {
+        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
+        instance = this;
+    }
 
     private static AddPersonController getInstance() {
-        return addPersonController;
+        return instance;
     }
 
     public void handleJob(MouseEvent mouseEvent) {

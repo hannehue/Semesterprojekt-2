@@ -9,11 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PersonalProfileController implements Initializable {
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
+public class PersonalProfileController {
 
     //Credit Person
     @FXML
