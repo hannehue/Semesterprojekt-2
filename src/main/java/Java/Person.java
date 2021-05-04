@@ -20,40 +20,54 @@ public class Person extends Credit{
         this.email = email;
     }
 
+    @Override
     public int getPersonID() {
         return personID;
     }
 
+    @Override
     public void setPersonID(int personID) {
         this.personID = personID;
     }
 
+    @Override
     public ArrayList<Job> getJobs() {
         return jobs;
     }
 
+    @Override
     public void setJobs(ArrayList<Job> jobs) {
         this.jobs = jobs;
     }
 
+    @Override
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    @Override
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
+    @Override
     public String getPersonalInfo() {
         return personalInfo;
     }
 
+    @Override
     public void setPersonalInfo(String personalInfo) {
         this.personalInfo = personalInfo;
     }
 
+    @Override
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public void setEmail(String email){
+        this.email = email;
     }
 
     @Override

@@ -17,7 +17,6 @@ public class Show extends Credit{
         return seasons;
     }
 
-
     public void setSeasons(ArrayList<Season> seasons) {
         this.seasons = seasons;
     }
