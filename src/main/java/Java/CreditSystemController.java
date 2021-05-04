@@ -30,10 +30,9 @@ public class CreditSystemController extends Application {
 
         //addPerson("Jens Hans", "Elsker min hund", "45624585", "boi@gmail.com");
 
-        dataLoader = new DatabaseLoader();
+        dataLoader = DatabaseLoader.getInstance();
         //creditList.addAll(dataLoader.readPersons());
         //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
-        /** :) **/
 
         for (String[] strings: dataLoader.getPersonArraylist()){
             personList.add(dataLoader.stringsToPerson(strings));

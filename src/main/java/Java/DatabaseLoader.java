@@ -11,6 +11,9 @@ import java.util.Scanner;
 
 public class DatabaseLoader {
 
+    private static DatabaseLoader instance;
+
+
     private Scanner inputStream = null;
     private FileWriter outputStream = null;
 
@@ -28,7 +31,7 @@ public class DatabaseLoader {
 
     private SimpleDateFormat formatter;
 
-    public DatabaseLoader() throws IOException, ParseException {
+    private DatabaseLoader() throws IOException {
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
         groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
@@ -38,6 +41,13 @@ public class DatabaseLoader {
         groupArraylist = readCredits(groupFile);
         movieArrayList = readCredits(movieFile);
         showArrayList = readCredits(showFile);
+    }
+
+    public static DatabaseLoader getInstance() throws IOException {
+        if (instance == null){
+            instance = new DatabaseLoader();
+        }
+        return instance;
     }
 
     public void writeCredits(File file, ArrayList<String[]> creditList) throws IOException {
@@ -219,7 +229,7 @@ public class DatabaseLoader {
         return tempEpisode;
     }
 
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException {
         //Production kan lige nu kun have en category, skal laves om
         DatabaseLoader dbload = new DatabaseLoader();
         for (String[] arr : dbload.groupArraylist) {
