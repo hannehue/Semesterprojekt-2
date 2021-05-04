@@ -55,10 +55,6 @@ public class MenuController implements Initializable {
     private String searchString;
     private static MenuController menuController = new MenuController();
 
-    private MenuController() {
-
-    }
-
     public static MenuController getInstance() {
         return menuController;
     }

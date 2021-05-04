@@ -26,10 +26,6 @@ public class CreditSystemController extends Application {
     private String searchFieldPlaceholder = "";
     private static CreditSystemController instance = new CreditSystemController();
 
-    private CreditSystemController() {
-
-    }
-
     public static CreditSystemController getInstance() {
         return instance;
     }
