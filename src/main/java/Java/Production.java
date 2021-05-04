@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-public abstract class Production extends Credit {
+public abstract class Production extends Credit implements IProduction {
 
     private int productionID;
     private Category[] categories;
@@ -23,20 +23,34 @@ public abstract class Production extends Credit {
         this.staffIDs = new ArrayList<>();
     }
 
+    @Override
     public int getProductionID() {
         return productionID;
     }
 
+    @Override
     public Category[] getCategories() {
         return categories;
     }
 
+    @Override
     public int getLengthInSecs() {
         return lengthInSecs;
     }
 
+    @Override
     public Date getReleaseDate() {
         return releaseDate;
+    }
+
+    @Override
+    public ArrayList<Integer> getStaffIDs() {
+        return staffIDs;
+    }
+
+
+    public void addStaffID(int id){
+        staffIDs.add(id);
     }
 
     public void setProductionID(int programID) {
@@ -53,14 +67,6 @@ public abstract class Production extends Credit {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
-    }
-
-    public ArrayList<Integer> getStaffIDs() {
-        return staffIDs;
-    }
-
-    public void addStaffID(int id){
-        staffIDs.add(id);
     }
 }
 
