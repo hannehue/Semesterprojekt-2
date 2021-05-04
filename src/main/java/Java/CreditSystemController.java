@@ -31,15 +31,13 @@ public class CreditSystemController extends Application {
         return instance;
     }
 
-    public CreditSystemController(){}
+    public CreditSystemController(){
 
-    private CreditSystemController(Stage primaryStage) {
-        this.primaryStage = primaryStage;
     }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        instance = new CreditSystemController(primaryStage);
 
         /** TEST MILJØ **/
 

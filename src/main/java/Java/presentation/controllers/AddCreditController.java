@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddCreditController implements Initializable {
+public class AddCreditController {
     @FXML
     protected ChoiceBox choiceBoxShow;
     @FXML
@@ -54,21 +54,16 @@ public class AddCreditController implements Initializable {
     private String showName;
     private String seasonName;
 
-    private static AddCreditController addCreditController = new AddCreditController();
+    private static AddCreditController instance;
+
+    public AddCreditController() {
+        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
+        instance = this;
+    }
 
     public static AddCreditController getInstance() {
-        return addCreditController;
+        return instance;
     }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-    }
-
-
-
-
 
     public void setShowName(String showname) {
         showName = showname;
