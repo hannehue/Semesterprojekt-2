@@ -2,7 +2,7 @@ package Java;
 
 import java.util.Date;
 
-public class Company extends Credit{
+public class Company extends Credit implements ICompany{
 
     private int companyID;
 
@@ -11,10 +11,12 @@ public class Company extends Credit{
         this.companyID = companyID;
     }
 
+    @Override
     public int getCompanyID() {
         return companyID;
     }
 
+    @Override
     public void setCompanyID(int companyID) {
         this.companyID = companyID;
     }
