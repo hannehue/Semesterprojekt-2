@@ -7,7 +7,7 @@ public interface IDataProcessors {
     void addJob(int productionId);
     void addMovie(String name, String description, Category[] categories, int id, int length);
     void addShow(String title, String description);
-    void addSeason(String description, String showList);
+    void addSeason(String description, int showId);
     void addEpisode(String title, int length, String show, String season, int id);
     String getNextEpisode(String show, String season);
 

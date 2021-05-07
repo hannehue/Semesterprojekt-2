@@ -124,23 +124,19 @@ public class ApplicationManager implements IDataProcessors {
     }
 
     @Override
-    public void addSeason(String description, String show) {
-        for (IShow s: showList) {
-                    if (s.getName() == show) {
-                        ISeason season = new Season(
-                                "S" + (s.getNumberOfSeason() + 1),
-                                new Date(),
-                                nextId(),
-                                false,
-                                description,
-                                s.getCreditID(),
-                                false
-                        );
-                        s.getSeasons().add(season);
-                        s.setAllSeasonApproved(false);
-                        System.out.println("tilføjet " + season.getName() + " til show: " + s.getName());
-                    }
-                }
+    public void addSeason(String description, int showId) {
+        IShow show = getShowById(showId);
+        ISeason season = new Season(
+                "S" + (show.getNumberOfSeason() + 1),
+                new Date(),
+                nextId(),
+                false,
+                description,
+                show.getCreditID(),
+                false
+        );
+        show.getSeasons().add(season);
+        show.setAllSeasonApproved(false);
     }
 
     @Override
@@ -229,24 +225,6 @@ public class ApplicationManager implements IDataProcessors {
         return showList;
     }
 
-    private String tempListToString() {
-        String temp = "Ingen personer tilføjet";
-        if (!tempList.isEmpty()) {
-            temp = "";
-            for (IJob job: tempList) {
-                for (ICredit person: personList) {
-                    if (person.getCreditID() == job.getPersonId()){
-                        if (job.getRole() == Role.SKUESPILLER) {
-                            temp += job.getRole() + ": " + person.getName() + " - " + job.getCharacterName() + "\n";
-                        } else {
-                            temp += job.getRole() + ": " + person.getName() + "\n";
-                        }
-                    }
-                }
-            }
-        } return temp;
-    }
-
     public void clearTempJobs(){
         tempList.clear();
     }
@@ -261,6 +239,7 @@ public class ApplicationManager implements IDataProcessors {
                 return movie;
             }
         }
+
         for (IShow show : showList) {
             for (ISeason season : show.getSeasons()) {
                 for (IEpisode episode : season.getEpisodes()) {
@@ -280,5 +259,34 @@ public class ApplicationManager implements IDataProcessors {
             }
         }
         return null;
+    }
+
+    public IShow getShowById(int showId){
+        for (IShow show : showList){
+            if (show.getCreditID() == showId){
+                return show;
+            }
+        }
+        return null;
+    }
+
+    public ISeason getSeasonById(int showId, int seasonId) {
+        IShow show = getShowById(showId);
+        for (ISeason season : show.getSeasons()){
+            return season;
+        }
+        return null;
+    }
+
+    public IEpisode getEpisodeById(int showId, int episodeId){
+        IShow show = getShowById(showId);
+        ArrayList<ISeason> seasons = show.getSeasons();
+       for (ISeason season : seasons)
+            for (IEpisode episode : season.getEpisodes()){
+                if (episode.getCreditID() == episodeId) {
+                    return episode;
+                }
+            }
+       return null;
     }
 }

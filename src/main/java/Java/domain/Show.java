@@ -53,4 +53,9 @@ public class Show extends Credit implements IShow {
     }
 
     public int getNumberOfSeason() { return seasons.size();};
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }
