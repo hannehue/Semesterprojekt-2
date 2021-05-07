@@ -2,6 +2,7 @@ package Java.presentation.controllers;
 
 import Java.interfaces.ICredit;
 import Java.domain.Job;
+import Java.interfaces.IJob;
 import Java.interfaces.IPerson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -65,7 +66,7 @@ public class CreditViewController implements Initializable {
             jobLabel.setStyle("-fx-font-weight: bold");
             jobLabel.setPadding(padding);
 
-            ObservableList<Job> observableJobs = FXCollections.observableArrayList();
+            ObservableList<IJob> observableJobs = FXCollections.observableArrayList();
             observableJobs.addAll(personCredit.getJobs());
             jobView.setItems(observableJobs);
 

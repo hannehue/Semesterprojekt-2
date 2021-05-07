@@ -4,6 +4,7 @@ import Java.domain.ApplicationManager;
 import Java.domain.Job;
 import Java.domain.Role;
 import Java.interfaces.ICredit;
+import Java.interfaces.IJob;
 import Java.presentation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,7 +59,7 @@ public class AddPersonController implements Initializable {
     }
 
     public void handleAddPerson(ActionEvent actionEvent) {
-        Job job;
+        IJob job;
         if (jobRole.getValue() == Role.SKUESPILLER) {
             job = new Job(personToCredit.getCreditID(), jobRole.getValue(), characterName.getText());
         } else {

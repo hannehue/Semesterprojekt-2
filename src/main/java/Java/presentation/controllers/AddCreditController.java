@@ -3,6 +3,7 @@ package Java.presentation.controllers;
 import Java.domain.ApplicationManager;
 import Java.domain.Job;
 import Java.interfaces.ICredit;
+import Java.interfaces.IJob;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
 import Java.presentation.*;
@@ -229,7 +230,7 @@ public class AddCreditController implements Initializable {
         PersonList.setPrefHeight(200);
         PersonList.setPrefWidth(493);
         moviePeoplePane.getChildren().add(PersonList);
-        ObservableList<Job> observableResults = ApplicationManager.getInstance().getTempList();
+        ObservableList<IJob> observableResults = ApplicationManager.getInstance().getTempList();
         PersonList.setItems(observableResults);
 
 
@@ -237,7 +238,7 @@ public class AddCreditController implements Initializable {
         episodePersonList.setPrefHeight(200);
         episodePersonList.setPrefWidth(493);
         episodePeoplePane.getChildren().add(PersonList);
-        ObservableList<Job> episodeList = ApplicationManager.getInstance().getTempList();
+        ObservableList<IJob> episodeList = ApplicationManager.getInstance().getTempList();
         PersonList.setItems(episodeList);
 
     }

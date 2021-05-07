@@ -15,7 +15,7 @@ public class ApplicationManager implements IDataProcessors {
     private ArrayList<IPerson> personList = new ArrayList<>();
     private ArrayList<IMovie> movieList= new ArrayList<>();
     private ArrayList<IShow> showList = new ArrayList<>();
-    private ObservableList<Job> tempList = FXCollections.observableArrayList();
+    private ObservableList<IJob> tempList = FXCollections.observableArrayList();
     private UserType userType;
     private String searchFieldPlaceholder = "";
 
@@ -41,7 +41,7 @@ public class ApplicationManager implements IDataProcessors {
 
         System.out.println(personList.toString());
 
-        ArrayList<Job> jobs = new ArrayList<>();
+        ArrayList<IJob> jobs = new ArrayList<>();
         jobs.add(new Job(Role.MEDVIRKENDE, "mickey", 12312));
         jobs.add(new Job(Role.BILLED_OG_LYDREDIGERING, 12312) );
         IPerson thisa = (IPerson) personList.get(0);
@@ -73,7 +73,7 @@ public class ApplicationManager implements IDataProcessors {
         personList.add(person);
     }
 
-    public void addTempJob(Job job) {
+    public void addTempJob(IJob job) {
         tempList.add(job);
         System.out.println("temp job added");
 
@@ -82,10 +82,10 @@ public class ApplicationManager implements IDataProcessors {
     @Override
     public void addJob(int productionId) {
         for (int i = tempList.size() - 1; i > -1; i--) {
-            Job job = tempList.get(i);
+            IJob job = tempList.get(i);
             for (IPerson person: personList) {
                 if (person.getCreditID() == job.getPersonId()) {
-                    Job newJob;
+                    IJob newJob;
                     if (job.getRole() == Role.SKUESPILLER) {
                         newJob = new Job(job.getRole(), job.getCharacterName(), productionId);
                     } else {
@@ -238,7 +238,7 @@ public class ApplicationManager implements IDataProcessors {
         String temp = "Ingen personer tilføjet";
         if (!tempList.isEmpty()) {
             temp = "";
-            for (Job job: tempList) {
+            for (IJob job: tempList) {
                 for (ICredit person: personList) {
                     if (person.getCreditID() == job.getPersonId()){
                         if (job.getRole() == Role.SKUESPILLER) {
@@ -256,7 +256,7 @@ public class ApplicationManager implements IDataProcessors {
         tempList.clear();
     }
 
-    public ObservableList<Job> getTempList() {
+    public ObservableList<IJob> getTempList() {
         return tempList;
     }
 

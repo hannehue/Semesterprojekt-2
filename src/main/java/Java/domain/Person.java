@@ -1,5 +1,6 @@
 package Java.domain;
 
+import Java.interfaces.IJob;
 import Java.interfaces.IPerson;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.Date;
 
 public class Person extends Credit implements IPerson {
     private int personID;
-    private ArrayList<Job> jobs;
+    private ArrayList<IJob> jobs;
     private String phoneNumber;
     private String personalInfo;
     private String personEmail;
@@ -16,7 +17,7 @@ public class Person extends Credit implements IPerson {
                         String description, int personID, String phoneNumber, String personalInfo, String personEmail){
         super(name, dateAdded, creditId, approved, description);
         this.personID = personID;
-        this.jobs = new ArrayList<Job>();
+        this.jobs = new ArrayList<IJob>();
         this.phoneNumber = phoneNumber;
         this.personalInfo = personalInfo;
         this.personEmail = personEmail;
@@ -33,12 +34,12 @@ public class Person extends Credit implements IPerson {
     }
 
     @Override
-    public ArrayList<Job> getJobs() {
+    public ArrayList<IJob> getJobs() {
         return jobs;
     }
 
     @Override
-    public void setJobs(ArrayList<Job> jobs) {
+    public void setJobs(ArrayList<IJob> jobs) {
         this.jobs = jobs;
     }
 
@@ -75,7 +76,7 @@ public class Person extends Credit implements IPerson {
     @Override
     public String toString() {
         String jobString = "";
-        for (Job job : jobs) {
+        for (IJob job : jobs) {
             jobString += "\t" + job.toString() + "\n";
         }
         return "Name: " + getName() + ", PersonID: " + personID + "\n" +
@@ -90,7 +91,7 @@ public class Person extends Credit implements IPerson {
         //Koreografi;Fotografer--165--Mand i hættetrøje ved tanken;Hans Jensen,
         String jobString = "";
 
-        for (Job j : getJobs()) {
+        for (IJob j : getJobs()) {
             String roles = "";
             String characterNames = "";
 

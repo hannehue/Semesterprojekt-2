@@ -8,8 +8,8 @@ public interface IPerson extends ICredit{
     int getPersonID();
     void setPersonID(int personID);
 
-    ArrayList<Job> getJobs();
-    void setJobs(ArrayList<Job> jobs);
+    ArrayList<IJob> getJobs();
+    void setJobs(ArrayList<IJob> jobs);
 
     String getPhoneNumber();
     void setPhoneNumber(String phoneNumber);
