@@ -1,5 +1,5 @@
 
-package Java.controllers;
+package Java.Application.controllers;
 
 import Java.Application.CreditSystemController;
 import Java.Application.UserType;

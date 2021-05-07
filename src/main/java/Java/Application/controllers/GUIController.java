@@ -1,4 +1,4 @@
-package Java.controllers;
+package Java.Application.controllers;
 
 import Java.Application.CreditSystemController;
 import javafx.event.ActionEvent;

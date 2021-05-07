@@ -1,4 +1,4 @@
-package Java.controllers;
+package Java.Application.controllers;
 
 import Java.Application.*;
 import javafx.event.ActionEvent;
