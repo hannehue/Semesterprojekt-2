@@ -1,8 +1,9 @@
 package Java.domain;
 
 import Java.domain.ApplicationManager;
+import Java.interfaces.IJob;
 
-public class Job implements IJob{
+public class Job implements IJob {
 
     private Role role;
     private int productionID;

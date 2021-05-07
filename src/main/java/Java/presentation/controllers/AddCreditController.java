@@ -55,6 +55,7 @@ public class AddCreditController implements Initializable {
     protected Pane episodePeoplePane;
 
     private ListView PersonList;
+    private ListView episodePersonList;
 
     private Stage createShow;
     private Stage createSeason;
@@ -225,7 +226,6 @@ public class AddCreditController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         PersonList = new ListView();
-        PersonList.setId("SearchList");
         PersonList.setPrefHeight(200);
         PersonList.setPrefWidth(493);
         moviePeoplePane.getChildren().add(PersonList);
@@ -233,6 +233,12 @@ public class AddCreditController implements Initializable {
         PersonList.setItems(observableResults);
 
 
+        episodePersonList = new ListView();
+        episodePersonList.setPrefHeight(200);
+        episodePersonList.setPrefWidth(493);
+        episodePeoplePane.getChildren().add(PersonList);
+        ObservableList<Job> episodeList = ApplicationManager.getInstance().getTempList();
+        PersonList.setItems(episodeList);
 
     }
 }

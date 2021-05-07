@@ -30,7 +30,6 @@
                                             </children>
                                         </Pane>
                                         <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendMovieButton" text="Godkend og send" />
-                              <Button layoutX="348.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleReloadPersonToMovie" text="Reload" />
                               <Button layoutX="410.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" />
                                     </children>
                                 </AnchorPane>
@@ -73,7 +72,6 @@
                                 </Pane>
                             <Button layoutX="488.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleGetEpisodeName" text="+" />
                               <TextField fx:id="episodeId" disable="true" layoutX="230.0" layoutY="60.0" prefHeight="27.0" prefWidth="248.0" />
-                              <Button layoutX="336.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleReloadPersonToMovie" text="Reload" />
                               <Button layoutX="397.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" />
                               <Button contentDisplay="CENTER" layoutX="190.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
                            </children>
