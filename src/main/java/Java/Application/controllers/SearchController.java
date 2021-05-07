@@ -1,6 +1,5 @@
 package Java.Application.controllers;
 
-import Java.Application.Credit;
 import Java.Application.CreditSystemController;
 import Java.Application.ICredit;
 import javafx.collections.FXCollections;

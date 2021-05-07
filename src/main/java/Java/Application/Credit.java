@@ -75,5 +75,8 @@ public abstract class Credit implements ICredit {
         this.approved = approved;
     }
 
-    public abstract String toFileString();
+    @Override
+    public String toFileString(){
+        return "No";
+    }
 }

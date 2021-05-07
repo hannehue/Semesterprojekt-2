@@ -77,7 +77,7 @@ public class DashboardController implements Initializable {
     protected EventHandler<ActionEvent> handleApproveSeason(int showId, int season) {
         for (IShow show: CreditSystemController.getShowList()) {
             if (show.getCreditID() == showId) {
-                for (Season s: show.getSeasons()) {
+                for (ISeason s: show.getSeasons()) {
                     if (s.getCreditID() == season) {
                         s.setApproved(true);
                     }
@@ -95,9 +95,9 @@ public class DashboardController implements Initializable {
     protected EventHandler<ActionEvent> handleApproveEpisode(int showId, int season, int episode) {
         for (IShow sh: CreditSystemController.getShowList()) {
             if (sh.getCreditID() == showId) {
-                for (Season s: sh.getSeasons()) {
+                for (ISeason s: sh.getSeasons()) {
                     if (s.getCreditID() == season) {
-                        for (Episode e: s.getEpisodes()) {
+                        for (IEpisode e: s.getEpisodes()) {
                             if (e.getCreditID() == episode) {
                                 e.setApproved(true);
                             }

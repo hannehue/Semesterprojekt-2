@@ -65,7 +65,7 @@ public class CreditSystemController extends Application {
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job(Role.MEDVIRKENDE, "mickey", 12312));
         jobs.add(new Job(Role.BILLED_OG_LYDREDIGERING, 12312) );
-        Person thisa = (Person) personList.get(0);
+        IPerson thisa = (IPerson) personList.get(0);
         thisa.setJobs(jobs);
     }
     
@@ -94,7 +94,7 @@ public class CreditSystemController extends Application {
     }
 
     public static void addPerson(String name, String description, String phoneNumber, String email){
-        Person person = new Person(
+        IPerson person = new Person(
                 name,
                 new Date(),
                 1, // change later
@@ -138,7 +138,7 @@ public class CreditSystemController extends Application {
     }
 
     public static void addMovie(String name, String description, Category[] categories, int id, int length) {
-        Movie movie = new Movie(
+        IMovie movie = new Movie(
                 name,
                 null,
                 id,
@@ -153,7 +153,7 @@ public class CreditSystemController extends Application {
     }
 
     public static void addShow(String title, String description) {
-        Show show = new Show(
+        IShow show = new Show(
                 title,
                 null,
                 nextId(),
@@ -167,7 +167,7 @@ public class CreditSystemController extends Application {
     public static void addSeason(String description, String show) {
         for (IShow s: showList) {
             if (s.getName() == show) {
-                Season season = new Season(
+                ISeason season = new Season(
                         "S" + (s.getNumberOfSeason() + 1),
                         new Date(),
                         nextId(),
@@ -186,9 +186,9 @@ public class CreditSystemController extends Application {
     public static void addEpisode(String title, int length, String show, String season, int id) {
         for (IShow s : showList) {
             if (s.getName() == show) {
-                for (Season seasonToGet : s.getSeasons()) {
+                for (ISeason seasonToGet : s.getSeasons()) {
                     if (seasonToGet.getName() == season) {
-                        Episode episode = new Episode(
+                        IEpisode episode = new Episode(
                                 getNextEpisode(show, season) + " - " + title,
                                 new Date(),
                                 id,
@@ -213,7 +213,7 @@ public class CreditSystemController extends Application {
         String episodeString = "";
         for (IShow s: showList) {
             if (s.getName() == show) {
-                for (Season se: s.getSeasons()) {
+                for (ISeason se: s.getSeasons()) {
                     if (se.getName() == season) {
                         episodeString = season + "E" + (se.getNumberOfEpisode() + 1);
                     }
@@ -288,8 +288,8 @@ public class CreditSystemController extends Application {
             }
         }
         for (IShow show : showList) {
-            for (Season season : show.getSeasons()) {
-                for (Episode episode : season.getEpisodes()) {
+            for (ISeason season : show.getSeasons()) {
+                for (IEpisode episode : season.getEpisodes()) {
                     if (episode.getProductionID() == productionID) {
                         return episode;
                     }

@@ -88,17 +88,17 @@ public class DatabaseLoader {
         return credit.toFileString().split(",");
     }
 
-    public void addCreditToDatabase(Credit credit){
-        if (credit instanceof Person) {
+    public void addCreditToDatabase(ICredit credit){
+        if (credit instanceof IPerson) {
             personArraylist.add(creditToStringArray(credit));
 
-        } else if (Movie.class.equals(credit.getClass())){
+        } else if (credit instanceof IMovie){
             movieArrayList.add(creditToStringArray(credit));
 
-        } else if (Group.class.equals(credit.getClass())){
+        } else if (credit instanceof IGroup){
             groupArraylist.add(creditToStringArray(credit));
 
-        } else if (Show.class.equals(credit.getClass())){
+        } else if (credit instanceof IShow){
             showArrayList.add(creditToStringArray(credit));
         }
     }
@@ -114,15 +114,15 @@ public class DatabaseLoader {
                 tempList.add(creditToStringArray(p));
             }
         }
-        if (readList.get(0) instanceof Person) {
+        if (readList.get(0) instanceof IPerson) {
             personArraylist = tempList;
 
-        } else if (readList.get(0) instanceof Movie){
+        } else if (readList.get(0) instanceof IMovie){
             movieArrayList = tempList;
 
-        } else if (readList.get(0) instanceof Group){
+        } else if (readList.get(0) instanceof IGroup){
             groupArraylist = tempList;
-        } else if (readList.get(0) instanceof Show){
+        } else if (readList.get(0) instanceof IShow){
             showArrayList = tempList;
         }
     }

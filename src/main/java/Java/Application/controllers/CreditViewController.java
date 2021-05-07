@@ -38,7 +38,7 @@ public class CreditViewController implements Initializable {
         descriptionLabel.setText(currentCredit.getDescription());
 
         if (currentCredit instanceof IPerson){
-            IPerson personCredit = (Person) currentCredit;
+            IPerson personCredit = (IPerson) currentCredit;
 
             Label personInfoLabel = new Label();
             Label personInfo = new Label();

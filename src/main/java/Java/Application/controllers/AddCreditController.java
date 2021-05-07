@@ -1,9 +1,6 @@
 package Java.Application.controllers;
 
-import Java.Application.CreditSystemController;
-import Java.Application.IShow;
-import Java.Application.Season;
-import Java.Application.Show;
+import Java.Application.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -161,7 +158,7 @@ public class AddCreditController implements Initializable {
             for (IShow show : CreditSystemController.getShowList()) {
                 if (show.getName() == showName) {
                     if (show.getSeasons() != null) {
-                        for (Season season : show.getSeasons()) {
+                        for (ISeason season : show.getSeasons()) {
                             choiceBoxSeason.getItems().add(season.getName());
                         }
                     }

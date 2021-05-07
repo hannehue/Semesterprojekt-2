@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Season extends Credit implements ISeason{
     private int showID;
-    private ArrayList<Episode> episodes;
+    private ArrayList<IEpisode> episodes;
     private boolean allEpisodesApproved;
 
     public Season(String name, Date dateAdded, int creditID, boolean approved, String description , int showID,  Boolean allEpisodesApproved){
@@ -16,12 +16,12 @@ public class Season extends Credit implements ISeason{
     }
 
     @Override
-    public ArrayList<Episode> getEpisodes() {
+    public ArrayList<IEpisode> getEpisodes() {
         return episodes;
     }
 
     @Override
-    public void setEpisodes(ArrayList<Episode> episodes) {
+    public void setEpisodes(ArrayList<IEpisode> episodes) {
         this.episodes = episodes;
     }
 
@@ -53,7 +53,7 @@ public class Season extends Credit implements ISeason{
 
         seasonFileString += "--";
 
-        for (Episode episode: getEpisodes()){
+        for (IEpisode episode: getEpisodes()){
             seasonFileString += episode.toFileString() + "--";
         }
         seasonFileString += "##" + isAllEpisodesApproved();
@@ -74,7 +74,7 @@ public class Season extends Credit implements ISeason{
         return episodes.size();
     }
 
-    public void addEpisode(Episode episode){
+    public void addEpisode(IEpisode episode){
         episodes.add(episode);
     }
 }
