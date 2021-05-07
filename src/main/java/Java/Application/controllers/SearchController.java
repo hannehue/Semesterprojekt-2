@@ -2,6 +2,7 @@ package Java.Application.controllers;
 
 import Java.Application.Credit;
 import Java.Application.CreditSystemController;
+import Java.Application.ICredit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -41,17 +42,17 @@ public class SearchController implements Initializable {
     }
 
     public static void setContent() {
-        ObservableList<Credit> observableResults = FXCollections.observableArrayList();
+        ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
         observableResults.addAll(search(MenuController.getSearchString()));
         System.out.println(observableResults);
         SearchList.setItems(observableResults);
     }
 
 
-    private static ArrayList<Credit> search(String getsearchString){
+    private static ArrayList<ICredit> search(String getsearchString){
         String searchStringChecked = getsearchString.toLowerCase();
-        ArrayList<Credit> creditList = new ArrayList<>();
-        for(Credit person : CreditSystemController.getPersonList()) {
+        ArrayList<ICredit> creditList = new ArrayList<>();
+        for(ICredit person : CreditSystemController.getPersonList()) {
             if (person != null && person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
                 creditList.add(person);
             }

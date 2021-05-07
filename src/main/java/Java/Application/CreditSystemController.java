@@ -16,9 +16,9 @@ public class CreditSystemController extends Application {
     private static Scene scene;
     private static int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
-    private static ArrayList<Person> personList = new ArrayList<>();
-    private static ArrayList<Movie> movieList= new ArrayList<>();
-    private static ArrayList<Show> showList = new ArrayList<>();
+    private static ArrayList<IPerson> personList = new ArrayList<>();
+    private static ArrayList<IMovie> movieList= new ArrayList<>();
+    private static ArrayList<IShow> showList = new ArrayList<>();
     private static ArrayList<Job> tempList = new ArrayList<>();
     private static Stage primaryStage;
     private static UserType userType;
@@ -36,10 +36,10 @@ public class CreditSystemController extends Application {
         //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
 
         for (String[] strings: dataLoader.getPersonArraylist()){
-            personList.add(dataLoader.stringsToPerson(strings));
+            personList.add(dataLoader.queryToPerson(strings));
         }
         for (String[] strings: dataLoader.getMovieArrayList()){
-            movieList.add(dataLoader.stringsToMovie(strings));
+            movieList.add(dataLoader.queryToMovie(strings));
         }
 
         System.out.println(personList.toString());
@@ -122,7 +122,7 @@ public class CreditSystemController extends Application {
     public static void addJob(int productionId) {
         for (int i = tempList.size()-1; i > -1; i--) {
             Job job = tempList.get(i);
-            for (Person person: personList) {
+            for (IPerson person: personList) {
                 if (person.getCreditID() == job.getPersonId()) {
                     Job newJob;
                     if (job.getRole() == Role.SKUESPILLER) {
@@ -165,7 +165,7 @@ public class CreditSystemController extends Application {
     }
 
     public static void addSeason(String description, String show) {
-        for (Show s: showList) {
+        for (IShow s: showList) {
             if (s.getName() == show) {
                 Season season = new Season(
                         "S" + (s.getNumberOfSeason() + 1),
@@ -184,7 +184,7 @@ public class CreditSystemController extends Application {
     }
 
     public static void addEpisode(String title, int length, String show, String season, int id) {
-        for (Show s : showList) {
+        for (IShow s : showList) {
             if (s.getName() == show) {
                 for (Season seasonToGet : s.getSeasons()) {
                     if (seasonToGet.getName() == season) {
@@ -211,7 +211,7 @@ public class CreditSystemController extends Application {
 
     public static String getNextEpisode(String show, String season) {
         String episodeString = "";
-        for (Show s: showList) {
+        for (IShow s: showList) {
             if (s.getName() == show) {
                 for (Season se: s.getSeasons()) {
                     if (se.getName() == season) {
@@ -225,11 +225,11 @@ public class CreditSystemController extends Application {
 
 
 
-    public static ArrayList<Person> getPersonList() {
+    public static ArrayList<IPerson> getPersonList() {
         return personList;
     }
 
-    public static ArrayList<Movie> getMovieList() {
+    public static ArrayList<IMovie> getMovieList() {
         return movieList;
     }
 
@@ -253,7 +253,7 @@ public class CreditSystemController extends Application {
         CreditSystemController.searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
-    public static ArrayList<Show> getShowList() {
+    public static ArrayList<IShow> getShowList() {
         return showList;
     }
 
@@ -262,7 +262,7 @@ public class CreditSystemController extends Application {
         if (!tempList.isEmpty()) {
             temp = "";
             for (Job job: tempList) {
-                for (Credit person: personList) {
+                for (ICredit person: personList) {
                     if (person.getCreditID() == job.getPersonId()){
                         if (job.getRole() == Role.SKUESPILLER) {
                             temp += job.getRole() + ": " + person.getName() + " - " + job.getCharacterName() + "\n";
@@ -281,13 +281,13 @@ public class CreditSystemController extends Application {
         }
     }
 
-    public static Production getProduction(int productionID) {
-        for (Movie movie : movieList) {
+    public static IProduction getProduction(int productionID) {
+        for (IMovie movie : movieList) {
             if (movie.getProductionID() == productionID) {
                 return movie;
             }
         }
-        for (Show show : showList) {
+        for (IShow show : showList) {
             for (Season season : show.getSeasons()) {
                 for (Episode episode : season.getEpisodes()) {
                     if (episode.getProductionID() == productionID) {

@@ -83,7 +83,7 @@ public class DatabaseLoader {
         return creditList;
     }
 
-    public String[] creditToStringArray(Credit credit) {
+    public String[] creditToStringArray(ICredit credit) {
 
         return credit.toFileString().split(",");
     }
@@ -103,13 +103,13 @@ public class DatabaseLoader {
         }
     }
 
-    public void addCreditsToDatabase(ArrayList<? extends Credit> readList){
+    public void addCreditsToDatabase(ArrayList<? extends ICredit> readList){
         if(readList.size() == 0 || readList == null){
             return;
         }
 
         ArrayList<String[]> tempList = new ArrayList<>();
-        for (Credit p: readList){
+        for (ICredit p: readList){
             if (p != null){
                 tempList.add(creditToStringArray(p));
             }
@@ -129,8 +129,8 @@ public class DatabaseLoader {
 
     /** Disse 3 vil jeg gerne rykke i en (facade) klasse for sig selv, sammen med de andre der kommer -Hans **/
 
-    public Person stringsToPerson(String[] vals) {
-        Person tempPerson = null;
+    public IPerson queryToPerson(String[] vals) {
+        IPerson tempPerson = null;
         try {
             if (vals[1].equals("null")){
                 tempPerson = new Person(vals[0], null, Integer.parseInt(vals[2]),
@@ -176,8 +176,8 @@ public class DatabaseLoader {
         return tempPerson;
     }
 
-    public Group stringsToGroup(String[] strings){
-        Group tempGroup = null;
+    public IGroup queryToGroup(String[] strings){
+        IGroup tempGroup = null;
         try {
             tempGroup = new Group(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]));
@@ -189,8 +189,8 @@ public class DatabaseLoader {
         return tempGroup;
     }
 
-    public Movie stringsToMovie(String[] strings){
-        Movie tempMovie = null;
+    public IMovie queryToMovie(String[] strings){
+        IMovie tempMovie = null;
         try {
             tempMovie = new Movie(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
@@ -207,8 +207,8 @@ public class DatabaseLoader {
         return tempMovie;
     }
 
-    public Episode stringsToEpisode(String[] strings){
-        Episode tempEpisode = null;
+    public IEpisode queryToEpisode(String[] strings){
+        IEpisode tempEpisode = null;
         try {
             tempEpisode = new Episode(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
@@ -231,7 +231,7 @@ public class DatabaseLoader {
 
         IGroup group = new Group("Yeet", new Date(), 45, false, "skyeet", 63);
 
-        group.getName();
+        System.out.println(group.getName());
 
     }
 

@@ -9,4 +9,6 @@ public interface ISeason  extends ICredit{
 
     int getShowID();
     void setShowID(int showID);
+
+    String toFileString();
 }

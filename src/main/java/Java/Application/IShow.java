@@ -11,4 +11,6 @@ public interface IShow extends ICredit {
     void setSeasons(ArrayList<Season> seasons);
 
 
+    int getNumberOfSeason();
+    String toFileString();
 }

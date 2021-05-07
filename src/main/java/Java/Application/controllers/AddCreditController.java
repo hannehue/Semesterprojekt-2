@@ -1,6 +1,7 @@
 package Java.Application.controllers;
 
 import Java.Application.CreditSystemController;
+import Java.Application.IShow;
 import Java.Application.Season;
 import Java.Application.Show;
 import javafx.event.ActionEvent;
@@ -81,7 +82,7 @@ public class AddCreditController implements Initializable {
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         choiceBoxSeason.getItems().clear();
-        for (Show show : CreditSystemController.getShowList()) {
+        for (IShow show : CreditSystemController.getShowList()) {
             choiceBoxShow.getItems().add(show.getName());
         }
         choiceBoxShow.show();
@@ -157,7 +158,7 @@ public class AddCreditController implements Initializable {
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
         if (showName != null) {
-            for (Show show : CreditSystemController.getShowList()) {
+            for (IShow show : CreditSystemController.getShowList()) {
                 if (show.getName() == showName) {
                     if (show.getSeasons() != null) {
                         for (Season season : show.getSeasons()) {
