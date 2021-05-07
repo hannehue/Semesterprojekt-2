@@ -2,10 +2,14 @@
 module Java {
     requires javafx.controls;
     requires javafx.fxml;
-    exports Java.Presentation.controllers;
-    opens Java.Presentation.controllers to javafx.fxml;
-    exports Java.Presentation;
-    opens Java.Presentation to javafx.fxml;
-    exports Java.Data;
-    opens Java.Data to javafx.fxml;
+    exports Java.presentation.controllers;
+    opens Java.presentation.controllers to javafx.fxml;
+    exports Java.presentation;
+    opens Java.presentation to javafx.fxml;
+    exports Java.data;
+    opens Java.data to javafx.fxml;
+    exports Java.interfaces;
+    opens Java.interfaces to javafx.fxml;
+    exports Java.domain;
+    opens Java.domain to javafx.fxml;
 }
