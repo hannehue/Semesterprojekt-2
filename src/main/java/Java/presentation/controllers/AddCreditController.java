@@ -1,23 +1,17 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
-import Java.domain.Job;
-import Java.interfaces.ICredit;
 import Java.interfaces.IJob;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
-import Java.presentation.*;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -87,7 +81,6 @@ public class AddCreditController implements Initializable {
         ApplicationManager.getInstance().addJob(id);
     }
 
-
     @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
         int id = ApplicationManager.getInstance().nextId();
@@ -100,6 +93,7 @@ public class AddCreditController implements Initializable {
                 );
         ApplicationManager.getInstance().addJob(id);
     }
+
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
         ApplicationManager.getInstance().addPerson(
@@ -134,7 +128,6 @@ public class AddCreditController implements Initializable {
         createSeason.show();
     }
 
-
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
         if (choiceBoxShow.getValue().toString() != null) {
@@ -155,7 +148,6 @@ public class AddCreditController implements Initializable {
     public void addSeason(String description) {
         ApplicationManager.getInstance().addSeason(description, choiceBoxShow.getValue().toString());
     }
-
 
     @FXML
     protected void handleGetEpisodeName(ActionEvent Event) throws IOException {
