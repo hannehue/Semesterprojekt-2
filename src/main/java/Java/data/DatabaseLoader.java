@@ -144,40 +144,11 @@ public class DatabaseLoader {
                 tempPerson = new Person(vals[0], formatter.parse(vals[1]), Integer.parseInt(vals[2]),
                         Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
             }
-            /* if (vals[9].equals("null")) {
-                return tempPerson;
-            }
-
-             */
         } catch (java.text.ParseException e) {
             e.printStackTrace();
             System.err.println("Failed when initializing person from string array");
             return null;
         }
-        // Loads one persons jobs into strings
-        /*
-        String[] jobsStrings = vals[9].split("##");
-        ArrayList<Job> jobs = new ArrayList<>();
-
-        // Job handling
-        for (int i = 0; i < jobsStrings.length; i++) { // Loops over all jobs
-            String[] jobValues = jobsStrings[i].split("--"); // Splits all values in the job
-
-            String[] characterNames = jobValues[2].split(";");
-            if (jobValues[2].equals("null")) {
-                characterNames = null;
-                jobs.add(new Job(Role.getRoleFromString(jobValues[0]), Integer.parseInt(jobValues[1])));
-            }
-            else {
-                jobs.add(new Job(Role.getRoleFromString(jobValues[0]), characterNames[0], Integer.parseInt(jobValues[1])));
-            }
-
-
-        }
-
-        tempPerson.setJobs(jobs);
-
-         */
         return tempPerson;
     }
 
