@@ -2,7 +2,8 @@
 module Java {
     requires javafx.controls;
     requires javafx.fxml;
-    exports Java.presentation.controllers;
+    requires java.sql;
+    requires org.postgresql.jdbc;
     opens Java.presentation.controllers to javafx.fxml;
     exports Java.presentation;
     opens Java.presentation to javafx.fxml;

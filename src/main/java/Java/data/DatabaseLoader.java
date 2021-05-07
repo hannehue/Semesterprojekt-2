@@ -8,14 +8,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.*;
+import java.sql.*;
 
 public class DatabaseLoader {
 
     private static DatabaseLoader instance;
-
 
     private Scanner inputStream = null;
     private FileWriter outputStream = null;
@@ -34,6 +35,9 @@ public class DatabaseLoader {
 
     private SimpleDateFormat formatter;
 
+    private Connection connection;
+
+
     private DatabaseLoader() throws IOException {
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
@@ -44,6 +48,21 @@ public class DatabaseLoader {
         groupArraylist = readCredits(groupFile);
         movieArrayList = readCredits(movieFile);
         showArrayList = readCredits(showFile);
+
+        //Create connection to database
+        try {
+            DriverManager.registerDriver(new org.postgresql.Driver());
+            this.connection = DriverManager.getConnection(
+                    "jdbc:postgresql://localhost:5432/DemoProjekt",
+                    "postgres" ,
+                    /** TILFØJ PASSWORD HER **/
+                    "");
+        } catch (SQLException e) {
+            System.out.println("Went wrong at connection creation");
+            e.printStackTrace();
+        }
+
+
     }
 
     public static DatabaseLoader getInstance() throws IOException {
@@ -205,10 +224,19 @@ public class DatabaseLoader {
 
     public static void main(String[] args) throws IOException {
 
-        IGroup group = new Group("Yeet", new Date(), 45, false, "skyeet", 63);
+        try {
+            PreparedStatement statement = getInstance().connection.prepareStatement(
+                    "INSERT INTO perpestilens1sons ()");
+        } catch (SQLException e) {
+            System.out.println("Went wrong at prepared Statement");
+            e.printStackTrace();
+        }
 
-        System.out.println(group.getName());
+    }
 
+
+    private Connection getConnection() {
+        return connection;
     }
 
     public ArrayList<String[]> getPersonArraylist() {
