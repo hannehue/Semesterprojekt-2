@@ -104,10 +104,12 @@ public class Person extends Credit implements IPerson{
         return personString;
     }
 
+    @Override
     public String getPersonEmail() {
         return personEmail;
     }
 
+    @Override
     public void setPersonEmail(String personEmail) {
         this.personEmail = personEmail;
     }

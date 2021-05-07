@@ -18,5 +18,8 @@ public interface IPerson extends ICredit{
     String getEmail();
     void setEmail(String email);
 
+    String getPersonEmail();
+    void setPersonEmail(String personEmail);
+
     String toFileString();
 }
