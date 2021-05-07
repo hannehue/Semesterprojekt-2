@@ -60,9 +60,6 @@ public class AddCreditController implements Initializable {
     private Stage createShow;
     private Stage createSeason;
 
-    private String showName;
-    private String seasonName;
-
     private static AddCreditController instance = new AddCreditController();
 
     private AddCreditController() {
@@ -70,22 +67,6 @@ public class AddCreditController implements Initializable {
 
     public static AddCreditController getInstance() {
         return instance;
-    }
-
-    public void setShowName(String showname) {
-        showName = showname;
-    }
-
-    public String getShowName() {
-        return showName;
-    }
-
-    public void setSeasonName(String seasonname){
-        seasonName = seasonname;
-    }
-
-    public String getSeasonName() {
-        return seasonName;
     }
 
     public void handleGetShows(MouseEvent mouseEvent) {
@@ -99,9 +80,8 @@ public class AddCreditController implements Initializable {
 
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
-        System.out.println("trying to add episode to" + showName + " . " + seasonName);
         int id = ApplicationManager.getInstance().nextId();
-        ApplicationManager.getInstance().addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName, id);
+        ApplicationManager.getInstance().addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), choiceBoxShow.getValue().toString(), choiceBoxSeason.getValue().toString(), id);
         reloadNextEpisode();
         ApplicationManager.getInstance().addJob(id);
     }
@@ -148,33 +128,17 @@ public class AddCreditController implements Initializable {
         loader.setController(CreateSeasonController.getInstance());
         Scene scene = new Scene(loader.load());
         createSeason = new Stage();
-        createSeason.setTitle("Opret Sæsson til " + showName);
+        createSeason.setTitle("Opret Sæson til " + choiceBoxShow.getValue().toString());
         createSeason.setScene(scene);
         createSeason.show();
     }
 
-    @FXML
-    public void handleSetShows(ActionEvent actionEvent) {
-        if (!choiceBoxShow.getSelectionModel().isEmpty()) {
-            showName = choiceBoxShow.getValue().toString();
-        }
-        choiceBoxShow.setValue(showName);
-    }
-
-    @FXML
-    public void handleSetSeason(ActionEvent actionEvent) {
-        if (!choiceBoxSeason.getSelectionModel().isEmpty()) {
-            seasonName = choiceBoxSeason.getValue().toString();
-            System.out.println("setSeason: " + seasonName);
-        }
-        choiceBoxSeason.setValue(seasonName);
-    }
 
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
-        if (showName != null) {
+        if (choiceBoxShow.getValue().toString() != null) {
             for (IShow show : ApplicationManager.getInstance().getShowList()) {
-                if (show.getName() == showName) {
+                if (show.getName() == choiceBoxShow.getValue().toString()) {
                     if (show.getSeasons() != null) {
                         for (ISeason season : show.getSeasons()) {
                             choiceBoxSeason.getItems().add(season.getName());
@@ -185,6 +149,10 @@ public class AddCreditController implements Initializable {
         }
         System.out.println("Showing choicebox wiht conttens " + choiceBoxSeason.getItems());
         choiceBoxSeason.show();
+    }
+
+    public void addSeason(String description) {
+        ApplicationManager.getInstance().addSeason(description, choiceBoxShow.getValue().toString());
     }
 
 
@@ -215,7 +183,7 @@ public class AddCreditController implements Initializable {
     }
 
     private void reloadNextEpisode() {
-        episodeId.setText(ApplicationManager.getInstance().getNextEpisode(showName, seasonName));
+        episodeId.setText(ApplicationManager.getInstance().getNextEpisode(choiceBoxShow.getValue().toString(), choiceBoxSeason.getValue().toString()));
     }
 
     public void handleRemovePersons(ActionEvent actionEvent) {

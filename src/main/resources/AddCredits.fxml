@@ -59,8 +59,8 @@
                               <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Episode:" />
                               <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendEpisodeButton" text="Godkend og send" />
                               <Button layoutX="488.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleCreateShow" text="+" />
-                              <ChoiceBox fx:id="choiceBoxShow" layoutX="230.0" layoutY="1.0" onAction="#handleSetShows" onMouseClicked="#handleGetShows" prefHeight="27.0" prefWidth="249.0" />
-                              <ChoiceBox fx:id="choiceBoxSeason" layoutX="230.0" layoutY="30.0" onAction="#handleSetSeason" onMouseClicked="#handleGetSeason" prefHeight="27.0" prefWidth="249.0" />
+                              <ChoiceBox fx:id="choiceBoxShow" layoutX="230.0" layoutY="1.0"  onMouseClicked="#handleGetShows" prefHeight="27.0" prefWidth="249.0" />
+                              <ChoiceBox fx:id="choiceBoxSeason" layoutX="230.0" layoutY="30.0"  onMouseClicked="#handleGetSeason" prefHeight="27.0" prefWidth="249.0" />
                               <Button layoutX="488.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleCreateSeason" text="+" />
                               <Label layoutX="10.0" layoutY="90.0" prefHeight="26.0" prefWidth="48.0" text="Title" />
                               <TextField fx:id="episodeTitle" layoutX="230.0" layoutY="90.0" prefHeight="27.0" prefWidth="283.0" />
