@@ -40,12 +40,6 @@ public class ApplicationManager implements IDataProcessors {
         }
 
         System.out.println(personList.toString());
-
-        ArrayList<IJob> jobs = new ArrayList<>();
-        jobs.add(new Job(Role.MEDVIRKENDE, "mickey", 12312));
-        jobs.add(new Job(Role.BILLED_OG_LYDREDIGERING, 12312) );
-        IPerson thisa = (IPerson) personList.get(0);
-        thisa.setJobs(jobs);
     }
 
     public static ApplicationManager getInstance() {
@@ -73,30 +67,31 @@ public class ApplicationManager implements IDataProcessors {
         personList.add(person);
     }
 
-    public void addTempJob(IJob job) {
-        tempList.add(job);
+    public void addTempJob(int personId, Role role, String charactername, int productionId) {
+        tempList.add(new Job(
+            personId,
+                role,
+                charactername,
+                productionId
+        ));
         System.out.println("temp job added");
+    }
 
+    public void addTempJob(int personId, Role role, int productionId) {
+        tempList.add(new Job(
+                personId,
+                role,
+                productionId
+        ));
+        System.out.println("temp job added");
     }
 
     @Override
     public void addJob(int productionId) {
-        for (int i = tempList.size() - 1; i > -1; i--) {
-            IJob job = tempList.get(i);
-            for (IPerson person: personList) {
-                if (person.getCreditID() == job.getPersonId()) {
-                    IJob newJob;
-                    if (job.getRole() == Role.SKUESPILLER) {
-                        newJob = new Job(job.getRole(), job.getCharacterName(), productionId);
-                    } else {
-                        newJob = new Job(job.getRole(), productionId);
-                    }
-                    person.getJobs().add(newJob);
-                }
-            }
-            tempList.remove(i);
+        for (IJob job : tempList) {
+            getPersonById(job.getPersonId()).addJob(job);
         }
-
+        tempList.clear();
     }
 
     @Override
@@ -273,6 +268,15 @@ public class ApplicationManager implements IDataProcessors {
                         return episode;
                     }
                 }
+            }
+        }
+        return null;
+    }
+
+    public IPerson getPersonById(int personId){
+        for (IPerson person : personList){
+            if (person.getCreditID() == personId){
+                return person;
             }
         }
         return null;

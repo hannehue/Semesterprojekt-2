@@ -81,6 +81,12 @@ public class AddCreditController implements Initializable {
         ApplicationManager.getInstance().addJob(id);
     }
 
+    /**
+     * Create a new movie with the supplied values
+     *
+     * @param Event
+     * @throws IOException
+     */
     @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
         int id = ApplicationManager.getInstance().nextId();
@@ -94,6 +100,13 @@ public class AddCreditController implements Initializable {
         ApplicationManager.getInstance().addJob(id);
     }
 
+    /**
+     * Add a new person with values from the "Add Person" text field.
+     *
+     * @param Event
+     * @throws IOException
+     */
+
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
         ApplicationManager.getInstance().addPerson(
@@ -103,6 +116,12 @@ public class AddCreditController implements Initializable {
                 personEmail.getText());
     }
 
+    /**
+     *  Open a window for creating a show
+     *
+     * @param Event
+     * @throws IOException
+     */
     @FXML
     protected void handleCreateShow(ActionEvent Event) throws IOException {
         // Opens new window for adding person
@@ -116,6 +135,17 @@ public class AddCreditController implements Initializable {
         createShow.show();
     }
 
+    public void disposeCreateShow() {
+        createShow.close();
+    }
+
+    /**
+     * Open window for creating a season for a show.
+     *
+     * @param Event from ActionEvent
+     * @throws IOException
+     *
+     */
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -128,6 +158,19 @@ public class AddCreditController implements Initializable {
         createSeason.show();
     }
 
+    /**
+     * disposes the createseason window
+     */
+    public void disposeCreateSeason() {
+        createSeason.close();
+    }
+
+    /**
+     *
+     * @param Event mouseevent from FXML
+     *
+     *      Populates the season choicebox with the seasons from the selected show
+     */
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
         if (choiceBoxShow.getValue().toString() != null) {
@@ -167,13 +210,7 @@ public class AddCreditController implements Initializable {
         stage.show();
     }
 
-    public void disposeCreateShow() {
-        createShow.close();
-    }
 
-    public void disposeCreateSeason() {
-        createSeason.close();
-    }
 
     private void reloadNextEpisode() {
         episodeId.setText(ApplicationManager.getInstance().getNextEpisode(choiceBoxShow.getValue().toString(), choiceBoxSeason.getValue().toString()));

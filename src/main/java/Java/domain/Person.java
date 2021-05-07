@@ -42,6 +42,10 @@ public class Person extends Credit implements IPerson {
     public void setJobs(ArrayList<IJob> jobs) {
         this.jobs = jobs;
     }
+    @Override
+    public void addJob(IJob job){
+        jobs.add(job);
+    }
 
     @Override
     public String getPhoneNumber() {

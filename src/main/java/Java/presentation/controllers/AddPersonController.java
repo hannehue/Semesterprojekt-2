@@ -61,11 +61,10 @@ public class AddPersonController implements Initializable {
     public void handleAddPerson(ActionEvent actionEvent) {
         IJob job;
         if (jobRole.getValue() == Role.SKUESPILLER) {
-            job = new Job(personToCredit.getCreditID(), jobRole.getValue(), characterName.getText());
+            ApplicationManager.getInstance().addTempJob(personToCredit.getCreditID(), jobRole.getValue(), characterName.getText(), 0);
         } else {
-            job = new Job(personToCredit.getCreditID(), jobRole.getValue());
+            ApplicationManager.getInstance().addTempJob(personToCredit.getCreditID(), jobRole.getValue(), 0);
         }
-        ApplicationManager.getInstance().addTempJob(job);
     }
 
     /** Move to domain layer **/

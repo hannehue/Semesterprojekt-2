@@ -10,26 +10,17 @@ public class Job implements IJob {
     private String characterName;
     private int personId;
 
-    public Job(Role role, String characterName, int productionID) {
+    public Job(int personId, Role role, String characterName, int productionID) {
         this.role = role;
         this.productionID = productionID;
         this.characterName = characterName;
-    }
-
-    public Job(int personId, Role role, String characterName) {
-        this.role = role;
-        this.personId = personId;
-        this.characterName = characterName;
-    }
-
-    public Job(int personId, Role roles) {
-        this.role = roles;
         this.personId = personId;
     }
 
-    public Job(Role role, int productionID) {
+    public Job(int personId, Role role, int productionID) {
         this.role = role;
         this.productionID = productionID;
+        this.personId = personId;
     }
 
     @Override
