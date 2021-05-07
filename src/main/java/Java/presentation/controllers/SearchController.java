@@ -23,11 +23,9 @@ public class SearchController implements Initializable {
     @FXML
     protected Pane searchPane;
 
-    private static SearchController instance;
+    private static SearchController instance = new SearchController();
 
-    public SearchController() {
-        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
-        instance = this;
+    private SearchController() {
     }
 
     public static SearchController getInstance() {
@@ -71,13 +69,14 @@ public class SearchController implements Initializable {
     }
 
     public void handleClickedItem(MouseEvent mouseEvent) {
-        Credit item = (Credit) SearchList.getSelectionModel().getSelectedItem();
-        System.out.println("clicked" + item);
-        CreditViewController.getInstance().setCurrentCredit(item);
         try {
-            MenuController.getInstance().setContentPane("CreditView.fxml");
+            MenuController.getInstance().setContentPane("CreditView.fxml", CreditViewController.getInstance());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Credit getCurrentCredit(){
+        return (Credit) SearchList.getSelectionModel().getSelectedItem();
     }
 }

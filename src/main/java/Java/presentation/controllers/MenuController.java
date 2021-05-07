@@ -1,6 +1,5 @@
 package Java.presentation.controllers;
 
-import Java.Credit;
 import Java.CreditSystemController;
 import javafx.animation.*;
 import javafx.collections.FXCollections;
@@ -11,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -57,11 +55,9 @@ public class MenuController implements Initializable {
 
     private AnchorPane ContentPane;
     private String searchString;
-    private static MenuController instance;
+    private static MenuController instance = new MenuController();
 
-    public MenuController() {
-        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be created");
-        instance = this;
+    private MenuController() {
     }
 
     public static MenuController getInstance() {
@@ -166,7 +162,7 @@ public class MenuController implements Initializable {
                 //prøver at åbne søgeresultat ind i content
                 try {
 
-                    setContentPane("SearchResult.fxml");
+                    setContentPane("SearchResult.fxml", (Object) SearchController.getInstance());
                     SearchController.getInstance().setContent();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -191,7 +187,7 @@ public class MenuController implements Initializable {
     @FXML
     private void handleLogin(MouseEvent mouseEvent){
         try {
-            setContentPane("Login.fxml");
+            setContentPane("Login.fxml", LoginController.getInstance());
             hideMenu();
         } catch (Exception e){
             e.printStackTrace();
@@ -199,7 +195,7 @@ public class MenuController implements Initializable {
     }
 
     public void handleAddCredit(MouseEvent mouseEvent) throws IOException {
-        setContentPane("AddCredits.fxml");
+        setContentPane("AddCredits.fxml", AddCreditController.getInstance());
         hideMenu();
     }
 
@@ -207,21 +203,28 @@ public class MenuController implements Initializable {
         return searchString;
     }
 
-    public void setContentPane(String fxml) throws IOException {
+    public void clearContentPane(){
         ContentPane.getChildren().clear();
-        Parent root = FXMLLoader.load(MenuController.class.getClassLoader().getResource(fxml));
+    }
+
+    public void setContentPane(String fxml, Object controller) throws IOException {
+        ContentPane.getChildren().clear();
+        Object fxmlController = controller;
+        FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getClassLoader().getResource(fxml));
+        fxmlLoader.setController(fxmlController);
+        Parent root = fxmlLoader.load();
         ContentPane.getChildren().add(root);
     }
 
     public void approveCreditHandler(MouseEvent mouseEvent) throws IOException {
-       setContentPane("ApproveCredits.fxml");
+       setContentPane("ApproveCredits.fxml", DashboardController.getInstance());
        hideMenu();
     }
 
     //Menu knap til Personlig profil
     public void handlePersonalProfile(MouseEvent mouseEvent) {
         try {
-            setContentPane("PersonalProfile.fxml");
+            setContentPane("PersonalProfile.fxml", PersonalProfileController.getInstance());
             hideMenu();
         } catch (Exception e){
             e.printStackTrace();
@@ -230,12 +233,13 @@ public class MenuController implements Initializable {
 
     public void handleLogout(MouseEvent mouseEvent) throws IOException {
         CreditSystemController.getInstance().setUserType(null);
-        CreditSystemController.getInstance().setRoot("Menu");
+        MenuController.getInstance().clearContentPane();
+        Menu.setVisible(false);
     }
 
     public void handleAddUser(MouseEvent mouseEvent) {
         try {
-            setContentPane("AddUsers.fxml");
+            setContentPane("AddUsers.fxml", GUIController.getInstance());
             hideMenu();
         } catch (Exception e){
             e.printStackTrace();

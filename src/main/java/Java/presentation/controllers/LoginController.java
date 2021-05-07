@@ -18,6 +18,16 @@ Denne Controller bruges til at logge ind på en konto
 
 public class LoginController {
 
+    private static LoginController instance = new LoginController();
+
+    private LoginController() {
+    }
+
+    public static LoginController getInstance() {
+        return instance;
+    }
+
+
 
     //---- Login Typer
     @FXML
@@ -39,6 +49,6 @@ public class LoginController {
 
     private void loginManager(UserType userType) throws IOException{
         CreditSystemController.getInstance().setUserType(userType);
-        //CreditSystemController.getInstance().setRoot("Menu");
+        MenuController.getInstance().clearContentPane();
     }
 }

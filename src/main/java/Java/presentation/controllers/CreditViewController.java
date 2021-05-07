@@ -29,13 +29,11 @@ public class CreditViewController implements Initializable {
     Label nameLabel;
     @FXML
     Label descriptionLabel;
-    private static CreditViewController instance;
+    private static CreditViewController instance = new CreditViewController();
 
     private Credit currentCredit;
 
-    public CreditViewController() {
-        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
-        instance = this;
+    private CreditViewController() {
     }
 
     public static CreditViewController getInstance() {
@@ -48,6 +46,8 @@ public class CreditViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        currentCredit = SearchController.getInstance().getCurrentCredit();
         assert currentCredit.isApproved();
 
         nameLabel.setText(currentCredit.getName());
@@ -89,4 +89,5 @@ public class CreditViewController implements Initializable {
         gridPane.add((javafx.scene.Node) objlist[1], 1, rowCount);
 
     }
+
 }

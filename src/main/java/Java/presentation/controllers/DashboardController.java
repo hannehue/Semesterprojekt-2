@@ -24,6 +24,7 @@ public class DashboardController implements Initializable {
     @FXML
     protected AnchorPane programToApprove;
 
+
     /* ------------------------------------------------------------------------------------------------------------------
         Metoder
     ------------------------------------------------------------------------------------------------------------------ */
@@ -38,6 +39,14 @@ public class DashboardController implements Initializable {
     @FXML
     public void handleReloadProgram(MouseEvent mouseEvent) {
         reloadProgram();
+    }
+    private static DashboardController instance = new DashboardController();
+
+    private DashboardController(){
+    }
+
+    public static DashboardController getInstance() {
+        return instance;
     }
 
     protected EventHandler<ActionEvent> handleApprovePerson(int Event) {

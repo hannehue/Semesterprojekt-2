@@ -54,11 +54,9 @@ public class AddCreditController {
     private String showName;
     private String seasonName;
 
-    private static AddCreditController instance;
+    private static AddCreditController instance = new AddCreditController();
 
-    public AddCreditController() {
-        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
-        instance = this;
+    private AddCreditController() {
     }
 
     public static AddCreditController getInstance() {
@@ -124,7 +122,10 @@ public class AddCreditController {
     @FXML
     protected void handleCreateShow(ActionEvent Event) throws IOException {
         // Opens new window for adding person
-        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("CreateShow.fxml")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(CreditSystemController.class.getClassLoader().getResource("CreateShow.fxml"));
+        loader.setController(CreateShowController.getInstance());
+        Scene scene = new Scene(loader.load());
         createShow = new Stage();
         createShow.setTitle("Opret Serie");
         createShow.setScene(scene);
@@ -133,7 +134,10 @@ public class AddCreditController {
 
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("CreateSeason.fxml")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(CreditSystemController.class.getClassLoader().getResource("CreateSeason.fxml"));
+        loader.setController(CreateSeasonController.getInstance());
+        Scene scene = new Scene(loader.load());
         createSeason = new Stage();
         createSeason.setTitle("Opret Sæsson til " + showName);
         createSeason.setScene(scene);
@@ -183,7 +187,10 @@ public class AddCreditController {
     @FXML
     protected void handleAddCreditButton(ActionEvent Event) throws IOException {
         // Opens new window for adding person
-        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml"));
+        loader.setController(AddPersonController.getInstance());
+        Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
         stage.setTitle("Tilføj person");
         stage.setScene(scene);
@@ -213,4 +220,5 @@ public class AddCreditController {
         personsToCreditM.setText(CreditSystemController.getInstance().tempListToString());
         personsToCreditE.setText(CreditSystemController.getInstance().tempListToString());
     }
+
 }

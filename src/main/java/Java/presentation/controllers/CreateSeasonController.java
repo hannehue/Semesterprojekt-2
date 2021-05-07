@@ -14,11 +14,9 @@ public class CreateSeasonController {
 
     @FXML
     protected TextArea seasonDescription;
-    private static CreateSeasonController instance;
+    private static CreateSeasonController instance = new CreateSeasonController();
 
-    public CreateSeasonController() {
-        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
-        instance = this;
+    private CreateSeasonController() {
     }
 
     public static CreateSeasonController getInstance(){

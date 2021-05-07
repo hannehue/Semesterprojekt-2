@@ -11,14 +11,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CreateShowController implements Initializable {
+public class CreateShowController {
     @FXML
     protected TextField showTitle;
     @FXML
     protected TextArea showDescription;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    private static CreateShowController instance = new CreateShowController();
+
+    private CreateShowController(){
+
+    }
+
+    public static CreateShowController getInstance(){
+        return instance;
     }
 
     @FXML
@@ -29,4 +35,5 @@ public class CreateShowController implements Initializable {
         );
         AddCreditController.getInstance().disposeCreateShow();
     }
+
 }

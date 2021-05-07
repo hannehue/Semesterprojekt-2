@@ -19,16 +19,21 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GUIController implements Initializable {
+public class GUIController {
 
+    private static GUIController instance = new GUIController();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    private GUIController() {
+
+    }
+
+    public static GUIController getInstance(){
+        return instance;
     }
 
     //Admin
     @FXML
     protected void handleAddUserButtonAdmin(ActionEvent Event) throws IOException{
-        CreditSystemController.getInstance().setRoot("Dashboard");
+        CreditSystemController.getInstance().setRoot("Dashboard", DashboardController.getInstance());
     }
 }

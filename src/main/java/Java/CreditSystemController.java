@@ -2,6 +2,7 @@ package Java;
 
 import Java.persistencelayer.DatabaseLoader;
 import Java.presentation.controllers.CreditViewController;
+import Java.presentation.controllers.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -55,7 +56,7 @@ public class CreditSystemController extends Application {
         /** TEST MILJØ **/
 
         /** GUI Setup*/
-        scene = new Scene(loadFXML("Menu"), 1024,768);
+        scene = new Scene(loadFXML("Menu", MenuController.getInstance()), 1024,768);
         primaryStage.setTitle("TV2-Krediteringer");
         primaryStage.setScene(scene);
         primaryStage.minWidthProperty().set(300);
@@ -63,14 +64,6 @@ public class CreditSystemController extends Application {
         primaryStage.show();
         this.primaryStage = primaryStage;
 
-        /*
-        personList.add(new Person("Peter Petesdafasdf", null, 12342, true,
-                "this is the desc", 2342,"31330913", "this is persinfo", null));
-        personList.add(new Person("New pers", null, 123, true, "this is the desc",
-                2342,"31330913","this is the persinfo", null));
-        personList.add(new Person("New pers 1", null, 123, true, "this is the desc",
-                2342,"31330913","this is personinfo new ", null));
-         */
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job(Role.MEDVIRKENDE, "mickey", 12312));
         jobs.add(new Job(Role.BILLED_OG_LYDREDIGERING, 12312) );
@@ -92,14 +85,15 @@ public class CreditSystemController extends Application {
     }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
-    public void setRoot(String fxml) throws IOException {
-        primaryStage.setScene(new Scene(loadFXML(fxml)));
+    public void setRoot(String fxml, Object controller) throws IOException {
+        primaryStage.setScene(new Scene(loadFXML(fxml, controller)));
     }
 
     //metode til at indlæse den nye .fxml fil som skal vises
-    private Parent loadFXML(String fxml) throws IOException {
+    private Parent loadFXML(String fxml, Object controller) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/" + fxml + ".fxml"));
+        fxmlLoader.setController(controller);
         return fxmlLoader.load();
     }
 

@@ -32,12 +32,10 @@ public class AddPersonController implements Initializable {
     private Credit personToCredit;
     private static AddPersonController instance = new AddPersonController();
 
-    public AddPersonController() {
-        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
-        instance = this;
+    private AddPersonController() {
     }
 
-    private static AddPersonController getInstance() {
+    public static AddPersonController getInstance() {
         return instance;
     }
 
