@@ -1,4 +1,4 @@
-package Java.Application;
+package Java.Presentation;
 
 public interface IJob {
 
