@@ -1,6 +1,6 @@
 package Java.Application;
 
-public class Job {
+public class Job implements IJob{
 
     private Role role;
     private int productionID;
@@ -42,34 +42,42 @@ public class Job {
         }
     }
 
+    @Override
     public int getProgram() {
         return productionID;
     }
 
+    @Override
     public void setProgram(int program) {
         this.productionID = productionID;
     }
 
+    @Override
     public Role getRole() {
         return role;
     }
 
+    @Override
     public void setRole(Role role) {
         this.role = role;
     }
 
+    @Override
     public void setJobs() {
 
     }
 
+    @Override
     public String getCharacterName() {
         return characterName;
     }
 
+    @Override
     public void setCharacterName(String characterName) {
         this.characterName = characterName;
     }
 
+    @Override
     public int getPersonId() {
         return personId;
     }
