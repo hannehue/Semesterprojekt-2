@@ -27,7 +27,7 @@
                               <TextField layoutX="226.0" layoutY="53.0" prefHeight="27.0" prefWidth="214.0" />
                               <ChoiceBox layoutX="226.0" layoutY="96.0" prefHeight="27.0" prefWidth="212.0" />
                               <Label layoutX="14.0" layoutY="97.0" prefHeight="26.0" prefWidth="151.0" text="Brugerrettighed" />
-                              <Button layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddUserButtonAdmin" prefHeight="54.0" prefWidth="140.0" text="Godked og Tilføj" />
+                              <Button layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddUserButton" prefHeight="54.0" prefWidth="140.0" text="Godked og Tilføj" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -41,7 +41,7 @@
                               <TextField layoutX="225.0" layoutY="70.0" prefHeight="27.0" prefWidth="214.0" />
                               <ChoiceBox layoutX="225.0" layoutY="152.0" prefHeight="27.0" prefWidth="212.0" />
                               <Label layoutX="13.0" layoutY="153.0" prefHeight="26.0" prefWidth="151.0" text="Brugerrettighed" />
-                              <Button layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddUserButtonAdmin" prefHeight="54.0" prefWidth="140.0" text="Godkend og overskriv" />
+                              <Button layoutX="300.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleAddUserButton" prefHeight="54.0" prefWidth="140.0" text="Godkend og overskriv" />
                               <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Find bruger" />
                               <PasswordField layoutX="226.0" layoutY="110.0" prefHeight="27.0" prefWidth="212.0" />
                            </children>

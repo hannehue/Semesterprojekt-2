@@ -239,7 +239,7 @@ public class MenuController implements Initializable {
 
     public void handleAddUser(MouseEvent mouseEvent) {
         try {
-            setContentPane("AddUsers.fxml", GUIController.getInstance());
+            setContentPane("AddUsers.fxml", AddUserController.getInstance());
             hideMenu();
         } catch (Exception e){
             e.printStackTrace();
