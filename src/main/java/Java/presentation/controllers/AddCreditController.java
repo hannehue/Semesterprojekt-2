@@ -52,7 +52,7 @@ public class AddCreditController implements Initializable {
     @FXML
     protected Pane moviePeoplePane;
     @FXML
-    protected TextArea personsToCreditE;
+    protected Pane episodePeoplePane;
 
     private ListView PersonList;
 

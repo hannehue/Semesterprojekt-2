@@ -30,6 +30,7 @@
                                             </children>
                                         </Pane>
                                         <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendMovieButton" text="Godkend og send" />
+                              <Button layoutX="348.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleReloadPersonToMovie" text="Reload" />
                               <Button layoutX="410.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" />
                                     </children>
                                 </AnchorPane>
@@ -66,9 +67,13 @@
                               <TextField fx:id="episodeTitle" layoutX="230.0" layoutY="90.0" prefHeight="27.0" prefWidth="283.0" />
                               <Label layoutX="14.0" layoutY="120.0" prefHeight="26.0" prefWidth="48.0" text="Længde" />
                               <TextField fx:id="episodeLength" layoutX="230.0" layoutY="120.0" prefHeight="27.0" prefWidth="283.0" />
-                              <TextArea fx:id="personsToCreditE" disable="true" layoutX="28.0" layoutY="252.0" prefHeight="200.0" prefWidth="493.0" />
-                              <Button layoutX="488.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleGetEpisodeName" text="+" />
+                               <Pane fx:id="episodePeoplePane" layoutX="9.0" layoutY="244.0" prefHeight="214.0" prefWidth="522.0">
+                               <children>
+                               </children>
+                                </Pane>
+                            <Button layoutX="488.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleGetEpisodeName" text="+" />
                               <TextField fx:id="episodeId" disable="true" layoutX="230.0" layoutY="60.0" prefHeight="27.0" prefWidth="248.0" />
+                              <Button layoutX="336.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleReloadPersonToMovie" text="Reload" />
                               <Button layoutX="397.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" />
                               <Button contentDisplay="CENTER" layoutX="190.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
                            </children>
