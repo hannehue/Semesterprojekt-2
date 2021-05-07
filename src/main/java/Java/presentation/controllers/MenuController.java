@@ -1,10 +1,13 @@
-package Java.controllers;
+package Java.presentation.controllers;
 
 import Java.CreditSystemController;
 import javafx.animation.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -50,9 +53,16 @@ public class MenuController implements Initializable {
     @FXML
     protected Label loginButtonLabel;
 
-    private static AnchorPane ContentPane;
-    private static String searchString;
+    private AnchorPane ContentPane;
+    private String searchString;
+    private static MenuController instance = new MenuController();
 
+    private MenuController() {
+    }
+
+    public static MenuController getInstance() {
+        return instance;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,6 +78,7 @@ public class MenuController implements Initializable {
     }
 
 
+    ObservableList<Node> tempChildren = FXCollections.observableArrayList();
     public void handleOpenMenu(MouseEvent mouseEvent) {
         ParallelTransition parallelTransition = new ParallelTransition();
         if (!Menu.isVisible()){
@@ -86,23 +97,36 @@ public class MenuController implements Initializable {
             parallelTransition.play();
             parallelTransition.getChildren().clear();
 
+            if (tempChildren.size() == 0) {
+                tempChildren.addAll(VBoxMenu.getChildren());
+            } else {
+                VBoxMenu.getChildren().clear();
+                VBoxMenu.getChildren().setAll(tempChildren);
+            }
+
+
             //Menu load----------------
             //Hvis der er logget ind, hvis menu i forhold til brugerens UserType
-            if (CreditSystemController.getUserType() != null) {
-                if (!CreditSystemController.getUserType().getPersonalProfile()){
+            if (CreditSystemController.getInstance().getUserType() != null) {
+                if (!CreditSystemController.getInstance().getUserType().getPersonalProfile()){
+                    System.out.println("personal legal");
                     VBoxMenu.getChildren().removeAll(profile);
                 }
-                if (!CreditSystemController.getUserType().getAddCredit()){
+                if (!CreditSystemController.getInstance().getUserType().getAddCredit()){
+                    System.out.println("credit legal");
                     VBoxMenu.getChildren().removeAll(addCredits);
                 }
-                if (!CreditSystemController.getUserType().getAddUser()){
+                if (!CreditSystemController.getInstance().getUserType().getAddUser()){
+                    System.out.println("add user legal");
                     VBoxMenu.getChildren().removeAll(addUserI);
                 }
-                if (!CreditSystemController.getUserType().getApproveCredit()){
+                if (!CreditSystemController.getInstance().getUserType().getApproveCredit()){
+                    System.out.println("approve credit legal");
                     VBoxMenu.getChildren().removeAll(approveCredit);
                 }
                 VBoxMenu.getChildren().removeAll(login);
             } else { //Hvis ikke der er logget ind skal der kun vises login
+                System.out.println("usertype is null");
                 VBoxMenu.getChildren().removeAll(profile, approveCredit, addCredits,addUserI, logout);
                 VBoxMenu.toFront();
             }
@@ -137,8 +161,9 @@ public class MenuController implements Initializable {
                 searchString = searchField.getText();
                 //prøver at åbne søgeresultat ind i content
                 try {
-                    setContentPane("SearchResult.fxml");
-                    SearchController.setContent();
+
+                    setContentPane("SearchResult.fxml", (Object) SearchController.getInstance());
+                    SearchController.getInstance().setContent();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -154,7 +179,7 @@ public class MenuController implements Initializable {
             KeyFrame keyFrame = new KeyFrame(Duration.millis(3000), keyValue);
             timeline.getKeyFrames().add(keyFrame);
             timeline.play();
-            timeline.setOnFinished(event -> searchField.setPromptText(CreditSystemController.getSearchFieldPlaceholder()));
+            timeline.setOnFinished(event -> searchField.setPromptText(CreditSystemController.getInstance().getSearchFieldPlaceholder()));
         }
     }
 
@@ -162,7 +187,7 @@ public class MenuController implements Initializable {
     @FXML
     private void handleLogin(MouseEvent mouseEvent){
         try {
-            setContentPane("Login.fxml");
+            setContentPane("Login.fxml", LoginController.getInstance());
             hideMenu();
         } catch (Exception e){
             e.printStackTrace();
@@ -170,29 +195,36 @@ public class MenuController implements Initializable {
     }
 
     public void handleAddCredit(MouseEvent mouseEvent) throws IOException {
-        setContentPane("AddCredits.fxml");
+        setContentPane("AddCredits.fxml", AddCreditController.getInstance());
         hideMenu();
     }
 
-    public static String getSearchString() {
+    public String getSearchString() {
         return searchString;
     }
 
-    public static void setContentPane(String fxml) throws IOException {
+    public void clearContentPane(){
         ContentPane.getChildren().clear();
-        Parent root = FXMLLoader.load(MenuController.class.getClassLoader().getResource(fxml));
+    }
+
+    public void setContentPane(String fxml, Object controller) throws IOException {
+        ContentPane.getChildren().clear();
+        Object fxmlController = controller;
+        FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getClassLoader().getResource(fxml));
+        fxmlLoader.setController(fxmlController);
+        Parent root = fxmlLoader.load();
         ContentPane.getChildren().add(root);
     }
 
     public void approveCreditHandler(MouseEvent mouseEvent) throws IOException {
-       setContentPane("ApproveCredits.fxml");
+       setContentPane("ApproveCredits.fxml", DashboardController.getInstance());
        hideMenu();
     }
 
     //Menu knap til Personlig profil
     public void handlePersonalProfile(MouseEvent mouseEvent) {
         try {
-            setContentPane("PersonalProfile.fxml");
+            setContentPane("PersonalProfile.fxml", PersonalProfileController.getInstance());
             hideMenu();
         } catch (Exception e){
             e.printStackTrace();
@@ -200,13 +232,14 @@ public class MenuController implements Initializable {
     }
 
     public void handleLogout(MouseEvent mouseEvent) throws IOException {
-        CreditSystemController.setUserType(null);
-        CreditSystemController.setRoot("Menu");
+        CreditSystemController.getInstance().setUserType(null);
+        MenuController.getInstance().clearContentPane();
+        Menu.setVisible(false);
     }
 
     public void handleAddUser(MouseEvent mouseEvent) {
         try {
-            setContentPane("AddUsers.fxml");
+            setContentPane("AddUsers.fxml", GUIController.getInstance());
             hideMenu();
         } catch (Exception e){
             e.printStackTrace();

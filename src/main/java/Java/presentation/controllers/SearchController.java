@@ -1,4 +1,4 @@
-package Java.controllers;
+package Java.presentation.controllers;
 
 import Java.Credit;
 import Java.CreditSystemController;
@@ -18,10 +18,19 @@ import java.util.ResourceBundle;
 
 
 public class SearchController implements Initializable {
-    private static ListView SearchList;
+    private ListView SearchList;
 
     @FXML
     protected Pane searchPane;
+
+    private static SearchController instance = new SearchController();
+
+    private SearchController() {
+    }
+
+    public static SearchController getInstance() {
+        return instance;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,18 +49,18 @@ public class SearchController implements Initializable {
         searchPane.getChildren().add(SearchList);
     }
 
-    public static void setContent() {
+    public void setContent() {
         ObservableList<Credit> observableResults = FXCollections.observableArrayList();
-        observableResults.addAll(search(MenuController.getSearchString()));
+        observableResults.addAll(search(MenuController.getInstance().getSearchString()));
         System.out.println(observableResults);
         SearchList.setItems(observableResults);
     }
 
 
-    private static ArrayList<Credit> search(String getsearchString){
+    private ArrayList<Credit> search(String getsearchString){
         String searchStringChecked = getsearchString.toLowerCase();
         ArrayList<Credit> creditList = new ArrayList<>();
-        for(Credit person : CreditSystemController.getPersonList()) {
+        for(Credit person : CreditSystemController.getInstance().getPersonList()) {
             if (person != null && person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
                 creditList.add(person);
             }
@@ -60,13 +69,14 @@ public class SearchController implements Initializable {
     }
 
     public void handleClickedItem(MouseEvent mouseEvent) {
-        Credit item = (Credit) SearchList.getSelectionModel().getSelectedItem();
-        System.out.println("clicked" + item);
-        CreditViewController.setCurrentCredit(item);
         try {
-            MenuController.setContentPane("CreditView.fxml");
+            MenuController.getInstance().setContentPane("CreditView.fxml", CreditViewController.getInstance());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Credit getCurrentCredit(){
+        return (Credit) SearchList.getSelectionModel().getSelectedItem();
     }
 }

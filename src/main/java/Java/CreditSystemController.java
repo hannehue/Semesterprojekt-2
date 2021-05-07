@@ -1,5 +1,8 @@
 package Java;
 
+import Java.persistencelayer.DatabaseLoader;
+import Java.presentation.controllers.CreditViewController;
+import Java.presentation.controllers.MenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,28 +15,35 @@ import java.util.Date;
 
 
 public class CreditSystemController extends Application {
-    private static Scene scene;
-    private static int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
+
+    private Scene scene;
+    private int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
     private DatabaseLoader dataLoader;
-    private static ArrayList<Person> personList = new ArrayList<>();
-    private static ArrayList<Movie> movieList= new ArrayList<>();
-    private static ArrayList<Show> showList = new ArrayList<>();
-    private static ArrayList<Job> tempList = new ArrayList<>();
-    private static Stage primaryStage;
-    private static UserType userType;
-    private static String searchFieldPlaceholder = "";
+    private ArrayList<Person> personList = new ArrayList<>();
+    private ArrayList<Movie> movieList= new ArrayList<>();
+    private ArrayList<Show> showList = new ArrayList<>();
+    private ArrayList<Job> tempList = new ArrayList<>();
+    private Stage primaryStage;
+    private UserType userType;
+    private String searchFieldPlaceholder = "";
+    private static CreditSystemController instance;
+
+    public static CreditSystemController getInstance() {
+        return instance;
+    }
+
+    public CreditSystemController(){
+        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
+        instance = this;
+    }
+
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
 
         /** TEST MILJØ **/
 
-        //addPerson("Jens Hans", "Elsker min hund", "45624585", "boi@gmail.com");
-
         dataLoader = new DatabaseLoader();
-        //creditList.addAll(dataLoader.readPersons());
-        //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
-        /** :) **/
 
         for (String[] strings: dataLoader.getPersonArraylist()){
             personList.add(dataLoader.stringsToPerson(strings));
@@ -46,7 +56,7 @@ public class CreditSystemController extends Application {
         /** TEST MILJØ **/
 
         /** GUI Setup*/
-        scene = new Scene(loadFXML("Menu"), 1024,768);
+        scene = new Scene(loadFXML("Menu", MenuController.getInstance()), 1024,768);
         primaryStage.setTitle("TV2-Krediteringer");
         primaryStage.setScene(scene);
         primaryStage.minWidthProperty().set(300);
@@ -54,14 +64,6 @@ public class CreditSystemController extends Application {
         primaryStage.show();
         this.primaryStage = primaryStage;
 
-        /*
-        personList.add(new Person("Peter Petesdafasdf", null, 12342, true,
-                "this is the desc", 2342,"31330913", "this is persinfo", null));
-        personList.add(new Person("New pers", null, 123, true, "this is the desc",
-                2342,"31330913","this is the persinfo", null));
-        personList.add(new Person("New pers 1", null, 123, true, "this is the desc",
-                2342,"31330913","this is personinfo new ", null));
-         */
         ArrayList<Job> jobs = new ArrayList<>();
         jobs.add(new Job(Role.MEDVIRKENDE, "mickey", 12312));
         jobs.add(new Job(Role.BILLED_OG_LYDREDIGERING, 12312) );
@@ -83,17 +85,19 @@ public class CreditSystemController extends Application {
     }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
-    public static void setRoot(String fxml) throws IOException {
-        primaryStage.setScene(new Scene(loadFXML(fxml)));
+    public void setRoot(String fxml, Object controller) throws IOException {
+        primaryStage.setScene(new Scene(loadFXML(fxml, controller)));
     }
 
     //metode til at indlæse den nye .fxml fil som skal vises
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CreditSystemController.class.getClassLoader().getResource(fxml + ".fxml"));
+    private Parent loadFXML(String fxml, Object controller) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/" + fxml + ".fxml"));
+        fxmlLoader.setController(controller);
         return fxmlLoader.load();
     }
 
-    public static void addPerson(String name, String description, String phoneNumber, String email){
+    public void addPerson(String name, String description, String phoneNumber, String email){
         Person person = new Person(
                 name,
                 new Date(),
@@ -107,19 +111,19 @@ public class CreditSystemController extends Application {
         personList.add(person);
     }
 
-    public static int nextId() {
+    public int nextId() {
         int temp = idTracker;
         idTracker++;
         return temp;
     }
 
-    public static void addTempJob(Job job) {
+    public void addTempJob(Job job) {
         tempList.add(job);
         System.out.println("temp job added");
 
     }
 
-    public static void addJob(int productionId) {
+    public void addJob(int productionId) {
         for (int i = tempList.size()-1; i > -1; i--) {
             Job job = tempList.get(i);
             for (Person person: personList) {
@@ -137,7 +141,7 @@ public class CreditSystemController extends Application {
         }
     }
 
-    public static void addMovie(String name, String description, Category[] categories, int id, int length) {
+    public void addMovie(String name, String description, Category[] categories, int id, int length) {
         Movie movie = new Movie(
                 name,
                 null,
@@ -152,7 +156,7 @@ public class CreditSystemController extends Application {
         System.out.println(movie.getName());
     }
 
-    public static void addShow(String title, String description) {
+    public void addShow(String title, String description) {
         Show show = new Show(
                 title,
                 null,
@@ -164,7 +168,7 @@ public class CreditSystemController extends Application {
         System.out.println("Added show: " + show.getName());
     }
 
-    public static void addSeason(String description, String show) {
+    public void addSeason(String description, String show) {
         for (Show s: showList) {
             if (s.getName() == show) {
                 Season season = new Season(
@@ -183,7 +187,7 @@ public class CreditSystemController extends Application {
         }
     }
 
-    public static void addEpisode(String title, int length, String show, String season, int id) {
+    public void addEpisode(String title, int length, String show, String season, int id) {
         for (Show s : showList) {
             if (s.getName() == show) {
                 for (Season seasonToGet : s.getSeasons()) {
@@ -209,7 +213,7 @@ public class CreditSystemController extends Application {
         }
     }
 
-    public static String getNextEpisode(String show, String season) {
+    public String getNextEpisode(String show, String season) {
         String episodeString = "";
         for (Show s: showList) {
             if (s.getName() == show) {
@@ -225,11 +229,11 @@ public class CreditSystemController extends Application {
 
 
 
-    public static ArrayList<Person> getPersonList() {
+    public ArrayList<Person> getPersonList() {
         return personList;
     }
 
-    public static ArrayList<Movie> getMovieList() {
+    public ArrayList<Movie> getMovieList() {
         return movieList;
     }
 
@@ -237,27 +241,27 @@ public class CreditSystemController extends Application {
         launch(args);
     }
 
-    public static UserType getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public static void setUserType(UserType userTypeSetter) {
+    public void setUserType(UserType userTypeSetter) {
         userType = userTypeSetter;
     }
 
-    public static String getSearchFieldPlaceholder() {
+    public String getSearchFieldPlaceholder() {
         return searchFieldPlaceholder;
     }
 
-    public static void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
-        CreditSystemController.searchFieldPlaceholder = searchFieldPlaceholder;
+    public void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
+        CreditSystemController.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
-    public static ArrayList<Show> getShowList() {
+    public ArrayList<Show> getShowList() {
         return showList;
     }
 
-    public static String tempListToString() {
+    public String tempListToString() {
         String temp = "Ingen personer tilføjet";
         if (!tempList.isEmpty()) {
             temp = "";
@@ -275,13 +279,13 @@ public class CreditSystemController extends Application {
         } return temp;
     }
 
-    public static void deleteTempList() {
+    public void deleteTempList() {
         for (int i = tempList.size()-1; i > -1; i--) {
             tempList.remove(i);
         }
     }
 
-    public static Production getProduction(int productionID) {
+    public Production getProduction(int productionID) {
         for (Movie movie : movieList) {
             if (movie.getProductionID() == productionID) {
                 return movie;

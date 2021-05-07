@@ -1,4 +1,4 @@
-package Java.controllers;
+package Java.presentation.controllers;
 
 import Java.CreditSystemController;
 import Java.Job;
@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AddCreditController implements Initializable {
+public class AddCreditController {
     @FXML
     protected ChoiceBox choiceBoxShow;
     @FXML
@@ -48,42 +48,41 @@ public class AddCreditController implements Initializable {
     @FXML
     protected TextArea personsToCreditE;
 
-    private static Stage createShow;
-    private static Stage createSeason;
+    private Stage createShow;
+    private Stage createSeason;
 
-    private static String showName;
-    private static String seasonName;
+    private String showName;
+    private String seasonName;
 
+    private static AddCreditController instance = new AddCreditController();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
+    private AddCreditController() {
     }
 
+    public static AddCreditController getInstance() {
+        return instance;
+    }
 
-
-
-
-    public static void setShowName(String showname) {
+    public void setShowName(String showname) {
         showName = showname;
     }
 
-    public static String getShowName() {
+    public String getShowName() {
         return showName;
     }
 
-    public static void setSeasonName(String seasonname){
+    public void setSeasonName(String seasonname){
         seasonName = seasonname;
     }
 
-    public static String getSeasonName() {
+    public String getSeasonName() {
         return seasonName;
     }
 
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         choiceBoxSeason.getItems().clear();
-        for (Show show : CreditSystemController.getShowList()) {
+        for (Show show : CreditSystemController.getInstance().getShowList()) {
             choiceBoxShow.getItems().add(show.getName());
         }
         choiceBoxShow.show();
@@ -92,28 +91,28 @@ public class AddCreditController implements Initializable {
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
         System.out.println("trying to add episode to" + showName + " . " + seasonName);
-        int id = CreditSystemController.nextId();
-        CreditSystemController.addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName, id);
+        int id = CreditSystemController.getInstance().nextId();
+        CreditSystemController.getInstance().addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName, id);
         reloadNextEpisode();
-        CreditSystemController.addJob(id);
+        CreditSystemController.getInstance().addJob(id);
     }
 
 
     @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
-        int id = CreditSystemController.nextId();
-        CreditSystemController.addMovie(
+        int id = CreditSystemController.getInstance().nextId();
+        CreditSystemController.getInstance().addMovie(
                 movieTitle.getText(),
                 movieDescription.getText(),
                 null,
                 id,
                 Integer.parseInt(movieLength.getText())
                 );
-        CreditSystemController.addJob(id);
+        CreditSystemController.getInstance().addJob(id);
     }
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
-        CreditSystemController.addPerson(
+        CreditSystemController.getInstance().addPerson(
                 personName.getText(),
                 null,
                 personPhone.getText(),
@@ -123,7 +122,10 @@ public class AddCreditController implements Initializable {
     @FXML
     protected void handleCreateShow(ActionEvent Event) throws IOException {
         // Opens new window for adding person
-        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("CreateShow.fxml")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(CreditSystemController.class.getClassLoader().getResource("CreateShow.fxml"));
+        loader.setController(CreateShowController.getInstance());
+        Scene scene = new Scene(loader.load());
         createShow = new Stage();
         createShow.setTitle("Opret Serie");
         createShow.setScene(scene);
@@ -132,7 +134,10 @@ public class AddCreditController implements Initializable {
 
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
-        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("CreateSeason.fxml")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(CreditSystemController.class.getClassLoader().getResource("CreateSeason.fxml"));
+        loader.setController(CreateSeasonController.getInstance());
+        Scene scene = new Scene(loader.load());
         createSeason = new Stage();
         createSeason.setTitle("Opret Sæsson til " + showName);
         createSeason.setScene(scene);
@@ -159,7 +164,7 @@ public class AddCreditController implements Initializable {
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
         if (showName != null) {
-            for (Show show : CreditSystemController.getShowList()) {
+            for (Show show : CreditSystemController.getInstance().getShowList()) {
                 if (show.getName() == showName) {
                     if (show.getSeasons() != null) {
                         for (Season season : show.getSeasons()) {
@@ -182,34 +187,38 @@ public class AddCreditController implements Initializable {
     @FXML
     protected void handleAddCreditButton(ActionEvent Event) throws IOException {
         // Opens new window for adding person
-        Scene scene = new Scene(FXMLLoader.load(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml"));
+        loader.setController(AddPersonController.getInstance());
+        Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
         stage.setTitle("Tilføj person");
         stage.setScene(scene);
         stage.show();
     }
 
-    public static void disposeCreateShow() {
+    public void disposeCreateShow() {
         createShow.close();
     }
 
-    public static void disposeCreateSeason() {
+    public void disposeCreateSeason() {
         createSeason.close();
     }
 
     private void reloadNextEpisode() {
-        episodeId.setText(CreditSystemController.getNextEpisode(showName, seasonName));
+        episodeId.setText(CreditSystemController.getInstance().getNextEpisode(showName, seasonName));
     }
 
     public void handleReloadPersonToMovie(ActionEvent actionEvent) {
-        personsToCreditM.setText(CreditSystemController.tempListToString());
-        personsToCreditE.setText(CreditSystemController.tempListToString());
-        System.out.println(CreditSystemController.tempListToString());
+        personsToCreditM.setText(CreditSystemController.getInstance().tempListToString());
+        personsToCreditE.setText(CreditSystemController.getInstance().tempListToString());
+        System.out.println(CreditSystemController.getInstance().tempListToString());
     }
 
     public void handleRemovePersons(ActionEvent actionEvent) {
-        CreditSystemController.deleteTempList();
-        personsToCreditM.setText(CreditSystemController.tempListToString());
-        personsToCreditE.setText(CreditSystemController.tempListToString());
+        CreditSystemController.getInstance().deleteTempList();
+        personsToCreditM.setText(CreditSystemController.getInstance().tempListToString());
+        personsToCreditE.setText(CreditSystemController.getInstance().tempListToString());
     }
+
 }

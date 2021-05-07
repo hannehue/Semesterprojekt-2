@@ -1,5 +1,5 @@
 
-package Java.controllers;
+package Java.presentation.controllers;
 
 import Java.CreditSystemController;
 import Java.UserType;
@@ -16,12 +16,18 @@ Denne Controller bruges til at logge ind på en konto
 ------------------------------------------------------------------------------------------------------------------ */
 
 
-public class LoginController implements Initializable {
+public class LoginController {
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    private static LoginController instance = new LoginController();
 
+    private LoginController() {
     }
+
+    public static LoginController getInstance() {
+        return instance;
+    }
+
+
 
     //---- Login Typer
     @FXML
@@ -41,8 +47,8 @@ public class LoginController implements Initializable {
         loginManager(UserType.ADMIN);
     }
 
-    protected static void loginManager(UserType userType) throws IOException{
-        CreditSystemController.setUserType(userType);
-        CreditSystemController.setRoot("Menu");
+    private void loginManager(UserType userType) throws IOException{
+        CreditSystemController.getInstance().setUserType(userType);
+        MenuController.getInstance().clearContentPane();
     }
 }
