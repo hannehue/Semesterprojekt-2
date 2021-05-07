@@ -67,6 +67,7 @@ public class AddPersonController implements Initializable {
         ApplicationManager.getInstance().addTempJob(job);
     }
 
+    /** Move to domain layer **/
     private void searchPerson() {
         String searchString = findPerson.getText().toLowerCase();
         ArrayList<ICredit> creditList = new ArrayList<>();
@@ -77,6 +78,7 @@ public class AddPersonController implements Initializable {
         }
         setContent(creditList);
     }
+    /** ------------------------ **/
 
     public void setContent(ArrayList<ICredit> creditList) {
         ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
