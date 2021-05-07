@@ -106,8 +106,6 @@ public class AddPersonController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         SearchList = new ListView();
         SearchList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override

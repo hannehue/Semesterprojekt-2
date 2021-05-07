@@ -2,7 +2,8 @@ package Java.domain;
 
 import Java.data.DatabaseLoader;
 import Java.interfaces.*;
-import Java.presentation.CreditSystemController;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class ApplicationManager implements IDataProcessors {
     private ArrayList<IPerson> personList = new ArrayList<>();
     private ArrayList<IMovie> movieList= new ArrayList<>();
     private ArrayList<IShow> showList = new ArrayList<>();
-    private ArrayList<Job> tempList = new ArrayList<>();
+    private ObservableList<Job> tempList = FXCollections.observableArrayList();
     private UserType userType;
     private String searchFieldPlaceholder = "";
 
@@ -80,7 +81,7 @@ public class ApplicationManager implements IDataProcessors {
 
     @Override
     public void addJob(int productionId) {
-        for (int i = tempList.size()-1; i > -1; i--) {
+        for (int i = tempList.size() - 1; i > -1; i--) {
             Job job = tempList.get(i);
             for (IPerson person: personList) {
                 if (person.getCreditID() == job.getPersonId()) {
@@ -208,7 +209,7 @@ public class ApplicationManager implements IDataProcessors {
         return personList;
     }
 
-    protected ArrayList<IMovie> getMovieList() {
+    public ArrayList<IMovie> getMovieList() {
         return movieList;
     }
 
@@ -229,7 +230,7 @@ public class ApplicationManager implements IDataProcessors {
         ApplicationManager.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
-    protected ArrayList<IShow> getShowList() {
+    public ArrayList<IShow> getShowList() {
         return showList;
     }
 
@@ -251,13 +252,15 @@ public class ApplicationManager implements IDataProcessors {
         } return temp;
     }
 
-    private void deleteTempList() {
-        for (int i = tempList.size()-1; i > -1; i--) {
-            tempList.remove(i);
-        }
+    public void clearTempJobs(){
+        tempList.clear();
     }
 
-    private IProduction getProduction(int productionID) {
+    public ObservableList<Job> getTempList() {
+        return tempList;
+    }
+
+    public IProduction getProduction(int productionID) {
         for (IMovie movie : movieList) {
             if (movie.getProductionID() == productionID) {
                 return movie;

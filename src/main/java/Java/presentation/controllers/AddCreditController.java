@@ -1,22 +1,32 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
+import Java.domain.Job;
+import Java.interfaces.ICredit;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
 import Java.presentation.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AddCreditController {
+public class AddCreditController implements Initializable {
     @FXML
     protected ChoiceBox choiceBoxShow;
     @FXML
@@ -40,9 +50,11 @@ public class AddCreditController {
     @FXML
     protected TextField episodeLength;
     @FXML
-    protected TextArea personsToCreditM;
+    protected Pane moviePeoplePane;
     @FXML
     protected TextArea personsToCreditE;
+
+    private ListView PersonList;
 
     private Stage createShow;
     private Stage createSeason;
@@ -205,16 +217,22 @@ public class AddCreditController {
         episodeId.setText(ApplicationManager.getInstance().getNextEpisode(showName, seasonName));
     }
 
-    public void handleReloadPersonToMovie(ActionEvent actionEvent) {
-        personsToCreditM.setText(ApplicationManager.getInstance().tempListToString());
-        personsToCreditE.setText(ApplicationManager.getInstance().tempListToString());
-        System.out.println(ApplicationManager.getInstance().tempListToString());
-    }
-
     public void handleRemovePersons(ActionEvent actionEvent) {
-        ApplicationManager.getInstance().deleteTempList();
-        personsToCreditM.setText(ApplicationManager.getInstance().tempListToString());
-        personsToCreditE.setText(ApplicationManager.getInstance().tempListToString());
+        ApplicationManager.getInstance().clearTempJobs();
     }
 
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        PersonList = new ListView();
+        PersonList.setId("SearchList");
+        PersonList.setPrefHeight(200);
+        PersonList.setPrefWidth(493);
+        moviePeoplePane.getChildren().add(PersonList);
+        ObservableList<Job> observableResults = ApplicationManager.getInstance().getTempList();
+        PersonList.setItems(observableResults);
+
+
+
+    }
 }

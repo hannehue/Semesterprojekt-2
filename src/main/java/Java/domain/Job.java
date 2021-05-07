@@ -35,12 +35,12 @@ public class Job {
     public String toString(){
         try {
             if (characterName != null) {
-                return role.toString() + " som " + characterName + " i " + ApplicationManager.getInstance().getProduction(productionID).getName();
+                return role.toString() + " som " + characterName;
             }
-            return role.toString() + " i " + ApplicationManager.getInstance().getProduction(productionID).getName();
+            return role.toString();
         }
         catch (NullPointerException e) {
-            return "";
+            return "asdfasdfasl;dfkj";
         }
     }
 
