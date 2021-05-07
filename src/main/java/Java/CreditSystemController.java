@@ -33,7 +33,7 @@ public class CreditSystemController extends Application {
     }
 
     public CreditSystemController(){
-        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be creates");
+        if(instance != null) throw new UnsupportedOperationException("More than one instance cannot be created");
         instance = this;
     }
 
