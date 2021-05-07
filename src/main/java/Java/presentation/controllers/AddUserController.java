@@ -17,7 +17,6 @@ public class AddUserController {
         return instance;
     }
 
-    //Admin
     @FXML
     protected void handleAddUserButton(ActionEvent Event) throws IOException{
     }

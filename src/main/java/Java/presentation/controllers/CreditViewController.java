@@ -40,10 +40,6 @@ public class CreditViewController implements Initializable {
         return instance;
     }
 
-    public void setCurrentCredit(Credit inputCredit) {
-        currentCredit = inputCredit;
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
