@@ -3,7 +3,7 @@ package Java.Application;
 import java.util.ArrayList;
 import java.util.Date;
 
-public interface IProduction {
+public interface IProduction extends ICredit {
 
     int getProductionID();
     int getLengthInSecs();

@@ -5,10 +5,7 @@ import Java.Application.*;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class DatabaseLoader {
 
@@ -87,12 +84,12 @@ public class DatabaseLoader {
     }
 
     public String[] creditToStringArray(Credit credit) {
-        String[] creditArray = credit.toFileString().split(",");
-        return creditArray;
+
+        return credit.toFileString().split(",");
     }
 
     public void addCreditToDatabase(Credit credit){
-        if (Person.class.equals(credit.getClass())) {
+        if (credit instanceof Person) {
             personArraylist.add(creditToStringArray(credit));
 
         } else if (Movie.class.equals(credit.getClass())){
@@ -231,13 +228,10 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args) throws IOException {
-        //Production kan lige nu kun have en category, skal laves om
-        DatabaseLoader dbload = new DatabaseLoader();
-        for (String[] arr : dbload.groupArraylist) {
-            System.out.println(dbload.stringsToGroup(arr).toString());
-        }
-        //dbload.groupArraylist.add(dbload.creditToStringArray(new Group("Et eller andet band 2", new Date(),2,false,"Band fra Esbjerg",3)));
-        //dbload.writeCredits(dbload.groupFile, dbload.groupArraylist);
+
+        IGroup group = new Group("Yeet", new Date(), 45, false, "skyeet", 63);
+
+        group.getName();
 
     }
 

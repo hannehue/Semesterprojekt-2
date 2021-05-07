@@ -2,7 +2,7 @@ package Java.Application;
 
 import java.util.*;
 
-public class Movie extends Production{
+public class Movie extends Production implements IMovie{
 
     public Movie(String name, Date dateAdded, int creditID, boolean approved, String description, int productionID,
                  Category[] category, int lengthInSecs, Date releaseDate) {

@@ -1,6 +1,6 @@
 package Java.Application;
 
-public interface IGroup {
+public interface IGroup extends ICredit{
 
     int getGroupID();
     void setGroupID(int groupID);

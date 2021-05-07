@@ -2,7 +2,7 @@ package Java.Application;
 
 import java.util.ArrayList;
 
-public interface IPerson {
+public interface IPerson extends ICredit{
     int getPersonID();
     void setPersonID(int personID);
 
