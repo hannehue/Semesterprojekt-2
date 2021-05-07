@@ -11,4 +11,6 @@ public interface ISeason  extends ICredit{
     void setShowID(int showID);
 
     String toFileString();
+
+    boolean isAllEpisodesApproved();
 }

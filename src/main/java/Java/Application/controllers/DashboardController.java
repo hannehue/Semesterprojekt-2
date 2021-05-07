@@ -196,7 +196,7 @@ public class DashboardController implements Initializable {
                 offset += 30;
                 System.out.println(1);
             } else if (!show.isAllSeasonApproved()) {
-                for (Season season: show.getSeasons()) {
+                for (ISeason season: show.getSeasons()) {
                     if (!season.isApproved()) {
                         Pane pane = new Pane();
                         programToApprove.getChildren().add(pane);
@@ -217,7 +217,7 @@ public class DashboardController implements Initializable {
                         offset += 30;
                         System.out.println(2);
                     } else if (!season.isAllEpisodesApproved()) {
-                        for (Episode episode: season.getEpisodes()) {
+                        for (IEpisode episode: season.getEpisodes()) {
                             if (!episode.isApproved()) {
                                 Pane pane = new Pane();
                                 programToApprove.getChildren().add(pane);

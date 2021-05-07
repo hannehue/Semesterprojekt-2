@@ -61,7 +61,7 @@ public class SearchController implements Initializable {
     }
 
     public void handleClickedItem(MouseEvent mouseEvent) {
-        Credit item = (Credit) SearchList.getSelectionModel().getSelectedItem();
+        ICredit item = (ICredit) SearchList.getSelectionModel().getSelectedItem();
         System.out.println("clicked" + item);
         CreditViewController.setCurrentCredit(item);
         try {
