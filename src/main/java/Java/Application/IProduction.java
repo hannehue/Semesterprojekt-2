@@ -14,4 +14,5 @@ public interface IProduction extends ICredit {
 
     ArrayList<Integer> getStaffIDs();
 
+    String toFileString();
 }

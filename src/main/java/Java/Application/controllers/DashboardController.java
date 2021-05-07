@@ -51,7 +51,7 @@ public class DashboardController implements Initializable {
 
     protected EventHandler<ActionEvent> handleApprovePerson(int Event) {
         System.out.println("før");
-        for (Credit personCredit: CreditSystemController.getInstance().getPersonList()) {
+        for (ICredit personCredit: CreditSystemController.getInstance().getPersonList()) {
             if (personCredit.getCreditID() == Event) {
                 personCredit.setApproved(true);
             }
@@ -63,7 +63,7 @@ public class DashboardController implements Initializable {
 
     protected EventHandler<ActionEvent> handleApproveMovie(int Event) {
         System.out.println("før");
-        for (Credit movieCredit: CreditSystemController.getInstance().getMovieList()) {
+        for (ICredit movieCredit: CreditSystemController.getInstance().getMovieList()) {
             if (movieCredit.getCreditID() == Event) {
                 movieCredit.setApproved(true);
             }
@@ -74,7 +74,7 @@ public class DashboardController implements Initializable {
     }
 
     protected EventHandler<ActionEvent> handleApproveShow(int Event) {
-        for (Show showCredit: CreditSystemController.getInstance().getShowList()) {
+        for (IShow showCredit: CreditSystemController.getInstance().getShowList()) {
             if (showCredit.getCreditID() == Event) {
                 showCredit.setApproved(true);
             }
@@ -84,9 +84,9 @@ public class DashboardController implements Initializable {
     }
 
     protected EventHandler<ActionEvent> handleApproveSeason(int showId, int season) {
-        for (Show show: CreditSystemController.getInstance().getShowList()) {
+        for (IShow show: CreditSystemController.getInstance().getShowList()) {
             if (show.getCreditID() == showId) {
-                for (Season s: show.getSeasons()) {
+                for (ISeason s: show.getSeasons()) {
                     if (s.getCreditID() == season) {
                         s.setApproved(true);
                     }
@@ -102,11 +102,11 @@ public class DashboardController implements Initializable {
     }
 
     protected EventHandler<ActionEvent> handleApproveEpisode(int showId, int season, int episode) {
-        for (Show sh: CreditSystemController.getInstance().getShowList()) {
+        for (IShow sh: CreditSystemController.getInstance().getShowList()) {
             if (sh.getCreditID() == showId) {
-                for (Season s: sh.getSeasons()) {
+                for (ISeason s: sh.getSeasons()) {
                     if (s.getCreditID() == season) {
-                        for (Episode e: s.getEpisodes()) {
+                        for (IEpisode e: s.getEpisodes()) {
                             if (e.getCreditID() == episode) {
                                 e.setApproved(true);
                             }
@@ -130,7 +130,7 @@ public class DashboardController implements Initializable {
         personToApprove.getChildren().clear();
 
         int offset = 20;
-        for (Credit personCredit: CreditSystemController.getInstance().getPersonList()) {
+        for (ICredit personCredit: CreditSystemController.getInstance().getPersonList()) {
             if (!personCredit.isApproved()) {
                 Pane personPane = new Pane();
                 personToApprove.getChildren().add(personPane);
@@ -158,7 +158,7 @@ public class DashboardController implements Initializable {
         movieToApprove.getChildren().clear();
 
         int offset = 20;
-        for (Credit movieCredit: CreditSystemController.getInstance().getMovieList()) {
+        for (ICredit movieCredit: CreditSystemController.getInstance().getMovieList()) {
             if (!movieCredit.isApproved()) {
                 Pane pane = new Pane();
                 movieToApprove.getChildren().add(pane);
@@ -185,7 +185,7 @@ public class DashboardController implements Initializable {
         programToApprove.getChildren().clear();;
 
         int offset = 20;
-        for (Show show: CreditSystemController.getInstance().getShowList()) {
+        for (IShow show: CreditSystemController.getInstance().getShowList()) {
             if (!show.isApproved()) {
                 Pane pane = new Pane();
                 programToApprove.getChildren().add(pane);
@@ -205,7 +205,7 @@ public class DashboardController implements Initializable {
                 offset += 30;
                 System.out.println(1);
             } else if (!show.isAllSeasonApproved()) {
-                for (Season season: show.getSeasons()) {
+                for (ISeason season: show.getSeasons()) {
                     if (!season.isApproved()) {
                         Pane pane = new Pane();
                         programToApprove.getChildren().add(pane);
@@ -226,7 +226,7 @@ public class DashboardController implements Initializable {
                         offset += 30;
                         System.out.println(2);
                     } else if (!season.isAllEpisodesApproved()) {
-                        for (Episode episode: season.getEpisodes()) {
+                        for (IEpisode episode: season.getEpisodes()) {
                             if (!episode.isApproved()) {
                                 Pane pane = new Pane();
                                 programToApprove.getChildren().add(pane);

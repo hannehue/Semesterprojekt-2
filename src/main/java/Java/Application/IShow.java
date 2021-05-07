@@ -7,8 +7,10 @@ public interface IShow extends ICredit {
     boolean isAllSeasonApproved();
     void setAllSeasonApproved(boolean allSeasonApproved);
 
-    ArrayList<Season> getSeasons();
-    void setSeasons(ArrayList<Season> seasons);
+    ArrayList<ISeason> getSeasons();
+    void setSeasons(ArrayList<ISeason> seasons);
 
 
+    int getNumberOfSeason();
+    String toFileString();
 }

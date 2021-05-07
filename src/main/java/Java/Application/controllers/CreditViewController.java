@@ -1,8 +1,9 @@
 package Java.Application.controllers;
 
-import Java.Application.Credit;
+import Java.Application.*;
+import Java.Application.ICredit;
 import Java.Application.Job;
-import Java.Application.Person;
+import Java.Application.IPerson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,7 +29,7 @@ public class CreditViewController implements Initializable {
     Label descriptionLabel;
     private static CreditViewController instance = new CreditViewController();
 
-    private Credit currentCredit;
+    private ICredit currentCredit;
 
     private CreditViewController() {
     }
@@ -46,8 +47,8 @@ public class CreditViewController implements Initializable {
         nameLabel.setText(currentCredit.getName());
         descriptionLabel.setText(currentCredit.getDescription());
 
-        if (currentCredit.getClass() == Person.class){
-            Person personCredit = (Person) currentCredit;
+        if (currentCredit instanceof IPerson){
+            IPerson personCredit = (IPerson) currentCredit;
 
             Label personInfoLabel = new Label();
             Label personInfo = new Label();

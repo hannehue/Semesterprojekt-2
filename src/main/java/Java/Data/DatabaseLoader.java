@@ -86,54 +86,54 @@ public class DatabaseLoader {
         return creditList;
     }
 
-    public String[] creditToStringArray(Credit credit) {
+    public String[] creditToStringArray(ICredit credit) {
 
         return credit.toFileString().split(",");
     }
 
-    public void addCreditToDatabase(Credit credit){
-        if (credit instanceof Person) {
+    public void addCreditToDatabase(ICredit credit){
+        if (credit instanceof IPerson) {
             personArraylist.add(creditToStringArray(credit));
 
-        } else if (Movie.class.equals(credit.getClass())){
+        } else if (credit instanceof IMovie){
             movieArrayList.add(creditToStringArray(credit));
 
-        } else if (Group.class.equals(credit.getClass())){
+        } else if (credit instanceof IGroup){
             groupArraylist.add(creditToStringArray(credit));
 
-        } else if (Show.class.equals(credit.getClass())){
+        } else if (credit instanceof IShow){
             showArrayList.add(creditToStringArray(credit));
         }
     }
 
-    public void addCreditsToDatabase(ArrayList<? extends Credit> readList){
+    public void addCreditsToDatabase(ArrayList<? extends ICredit> readList){
         if(readList.size() == 0 || readList == null){
             return;
         }
 
         ArrayList<String[]> tempList = new ArrayList<>();
-        for (Credit p: readList){
+        for (ICredit p: readList){
             if (p != null){
                 tempList.add(creditToStringArray(p));
             }
         }
-        if (readList.get(0) instanceof Person) {
+        if (readList.get(0) instanceof IPerson) {
             personArraylist = tempList;
 
-        } else if (readList.get(0) instanceof Movie){
+        } else if (readList.get(0) instanceof IMovie){
             movieArrayList = tempList;
 
-        } else if (readList.get(0) instanceof Group){
+        } else if (readList.get(0) instanceof IGroup){
             groupArraylist = tempList;
-        } else if (readList.get(0) instanceof Show){
+        } else if (readList.get(0) instanceof IShow){
             showArrayList = tempList;
         }
     }
 
     /** Disse 3 vil jeg gerne rykke i en (facade) klasse for sig selv, sammen med de andre der kommer -Hans **/
 
-    public Person stringsToPerson(String[] vals) {
-        Person tempPerson = null;
+    public IPerson queryToPerson(String[] vals) {
+        IPerson tempPerson = null;
         try {
             if (vals[1].equals("null")){
                 tempPerson = new Person(vals[0], null, Integer.parseInt(vals[2]),
@@ -179,8 +179,8 @@ public class DatabaseLoader {
         return tempPerson;
     }
 
-    public Group stringsToGroup(String[] strings){
-        Group tempGroup = null;
+    public IGroup queryToGroup(String[] strings){
+        IGroup tempGroup = null;
         try {
             tempGroup = new Group(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]));
@@ -192,8 +192,8 @@ public class DatabaseLoader {
         return tempGroup;
     }
 
-    public Movie stringsToMovie(String[] strings){
-        Movie tempMovie = null;
+    public IMovie queryToMovie(String[] strings){
+        IMovie tempMovie = null;
         try {
             tempMovie = new Movie(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
@@ -210,8 +210,8 @@ public class DatabaseLoader {
         return tempMovie;
     }
 
-    public Episode stringsToEpisode(String[] strings){
-        Episode tempEpisode = null;
+    public IEpisode queryToEpisode(String[] strings){
+        IEpisode tempEpisode = null;
         try {
             tempEpisode = new Episode(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
@@ -234,7 +234,7 @@ public class DatabaseLoader {
 
         IGroup group = new Group("Yeet", new Date(), 45, false, "skyeet", 63);
 
-        group.getName();
+        System.out.println(group.getName());
 
     }
 

@@ -1,8 +1,6 @@
 package Java.Application.controllers;
 
-import Java.Application.CreditSystemController;
-import Java.Application.Season;
-import Java.Application.Show;
+import Java.Application.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,7 +78,7 @@ public class AddCreditController {
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         choiceBoxSeason.getItems().clear();
-        for (Show show : CreditSystemController.getInstance().getShowList()) {
+        for (IShow show : CreditSystemController.getInstance().getShowList()) {
             choiceBoxShow.getItems().add(show.getName());
         }
         choiceBoxShow.show();
@@ -162,10 +160,10 @@ public class AddCreditController {
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
         if (showName != null) {
-            for (Show show : CreditSystemController.getInstance().getShowList()) {
+            for (IShow show : CreditSystemController.getInstance().getShowList()) {
                 if (show.getName() == showName) {
                     if (show.getSeasons() != null) {
-                        for (Season season : show.getSeasons()) {
+                        for (ISeason season : show.getSeasons()) {
                             choiceBoxSeason.getItems().add(season.getName());
                         }
                     }

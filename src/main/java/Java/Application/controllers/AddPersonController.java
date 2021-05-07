@@ -1,9 +1,6 @@
 package Java.Application.controllers;
 
-import Java.Application.Credit;
-import Java.Application.CreditSystemController;
-import Java.Application.Job;
-import Java.Application.Role;
+import Java.Application.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,7 +29,7 @@ public class AddPersonController implements Initializable {
 
     protected TextField characterName = new TextField();
     private ListView SearchList;
-    private Credit personToCredit;
+    private ICredit personToCredit;
     private static AddPersonController instance = new AddPersonController();
 
     private AddPersonController() {
@@ -68,8 +65,8 @@ public class AddPersonController implements Initializable {
 
     private void searchPerson() {
         String searchString = findPerson.getText().toLowerCase();
-        ArrayList<Credit> creditList = new ArrayList<>();
-        for (Credit person : CreditSystemController.getInstance().getPersonList()) {
+        ArrayList<ICredit> creditList = new ArrayList<>();
+        for (ICredit person : CreditSystemController.getInstance().getPersonList()) {
             if (person.getName().toLowerCase().contains(searchString)) {
                 creditList.add(person);
             }
@@ -77,8 +74,8 @@ public class AddPersonController implements Initializable {
         setContent(creditList);
     }
 
-    public void setContent(ArrayList<Credit> creditList) {
-        ObservableList<Credit> observableResults = FXCollections.observableArrayList();
+    public void setContent(ArrayList<ICredit> creditList) {
+        ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
         observableResults.addAll(creditList);
         System.out.println(observableResults);
         SearchList.setItems(observableResults);
@@ -97,7 +94,7 @@ public class AddPersonController implements Initializable {
     }
 
     private void handleClickedItem(MouseEvent event) {
-        personToCredit = (Credit) SearchList.getSelectionModel().getSelectedItem();
+        personToCredit = (ICredit) SearchList.getSelectionModel().getSelectedItem();
         findPerson.setText(personToCredit.getName());
         SearchList.setVisible(false);
     }
