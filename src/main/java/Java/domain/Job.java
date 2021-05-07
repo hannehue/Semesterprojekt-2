@@ -66,11 +66,6 @@ public class Job implements IJob {
     }
 
     @Override
-    public void setJobs() {
-
-    }
-
-    @Override
     public String getCharacterName() {
         return characterName;
     }

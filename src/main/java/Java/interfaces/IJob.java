@@ -2,6 +2,8 @@ package Java.interfaces;
 
 import Java.domain.Role;
 
+import java.util.ArrayList;
+
 public interface IJob {
 
     int getProgram();
@@ -10,7 +12,6 @@ public interface IJob {
     Role getRole();
     void setRole(Role role);
 
-    void setJobs();
 
     String getCharacterName();
     void setCharacterName(String characterName);
