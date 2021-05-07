@@ -76,7 +76,7 @@ public class SearchController implements Initializable {
         }
     }
 
-    public Credit getCurrentCredit(){
-        return (Credit) SearchList.getSelectionModel().getSelectedItem();
+    public ICredit getCurrentCredit(){
+        return (ICredit) SearchList.getSelectionModel().getSelectedItem();
     }
 }
