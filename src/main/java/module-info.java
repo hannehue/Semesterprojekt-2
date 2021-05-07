@@ -7,6 +7,4 @@ module Java {
     opens Java.presentation.controllers to javafx.fxml;
     exports Java.persistencelayer;
     opens Java.persistencelayer to javafx.fxml;
-    opens Java.presentation to javafx.fxml;
-    exports Java.presentation;
 }
