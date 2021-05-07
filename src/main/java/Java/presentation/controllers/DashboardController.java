@@ -55,26 +55,22 @@ public class DashboardController implements Initializable {
     }
 
     protected EventHandler<ActionEvent> handleApprovePerson(int Event) {
-        System.out.println("før");
         for (ICredit personCredit: ApplicationManager.getInstance().getPersonList()) {
             if (personCredit.getCreditID() == Event) {
                 personCredit.setApproved(true);
             }
         }
         reloadPerson();
-        System.out.println("efter" + Event);
         return null;
     }
 
     protected EventHandler<ActionEvent> handleApproveMovie(int Event) {
-        System.out.println("før");
         for (ICredit movieCredit: ApplicationManager.getInstance().getMovieList()) {
             if (movieCredit.getCreditID() == Event) {
                 movieCredit.setApproved(true);
             }
         }
         reloadMovie();
-        System.out.println("efter" + Event);
         return null;
     }
 
@@ -208,7 +204,6 @@ public class DashboardController implements Initializable {
                 approveButton.setOnAction(actionEvent -> handleApproveShow(finalButtonCounter));
 
                 offset += 30;
-                System.out.println(1);
             } else if (!show.isAllSeasonApproved()) {
                 for (ISeason season: show.getSeasons()) {
                     if (!season.isApproved()) {
@@ -229,7 +224,6 @@ public class DashboardController implements Initializable {
                         approveButton.setOnAction(actionEvent -> handleApproveSeason(showID, finalButtonCounter));
 
                         offset += 30;
-                        System.out.println(2);
                     } else if (!season.isAllEpisodesApproved()) {
                         for (IEpisode episode: season.getEpisodes()) {
                             if (!episode.isApproved()) {
@@ -251,7 +245,6 @@ public class DashboardController implements Initializable {
                                 approveButton.setOnAction(actionEvent -> handleApproveEpisode(showID, seasonId, finalButtonCounter));
 
                                 offset += 30;
-                                System.out.println(3);
                             }
                         }
                     }

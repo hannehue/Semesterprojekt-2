@@ -208,7 +208,7 @@ public class ApplicationManager implements IDataProcessors {
         return personList;
     }
 
-    public ArrayList<IMovie> getMovieList() {
+    protected ArrayList<IMovie> getMovieList() {
         return movieList;
     }
 
@@ -229,11 +229,11 @@ public class ApplicationManager implements IDataProcessors {
         ApplicationManager.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
-    public ArrayList<IShow> getShowList() {
+    protected ArrayList<IShow> getShowList() {
         return showList;
     }
 
-    public String tempListToString() {
+    private String tempListToString() {
         String temp = "Ingen personer tilføjet";
         if (!tempList.isEmpty()) {
             temp = "";
@@ -251,13 +251,13 @@ public class ApplicationManager implements IDataProcessors {
         } return temp;
     }
 
-    public void deleteTempList() {
+    private void deleteTempList() {
         for (int i = tempList.size()-1; i > -1; i--) {
             tempList.remove(i);
         }
     }
 
-    public IProduction getProduction(int productionID) {
+    private IProduction getProduction(int productionID) {
         for (IMovie movie : movieList) {
             if (movie.getProductionID() == productionID) {
                 return movie;

@@ -56,7 +56,7 @@ public class SearchController implements Initializable {
         SearchList.setItems(observableResults);
     }
 
-
+    /* should be moved to domain layer */
     private ArrayList<ICredit> search(String getsearchString){
         String searchStringChecked = getsearchString.toLowerCase();
         ArrayList<ICredit> creditList = new ArrayList<>();
