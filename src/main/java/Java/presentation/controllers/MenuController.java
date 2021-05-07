@@ -1,6 +1,6 @@
 package Java.presentation.controllers;
 
-import Java.presentation.CreditSystemController;
+import Java.domain.ApplicationManager;
 import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -107,20 +107,20 @@ public class MenuController implements Initializable {
 
             //Menu load----------------
             //Hvis der er logget ind, hvis menu i forhold til brugerens UserType
-            if (CreditSystemController.getInstance().getUserType() != null) {
-                if (!CreditSystemController.getInstance().getUserType().getPersonalProfile()){
+            if (ApplicationManager.getInstance().getUserType() != null) {
+                if (!ApplicationManager.getInstance().getUserType().getPersonalProfile()){
                     System.out.println("personal legal");
                     VBoxMenu.getChildren().removeAll(profile);
                 }
-                if (!CreditSystemController.getInstance().getUserType().getAddCredit()){
+                if (!ApplicationManager.getInstance().getUserType().getAddCredit()){
                     System.out.println("credit legal");
                     VBoxMenu.getChildren().removeAll(addCredits);
                 }
-                if (!CreditSystemController.getInstance().getUserType().getAddUser()){
+                if (!ApplicationManager.getInstance().getUserType().getAddUser()){
                     System.out.println("add user legal");
                     VBoxMenu.getChildren().removeAll(addUserI);
                 }
-                if (!CreditSystemController.getInstance().getUserType().getApproveCredit()){
+                if (!ApplicationManager.getInstance().getUserType().getApproveCredit()){
                     System.out.println("approve credit legal");
                     VBoxMenu.getChildren().removeAll(approveCredit);
                 }
@@ -179,7 +179,7 @@ public class MenuController implements Initializable {
             KeyFrame keyFrame = new KeyFrame(Duration.millis(3000), keyValue);
             timeline.getKeyFrames().add(keyFrame);
             timeline.play();
-            timeline.setOnFinished(event -> searchField.setPromptText(CreditSystemController.getInstance().getSearchFieldPlaceholder()));
+            timeline.setOnFinished(event -> searchField.setPromptText(ApplicationManager.getInstance().getSearchFieldPlaceholder()));
         }
     }
 
@@ -232,7 +232,7 @@ public class MenuController implements Initializable {
     }
 
     public void handleLogout(MouseEvent mouseEvent) throws IOException {
-        CreditSystemController.getInstance().setUserType(null);
+        ApplicationManager.getInstance().setUserType(null);
         MenuController.getInstance().clearContentPane();
         Menu.setVisible(false);
     }

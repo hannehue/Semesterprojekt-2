@@ -1,6 +1,6 @@
 package Java.presentation.controllers;
 
-import Java.presentation.CreditSystemController;
+import Java.domain.ApplicationManager;
 import Java.domain.UserType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,7 +44,7 @@ public class LoginController {
     }
 
     private void loginManager(UserType userType) throws IOException{
-        CreditSystemController.getInstance().setUserType(userType);
+        ApplicationManager.getInstance().setUserType(userType);
         MenuController.getInstance().clearContentPane();
     }
 }

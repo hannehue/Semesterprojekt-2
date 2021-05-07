@@ -1,5 +1,6 @@
 package Java.presentation.controllers;
 
+import Java.domain.ApplicationManager;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
 import Java.presentation.*;
@@ -77,7 +78,7 @@ public class AddCreditController {
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         choiceBoxSeason.getItems().clear();
-        for (IShow show : CreditSystemController.getInstance().getShowList()) {
+        for (IShow show : ApplicationManager.getInstance().getShowList()) {
             choiceBoxShow.getItems().add(show.getName());
         }
         choiceBoxShow.show();
@@ -86,28 +87,28 @@ public class AddCreditController {
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
         System.out.println("trying to add episode to" + showName + " . " + seasonName);
-        int id = CreditSystemController.getInstance().nextId();
-        CreditSystemController.getInstance().addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName, id);
+        int id = ApplicationManager.getInstance().nextId();
+        ApplicationManager.getInstance().addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), showName, seasonName, id);
         reloadNextEpisode();
-        CreditSystemController.getInstance().addJob(id);
+        ApplicationManager.getInstance().addJob(id);
     }
 
 
     @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
-        int id = CreditSystemController.getInstance().nextId();
-        CreditSystemController.getInstance().addMovie(
+        int id = ApplicationManager.getInstance().nextId();
+        ApplicationManager.getInstance().addMovie(
                 movieTitle.getText(),
                 movieDescription.getText(),
                 null,
                 id,
                 Integer.parseInt(movieLength.getText())
                 );
-        CreditSystemController.getInstance().addJob(id);
+        ApplicationManager.getInstance().addJob(id);
     }
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
-        CreditSystemController.getInstance().addPerson(
+        ApplicationManager.getInstance().addPerson(
                 personName.getText(),
                 null,
                 personPhone.getText(),
@@ -118,7 +119,7 @@ public class AddCreditController {
     protected void handleCreateShow(ActionEvent Event) throws IOException {
         // Opens new window for adding person
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(CreditSystemController.class.getClassLoader().getResource("CreateShow.fxml"));
+        loader.setLocation(ApplicationManager.class.getClassLoader().getResource("CreateShow.fxml"));
         loader.setController(CreateShowController.getInstance());
         Scene scene = new Scene(loader.load());
         createShow = new Stage();
@@ -130,7 +131,7 @@ public class AddCreditController {
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(CreditSystemController.class.getClassLoader().getResource("CreateSeason.fxml"));
+        loader.setLocation(ApplicationManager.class.getClassLoader().getResource("CreateSeason.fxml"));
         loader.setController(CreateSeasonController.getInstance());
         Scene scene = new Scene(loader.load());
         createSeason = new Stage();
@@ -159,7 +160,7 @@ public class AddCreditController {
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
         if (showName != null) {
-            for (IShow show : CreditSystemController.getInstance().getShowList()) {
+            for (IShow show : ApplicationManager.getInstance().getShowList()) {
                 if (show.getName() == showName) {
                     if (show.getSeasons() != null) {
                         for (ISeason season : show.getSeasons()) {
@@ -183,7 +184,7 @@ public class AddCreditController {
     protected void handleAddCreditButton(ActionEvent Event) throws IOException {
         // Opens new window for adding person
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(CreditSystemController.class.getClassLoader().getResource("AddPersonToCredit.fxml"));
+        loader.setLocation(ApplicationManager.class.getClassLoader().getResource("AddPersonToCredit.fxml"));
         loader.setController(AddPersonController.getInstance());
         Scene scene = new Scene(loader.load());
         Stage stage = new Stage();
@@ -201,19 +202,19 @@ public class AddCreditController {
     }
 
     private void reloadNextEpisode() {
-        episodeId.setText(CreditSystemController.getInstance().getNextEpisode(showName, seasonName));
+        episodeId.setText(ApplicationManager.getInstance().getNextEpisode(showName, seasonName));
     }
 
     public void handleReloadPersonToMovie(ActionEvent actionEvent) {
-        personsToCreditM.setText(CreditSystemController.getInstance().tempListToString());
-        personsToCreditE.setText(CreditSystemController.getInstance().tempListToString());
-        System.out.println(CreditSystemController.getInstance().tempListToString());
+        personsToCreditM.setText(ApplicationManager.getInstance().tempListToString());
+        personsToCreditE.setText(ApplicationManager.getInstance().tempListToString());
+        System.out.println(ApplicationManager.getInstance().tempListToString());
     }
 
     public void handleRemovePersons(ActionEvent actionEvent) {
-        CreditSystemController.getInstance().deleteTempList();
-        personsToCreditM.setText(CreditSystemController.getInstance().tempListToString());
-        personsToCreditE.setText(CreditSystemController.getInstance().tempListToString());
+        ApplicationManager.getInstance().deleteTempList();
+        personsToCreditM.setText(ApplicationManager.getInstance().tempListToString());
+        personsToCreditE.setText(ApplicationManager.getInstance().tempListToString());
     }
 
 }

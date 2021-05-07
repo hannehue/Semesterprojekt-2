@@ -1,6 +1,6 @@
 package Java.presentation.controllers;
 
-import Java.presentation.CreditSystemController;
+import Java.domain.ApplicationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -23,7 +23,7 @@ public class CreateSeasonController {
     @FXML
     protected void handleAddSeason(ActionEvent Event) throws IOException {
         System.out.println("trying to add season with showname: " + AddCreditController.getInstance().getShowName());
-        CreditSystemController.getInstance().addSeason(seasonDescription.getText(), AddCreditController.getInstance().getShowName());
+        ApplicationManager.getInstance().addSeason(seasonDescription.getText(), AddCreditController.getInstance().getShowName());
         AddCreditController.getInstance().disposeCreateSeason();
     }
 }

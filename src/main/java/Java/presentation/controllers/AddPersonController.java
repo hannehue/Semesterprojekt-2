@@ -1,5 +1,6 @@
 package Java.presentation.controllers;
 
+import Java.domain.ApplicationManager;
 import Java.domain.Job;
 import Java.domain.Role;
 import Java.interfaces.ICredit;
@@ -63,13 +64,13 @@ public class AddPersonController implements Initializable {
         } else {
             job = new Job(personToCredit.getCreditID(), jobRole.getValue());
         }
-        CreditSystemController.getInstance().addTempJob(job);
+        ApplicationManager.getInstance().addTempJob(job);
     }
 
     private void searchPerson() {
         String searchString = findPerson.getText().toLowerCase();
         ArrayList<ICredit> creditList = new ArrayList<>();
-        for (ICredit person : CreditSystemController.getInstance().getPersonList()) {
+        for (ICredit person : ApplicationManager.getInstance().getPersonList()) {
             if (person.getName().toLowerCase().contains(searchString)) {
                 creditList.add(person);
             }

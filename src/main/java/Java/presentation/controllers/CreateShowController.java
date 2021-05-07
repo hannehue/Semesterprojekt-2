@@ -1,6 +1,6 @@
 package Java.presentation.controllers;
 
-import Java.presentation.CreditSystemController;
+import Java.domain.ApplicationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -26,7 +26,7 @@ public class CreateShowController {
 
     @FXML
     protected void handleAddShow(ActionEvent Event) throws IOException {
-        CreditSystemController.getInstance().addShow(
+        ApplicationManager.getInstance().addShow(
                 showTitle.getText(),
                 showDescription.getText()
         );

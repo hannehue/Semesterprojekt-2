@@ -9,7 +9,7 @@ public interface IDataProcessors {
     void addShow(String title, String description);
     void addSeason(String description, String showList);
     void addEpisode(String title, int length, String show, String season, int id);
-    String getNextEpisode();
+    String getNextEpisode(String show, String season);
 
     void onStop();
 }

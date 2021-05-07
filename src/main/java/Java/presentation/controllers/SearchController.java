@@ -1,6 +1,6 @@
 package Java.presentation.controllers;
 
-import Java.presentation.CreditSystemController;
+import Java.domain.ApplicationManager;
 import Java.interfaces.ICredit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +60,7 @@ public class SearchController implements Initializable {
     private ArrayList<ICredit> search(String getsearchString){
         String searchStringChecked = getsearchString.toLowerCase();
         ArrayList<ICredit> creditList = new ArrayList<>();
-        for(ICredit person : CreditSystemController.getInstance().getPersonList()) {
+        for(ICredit person : ApplicationManager.getInstance().getPersonList()) {
             if (person != null && person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
                 creditList.add(person);
             }

@@ -72,7 +72,7 @@ public class ApplicationManager implements IDataProcessors {
         personList.add(person);
     }
 
-    private void addTempJob(Job job) {
+    public void addTempJob(Job job) {
         tempList.add(job);
         System.out.println("temp job added");
 
@@ -128,7 +128,7 @@ public class ApplicationManager implements IDataProcessors {
     }
 
     @Override
-    public void addSeason(String description, String showList) {
+    public void addSeason(String description, String show) {
         for (IShow s: showList) {
                     if (s.getName() == show) {
                         ISeason season = new Season(
@@ -176,7 +176,7 @@ public class ApplicationManager implements IDataProcessors {
     }
 
     @Override
-    private String getNextEpisode(String show, String season) {
+    public String getNextEpisode(String show, String season) {
         String episodeString = "";
         for (IShow s: showList) {
             if (s.getName() == show) {
@@ -226,7 +226,7 @@ public class ApplicationManager implements IDataProcessors {
     }
 
     public void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
-        CreditSystemController.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
+        ApplicationManager.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
     public ArrayList<IShow> getShowList() {
