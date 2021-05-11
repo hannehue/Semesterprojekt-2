@@ -1,6 +1,6 @@
 package Java.interfaces;
 
-import Java.domain.Category;
+import Java.domain.data.Category;
 
 import java.util.ArrayList;
 import java.util.Date;

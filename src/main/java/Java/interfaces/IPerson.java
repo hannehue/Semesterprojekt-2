@@ -1,7 +1,5 @@
 package Java.interfaces;
 
-import Java.domain.Job;
-
 import java.util.ArrayList;
 
 public interface IPerson extends ICredit{

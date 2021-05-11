@@ -1,7 +1,7 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
-import Java.domain.UserType;
+import Java.domain.data.UserType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 

@@ -1,6 +1,5 @@
-package Java.domain;
+package Java.domain.data;
 
-import Java.domain.ApplicationManager;
 import Java.interfaces.IJob;
 
 public class Job implements IJob {

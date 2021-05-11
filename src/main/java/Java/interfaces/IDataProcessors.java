@@ -1,6 +1,6 @@
 package Java.interfaces;
 
-import Java.domain.Category;
+import Java.domain.data.Category;
 
 public interface IDataProcessors {
     void addPerson(String name, String description, String phoneNumber, String email);

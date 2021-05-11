@@ -1,7 +1,6 @@
 package Java.presentation.controllers;
 
 import Java.interfaces.ICredit;
-import Java.domain.Job;
 import Java.interfaces.IJob;
 import Java.interfaces.IPerson;
 import javafx.collections.FXCollections;

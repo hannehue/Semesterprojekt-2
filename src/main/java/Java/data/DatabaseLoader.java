@@ -1,6 +1,6 @@
 package Java.data;
 
-import Java.domain.*;
+import Java.domain.data.*;
 import Java.interfaces.*;
 
 import java.io.*;

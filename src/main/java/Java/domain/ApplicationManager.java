@@ -1,6 +1,7 @@
 package Java.domain;
 
 import Java.data.DatabaseLoader;
+import Java.domain.data.*;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -211,14 +212,6 @@ public class ApplicationManager implements IDataProcessors {
         userType = userTypeSetter;
     }
 
-    public String getSearchFieldPlaceholder() {
-        return searchFieldPlaceholder;
-    }
-
-    public void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
-        ApplicationManager.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
-    }
-
     public ArrayList<IShow> getShowList() {
         return showList;
     }
@@ -229,6 +222,14 @@ public class ApplicationManager implements IDataProcessors {
 
     public ObservableList<IJob> getTempList() {
         return tempList;
+    }
+
+    public String getSearchFieldPlaceholder() {
+        return searchFieldPlaceholder;
+    }
+
+    public void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
+        ApplicationManager.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
     public IProduction getProduction(int productionID) {
@@ -286,5 +287,21 @@ public class ApplicationManager implements IDataProcessors {
                 }
             }
        return null;
+    }
+
+    /**
+     * Searches through the list of persons to return the found people.
+     *
+     * @param findPerson
+     * @return
+     */
+    public ArrayList<ICredit> searchPerson(String findPerson) {
+        ArrayList<ICredit> creditList = new ArrayList<>();
+        for (ICredit person : ApplicationManager.getInstance().getPersonList()) {
+            if (person.getName().toLowerCase().contains(findPerson)) {
+                creditList.add(person);
+            }
+        }
+        return creditList;
     }
 }

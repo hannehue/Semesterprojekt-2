@@ -1,11 +1,9 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
-import Java.domain.Job;
-import Java.domain.Role;
+import Java.domain.data.Role;
 import Java.interfaces.ICredit;
 import Java.interfaces.IJob;
-import Java.presentation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,7 +52,8 @@ public class AddPersonController implements Initializable {
     }
 
     public void handleFindPerson(ActionEvent actionEvent) {
-        searchPerson();
+        ArrayList<ICredit> searchList = ApplicationManager.getInstance().searchPerson(findPerson.getText().toLowerCase());
+        setContent(searchList);
         setCharacterNameField();
     }
 
@@ -67,19 +66,11 @@ public class AddPersonController implements Initializable {
         }
     }
 
-    /** Move to domain layer **/
-    private void searchPerson() {
-        String searchString = findPerson.getText().toLowerCase();
-        ArrayList<ICredit> creditList = new ArrayList<>();
-        for (ICredit person : ApplicationManager.getInstance().getPersonList()) {
-            if (person.getName().toLowerCase().contains(searchString)) {
-                creditList.add(person);
-            }
-        }
-        setContent(creditList);
-    }
-    /** ------------------------ **/
-
+    /**
+     * Sets the content of the SearchList
+     *
+     * @param creditList
+     */
     public void setContent(ArrayList<ICredit> creditList) {
         ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
         observableResults.addAll(creditList);
