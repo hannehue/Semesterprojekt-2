@@ -304,14 +304,8 @@ public class ApplicationManager implements IDataProcessors {
         return creditList;
     }
 
-    public ObservableList<IPerson> getUnapprovedPersons(){
-        ObservableList<IPerson> persons = getPersonList();
-        for (IPerson person : persons){
-            if (!person.isApproved()){
-                persons.remove(person);
-            }
-        }
-        return persons;
+    public ObservableList<IPerson> getPersons(){
+        return personList;
     }
 
     public ObservableList<IMovie> getMovies(){

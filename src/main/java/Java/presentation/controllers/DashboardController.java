@@ -64,18 +64,17 @@ public class DashboardController implements Initializable {
         reloadProgram();
     }
 
-    protected void handleApprovePerson(int personId) {
-        ApplicationManager.getInstance().setPersonApproved(personId);
-    }
-
-    protected void handleApproveMovie(int movieId) {
-        ICredit approveCredit = null;
-        for (IMovie movieCredit: movieObservableList) {
-            if (movieCredit.getCreditID() == movieId) {
-                movieObservableList.remove(movieCredit);
-                movieCredit.setApproved(true);
-                movieObservableList.add(movieCredit);
+    protected <T extends ICredit> void approveCredit(int id, ObservableList<T> observableList) {
+        T approveCredit = null;
+        for (T credit: observableList) {
+            if (credit.getCreditID() == id) {
+                approveCredit = credit;
             }
+        }
+        if (approveCredit != null){
+            observableList.remove(approveCredit);
+            approveCredit.setApproved(true);
+            observableList.add(approveCredit);
         }
     }
 
@@ -83,10 +82,9 @@ public class DashboardController implements Initializable {
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
             handleApproveShow(id);
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
-            handleApproveMovie(id);
-            System.out.println("got movie");
+            approveCredit(id, movieObservableList);
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
-            handleApprovePerson(id);
+            approveCredit(id, personObservableList);
         }
     }
 
@@ -157,32 +155,33 @@ public class DashboardController implements Initializable {
     }
 
     private void removeItem(AnchorPane listToApprove, ICredit credit){
-        for (Node children : listToApprove.getChildren()){
-            if (children.getId() == String.valueOf(credit.getCreditID())){
-                listToApprove.getChildren().remove(children);
+        Node removechild = null;
+        for (Node child: listToApprove.getChildren()){
+            if (Integer.parseInt(child.getId()) == credit.getCreditID()){
+                removechild = child;
             }
+        }
+        if(removechild != null){
+            listToApprove.getChildren().remove(removechild);
         }
     }
 
     public void setContent(AnchorPane listToApprove, ObservableList<? extends ICredit> creditList){
         listToApprove.getChildren().clear();
-
-        System.out.println(creditList);
         int offset = 20;
         for (ICredit credit : creditList){
-            addItem(listToApprove, credit, offset);
-            offset += 30;
+            if (!credit.isApproved()) {
+                addItem(listToApprove, credit, offset);
+                offset += 30;
+            }
         }
 
         creditList.addListener(new ListChangeListener<ICredit>() {
             @Override
             public void onChanged(Change<? extends ICredit> change) {
-                System.out.println("called onchange " + change);
                 int offset = 20;
                 while (change.next()) {
-                    System.out.println("change next");
                     if (change.wasAdded()) {
-                        System.out.println("was added " + change);
                         for (ICredit credit : change.getAddedSubList()){
                             if (!credit.isApproved()){
                                 addItem(listToApprove, credit, offset);
@@ -190,11 +189,9 @@ public class DashboardController implements Initializable {
                             }
                         }
                     } else if (change.wasRemoved()) {
-                        System.out.println("removed " + change);
                         for (ICredit credit : change.getRemoved()){
-                            if (credit.isApproved()) {
-                                removeItem(listToApprove, credit);
-                            }
+                            System.out.println("Removed credit: " + credit);
+                            removeItem(listToApprove, credit);
                         }
                     }
                 }
@@ -276,9 +273,8 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         movieObservableList = ApplicationManager.getInstance().getMovies();
-        //personObservableList = ApplicationManager.getInstance().getPersons();
-
-        //setContent(personToApprove, personObservableList);
         setContent(movieToApprove, movieObservableList);
+        personObservableList = ApplicationManager.getInstance().getPersons();
+        setContent(personToApprove, personObservableList);
     }
 }
