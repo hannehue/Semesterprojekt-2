@@ -51,10 +51,10 @@ public enum Role {
         this.roleString = roleString;
     }
 
-    public Role getRoleFromString(String val){
+    public Role getRoleFromString(String roleString){
         Role[] roles = Role.values();
         for (int i = 0; i < Role.values().length; i++) {
-            if (val.equals(roles[i].toString())){
+            if (roleString.equals(roles[i].toString())){
                 return roles[i];
             }
         }

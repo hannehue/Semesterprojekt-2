@@ -144,14 +144,23 @@ public class DatabaseLoader {
 
     /** Disse 3 vil jeg gerne rykke i en (facade) klasse for sig selv, sammen med de andre der kommer -Hans **/
 
-    public IPerson queryToPerson(String searchString) {
+
+
+    public IPerson SearchQueryToPerson(String searchString) {
+        //Deaclare person to be returned
         IPerson tempPerson = null;
+        //Query & person creation try block
         try {
+            //PreparedStatement that gets all results from credits, persons, jobs & job_roles tables where a name looks
+            //like the search string, case insensitive
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
-                "SELECT * FROM credits, persons WHERE LOWER(name) LIKE LOWER(?)"
+                "SELECT * FROM credits, persons, jobs, job_roles WHERE LOWER(name) LIKE LOWER(?)"
             );
+            //inserts searchString into SQL statement
             queryStatement.setString(1, "%" + searchString + "%");
+            //gets a SINGLE result set that matches query. This most likely need to be reworked!!!!
             ResultSet queryResult = queryStatement.executeQuery();
+            //Instantiates a new person in the tempPerson variable
             while (queryResult.next()) {
                 tempPerson = new Person(
                         /* Name         */ queryResult.getString("name"),
@@ -164,6 +173,10 @@ public class DatabaseLoader {
                         /* personal info*/ queryResult.getString("personal_info"),
                         /* email        */ queryResult.getString("email")
                 );
+                //JobList for person. ALSO NEEDS TO BE REWORKED FOR EVENTUAL MULTIPLE JOBS
+                ArrayList<IJob> jobs = new ArrayList<>();
+                jobs.add(new Job(((Role.values()[queryResult.getInt("job_role_id") - 1])), queryResult.getInt("production_id")));
+                tempPerson.setJobs(jobs);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -173,6 +186,40 @@ public class DatabaseLoader {
             System.out.println("Parse error at queryToPerson");
         }
         return tempPerson;
+    }
+
+    //Needs to be implemented to return an arraylist of matching searches
+    public ArrayList<IPerson> SearchQueryToPersonList(String searchString) {
+        ArrayList<IPerson> personArrayList = new ArrayList<>();
+        IPerson tempPerson = null;
+        try {
+            PreparedStatement queryStatement = getInstance().connection.prepareStatement(
+                    "SELECT * FROM credits, persons WHERE LOWER(name) LIKE LOWER(?)"
+            );
+            queryStatement.setString(1, "%" + searchString + "%");
+            queryStatement.execute();
+            while (queryStatement.getResultSet().next()) {
+                ResultSet queryResult = queryStatement.getResultSet();
+                personArrayList.add(new Person(
+                        /* Name         */ queryResult.getString("name"),
+                        /* Date         */ formatter.parse(queryResult.getString("date_added")),
+                        /* CreditID     */ queryResult.getInt("credit_id"),
+                        /* Approved     */ queryResult.getBoolean("approved"),
+                        /* description  */ queryResult.getString("description"),
+                        /* personID     */ queryResult.getInt("person_id"),
+                        /* phone number */ queryResult.getString("phone_number"),
+                        /* personal info*/ queryResult.getString("personal_info"),
+                        /* email        */ queryResult.getString("email")
+                ));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println("SQL ERROR at queryToPerson");
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("Parse error at queryToPerson");
+        }
+        return personArrayList;
     }
 
     public IGroup queryToGroup(String[] strings){
@@ -228,8 +275,9 @@ public class DatabaseLoader {
 
     public static void main(String[] args){
         //getInstance().queryToPerson("Jens");
-        System.out.println(getInstance().queryToPerson("Je").getName());
-        System.out.println(getInstance().queryToPerson("je").getPersonID());
+        System.out.println(getInstance().SearchQueryToPerson("en").getName());
+        System.out.println(getInstance().SearchQueryToPerson("en").getPersonID());
+        System.out.println(getInstance().SearchQueryToPerson("Je").getJobs());
 
         /*
         try {
