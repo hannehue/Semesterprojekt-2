@@ -6,6 +6,7 @@ import Java.domain.data.Person;
 import Java.domain.data.Show;
 import Java.interfaces.*;
 import Java.presentation.*;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,22 +31,20 @@ public class DashboardController implements Initializable {
     @FXML
     protected AnchorPane programToApprove;
 
+    private ObservableList<? extends ICredit> contentList;
 
+    @Override
+    public String toString() {
+        return "DashboardController{" +
+                "personToApprove=" + personToApprove +
+                ", movieToApprove=" + movieToApprove +
+                ", programToApprove=" + programToApprove +
+                '}';
+    }
     /* ------------------------------------------------------------------------------------------------------------------
         Metoder
     ------------------------------------------------------------------------------------------------------------------ */
-    @FXML
-    public void handleReloadPerson(MouseEvent mouseEvent) {
-        reloadPerson();
-    }
-    @FXML
-    public void handleReloadMovie(MouseEvent mouseEvent) {
-        reloadMovie();
-    }
-    @FXML
-    public void handleReloadProgram(MouseEvent mouseEvent) {
-        reloadProgram();
-    }
+
     private static DashboardController instance = new DashboardController();
 
     private DashboardController(){
@@ -72,20 +71,12 @@ public class DashboardController implements Initializable {
     private void handleApproveCredit(int Event, Class<? extends ICredit> credit) {
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
             handleApproveShow(Event);
-            //    case ISeason.class:
-            //       handleApproveSeason(int);
-            //    break;
-            //  case IEpisode.class:
-            //     handleApproveEpisode();
-            //     break;
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
             handleApproveMovie(Event);
             System.out.println("got movie");
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
             handleApprovePerson(Event);
         }
-        System.out.println(IMovie.class.getTypeName());
-        System.out.println("in approvecredit " + credit.getTypeName());
     }
 
     protected void handleApproveShow(int Event) {
@@ -171,7 +162,7 @@ public class DashboardController implements Initializable {
     }
 
     private void reloadProgram() {
-        programToApprove.getChildren().clear();;
+        programToApprove.getChildren().clear();
 
         int offset = 20;
         for (IShow show: ApplicationManager.getInstance().getShowList()) {

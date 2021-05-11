@@ -13,7 +13,7 @@ import java.util.Date;
 public class ApplicationManager implements IDataProcessors {
 
     private DatabaseLoader dataLoader;
-    private ArrayList<IPerson> personList = new ArrayList<>();
+    private ObservableList<IPerson> personList = FXCollections.observableArrayList();
     private ArrayList<IMovie> movieList= new ArrayList<>();
     private ArrayList<IShow> showList = new ArrayList<>();
     private ObservableList<IJob> tempList = FXCollections.observableArrayList();
@@ -184,7 +184,7 @@ public class ApplicationManager implements IDataProcessors {
     @Override
     public void onStop(){
 
-        dataLoader.addCreditsToDatabase(personList);
+        dataLoader.addCreditsToDatabase((ArrayList<IPerson>) personList);
         dataLoader.addCreditsToDatabase(movieList);
         dataLoader.addCreditsToDatabase(showList);
 
@@ -199,6 +199,9 @@ public class ApplicationManager implements IDataProcessors {
         return movieList;
     }
 
+    private ObservableList<IPerson> getPersonList(){
+        return  personList;
+    }
 
     public UserType getUserType() {
         return userType;
@@ -293,7 +296,7 @@ public class ApplicationManager implements IDataProcessors {
      */
     public ArrayList<ICredit> searchPerson(String findPerson) {
         ArrayList<ICredit> creditList = new ArrayList<>();
-        for (ICredit person : personList) {
+        for (ICredit person : getPersonList()) {
             if (person.getName().toLowerCase().contains(findPerson)) {
                 creditList.add(person);
             }
@@ -301,8 +304,8 @@ public class ApplicationManager implements IDataProcessors {
         return creditList;
     }
 
-    public ArrayList<IPerson> getUnapprovedPersons(){
-        ArrayList<IPerson> persons = personList;
+    public ObservableList<IPerson> getUnapprovedPersons(){
+        ObservableList<IPerson> persons = getPersonList();
         for (IPerson person : persons){
             if (!person.isApproved()){
                 persons.remove(person);
@@ -322,7 +325,7 @@ public class ApplicationManager implements IDataProcessors {
     }
 
     public void setPersonApproved(int personId){
-        for (ICredit personCredit: personList) {
+        for (ICredit personCredit: getPersonList()) {
             if (personCredit.getCreditID() == personId) {
                 personCredit.setApproved(true);
             }
