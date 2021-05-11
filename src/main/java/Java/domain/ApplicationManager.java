@@ -195,10 +195,6 @@ public class ApplicationManager implements IDataProcessors {
         }
     }
 
-    public ArrayList<IPerson> getPersonList() {
-        return personList;
-    }
-
     public ArrayList<IMovie> getMovieList() {
         return movieList;
     }
@@ -297,11 +293,40 @@ public class ApplicationManager implements IDataProcessors {
      */
     public ArrayList<ICredit> searchPerson(String findPerson) {
         ArrayList<ICredit> creditList = new ArrayList<>();
-        for (ICredit person : ApplicationManager.getInstance().getPersonList()) {
+        for (ICredit person : personList) {
             if (person.getName().toLowerCase().contains(findPerson)) {
                 creditList.add(person);
             }
         }
         return creditList;
     }
+
+    public ArrayList<IPerson> getUnapprovedPersons(){
+        ArrayList<IPerson> persons = personList;
+        for (IPerson person : persons){
+            if (!person.isApproved()){
+                persons.remove(person);
+            }
+        }
+        return persons;
+    }
+
+    public ArrayList<IMovie> getUnapprovedMovies(){
+        ArrayList<IMovie> movies = movieList;
+        for (IMovie movie : movies){
+            if (!movie.isApproved()){
+                movies.remove(movie);
+            }
+        }
+        return movies;
+    }
+
+    public void setPersonApproved(int personId){
+        for (ICredit personCredit: personList) {
+            if (personCredit.getCreditID() == personId) {
+                personCredit.setApproved(true);
+            }
+        }
+    }
+
 }

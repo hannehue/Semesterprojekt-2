@@ -1,10 +1,10 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
-import Java.interfaces.ICredit;
-import Java.interfaces.IEpisode;
-import Java.interfaces.ISeason;
-import Java.interfaces.IShow;
+import Java.domain.data.Movie;
+import Java.domain.data.Person;
+import Java.domain.data.Show;
+import Java.interfaces.*;
 import Java.presentation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /* ------------------------------------------------------------------------------------------------------------------
@@ -54,37 +55,49 @@ public class DashboardController implements Initializable {
         return instance;
     }
 
-    protected EventHandler<ActionEvent> handleApprovePerson(int Event) {
-        for (ICredit personCredit: ApplicationManager.getInstance().getPersonList()) {
-            if (personCredit.getCreditID() == Event) {
-                personCredit.setApproved(true);
-            }
-        }
+    protected void handleApprovePerson(int Event) {
+        ApplicationManager.getInstance().setPersonApproved(Event);
         reloadPerson();
-        return null;
     }
 
-    protected EventHandler<ActionEvent> handleApproveMovie(int Event) {
+    protected void handleApproveMovie(int Event) {
         for (ICredit movieCredit: ApplicationManager.getInstance().getMovieList()) {
             if (movieCredit.getCreditID() == Event) {
                 movieCredit.setApproved(true);
             }
         }
         reloadMovie();
-        return null;
     }
 
-    protected EventHandler<ActionEvent> handleApproveShow(int Event) {
+    private void handleApproveCredit(int Event, Class<? extends ICredit> credit) {
+        if (Show.class.getTypeName().equals(credit.getTypeName())) {
+            handleApproveShow(Event);
+            //    case ISeason.class:
+            //       handleApproveSeason(int);
+            //    break;
+            //  case IEpisode.class:
+            //     handleApproveEpisode();
+            //     break;
+        } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
+            handleApproveMovie(Event);
+            System.out.println("got movie");
+        } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
+            handleApprovePerson(Event);
+        }
+        System.out.println(IMovie.class.getTypeName());
+        System.out.println("in approvecredit " + credit.getTypeName());
+    }
+
+    protected void handleApproveShow(int Event) {
         for (IShow showCredit: ApplicationManager.getInstance().getShowList()) {
             if (showCredit.getCreditID() == Event) {
                 showCredit.setApproved(true);
             }
         }
         reloadProgram();
-        return null;
     }
 
-    protected EventHandler<ActionEvent> handleApproveSeason(int showId, int season) {
+    protected void handleApproveSeason(int showId, int season) {
         for (IShow show: ApplicationManager.getInstance().getShowList()) {
             if (show.getCreditID() == showId) {
                 for (ISeason s: show.getSeasons()) {
@@ -99,10 +112,9 @@ public class DashboardController implements Initializable {
             }
         }
         reloadProgram();
-        return null;
     }
 
-    protected EventHandler<ActionEvent> handleApproveEpisode(int showId, int season, int episode) {
+    protected void handleApproveEpisode(int showId, int season, int episode) {
         for (IShow sh: ApplicationManager.getInstance().getShowList()) {
             if (sh.getCreditID() == showId) {
                 for (ISeason s: sh.getSeasons()) {
@@ -121,65 +133,41 @@ public class DashboardController implements Initializable {
             }
         }
         reloadProgram();
-        return null;
     }
 
-
-
-
-    private void reloadPerson() {
-        personToApprove.getChildren().clear();
+    public void setContent(AnchorPane listToApprove, ArrayList<? extends ICredit> creditList){
+        listToApprove.getChildren().clear();
 
         int offset = 20;
-        for (ICredit personCredit: ApplicationManager.getInstance().getPersonList()) {
-            if (!personCredit.isApproved()) {
-                Pane personPane = new Pane();
-                personToApprove.getChildren().add(personPane);
-                personPane.setLayoutY(offset);
-                personPane.setId(String.valueOf(personCredit.getCreditID()));
+        for (ICredit credit: creditList) {
+            Pane personPane = new Pane();
+            listToApprove.getChildren().add(personPane);
+            personPane.setLayoutY(offset);
+            personPane.setId(String.valueOf(credit.getCreditID()));
 
-                Label personLabel = new Label("Name: " + personCredit.getName());
-                personLabel.setLayoutX(20);
-                personPane.getChildren().add(personLabel);
+            Label personLabel = new Label("Name: " + credit.getName());
+            personLabel.setLayoutX(20);
+            personPane.getChildren().add(personLabel);
 
 
-                Button approveButton = new Button();
-                approveButton.setText("Godkend");
-                approveButton.setLayoutX(300);
-                personPane.getChildren().add(approveButton);
-                int finalButtonCounter = personCredit.getCreditID();
-                approveButton.setOnAction(actionEvent -> handleApprovePerson(finalButtonCounter));
+            Button approveButton = new Button();
+            approveButton.setText("Godkend");
+            approveButton.setLayoutX(300);
+            personPane.getChildren().add(approveButton);
+            int finalButtonCounter = credit.getCreditID();
+            approveButton.setOnAction(actionEvent -> handleApproveCredit(finalButtonCounter, credit.getClass()));
 
-                offset += 30;
-            }
+            offset += 30;
         }
+
+    }
+
+    private void reloadPerson() {
+        setContent(personToApprove, ApplicationManager.getInstance().getUnapprovedPersons());
     }
 
     private void reloadMovie() {
-        movieToApprove.getChildren().clear();
-
-        int offset = 20;
-        for (ICredit movieCredit: ApplicationManager.getInstance().getMovieList()) {
-            if (!movieCredit.isApproved()) {
-                Pane pane = new Pane();
-                movieToApprove.getChildren().add(pane);
-                pane.setLayoutY(offset);
-                pane.setId(String.valueOf(movieCredit.getCreditID()));
-
-                Label label = new Label("Name: " + movieCredit.getName());
-                label.setLayoutX(20);
-                pane.getChildren().add(label);
-
-                Button approveButton = new Button();
-                approveButton.setText("Godkend");
-                approveButton.setLayoutX(300);
-                pane.getChildren().add(approveButton);
-                int finalButtonCounter = movieCredit.getCreditID();
-                approveButton.setOnAction(actionEvent -> handleApproveMovie(finalButtonCounter));
-
-                offset += 30;
-            }
-        }
+        setContent(movieToApprove, ApplicationManager.getInstance().getUnapprovedMovies());
     }
 
     private void reloadProgram() {

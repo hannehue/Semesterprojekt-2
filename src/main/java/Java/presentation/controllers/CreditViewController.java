@@ -80,5 +80,4 @@ public class CreditViewController implements Initializable {
         gridPane.add((javafx.scene.Node) objlist[1], 1, rowCount);
 
     }
-
 }
