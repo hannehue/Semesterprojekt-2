@@ -15,7 +15,7 @@ public class ApplicationManager implements IDataProcessors {
     private DatabaseLoader dataLoader;
     private ObservableList<IPerson> personList = FXCollections.observableArrayList();
     private ObservableList<IMovie> movieList = FXCollections.observableArrayList();
-    private ArrayList<IShow> showList = new ArrayList<>();
+    private ObservableList<IShow> showList = FXCollections.observableArrayList();
     private ObservableList<IJob> tempList = FXCollections.observableArrayList();
     private UserType userType;
     private String searchFieldPlaceholder = "";
@@ -186,7 +186,7 @@ public class ApplicationManager implements IDataProcessors {
 
         dataLoader.addCreditsToDatabase((ArrayList<IPerson>) personList);
         dataLoader.addCreditsToDatabase((ArrayList<IMovie>) movieList);
-        dataLoader.addCreditsToDatabase(showList);
+        dataLoader.addCreditsToDatabase((ArrayList<IShow>) showList);
 
         try {
             dataLoader.writeAllCredits();
@@ -211,7 +211,7 @@ public class ApplicationManager implements IDataProcessors {
         userType = userTypeSetter;
     }
 
-    public ArrayList<IShow> getShowList() {
+    public ObservableList<IShow> getShowList() {
         return showList;
     }
 
