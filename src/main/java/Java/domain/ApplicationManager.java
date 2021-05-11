@@ -276,16 +276,18 @@ public class ApplicationManager implements IDataProcessors {
         return null;
     }
 
-    public IEpisode getEpisodeById(int showId, int episodeId){
-        IShow show = getShowById(showId);
-        ArrayList<ISeason> seasons = show.getSeasons();
-       for (ISeason season : seasons)
-            for (IEpisode episode : season.getEpisodes()){
-                if (episode.getCreditID() == episodeId) {
-                    return episode;
+    public IEpisode getEpisodeById(int episodeId){
+        for (IShow show : showList) {
+            ObservableList<ISeason> seasons = show.getSeasons();
+            for (ISeason season : seasons) {
+                for (IEpisode episode : season.getEpisodes()){
+                    if (episode.getCreditID() == episodeId) {
+                        return episode;
+                    }
                 }
             }
-       return null;
+        }
+        return null;
     }
 
     /**

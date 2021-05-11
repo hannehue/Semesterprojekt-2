@@ -1,5 +1,7 @@
 package Java.interfaces;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public interface IShow extends ICredit {
@@ -7,8 +9,8 @@ public interface IShow extends ICredit {
     boolean isAllSeasonApproved();
     void setAllSeasonApproved(boolean allSeasonApproved);
 
-    ArrayList<ISeason> getSeasons();
-    void setSeasons(ArrayList<ISeason> seasons);
+    ObservableList<ISeason> getSeasons();
+    void setSeasons(ObservableList<ISeason> seasons);
 
 
     int getNumberOfSeason();

@@ -2,29 +2,31 @@ package Java.domain.data;
 
 import Java.interfaces.IEpisode;
 import Java.interfaces.ISeason;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Season extends Credit implements ISeason {
     private int showID;
-    private ArrayList<IEpisode> episodes;
+    private ObservableList<IEpisode> episodes;
     private boolean allEpisodesApproved;
 
     public Season(String name, Date dateAdded, int creditID, boolean approved, String description , int showID,  Boolean allEpisodesApproved){
         super(name,dateAdded, creditID, approved, description);
         this.showID = showID;
-        this.episodes = new ArrayList<>();
+        this.episodes = FXCollections.observableArrayList();
         this.allEpisodesApproved = allEpisodesApproved;
     }
 
     @Override
-    public ArrayList<IEpisode> getEpisodes() {
+    public ObservableList<IEpisode> getEpisodes() {
         return episodes;
     }
 
     @Override
-    public void setEpisodes(ArrayList<IEpisode> episodes) {
+    public void setEpisodes(ObservableList<IEpisode> episodes) {
         this.episodes = episodes;
     }
 

@@ -1,11 +1,13 @@
 package Java.interfaces;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public interface ISeason  extends ICredit{
 
-    ArrayList<IEpisode> getEpisodes();
-    void setEpisodes(ArrayList<IEpisode> episodes);
+    ObservableList<IEpisode> getEpisodes();
+    void setEpisodes(ObservableList<IEpisode> episodes);
 
     int getShowID();
     void setShowID(int showID);

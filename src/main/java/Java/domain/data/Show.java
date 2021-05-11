@@ -2,18 +2,20 @@ package Java.domain.data;
 
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Show extends Credit implements IShow {
 
-    private ArrayList <ISeason> seasons;
+    private ObservableList<ISeason> seasons;
     private boolean allSeasonApproved;
 
     public Show(String showName, Date dateadded, int showID, boolean approved,  String description, boolean allSeasonApproved){
         super(showName, dateadded, showID, approved, description);
-        this.seasons = new ArrayList<>();
+        this.seasons = FXCollections.observableArrayList();
         this.allSeasonApproved = allSeasonApproved;
     }
 
@@ -28,12 +30,12 @@ public class Show extends Credit implements IShow {
     }
 
     @Override
-    public ArrayList<ISeason> getSeasons() {
+    public ObservableList<ISeason> getSeasons() {
         return seasons;
     }
 
     @Override
-    public void setSeasons(ArrayList<ISeason> seasons) {
+    public void setSeasons(ObservableList<ISeason> seasons) {
         this.seasons = seasons;
     }
 

@@ -4,6 +4,7 @@ import Java.domain.ApplicationManager;
 import Java.domain.data.*;
 import Java.interfaces.*;
 import Java.presentation.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,10 +31,16 @@ public class DashboardController implements Initializable {
     protected AnchorPane movieToApprove;
     @FXML
     protected AnchorPane showToApprove;
+    @FXML
+    protected AnchorPane seasonToApprove;
+    @FXML
+    protected AnchorPane episodeToApprove;
 
     private ObservableList<IPerson> personObservableList;
     private ObservableList<IMovie> movieObservableList;
     private ObservableList<IShow> showObservableList;
+    private ObservableList<ISeason> seasonObservableList = FXCollections.observableArrayList();
+    private ObservableList<IEpisode> episodeObservableList = FXCollections.observableArrayList();
 
 
     @Override
@@ -79,60 +86,39 @@ public class DashboardController implements Initializable {
 
     private void handleApproveCredit(int id, Class<? extends ICredit> credit) {
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
-            handleApproveShow(id);
+            approveCredit(id, showObservableList);
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
             approveCredit(id, movieObservableList);
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
             approveCredit(id, personObservableList);
         } else if (Season.class.getTypeName().equals(credit.getTypeName())) {
-            approveCredit(id, movieObservableList);
+            handleApproveSeason(id);
         } else if (Episode.class.getTypeName().equals(credit.getTypeName())) {
-            approveCredit(id, movieObservableList);
+            handleApproveEpisode(id);
         }
     }
 
-    protected void handleApproveShow(int id) {
-        for (IShow showCredit: ApplicationManager.getInstance().getShowList()) {
-            if (showCredit.getCreditID() == id) {
-                showCredit.setApproved(true);
-            }
-        }
-    }
-
-    protected void handleApproveSeason(int showId, int season) {
-        for (IShow show: ApplicationManager.getInstance().getShowList()) {
-            if (show.getCreditID() == showId) {
-                for (ISeason s: show.getSeasons()) {
-                    if (s.getCreditID() == season) {
-                        s.setApproved(true);
-                    }
-                    show.setAllSeasonApproved(true);
-                    if (!show.isApproved() || !s.isAllEpisodesApproved()) {
-                        show.setAllSeasonApproved(false);
-                    }
+    /**
+     * handle the approval of seasons
+     * @param season
+     */
+    protected void handleApproveSeason(int season) {
+        for (IShow show: showObservableList) {
+            for (ISeason s: show.getSeasons()) {
+                if (s.getCreditID() == season) {
+                    show.getSeasons().remove(s);
+                    s.setApproved(true);
+                    show.getSeasons().add(s);
                 }
             }
         }
     }
 
-    protected void handleApproveEpisode(int showId, int season, int episode) {
-        for (IShow sh: ApplicationManager.getInstance().getShowList()) {
-            if (sh.getCreditID() == showId) {
-                for (ISeason s: sh.getSeasons()) {
-                    if (s.getCreditID() == season) {
-                        for (IEpisode e: s.getEpisodes()) {
-                            if (e.getCreditID() == episode) {
-                                e.setApproved(true);
-                            }
-                            s.setAllEpisodeApproved(true);
-                            if (!e.isApproved()) {
-                                s.setAllEpisodeApproved(false);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    /**
+     * handle the approval of episodes
+     * @param episode
+     */
+    protected void handleApproveEpisode(int episode) {
     }
 
     private void addItem(AnchorPane listToApprove, ICredit credit, int offset){
@@ -167,7 +153,6 @@ public class DashboardController implements Initializable {
     }
 
     public void setContent(AnchorPane listToApprove, ObservableList<? extends ICredit> creditList){
-        listToApprove.getChildren().clear();
         int offset = 20;
         for (ICredit credit : creditList){
             if (!credit.isApproved()) {
@@ -209,5 +194,15 @@ public class DashboardController implements Initializable {
         setContent(personToApprove, personObservableList);
         showObservableList = ApplicationManager.getInstance().getShowList();
         setContent(showToApprove, showObservableList);
+        setContent(seasonToApprove, seasonObservableList);
+        setContent(episodeToApprove, episodeObservableList);
+        for (IShow show : ApplicationManager.getInstance().getShowList()) {
+            ObservableList<ISeason> seasons = show.getSeasons();
+            for (ISeason season : seasons) {
+                ObservableList<IEpisode>  episodes = season.getEpisodes();
+                episodeObservableList.addAll(episodes);
+            }
+            seasonObservableList.addAll(seasons);
+        }
     }
 }
