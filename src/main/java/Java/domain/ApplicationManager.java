@@ -23,21 +23,22 @@ public class ApplicationManager implements IDataProcessors {
     private int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
 
     private ApplicationManager() {
-        try{
+
             dataLoader = DatabaseLoader.getInstance();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+
         //creditList.addAll(dataLoader.readPersons());
         //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
 
+
+        /*
         for (String[] strings: dataLoader.getPersonArraylist()){
             personList.add(dataLoader.queryToPerson(strings));
         }
         for (String[] strings: dataLoader.getMovieArrayList()){
             movieList.add(dataLoader.queryToMovie(strings));
         }
+
+         */
 
         System.out.println(personList.toString());
 

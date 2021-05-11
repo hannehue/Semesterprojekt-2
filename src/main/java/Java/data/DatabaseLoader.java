@@ -38,7 +38,7 @@ public class DatabaseLoader {
     private Connection connection;
 
 
-    private DatabaseLoader() throws IOException {
+    private DatabaseLoader(){
 
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         /*
@@ -47,10 +47,6 @@ public class DatabaseLoader {
         movieFile = new File(DatabaseLoader.class.getClassLoader().getResource("Movies.txt").getFile());
         showFile = new File(DatabaseLoader.class.getClassLoader().getResource("Shows.txt").getFile());
         */
-        personArraylist = readCredits(personFile);
-        groupArraylist = readCredits(groupFile);
-        movieArrayList = readCredits(movieFile);
-        showArrayList = readCredits(showFile);
 
 
         //Create connection to database
@@ -69,7 +65,7 @@ public class DatabaseLoader {
 
     }
 
-    public static DatabaseLoader getInstance() throws IOException {
+    public static DatabaseLoader getInstance(){
         if (instance == null){
             instance = new DatabaseLoader();
         }
@@ -100,15 +96,6 @@ public class DatabaseLoader {
             line += strings[column] + ",";
         }
         return line;
-    }
-
-    public ArrayList<String[]> readCredits(File file) throws FileNotFoundException {
-        inputStream = new Scanner(file);
-        ArrayList<String[]> creditList = new ArrayList<>();
-        while (inputStream.hasNext()) {
-            creditList.add(inputStream.nextLine().split(","));
-        }
-        return creditList;
     }
 
     public String[] creditToStringArray(ICredit credit) {
@@ -157,20 +144,33 @@ public class DatabaseLoader {
 
     /** Disse 3 vil jeg gerne rykke i en (facade) klasse for sig selv, sammen med de andre der kommer -Hans **/
 
-    public IPerson queryToPerson(String[] vals) {
+    public IPerson queryToPerson(String searchString) {
         IPerson tempPerson = null;
         try {
-            if (vals[1].equals("null")){
-                tempPerson = new Person(vals[0], null, Integer.parseInt(vals[2]),
-                        Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
-            } else {
-                tempPerson = new Person(vals[0], formatter.parse(vals[1]), Integer.parseInt(vals[2]),
-                        Boolean.parseBoolean(vals[3]), vals[4], Integer.parseInt(vals[5]), vals[6], vals[7], vals[8]);
+            PreparedStatement queryStatement = getInstance().connection.prepareStatement(
+                "SELECT * FROM credits, persons WHERE LOWER(name) LIKE LOWER(?)"
+            );
+            queryStatement.setString(1, "%" + searchString + "%");
+            ResultSet queryResult = queryStatement.executeQuery();
+            while (queryResult.next()) {
+                tempPerson = new Person(
+                        /* Name         */ queryResult.getString("name"),
+                        /* Date         */ formatter.parse(queryResult.getString("date_added")),
+                        /* CreditID     */ queryResult.getInt("credit_id"),
+                        /* Approved     */ queryResult.getBoolean("approved"),
+                        /* description  */ queryResult.getString("description"),
+                        /* personID     */ queryResult.getInt("person_id"),
+                        /* phone number */ queryResult.getString("phone_number"),
+                        /* personal info*/ queryResult.getString("personal_info"),
+                        /* email        */ queryResult.getString("email")
+                );
             }
-        } catch (java.text.ParseException e) {
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            System.out.println("SQL ERROR at queryToPerson");
+        } catch (ParseException e) {
             e.printStackTrace();
-            System.err.println("Failed when initializing person from string array");
-            return null;
+            System.out.println("Parse error at queryToPerson");
         }
         return tempPerson;
     }
@@ -226,14 +226,18 @@ public class DatabaseLoader {
         return tempEpisode;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
+        //getInstance().queryToPerson("Jens");
+        System.out.println(getInstance().queryToPerson("Je").getName());
+        System.out.println(getInstance().queryToPerson("je").getPersonID());
 
+        /*
         try {
-            PreparedStatement statement = getInstance().connection.prepareStatement("SELECT * From categories");
+            PreparedStatement statement = getInstance().connection.prepareStatement("SELECT * From persons, credits");
             ResultSet resultSet = statement.executeQuery();
-            System.out.println("ID \tCategory");
             while (resultSet.next()){
-                System.out.println(resultSet.getString("category_id") + "\t" + resultSet.getString("category"));
+                System.out.println(resultSet.getString("name") + "\t" +
+                        resultSet.getString("credit_id") + "\t" + resultSet.getString("person_id"));
             }
 
 
@@ -242,6 +246,7 @@ public class DatabaseLoader {
             e.printStackTrace();
         }
 
+         */
     }
 
 

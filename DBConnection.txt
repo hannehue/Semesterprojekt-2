@@ -1,0 +1,6 @@
+#DataSourceSettings#
+#LocalDataSource: bpmfwbjk@hattie.db.elephantsql.com
+#BEGIN#
+<data-source source="LOCAL" name="bpmfwbjk@hattie.db.elephantsql.com" uuid="229eab7f-030d-4f62-820c-b292142e165e"><database-info product="PostgreSQL" version="11.9 (Ubuntu 11.9-1.pgdg20.04+1)" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.5" dbms="POSTGRES" exact-version="11.9" exact-driver-version="42.2"><identifier-quote-string>&quot;</identifier-quote-string></database-info><case-sensitivity plain-identifiers="lower" quoted-identifiers="exact"/><driver-ref>postgresql</driver-ref><synchronize>true</synchronize><jdbc-driver>org.postgresql.Driver</jdbc-driver><jdbc-url>jdbc:postgresql://hattie.db.elephantsql.com:5432/bpmfwbjk</jdbc-url><secret-storage>master_key</secret-storage><user-name>bpmfwbjk</user-name><schema-mapping><introspection-scope><node kind="database" qname="@"><node kind="schema" qname="@"/></node></introspection-scope></schema-mapping><working-dir>$ProjectFileDir$</working-dir></data-source>
+#END#
+
