@@ -14,7 +14,7 @@ public class ApplicationManager implements IDataProcessors {
 
     private DatabaseLoader dataLoader;
     private ObservableList<IPerson> personList = FXCollections.observableArrayList();
-    private ArrayList<IMovie> movieList= new ArrayList<>();
+    private ObservableList<IMovie> movieList = FXCollections.observableArrayList();
     private ArrayList<IShow> showList = new ArrayList<>();
     private ObservableList<IJob> tempList = FXCollections.observableArrayList();
     private UserType userType;
@@ -185,7 +185,7 @@ public class ApplicationManager implements IDataProcessors {
     public void onStop(){
 
         dataLoader.addCreditsToDatabase((ArrayList<IPerson>) personList);
-        dataLoader.addCreditsToDatabase(movieList);
+        dataLoader.addCreditsToDatabase((ArrayList<IMovie>) movieList);
         dataLoader.addCreditsToDatabase(showList);
 
         try {
@@ -195,7 +195,7 @@ public class ApplicationManager implements IDataProcessors {
         }
     }
 
-    public ArrayList<IMovie> getMovieList() {
+    public ObservableList<IMovie> getMovieList() {
         return movieList;
     }
 
@@ -314,14 +314,8 @@ public class ApplicationManager implements IDataProcessors {
         return persons;
     }
 
-    public ArrayList<IMovie> getUnapprovedMovies(){
-        ArrayList<IMovie> movies = movieList;
-        for (IMovie movie : movies){
-            if (!movie.isApproved()){
-                movies.remove(movie);
-            }
-        }
-        return movies;
+    public ObservableList<IMovie> getMovies(){
+        return movieList;
     }
 
     public void setPersonApproved(int personId){

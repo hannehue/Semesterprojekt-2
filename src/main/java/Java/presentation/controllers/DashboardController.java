@@ -6,11 +6,13 @@ import Java.domain.data.Person;
 import Java.domain.data.Show;
 import Java.interfaces.*;
 import Java.presentation.*;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -31,7 +33,9 @@ public class DashboardController implements Initializable {
     @FXML
     protected AnchorPane programToApprove;
 
-    private ObservableList<? extends ICredit> contentList;
+    private ObservableList<IPerson> personObservableList;
+    private ObservableList<IMovie> movieObservableList;
+
 
     @Override
     public String toString() {
@@ -54,28 +58,35 @@ public class DashboardController implements Initializable {
         return instance;
     }
 
-    protected void handleApprovePerson(int Event) {
-        ApplicationManager.getInstance().setPersonApproved(Event);
-        reloadPerson();
+
+    @FXML
+    public void handleReloadProgram(MouseEvent mouseEvent) {
+        reloadProgram();
     }
 
-    protected void handleApproveMovie(int Event) {
-        for (ICredit movieCredit: ApplicationManager.getInstance().getMovieList()) {
-            if (movieCredit.getCreditID() == Event) {
+    protected void handleApprovePerson(int personId) {
+        ApplicationManager.getInstance().setPersonApproved(personId);
+    }
+
+    protected void handleApproveMovie(int movieId) {
+        ICredit approveCredit = null;
+        for (IMovie movieCredit: movieObservableList) {
+            if (movieCredit.getCreditID() == movieId) {
+                movieObservableList.remove(movieCredit);
                 movieCredit.setApproved(true);
+                movieObservableList.add(movieCredit);
             }
         }
-        reloadMovie();
     }
 
-    private void handleApproveCredit(int Event, Class<? extends ICredit> credit) {
+    private void handleApproveCredit(int id, Class<? extends ICredit> credit) {
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
-            handleApproveShow(Event);
+            handleApproveShow(id);
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
-            handleApproveMovie(Event);
+            handleApproveMovie(id);
             System.out.println("got movie");
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
-            handleApprovePerson(Event);
+            handleApprovePerson(id);
         }
     }
 
@@ -126,39 +137,69 @@ public class DashboardController implements Initializable {
         reloadProgram();
     }
 
-    public void setContent(AnchorPane listToApprove, ArrayList<? extends ICredit> creditList){
+    private void addItem(AnchorPane listToApprove, ICredit credit, int offset){
+        Pane personPane = new Pane();
+        listToApprove.getChildren().add(personPane);
+        personPane.setLayoutY(offset);
+        personPane.setId(String.valueOf(credit.getCreditID()));
+
+        Label personLabel = new Label("Name: " + credit.getName());
+        personLabel.setLayoutX(20);
+        personPane.getChildren().add(personLabel);
+
+
+        Button approveButton = new Button();
+        approveButton.setText("Godkend");
+        approveButton.setLayoutX(300);
+        personPane.getChildren().add(approveButton);
+        int finalButtonCounter = credit.getCreditID();
+        approveButton.setOnAction(actionEvent -> handleApproveCredit(finalButtonCounter, credit.getClass()));
+    }
+
+    private void removeItem(AnchorPane listToApprove, ICredit credit){
+        for (Node children : listToApprove.getChildren()){
+            if (children.getId() == String.valueOf(credit.getCreditID())){
+                listToApprove.getChildren().remove(children);
+            }
+        }
+    }
+
+    public void setContent(AnchorPane listToApprove, ObservableList<? extends ICredit> creditList){
         listToApprove.getChildren().clear();
 
+        System.out.println(creditList);
         int offset = 20;
-        for (ICredit credit: creditList) {
-            Pane personPane = new Pane();
-            listToApprove.getChildren().add(personPane);
-            personPane.setLayoutY(offset);
-            personPane.setId(String.valueOf(credit.getCreditID()));
-
-            Label personLabel = new Label("Name: " + credit.getName());
-            personLabel.setLayoutX(20);
-            personPane.getChildren().add(personLabel);
-
-
-            Button approveButton = new Button();
-            approveButton.setText("Godkend");
-            approveButton.setLayoutX(300);
-            personPane.getChildren().add(approveButton);
-            int finalButtonCounter = credit.getCreditID();
-            approveButton.setOnAction(actionEvent -> handleApproveCredit(finalButtonCounter, credit.getClass()));
-
+        for (ICredit credit : creditList){
+            addItem(listToApprove, credit, offset);
             offset += 30;
         }
 
-    }
-
-    private void reloadPerson() {
-        setContent(personToApprove, ApplicationManager.getInstance().getUnapprovedPersons());
-    }
-
-    private void reloadMovie() {
-        setContent(movieToApprove, ApplicationManager.getInstance().getUnapprovedMovies());
+        creditList.addListener(new ListChangeListener<ICredit>() {
+            @Override
+            public void onChanged(Change<? extends ICredit> change) {
+                System.out.println("called onchange " + change);
+                int offset = 20;
+                while (change.next()) {
+                    System.out.println("change next");
+                    if (change.wasAdded()) {
+                        System.out.println("was added " + change);
+                        for (ICredit credit : change.getAddedSubList()){
+                            if (!credit.isApproved()){
+                                addItem(listToApprove, credit, offset);
+                                offset += 30;
+                            }
+                        }
+                    } else if (change.wasRemoved()) {
+                        System.out.println("removed " + change);
+                        for (ICredit credit : change.getRemoved()){
+                            if (credit.isApproved()) {
+                                removeItem(listToApprove, credit);
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void reloadProgram() {
@@ -234,6 +275,10 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        movieObservableList = ApplicationManager.getInstance().getMovies();
+        //personObservableList = ApplicationManager.getInstance().getPersons();
 
+        //setContent(personToApprove, personObservableList);
+        setContent(movieToApprove, movieObservableList);
     }
 }
