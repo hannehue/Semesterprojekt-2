@@ -39,24 +39,28 @@ public class DatabaseLoader {
 
 
     private DatabaseLoader() throws IOException {
+
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        /*
         personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
         groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
         movieFile = new File(DatabaseLoader.class.getClassLoader().getResource("Movies.txt").getFile());
         showFile = new File(DatabaseLoader.class.getClassLoader().getResource("Shows.txt").getFile());
+        */
         personArraylist = readCredits(personFile);
         groupArraylist = readCredits(groupFile);
         movieArrayList = readCredits(movieFile);
         showArrayList = readCredits(showFile);
 
+
         //Create connection to database
         try {
             DriverManager.registerDriver(new org.postgresql.Driver());
             this.connection = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/DemoProjekt",
-                    "postgres" ,
+                    "jdbc:postgresql://hattie.db.elephantsql.com:5432/bpmfwbjk",
+                    "bpmfwbjk" ,
                     /** TILFØJ PASSWORD HER **/
-                    "");
+                    "Q2w3lGuOmhrrTotMtUu8dyp6Hh4tbbl6");
         } catch (SQLException e) {
             System.out.println("Went wrong at connection creation");
             e.printStackTrace();
@@ -216,7 +220,7 @@ public class DatabaseLoader {
 
         } catch (ParseException e){
             e.printStackTrace();
-            System.err.println("Failed when initializing movie from string array");
+            System.err.println("Failed when initializing episode from string array");
             return null;
         }
         return tempEpisode;
@@ -225,8 +229,14 @@ public class DatabaseLoader {
     public static void main(String[] args) throws IOException {
 
         try {
-            PreparedStatement statement = getInstance().connection.prepareStatement(
-                    "INSERT INTO perpestilens1sons ()");
+            PreparedStatement statement = getInstance().connection.prepareStatement("SELECT * From categories");
+            ResultSet resultSet = statement.executeQuery();
+            System.out.println("ID \tCategory");
+            while (resultSet.next()){
+                System.out.println(resultSet.getString("category_id") + "\t" + resultSet.getString("category"));
+            }
+
+
         } catch (SQLException e) {
             System.out.println("Went wrong at prepared Statement");
             e.printStackTrace();
