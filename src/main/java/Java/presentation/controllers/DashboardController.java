@@ -1,9 +1,7 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
-import Java.domain.data.Movie;
-import Java.domain.data.Person;
-import Java.domain.data.Show;
+import Java.domain.data.*;
 import Java.interfaces.*;
 import Java.presentation.*;
 import javafx.collections.ListChangeListener;
@@ -85,12 +83,16 @@ public class DashboardController implements Initializable {
             approveCredit(id, movieObservableList);
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
             approveCredit(id, personObservableList);
+        } else if (Season.class.getTypeName().equals(credit.getTypeName())) {
+            approveCredit(id, movieObservableList);
+        } else if (Episode.class.getTypeName().equals(credit.getTypeName())) {
+            approveCredit(id, movieObservableList);
         }
     }
 
-    protected void handleApproveShow(int Event) {
+    protected void handleApproveShow(int id) {
         for (IShow showCredit: ApplicationManager.getInstance().getShowList()) {
-            if (showCredit.getCreditID() == Event) {
+            if (showCredit.getCreditID() == id) {
                 showCredit.setApproved(true);
             }
         }
