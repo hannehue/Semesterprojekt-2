@@ -64,6 +64,11 @@ public class AddCreditController implements Initializable {
         return instance;
     }
 
+    /**
+     * Displays the choices in the choicebox show
+     *
+     * @param mouseEvent
+     */
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         choiceBoxSeason.getItems().clear();
@@ -73,6 +78,12 @@ public class AddCreditController implements Initializable {
         choiceBoxShow.show();
     }
 
+    /**
+     * Submits the episode of the show selected.
+     *
+     * @param Event
+     * @throws IOException
+     */
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
         int id = ApplicationManager.getInstance().nextId();
@@ -192,6 +203,12 @@ public class AddCreditController implements Initializable {
         ApplicationManager.getInstance().addSeason(description, ((IShow) choiceBoxShow.getValue()).getCreditID());
     }
 
+    /**
+     * Sets the name of the next episode.
+     *
+     * @param Event
+     * @throws IOException
+     */
     @FXML
     protected void handleGetEpisodeName(ActionEvent Event) throws IOException {
         reloadNextEpisode();

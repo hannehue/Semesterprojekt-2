@@ -29,8 +29,6 @@ public class ApplicationManager implements IDataProcessors {
         catch (IOException e) {
             e.printStackTrace();
         }
-        //creditList.addAll(dataLoader.readPersons());
-        //[Role.getRoleFromString("Koreografi")], 234324,["pisboiii"])
 
         for (String[] strings: dataLoader.getPersonArraylist()){
             personList.add(dataLoader.queryToPerson(strings));
