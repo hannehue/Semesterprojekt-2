@@ -307,5 +307,24 @@ public class ApplicationManager implements IDataProcessors {
             }
         }
     }
+    /**
+     * Aprrove some credit with an id, from a list.
+     * @param id
+     * @param observableList
+     * @param <T>
+     */
+    public  <T extends ICredit> void approveCredit(int id, ObservableList<T> observableList) {
+        T approveCredit = null;
+        for (T credit: observableList) {
+            if (credit.getCreditID() == id) {
+                approveCredit = credit;
+            }
+        }
+        if (approveCredit != null){
+            observableList.remove(approveCredit);
+            approveCredit.setApproved(true);
+            observableList.add(approveCredit);
+        }
+    }
 
 }

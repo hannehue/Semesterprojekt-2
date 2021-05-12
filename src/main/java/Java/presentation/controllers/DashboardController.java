@@ -63,54 +63,19 @@ public class DashboardController implements Initializable {
         return instance;
     }
 
-    /**
-     * Aprrove some credit with an id, from a list.
-     * @param id
-     * @param observableList
-     * @param <T>
-     */
-    protected <T extends ICredit> void approveCredit(int id, ObservableList<T> observableList) {
-        T approveCredit = null;
-        for (T credit: observableList) {
-            if (credit.getCreditID() == id) {
-                approveCredit = credit;
-            }
-        }
-        if (approveCredit != null){
-            observableList.remove(approveCredit);
-            approveCredit.setApproved(true);
-            observableList.add(approveCredit);
-        }
-    }
 
     private void handleApproveCredit(int id, Class<? extends ICredit> credit) {
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
-            approveCredit(id, showObservableList);
+            ApplicationManager.getInstance().approveCredit(id, showObservableList);
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
-            approveCredit(id, movieObservableList);
+            ApplicationManager.getInstance().approveCredit(id, movieObservableList);
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
-            approveCredit(id, personObservableList);
+            ApplicationManager.getInstance().approveCredit(id, personObservableList);
         } else if (Season.class.getTypeName().equals(credit.getTypeName())) {
-            handleApproveSeason(id);
+            ApplicationManager.getInstance().approveSeason(id);
         } else if (Episode.class.getTypeName().equals(credit.getTypeName())) {
-            handleApproveEpisode(id);
+            ApplicationManager.getInstance().approveEpisode(id);
         }
-    }
-
-    /**
-     * handle the approval of seasons
-     * @param seasonId
-     */
-    protected void handleApproveSeason(int seasonId) {
-        ApplicationManager.getInstance().approveSeason(seasonId);
-    }
-
-    /**
-     * handle the approval of episodes
-     * @param episodeId
-     */
-    protected void handleApproveEpisode(int episodeId) {
-        ApplicationManager.getInstance().approveEpisode(episodeId);
     }
 
     private void addItem(AnchorPane listToApprove, ICredit credit, int offset){
@@ -172,7 +137,6 @@ public class DashboardController implements Initializable {
             }
         });
     }
-
     public <T extends ICredit> void setContent(AnchorPane listToApprove, ObservableMap<Integer, T> creditList){
         int offset = 20;
         for (Map.Entry<Integer, T> credit : creditList.entrySet()){
