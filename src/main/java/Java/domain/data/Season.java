@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class Season extends Credit implements ISeason {
     private int showID;
-    private ObservableList<IEpisode> episodes;
+    private ObservableList<Integer> episodes;
     private boolean allEpisodesApproved;
 
     public Season(String name, Date dateAdded, int creditID, boolean approved, String description , int showID,  Boolean allEpisodesApproved){
@@ -21,12 +21,12 @@ public class Season extends Credit implements ISeason {
     }
 
     @Override
-    public ObservableList<IEpisode> getEpisodes() {
+    public ObservableList<Integer> getEpisodes() {
         return episodes;
     }
 
     @Override
-    public void setEpisodes(ObservableList<IEpisode> episodes) {
+    public void setEpisodes(ObservableList<Integer> episodes) {
         this.episodes = episodes;
     }
 
@@ -43,10 +43,7 @@ public class Season extends Credit implements ISeason {
 
     @Override
     public String toString() {
-        return "Season{" +
-                "showID='" + showID + '\'' +
-                ", episodes=" + episodes +
-                '}';
+        return this.getName();
     }
 
     @Override
@@ -58,8 +55,8 @@ public class Season extends Credit implements ISeason {
 
         seasonFileString += "--";
 
-        for (IEpisode episode: getEpisodes()){
-            seasonFileString += episode.toFileString() + "--";
+        for (Integer episode: getEpisodes()){
+            seasonFileString += episode + "--";
         }
         seasonFileString += "##" + isAllEpisodesApproved();
 
@@ -79,7 +76,7 @@ public class Season extends Credit implements ISeason {
         return episodes.size();
     }
 
-    public void addEpisode(IEpisode episode){
+    public void addEpisode(Integer episode){
         episodes.add(episode);
     }
 }

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public interface ISeason  extends ICredit{
 
-    ObservableList<IEpisode> getEpisodes();
-    void setEpisodes(ObservableList<IEpisode> episodes);
+    ObservableList<Integer> getEpisodes();
+    void setEpisodes(ObservableList<Integer> episodes);
 
     int getShowID();
     void setShowID(int showID);
@@ -16,7 +16,7 @@ public interface ISeason  extends ICredit{
 
     boolean isAllEpisodesApproved();
 
-    void addEpisode(IEpisode episode);
+    void addEpisode(Integer episode);
 
     void setAllEpisodeApproved(boolean b);
 

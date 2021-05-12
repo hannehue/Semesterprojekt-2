@@ -100,25 +100,22 @@ public class DashboardController implements Initializable {
 
     /**
      * handle the approval of seasons
-     * @param season
+     * @param seasonId
      */
-    protected void handleApproveSeason(int season) {
-        for (IShow show: showObservableList) {
-            for (ISeason s: show.getSeasons()) {
-                if (s.getCreditID() == season) {
-                    show.getSeasons().remove(s);
-                    s.setApproved(true);
-                    show.getSeasons().add(s);
-                }
-            }
-        }
+    protected void handleApproveSeason(int seasonId) {
+        ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
+        season.setApproved(true);
+        ApplicationManager.getInstance().setSeasonById(season.getCreditID(), season);
     }
 
     /**
      * handle the approval of episodes
-     * @param episode
+     * @param episodeId
      */
-    protected void handleApproveEpisode(int episode) {
+    protected void handleApproveEpisode(int episodeId) {
+        IEpisode episode = ApplicationManager.getInstance().getEpisodeById(episodeId);
+        episode.setApproved(true);
+        ApplicationManager.getInstance().setEpisodeById(episode.getCreditID(), episode);
     }
 
     private void addItem(AnchorPane listToApprove, ICredit credit, int offset){
@@ -197,12 +194,16 @@ public class DashboardController implements Initializable {
         setContent(seasonToApprove, seasonObservableList);
         setContent(episodeToApprove, episodeObservableList);
         for (IShow show : ApplicationManager.getInstance().getShowList()) {
-            ObservableList<ISeason> seasons = show.getSeasons();
-            for (ISeason season : seasons) {
-                ObservableList<IEpisode>  episodes = season.getEpisodes();
-                episodeObservableList.addAll(episodes);
+            ObservableList<Integer> seasons = show.getSeasons();
+            for (Integer seasonId : seasons) {
+                ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
+                ObservableList<Integer>  episodes = season.getEpisodes();
+                for (Integer episodeId: episodes) {
+                    IEpisode episode = ApplicationManager.getInstance().getEpisodeById(episodeId);
+                    episodeObservableList.add(episode);
+                }
+                seasonObservableList.add(season);
             }
-            seasonObservableList.addAll(seasons);
         }
     }
 }

@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class Show extends Credit implements IShow {
 
-    private ObservableList<ISeason> seasons;
+    private ObservableList<Integer> seasons;
     private boolean allSeasonApproved;
 
     public Show(String showName, Date dateadded, int showID, boolean approved,  String description, boolean allSeasonApproved){
@@ -30,27 +30,22 @@ public class Show extends Credit implements IShow {
     }
 
     @Override
-    public ObservableList<ISeason> getSeasons() {
+    public ObservableList<Integer> getSeasons() {
         return seasons;
     }
 
     @Override
-    public void setSeasons(ObservableList<ISeason> seasons) {
+    public void setSeasons(ObservableList<Integer> seasons) {
         this.seasons = seasons;
     }
 
     @Override
     public String toFileString() {
         String showString = "" + getName() + "::" + getDateAdded() + "::" + getCreditID() + "::" + isApproved() + "::" + getDescription() + "::" + getCreditID() + "::";
-
-        for (ISeason s : seasons){
-            showString += s.toFileString() + "++";
-        }
-
         return showString;
     }
 
-    public void addSeason(ISeason season) {
+    public void addSeason(Integer season) {
         this.seasons.add(season);
     }
 

@@ -87,8 +87,10 @@ public class AddCreditController implements Initializable {
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
         int id = ApplicationManager.getInstance().nextId();
-        ApplicationManager.getInstance().addEpisode(episodeTitle.getText(), Integer.parseInt(episodeLength.getText()), choiceBoxShow.getValue().toString(), choiceBoxSeason.getValue().toString(), id);
-        reloadNextEpisode();
+        ApplicationManager.getInstance().addEpisode(
+                episodeTitle.getText(),
+                Integer.parseInt(episodeLength.getText()),
+                ((ISeason) choiceBoxSeason.getValue()).getCreditID(), id);
         ApplicationManager.getInstance().addJob(id);
     }
 
@@ -188,8 +190,9 @@ public class AddCreditController implements Initializable {
             for (IShow show : ApplicationManager.getInstance().getShowList()) {
                 if (show.getName() == choiceBoxShow.getValue().toString()) {
                     if (show.getSeasons() != null) {
-                        for (ISeason season : show.getSeasons()) {
-                            choiceBoxSeason.getItems().add(season.getName());
+                        for (Integer seasonId : show.getSeasons()) {
+                            ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
+                            choiceBoxSeason.getItems().add(season);
                         }
                     }
                 }
@@ -230,7 +233,7 @@ public class AddCreditController implements Initializable {
 
 
     private void reloadNextEpisode() {
-        episodeId.setText(ApplicationManager.getInstance().getNextEpisode(choiceBoxShow.getValue().toString(), choiceBoxSeason.getValue().toString()));
+        episodeId.setText(ApplicationManager.getInstance().getNextEpisode(((ISeason) choiceBoxSeason.getValue()).getCreditID()));
     }
 
     public void handleRemovePersons(ActionEvent actionEvent) {

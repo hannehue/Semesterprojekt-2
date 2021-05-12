@@ -5,6 +5,7 @@ import Java.domain.data.*;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class ApplicationManager implements IDataProcessors {
     private ObservableList<IMovie> movieList = FXCollections.observableArrayList();
     private ObservableList<IShow> showList = FXCollections.observableArrayList();
     private ObservableList<IJob> tempList = FXCollections.observableArrayList();
+    private ObservableMap<Integer, ISeason> seasonMap = FXCollections.observableHashMap();
+    private ObservableMap<Integer, IEpisode> episodeMap = FXCollections.observableHashMap();
     private UserType userType;
     private String searchFieldPlaceholder = "";
 
@@ -134,50 +137,35 @@ public class ApplicationManager implements IDataProcessors {
                 show.getCreditID(),
                 false
         );
-        show.getSeasons().add(season);
+        show.getSeasons().add(season.getCreditID());
+        seasonMap.put(season.getCreditID(), season);
         show.setAllSeasonApproved(false);
     }
 
     @Override
-    public void addEpisode(String title, int length, String show, String season, int id) {
-        for (IShow s : showList) {
-            if (s.getName() == show) {
-                for (ISeason seasonToGet : s.getSeasons()) {
-                    if (seasonToGet.getName() == season) {
-                        IEpisode episode = new Episode(
-                                getNextEpisode(show, season) + " - " + title,
-                                new Date(),
-                                id,
-                                false,
-                                "description",
-                                nextId(),
-                                null,
-                                length,
-                                null,
-                                seasonToGet.getCreditID()
-                        );
-                        seasonToGet.addEpisode(episode);
-                        seasonToGet.setAllEpisodeApproved(false);
-                        System.out.println("tilføjet " + episode.getName());
-                    }
-                }
-            }
-        }
-
+    public void addEpisode(String title, int length, int seasonId, int id) {
+        ISeason season = seasonMap.get(seasonId);
+        IEpisode episode = new Episode(
+                getNextEpisode(season.getShowID()) + " - " + title,
+                new Date(),
+                id,
+                false,
+                "description",
+                nextId(),
+                null,
+                length,
+                null,
+                season.getCreditID()
+        );
+        season.getEpisodes().add(episode.getCreditID());
+        episodeMap.put(episode.getCreditID(), episode);
+        System.out.println("tilføjet " + episode.getName());
     }
 
     @Override
-    public String getNextEpisode(String show, String season) {
-        String episodeString = "";
-        for (IShow s: showList) {
-            if (s.getName() == show) {
-                for (ISeason se: s.getSeasons()) {
-                    if (se.getName() == season) {
-                        episodeString = season + "E" + (se.getNumberOfEpisode() + 1);
-                    }
-                }
-            }
-        }
+    public String getNextEpisode(Integer seasonId) {
+        ISeason season = seasonMap.get(seasonId);
+        String episodeString = season + "E" + (season.getNumberOfEpisode() + 1);
         return episodeString;
     }
 
@@ -231,25 +219,6 @@ public class ApplicationManager implements IDataProcessors {
         ApplicationManager.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
-    public IProduction getProduction(int productionID) {
-        for (IMovie movie : movieList) {
-            if (movie.getProductionID() == productionID) {
-                return movie;
-            }
-        }
-
-        for (IShow show : showList) {
-            for (ISeason season : show.getSeasons()) {
-                for (IEpisode episode : season.getEpisodes()) {
-                    if (episode.getProductionID() == productionID) {
-                        return episode;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
     public IPerson getPersonById(int personId){
         for (IPerson person : personList){
             if (person.getCreditID() == personId){
@@ -268,27 +237,28 @@ public class ApplicationManager implements IDataProcessors {
         return null;
     }
 
-    public ISeason getSeasonById(int showId, int seasonId) {
-        IShow show = getShowById(showId);
-        for (ISeason season : show.getSeasons()){
-            return season;
+
+    public void setSeasonById(int seasonId, ISeason season) {
+        if (seasonMap.containsKey(seasonId)) {
+            seasonMap.remove(seasonId);
         }
-        return null;
+        seasonMap.put(seasonId, season);
+    }
+    public void setEpisodeById(int episodeId, IEpisode episode) {
+        if (seasonMap.containsKey(episodeId)) {
+            seasonMap.remove(episodeId);
+        }
+        episodeMap.put(episodeId, episode);
+    }
+
+    public ISeason getSeasonById(int seasonId) {
+        return seasonMap.get(seasonId);
     }
 
     public IEpisode getEpisodeById(int episodeId){
-        for (IShow show : showList) {
-            ObservableList<ISeason> seasons = show.getSeasons();
-            for (ISeason season : seasons) {
-                for (IEpisode episode : season.getEpisodes()){
-                    if (episode.getCreditID() == episodeId) {
-                        return episode;
-                    }
-                }
-            }
-        }
-        return null;
+        return episodeMap.get(episodeId);
     }
+
 
     /**
      * Searches through the list of persons to return the found people.

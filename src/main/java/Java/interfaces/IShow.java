@@ -9,8 +9,8 @@ public interface IShow extends ICredit {
     boolean isAllSeasonApproved();
     void setAllSeasonApproved(boolean allSeasonApproved);
 
-    ObservableList<ISeason> getSeasons();
-    void setSeasons(ObservableList<ISeason> seasons);
+    ObservableList<Integer> getSeasons();
+    void setSeasons(ObservableList<Integer> seasons);
 
 
     int getNumberOfSeason();

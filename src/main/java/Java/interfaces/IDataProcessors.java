@@ -8,8 +8,8 @@ public interface IDataProcessors {
     void addMovie(String name, String description, Category[] categories, int id, int length);
     void addShow(String title, String description);
     void addSeason(String description, int showId);
-    void addEpisode(String title, int length, String show, String season, int id);
-    String getNextEpisode(String show, String season);
+    void addEpisode(String title, int length, int seasonId, int id);
+    String getNextEpisode(Integer seasonId);
 
     void onStop();
 }
