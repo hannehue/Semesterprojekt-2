@@ -183,10 +183,6 @@ public class ApplicationManager implements IDataProcessors {
         }
     }
 
-    public ObservableList<IMovie> getMovieList() {
-        return movieList;
-    }
-
     private ObservableList<IPerson> getPersonList(){
         return  personList;
     }
@@ -300,13 +296,6 @@ public class ApplicationManager implements IDataProcessors {
         return movieList;
     }
 
-    public void setPersonApproved(int personId){
-        for (ICredit personCredit: getPersonList()) {
-            if (personCredit.getCreditID() == personId) {
-                personCredit.setApproved(true);
-            }
-        }
-    }
     /**
      * Aprrove some credit with an id, from a list.
      * @param id
