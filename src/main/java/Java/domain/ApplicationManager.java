@@ -146,7 +146,7 @@ public class ApplicationManager implements IDataProcessors {
     public void addEpisode(String title, int length, int seasonId, int id) {
         ISeason season = seasonMap.get(seasonId);
         IEpisode episode = new Episode(
-                getNextEpisode(season.getShowID()) + " - " + title,
+                getNextEpisode(season.getCreditID()) + " - " + title,
                 new Date(),
                 id,
                 false,
@@ -238,17 +238,25 @@ public class ApplicationManager implements IDataProcessors {
     }
 
 
-    public void setSeasonById(int seasonId, ISeason season) {
+    public void approveSeason(int seasonId) {
+        ISeason se = null;
         if (seasonMap.containsKey(seasonId)) {
-            seasonMap.remove(seasonId);
+            se = seasonMap.remove(seasonId);
+            se.setApproved(true);
         }
-        seasonMap.put(seasonId, season);
+        if (se != null) {
+            seasonMap.put(seasonId, se);
+        }
     }
-    public void setEpisodeById(int episodeId, IEpisode episode) {
-        if (seasonMap.containsKey(episodeId)) {
-            seasonMap.remove(episodeId);
+    public void approveEpisode(int episodeId) {
+        IEpisode ep = null;
+        if (episodeMap.containsKey(episodeId)) {
+            ep = episodeMap.remove(episodeId);
+            ep.setApproved(true);
         }
-        episodeMap.put(episodeId, episode);
+        if (ep != null) {
+           episodeMap.put(episodeId, ep);
+        }
     }
 
     public ISeason getSeasonById(int seasonId) {
@@ -257,6 +265,14 @@ public class ApplicationManager implements IDataProcessors {
 
     public IEpisode getEpisodeById(int episodeId){
         return episodeMap.get(episodeId);
+    }
+
+    public ObservableMap<Integer, ISeason> getSeasonMap(){
+        return seasonMap;
+    }
+
+    public ObservableMap<Integer, IEpisode> getEpisodeMap(){
+        return episodeMap;
     }
 
 

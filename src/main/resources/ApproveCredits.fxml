@@ -27,12 +27,12 @@
                                 <AnchorPane fx:id="showToApprove" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false"  text="Program">
+                        <TitledPane animated="false"  text="Sæson">
                             <content>
                                 <AnchorPane fx:id="seasonToApprove" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false"  text="Program">
+                        <TitledPane animated="false"  text="Episoder">
                             <content>
                                 <AnchorPane fx:id="episodeToApprove" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                             </content>

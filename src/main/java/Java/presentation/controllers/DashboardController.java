@@ -4,9 +4,7 @@ import Java.domain.ApplicationManager;
 import Java.domain.data.*;
 import Java.interfaces.*;
 import Java.presentation.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /* ------------------------------------------------------------------------------------------------------------------
@@ -39,8 +38,8 @@ public class DashboardController implements Initializable {
     private ObservableList<IPerson> personObservableList;
     private ObservableList<IMovie> movieObservableList;
     private ObservableList<IShow> showObservableList;
-    private ObservableList<ISeason> seasonObservableList = FXCollections.observableArrayList();
-    private ObservableList<IEpisode> episodeObservableList = FXCollections.observableArrayList();
+    private ObservableMap<Integer, ISeason> seasonObservableMap = FXCollections.observableHashMap();
+    private ObservableMap<Integer, IEpisode> episodeObservableMap = FXCollections.observableHashMap();
 
 
     @Override
@@ -103,9 +102,7 @@ public class DashboardController implements Initializable {
      * @param seasonId
      */
     protected void handleApproveSeason(int seasonId) {
-        ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
-        season.setApproved(true);
-        ApplicationManager.getInstance().setSeasonById(season.getCreditID(), season);
+        ApplicationManager.getInstance().approveSeason(seasonId);
     }
 
     /**
@@ -113,9 +110,7 @@ public class DashboardController implements Initializable {
      * @param episodeId
      */
     protected void handleApproveEpisode(int episodeId) {
-        IEpisode episode = ApplicationManager.getInstance().getEpisodeById(episodeId);
-        episode.setApproved(true);
-        ApplicationManager.getInstance().setEpisodeById(episode.getCreditID(), episode);
+        ApplicationManager.getInstance().approveEpisode(episodeId);
     }
 
     private void addItem(AnchorPane listToApprove, ICredit credit, int offset){
@@ -158,29 +153,57 @@ public class DashboardController implements Initializable {
             }
         }
 
-        creditList.addListener(new ListChangeListener<ICredit>() {
-            @Override
-            public void onChanged(Change<? extends ICredit> change) {
-                int offset = 20;
-                while (change.next()) {
-                    if (change.wasAdded()) {
-                        for (ICredit credit : change.getAddedSubList()){
-                            if (!credit.isApproved()){
-                                addItem(listToApprove, credit, offset);
-                                offset += 30;
-                            }
+        creditList.addListener((ListChangeListener<ICredit>) change -> {
+            int offset1 = 20;
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    for (ICredit credit : change.getAddedSubList()){
+                        if (!credit.isApproved()){
+                            addItem(listToApprove, credit, offset1);
+                            offset1 += 30;
                         }
-                    } else if (change.wasRemoved()) {
-                        for (ICredit credit : change.getRemoved()){
-                            System.out.println("Removed credit: " + credit);
-                            removeItem(listToApprove, credit);
-                        }
+                    }
+                } else if (change.wasRemoved()) {
+                    for (ICredit credit : change.getRemoved()){
+                        System.out.println("Removed credit: " + credit);
+                        removeItem(listToApprove, credit);
                     }
                 }
             }
         });
     }
 
+    public <T extends ICredit> void setContent(AnchorPane listToApprove, ObservableMap<Integer, T> creditList){
+        int offset = 20;
+        for (Map.Entry<Integer, T> credit : creditList.entrySet()){
+            if (!credit.getValue().isApproved()) {
+                addItem(listToApprove, credit.getValue(), offset);
+                offset += 30;
+            }
+        }
+
+        creditList.addListener(new MapChangeListener<Integer, T>() {
+            @Override
+            public void onChanged(Change<? extends Integer, ? extends T> change) {
+                int offset = 20;
+                System.out.println("change in map");
+                if (change.wasAdded()) {
+                    System.out.println("change add");
+                    ICredit credit = change.getValueAdded();
+                    if (!credit.isApproved()){
+                        addItem(listToApprove, credit, offset);
+                        offset += 30;
+                    }
+                } else if (change.wasRemoved()) {
+                    System.out.println("change removed");
+                    ICredit credit = change.getValueRemoved();
+                    if (!credit.isApproved()){
+                        removeItem(listToApprove, credit);
+                    }
+                }
+            }
+        });
+    }
 
 
     @Override
@@ -191,19 +214,10 @@ public class DashboardController implements Initializable {
         setContent(personToApprove, personObservableList);
         showObservableList = ApplicationManager.getInstance().getShowList();
         setContent(showToApprove, showObservableList);
-        setContent(seasonToApprove, seasonObservableList);
-        setContent(episodeToApprove, episodeObservableList);
-        for (IShow show : ApplicationManager.getInstance().getShowList()) {
-            ObservableList<Integer> seasons = show.getSeasons();
-            for (Integer seasonId : seasons) {
-                ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
-                ObservableList<Integer>  episodes = season.getEpisodes();
-                for (Integer episodeId: episodes) {
-                    IEpisode episode = ApplicationManager.getInstance().getEpisodeById(episodeId);
-                    episodeObservableList.add(episode);
-                }
-                seasonObservableList.add(season);
-            }
-        }
+
+        seasonObservableMap = ApplicationManager.getInstance().getSeasonMap();
+        episodeObservableMap = ApplicationManager.getInstance().getEpisodeMap();
+        setContent(seasonToApprove, seasonObservableMap);
+        setContent(episodeToApprove, episodeObservableMap);
     }
 }

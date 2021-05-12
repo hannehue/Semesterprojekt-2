@@ -79,6 +79,29 @@ public class AddCreditController implements Initializable {
     }
 
     /**
+     *
+     * @param Event mouseevent from FXML
+     *
+     *      Populates the season choicebox with the seasons from the selected show
+     */
+    public void handleGetSeason(MouseEvent Event) {
+        choiceBoxSeason.getItems().clear();
+        if (choiceBoxShow.getValue() != null) {
+            for (IShow show : ApplicationManager.getInstance().getShowList()) {
+                if (show.getName() == choiceBoxShow.getValue().toString()) {
+                    if (show.getSeasons() != null) {
+                        for (Integer seasonId : show.getSeasons()) {
+                            ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
+                            choiceBoxSeason.getItems().add(season);
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("Showing choicebox wiht conttens " + choiceBoxSeason.getItems());
+        choiceBoxSeason.show();
+    }
+    /**
      * Submits the episode of the show selected.
      *
      * @param Event
@@ -90,7 +113,8 @@ public class AddCreditController implements Initializable {
         ApplicationManager.getInstance().addEpisode(
                 episodeTitle.getText(),
                 Integer.parseInt(episodeLength.getText()),
-                ((ISeason) choiceBoxSeason.getValue()).getCreditID(), id);
+                ((ISeason) choiceBoxSeason.getValue()).getCreditID(),
+                id);
         ApplicationManager.getInstance().addJob(id);
     }
 
@@ -178,29 +202,6 @@ public class AddCreditController implements Initializable {
         createSeason.close();
     }
 
-    /**
-     *
-     * @param Event mouseevent from FXML
-     *
-     *      Populates the season choicebox with the seasons from the selected show
-     */
-    public void handleGetSeason(MouseEvent Event) {
-        choiceBoxSeason.getItems().clear();
-        if (choiceBoxShow.getValue() != null) {
-            for (IShow show : ApplicationManager.getInstance().getShowList()) {
-                if (show.getName() == choiceBoxShow.getValue().toString()) {
-                    if (show.getSeasons() != null) {
-                        for (Integer seasonId : show.getSeasons()) {
-                            ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
-                            choiceBoxSeason.getItems().add(season);
-                        }
-                    }
-                }
-            }
-        }
-        System.out.println("Showing choicebox wiht conttens " + choiceBoxSeason.getItems());
-        choiceBoxSeason.show();
-    }
 
     public void addSeason(String description) {
         ApplicationManager.getInstance().addSeason(description, ((IShow) choiceBoxShow.getValue()).getCreditID());
