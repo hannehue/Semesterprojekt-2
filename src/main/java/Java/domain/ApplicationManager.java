@@ -259,10 +259,6 @@ public class ApplicationManager implements IDataProcessors {
         return seasonMap.get(seasonId);
     }
 
-    public IEpisode getEpisodeById(int episodeId){
-        return episodeMap.get(episodeId);
-    }
-
     public ObservableMap<Integer, ISeason> getSeasonMap(){
         return seasonMap;
     }

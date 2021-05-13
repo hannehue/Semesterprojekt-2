@@ -143,7 +143,6 @@ public class AddCreditController implements Initializable {
      * @param Event
      * @throws IOException
      */
-
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
         ApplicationManager.getInstance().addPerson(
