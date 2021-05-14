@@ -72,7 +72,7 @@ public class AddCreditController implements Initializable {
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         choiceBoxSeason.getItems().clear();
-        for (IShow show : ApplicationManager.getInstance().getShowList()) {
+        for (IShow show : ApplicationManager.getInstance().getAllShows()) {
             choiceBoxShow.getItems().add(show);
         }
         choiceBoxShow.show();
@@ -87,14 +87,11 @@ public class AddCreditController implements Initializable {
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
         if (choiceBoxShow.getValue() != null) {
-            for (IShow show : ApplicationManager.getInstance().getShowList()) {
-                if (show.getName() == choiceBoxShow.getValue().toString()) {
-                    if (show.getSeasons() != null) {
-                        for (Integer seasonId : show.getSeasons()) {
-                            ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
-                            choiceBoxSeason.getItems().add(season);
-                        }
-                    }
+            IShow show = ApplicationManager.getInstance().searchShowName(choiceBoxShow.getValue().toString());
+            if (show != null) {
+                for (Integer seasonId : show.getSeasons()) {
+                    ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
+                    choiceBoxSeason.getItems().add(season);
                 }
             }
         }
@@ -202,7 +199,7 @@ public class AddCreditController implements Initializable {
     }
 
 
-    public void addSeason(String description) {
+    protected void addSeason(String description) {
         ApplicationManager.getInstance().addSeason(description, ((IShow) choiceBoxShow.getValue()).getCreditID());
     }
 

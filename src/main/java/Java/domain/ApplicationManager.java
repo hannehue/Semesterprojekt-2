@@ -14,16 +14,16 @@ import java.util.Date;
 public class ApplicationManager implements IDataProcessors {
 
     private DatabaseLoader dataLoader;
-    private ObservableList<IPerson> personList = FXCollections.observableArrayList();
-    private ObservableList<IMovie> movieList = FXCollections.observableArrayList();
-    private ObservableList<IShow> showList = FXCollections.observableArrayList();
-    private ObservableList<IJob> tempList = FXCollections.observableArrayList();
-    private ObservableMap<Integer, ISeason> seasonMap = FXCollections.observableHashMap();
-    private ObservableMap<Integer, IEpisode> episodeMap = FXCollections.observableHashMap();
+    private final ObservableList<IPerson> personList = FXCollections.observableArrayList();
+    private final ObservableList<IMovie> movieList = FXCollections.observableArrayList();
+    private final ObservableMap<Integer, IShow> showMap = FXCollections.observableHashMap();
+    private final ObservableList<IJob> tempList = FXCollections.observableArrayList();
+    private final ObservableMap<Integer, ISeason> seasonMap = FXCollections.observableHashMap();
+    private final ObservableMap<Integer, IEpisode> episodeMap = FXCollections.observableHashMap();
     private UserType userType;
     private String searchFieldPlaceholder = "";
 
-    private static ApplicationManager instance = new ApplicationManager();
+    private static final ApplicationManager instance = new ApplicationManager();
     private int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
 
     private ApplicationManager() {
@@ -121,7 +121,7 @@ public class ApplicationManager implements IDataProcessors {
                 false,
                 "desc",
                 true);
-        showList.add(show);
+        showMap.put(show.getCreditID(), show);
         System.out.println("Added show: " + show.getName());
     }
 
@@ -174,7 +174,7 @@ public class ApplicationManager implements IDataProcessors {
 
         dataLoader.addCreditsToDatabase((ArrayList<IPerson>) personList);
         dataLoader.addCreditsToDatabase((ArrayList<IMovie>) movieList);
-        dataLoader.addCreditsToDatabase((ArrayList<IShow>) showList);
+        dataLoader.addCreditsToDatabase((ArrayList<IShow>) showMap);
 
         try {
             dataLoader.writeAllCredits();
@@ -195,8 +195,8 @@ public class ApplicationManager implements IDataProcessors {
         userType = userTypeSetter;
     }
 
-    public ObservableList<IShow> getShowList() {
-        return showList;
+    public ObservableMap<Integer, IShow> getShowList() {
+        return showMap;
     }
 
     public void clearTempJobs(){
@@ -225,15 +225,21 @@ public class ApplicationManager implements IDataProcessors {
     }
 
     public IShow getShowById(int showId){
-        for (IShow show : showList){
-            if (show.getCreditID() == showId){
+        return showMap.get(showId);
+    }
+
+    public IShow searchShowName(String name){
+        for (IShow show : showMap.values()){
+            if (show.getName() == name ) {
                 return show;
             }
         }
         return null;
     }
 
-
+    public ArrayList<IShow> getAllShows(){
+        return (ArrayList<IShow>) showMap.values();
+    }
 
     public ISeason getSeasonById(int seasonId) {
         return seasonMap.get(seasonId);
@@ -293,14 +299,14 @@ public class ApplicationManager implements IDataProcessors {
     }
 
 
-    public <T extends ICredit> void approveCredit(int seasonId, ObservableMap<Integer,T> map) {
-        ICredit credit = null;
-        if (map.containsKey(seasonId)) {
-            credit = map.remove(seasonId);
+    public <T extends ICredit> void approveCredit(int id, ObservableMap<Integer,T> map) {
+        T credit = null;
+        if (map.containsKey(id)) {
+            credit = map.remove(id);
             credit.setApproved(true);
         }
         if (credit != null) {
-            map.put(seasonId, (T) credit);
+            map.put(id, credit);
         }
     }
 

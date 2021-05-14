@@ -3,19 +3,14 @@ package Java.presentation.controllers;
 import Java.domain.ApplicationManager;
 import Java.domain.data.*;
 import Java.interfaces.*;
-import Java.presentation.*;
 import javafx.collections.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -37,19 +32,11 @@ public class DashboardController implements Initializable {
 
     private ObservableList<IPerson> personObservableList;
     private ObservableList<IMovie> movieObservableList;
-    private ObservableList<IShow> showObservableList;
+    private ObservableMap<Integer, IShow> showObservableMap;
     private ObservableMap<Integer, ISeason> seasonObservableMap = FXCollections.observableHashMap();
     private ObservableMap<Integer, IEpisode> episodeObservableMap = FXCollections.observableHashMap();
 
 
-    @Override
-    public String toString() {
-        return "DashboardController{" +
-                "personToApprove=" + personToApprove +
-                ", movieToApprove=" + movieToApprove +
-                ", programToApprove=" + showToApprove +
-                '}';
-    }
     /* ------------------------------------------------------------------------------------------------------------------
         Metoder
     ------------------------------------------------------------------------------------------------------------------ */
@@ -66,7 +53,7 @@ public class DashboardController implements Initializable {
 
     private void handleApproveCredit(int id, Class<? extends ICredit> credit) {
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
-            ApplicationManager.getInstance().approveCredit(id, showObservableList);
+            ApplicationManager.getInstance().approveCredit(id, showObservableMap);
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
             ApplicationManager.getInstance().approveCredit(id, movieObservableList);
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
@@ -109,7 +96,7 @@ public class DashboardController implements Initializable {
         }
     }
 
-    public void setContent(AnchorPane listToApprove, ObservableList<? extends ICredit> creditList){
+    private void setContent(AnchorPane listToApprove, ObservableList<? extends ICredit> creditList){
         int offset = 20;
         for (ICredit credit : creditList){
             if (!credit.isApproved()) {
@@ -137,7 +124,7 @@ public class DashboardController implements Initializable {
             }
         });
     }
-    public <T extends ICredit> void setContent(AnchorPane listToApprove, ObservableMap<Integer, T> creditList){
+    private <T extends ICredit> void setContent(AnchorPane listToApprove, ObservableMap<Integer, T> creditList){
         int offset = 20;
         for (Map.Entry<Integer, T> credit : creditList.entrySet()){
             if (!credit.getValue().isApproved()) {
@@ -176,8 +163,8 @@ public class DashboardController implements Initializable {
         setContent(movieToApprove, movieObservableList);
         personObservableList = ApplicationManager.getInstance().getPersons();
         setContent(personToApprove, personObservableList);
-        showObservableList = ApplicationManager.getInstance().getShowList();
-        setContent(showToApprove, showObservableList);
+        showObservableMap = ApplicationManager.getInstance().getShowList();
+        setContent(showToApprove, showObservableMap);
 
         seasonObservableMap = ApplicationManager.getInstance().getSeasonMap();
         episodeObservableMap = ApplicationManager.getInstance().getEpisodeMap();

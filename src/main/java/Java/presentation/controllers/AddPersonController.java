@@ -71,7 +71,7 @@ public class AddPersonController implements Initializable {
      *
      * @param creditList
      */
-    public void setContent(ArrayList<ICredit> creditList) {
+    private void setContent(ArrayList<ICredit> creditList) {
         ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
         observableResults.addAll(creditList);
         System.out.println(observableResults);
