@@ -2,7 +2,6 @@ package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
 import Java.domain.services.*;
-import Java.domain.dataoperators.*;
 import Java.interfaces.IJob;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;

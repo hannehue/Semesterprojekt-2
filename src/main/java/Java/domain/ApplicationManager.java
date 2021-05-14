@@ -15,14 +15,6 @@ public class ApplicationManager {
     private UserType userType;
     private String searchFieldPlaceholder = "";
 
-    private EpisodeManager episodeOperator;
-    private JobManager jobOperator;
-    private MovieManager movieOperator;
-    private PersonManager personOperator;
-    private SeasonManager seasonOperator;
-    private ShowManager showOperator;
-
-
     private static final ApplicationManager instance = new ApplicationManager();
     private int idTracker = 0; //should be moved to database (tracker id for Movie og Person)
 

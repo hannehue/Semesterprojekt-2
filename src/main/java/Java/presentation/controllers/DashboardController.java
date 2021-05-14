@@ -3,7 +3,6 @@ package Java.presentation.controllers;
 import Java.domain.ApplicationManager;
 import Java.domain.data.*;
 import Java.domain.services.*;
-import Java.domain.dataoperators.*;
 import Java.interfaces.*;
 import javafx.collections.*;
 import javafx.fxml.FXML;
