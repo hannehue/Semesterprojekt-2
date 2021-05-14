@@ -1,6 +1,8 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
+import Java.domain.data.Job;
+import Java.domain.dataoperators.*;
 import Java.interfaces.IJob;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
@@ -72,7 +74,7 @@ public class AddCreditController implements Initializable {
     public void handleGetShows(MouseEvent mouseEvent) {
         choiceBoxShow.getItems().clear();
         choiceBoxSeason.getItems().clear();
-        for (IShow show : ApplicationManager.getInstance().getAllShows()) {
+        for (IShow show : ShowOperator.getInstance().getAllShows()) {
             choiceBoxShow.getItems().add(show);
         }
         choiceBoxShow.show();
@@ -87,10 +89,10 @@ public class AddCreditController implements Initializable {
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
         if (choiceBoxShow.getValue() != null) {
-            IShow show = ApplicationManager.getInstance().searchShowName(choiceBoxShow.getValue().toString());
+            IShow show = ShowOperator.getInstance().searchShowName(choiceBoxShow.getValue().toString());
             if (show != null) {
                 for (Integer seasonId : show.getSeasons()) {
-                    ISeason season = ApplicationManager.getInstance().getSeasonById(seasonId);
+                    ISeason season = SeasonOperator.getInstance().getSeasonById(seasonId);
                     choiceBoxSeason.getItems().add(season);
                 }
             }
@@ -107,12 +109,12 @@ public class AddCreditController implements Initializable {
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
         int id = ApplicationManager.getInstance().nextId();
-        ApplicationManager.getInstance().addEpisode(
+        EpisodeOperator.getInstance().addEpisode(
                 episodeTitle.getText(),
                 Integer.parseInt(episodeLength.getText()),
                 ((ISeason) choiceBoxSeason.getValue()).getCreditID(),
                 id);
-        ApplicationManager.getInstance().addJob(id);
+        JobOperator.getInstance().addJob(id);
     }
 
     /**
@@ -124,14 +126,14 @@ public class AddCreditController implements Initializable {
     @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
         int id = ApplicationManager.getInstance().nextId();
-        ApplicationManager.getInstance().addMovie(
+        MovieOperator.getInstance().addMovie(
                 movieTitle.getText(),
                 movieDescription.getText(),
                 null,
                 id,
                 Integer.parseInt(movieLength.getText())
                 );
-        ApplicationManager.getInstance().addJob(id);
+        JobOperator.getInstance().addJob(id);
     }
 
     /**
@@ -142,7 +144,7 @@ public class AddCreditController implements Initializable {
      */
     @FXML
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
-        ApplicationManager.getInstance().addPerson(
+        PersonOperator.getInstance().addPerson(
                 personName.getText(),
                 null,
                 personPhone.getText(),
@@ -200,7 +202,7 @@ public class AddCreditController implements Initializable {
 
 
     protected void addSeason(String description) {
-        ApplicationManager.getInstance().addSeason(description, ((IShow) choiceBoxShow.getValue()).getCreditID());
+        SeasonOperator.getInstance().addSeason(description, ((IShow) choiceBoxShow.getValue()).getCreditID());
     }
 
     /**
@@ -230,11 +232,11 @@ public class AddCreditController implements Initializable {
 
 
     private void reloadNextEpisode() {
-        episodeId.setText(ApplicationManager.getInstance().getNextEpisode(((ISeason) choiceBoxSeason.getValue()).getCreditID()));
+        episodeId.setText(EpisodeOperator.getInstance().getNextEpisode(((ISeason) choiceBoxSeason.getValue()).getCreditID()));
     }
 
     public void handleRemovePersons(ActionEvent actionEvent) {
-        ApplicationManager.getInstance().clearTempJobs();
+        JobOperator.getInstance().clearTempJobs();
     }
 
 
@@ -244,7 +246,7 @@ public class AddCreditController implements Initializable {
         PersonList.setPrefHeight(200);
         PersonList.setPrefWidth(493);
         moviePeoplePane.getChildren().add(PersonList);
-        ObservableList<IJob> observableResults = ApplicationManager.getInstance().getTempList();
+        ObservableList<IJob> observableResults = JobOperator.getInstance().getTempList();
         PersonList.setItems(observableResults);
 
 
@@ -252,7 +254,7 @@ public class AddCreditController implements Initializable {
         episodePersonList.setPrefHeight(200);
         episodePersonList.setPrefWidth(493);
         episodePeoplePane.getChildren().add(PersonList);
-        ObservableList<IJob> episodeList = ApplicationManager.getInstance().getTempList();
+        ObservableList<IJob> episodeList = JobOperator.getInstance().getTempList();
         PersonList.setItems(episodeList);
 
     }

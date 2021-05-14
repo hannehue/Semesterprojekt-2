@@ -1,6 +1,7 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
+import Java.domain.dataoperators.ShowOperator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -26,7 +27,7 @@ public class CreateShowController {
 
     @FXML
     protected void handleAddShow(ActionEvent Event) throws IOException {
-        ApplicationManager.getInstance().addShow(
+        ShowOperator.getInstance().addShow(
                 showTitle.getText(),
                 showDescription.getText()
         );
