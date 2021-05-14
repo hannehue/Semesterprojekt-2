@@ -234,26 +234,6 @@ public class ApplicationManager implements IDataProcessors {
     }
 
 
-    public void approveSeason(int seasonId) {
-        ISeason se = null;
-        if (seasonMap.containsKey(seasonId)) {
-            se = seasonMap.remove(seasonId);
-            se.setApproved(true);
-        }
-        if (se != null) {
-            seasonMap.put(seasonId, se);
-        }
-    }
-    public void approveEpisode(int episodeId) {
-        IEpisode ep = null;
-        if (episodeMap.containsKey(episodeId)) {
-            ep = episodeMap.remove(episodeId);
-            ep.setApproved(true);
-        }
-        if (ep != null) {
-           episodeMap.put(episodeId, ep);
-        }
-    }
 
     public ISeason getSeasonById(int seasonId) {
         return seasonMap.get(seasonId);
@@ -309,6 +289,18 @@ public class ApplicationManager implements IDataProcessors {
             observableList.remove(approveCredit);
             approveCredit.setApproved(true);
             observableList.add(approveCredit);
+        }
+    }
+
+
+    public <T extends ICredit> void approveCredit(int seasonId, ObservableMap<Integer,T> map) {
+        ICredit credit = null;
+        if (map.containsKey(seasonId)) {
+            credit = map.remove(seasonId);
+            credit.setApproved(true);
+        }
+        if (credit != null) {
+            map.put(seasonId, (T) credit);
         }
     }
 

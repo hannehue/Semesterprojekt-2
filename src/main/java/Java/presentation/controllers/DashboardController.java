@@ -72,9 +72,9 @@ public class DashboardController implements Initializable {
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
             ApplicationManager.getInstance().approveCredit(id, personObservableList);
         } else if (Season.class.getTypeName().equals(credit.getTypeName())) {
-            ApplicationManager.getInstance().approveSeason(id);
+            ApplicationManager.getInstance().approveCredit(id, seasonObservableMap);
         } else if (Episode.class.getTypeName().equals(credit.getTypeName())) {
-            ApplicationManager.getInstance().approveEpisode(id);
+            ApplicationManager.getInstance().approveCredit(id, episodeObservableMap);
         }
     }
 
