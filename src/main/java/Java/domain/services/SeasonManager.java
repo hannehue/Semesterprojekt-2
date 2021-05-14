@@ -1,4 +1,4 @@
-package Java.domain.dataoperators;
+package Java.domain.services;
 
 import Java.domain.ApplicationManager;
 import Java.domain.data.Season;
@@ -9,18 +9,18 @@ import javafx.collections.ObservableMap;
 
 import java.util.Date;
 
-public class SeasonOperator {
-    private static SeasonOperator instance = new SeasonOperator();
-    private SeasonOperator(){}
+public class SeasonManager {
+    private static SeasonManager instance = new SeasonManager();
+    private SeasonManager(){}
 
-    public static SeasonOperator getInstance() {
+    public static SeasonManager getInstance() {
         return instance;
     }
 
     private final ObservableMap<Integer, ISeason> seasonMap = FXCollections.observableHashMap();
 
     public void addSeason(String description, int showId) {
-        IShow show = ShowOperator.getInstance().getShowById(showId);
+        IShow show = ShowManager.getInstance().getShowById(showId);
         ISeason season = new Season(
                 "S" + (show.getNumberOfSeason() + 1),
                 new Date(),

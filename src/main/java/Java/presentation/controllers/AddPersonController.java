@@ -1,10 +1,8 @@
 package Java.presentation.controllers;
 
-import Java.domain.ApplicationManager;
-import Java.domain.data.Job;
 import Java.domain.data.Role;
-import Java.domain.dataoperators.JobOperator;
-import Java.domain.dataoperators.PersonOperator;
+import Java.domain.services.JobManager;
+import Java.domain.services.PersonManager;
 import Java.interfaces.ICredit;
 import Java.interfaces.IJob;
 import javafx.collections.FXCollections;
@@ -55,7 +53,7 @@ public class AddPersonController implements Initializable {
     }
 
     public void handleFindPerson(ActionEvent actionEvent) {
-        ArrayList<ICredit> searchList = PersonOperator.getInstance().searchPerson(findPerson.getText().toLowerCase());
+        ArrayList<ICredit> searchList = PersonManager.getInstance().searchPerson(findPerson.getText().toLowerCase());
         setContent(searchList);
         setCharacterNameField();
     }
@@ -63,9 +61,9 @@ public class AddPersonController implements Initializable {
     public void handleAddPerson(ActionEvent actionEvent) {
         IJob job;
         if (jobRole.getValue() == Role.SKUESPILLER) {
-            JobOperator.getInstance().addTempJob(personToCredit.getCreditID(), jobRole.getValue(), characterName.getText(), 0);
+            JobManager.getInstance().addTempJob(personToCredit.getCreditID(), jobRole.getValue(), characterName.getText(), 0);
         } else {
-            JobOperator.getInstance().addTempJob(personToCredit.getCreditID(), jobRole.getValue(), 0);
+            JobManager.getInstance().addTempJob(personToCredit.getCreditID(), jobRole.getValue(), 0);
         }
     }
 

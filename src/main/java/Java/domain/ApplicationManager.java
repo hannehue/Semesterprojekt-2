@@ -2,15 +2,12 @@ package Java.domain;
 
 import Java.data.DatabaseLoader;
 import Java.domain.data.*;
-import Java.domain.dataoperators.*;
+import Java.domain.services.*;
 import Java.interfaces.*;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class ApplicationManager {
 
@@ -18,12 +15,12 @@ public class ApplicationManager {
     private UserType userType;
     private String searchFieldPlaceholder = "";
 
-    private EpisodeOperator episodeOperator;
-    private JobOperator jobOperator;
-    private MovieOperator movieOperator;
-    private PersonOperator personOperator;
-    private SeasonOperator seasonOperator;
-    private ShowOperator showOperator;
+    private EpisodeManager episodeOperator;
+    private JobManager jobOperator;
+    private MovieManager movieOperator;
+    private PersonManager personOperator;
+    private SeasonManager seasonOperator;
+    private ShowManager showOperator;
 
 
     private static final ApplicationManager instance = new ApplicationManager();

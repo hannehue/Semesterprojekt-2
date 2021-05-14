@@ -1,4 +1,4 @@
-package Java.domain.dataoperators;
+package Java.domain.services;
 
 import Java.domain.data.Category;
 import Java.domain.data.Movie;
@@ -6,11 +6,11 @@ import Java.interfaces.IMovie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class MovieOperator {
-    private static MovieOperator instance = new MovieOperator();
-    private MovieOperator(){}
+public class MovieManager {
+    private static MovieManager instance = new MovieManager();
+    private MovieManager(){}
 
-    public static MovieOperator getInstance() {
+    public static MovieManager getInstance() {
         return instance;
     }
 

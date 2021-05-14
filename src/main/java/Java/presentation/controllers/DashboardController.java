@@ -2,6 +2,7 @@ package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
 import Java.domain.data.*;
+import Java.domain.services.*;
 import Java.domain.dataoperators.*;
 import Java.interfaces.*;
 import javafx.collections.*;
@@ -160,15 +161,15 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        movieObservableList = MovieOperator.getInstance().getMovies();
+        movieObservableList = MovieManager.getInstance().getMovies();
         setContent(movieToApprove, movieObservableList);
-        personObservableList = PersonOperator.getInstance().getPersonList();
+        personObservableList = PersonManager.getInstance().getPersonList();
         setContent(personToApprove, personObservableList);
-        showObservableMap = ShowOperator.getInstance().getShowList();
+        showObservableMap = ShowManager.getInstance().getShowList();
         setContent(showToApprove, showObservableMap);
 
-        seasonObservableMap = SeasonOperator.getInstance().getSeasonMap();
-        episodeObservableMap = EpisodeOperator.getInstance().getEpisodeMap();
+        seasonObservableMap = SeasonManager.getInstance().getSeasonMap();
+        episodeObservableMap = EpisodeManager.getInstance().getEpisodeMap();
         setContent(seasonToApprove, seasonObservableMap);
         setContent(episodeToApprove, episodeObservableMap);
     }

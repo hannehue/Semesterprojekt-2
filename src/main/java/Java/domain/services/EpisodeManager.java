@@ -1,4 +1,4 @@
-package Java.domain.dataoperators;
+package Java.domain.services;
 
 import Java.domain.ApplicationManager;
 import Java.domain.data.Episode;
@@ -9,21 +9,21 @@ import javafx.collections.ObservableMap;
 
 import java.util.Date;
 
-public class EpisodeOperator {
-    private static EpisodeOperator instance = new EpisodeOperator();
+public class EpisodeManager {
+    private static EpisodeManager instance = new EpisodeManager();
 
-    private EpisodeOperator(){
+    private EpisodeManager(){
 
     }
 
-    public static EpisodeOperator getInstance(){
+    public static EpisodeManager getInstance(){
         return instance;
     }
 
     private final ObservableMap<Integer, IEpisode> episodeMap = FXCollections.observableHashMap();
 
     public void addEpisode(String title, int length, int seasonId, int id) {
-        ISeason season = SeasonOperator.getInstance().getSeasonById(seasonId);
+        ISeason season = SeasonManager.getInstance().getSeasonById(seasonId);
         IEpisode episode = new Episode(
                 getNextEpisode(season.getCreditID()) + " - " + title,
                 new Date(),
@@ -42,7 +42,7 @@ public class EpisodeOperator {
     }
 
     public String getNextEpisode(Integer seasonId) {
-        ISeason season = SeasonOperator.getInstance().getSeasonById(seasonId);
+        ISeason season = SeasonManager.getInstance().getSeasonById(seasonId);
         String episodeString = season + "E" + (season.getNumberOfEpisode() + 1);
         return episodeString;
     }

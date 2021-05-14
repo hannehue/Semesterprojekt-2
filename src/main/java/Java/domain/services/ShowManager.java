@@ -1,4 +1,4 @@
-package Java.domain.dataoperators;
+package Java.domain.services;
 
 import Java.domain.ApplicationManager;
 import Java.domain.data.Show;
@@ -8,11 +8,11 @@ import javafx.collections.ObservableMap;
 
 import java.util.ArrayList;
 
-public class ShowOperator {
-    private static ShowOperator instance = new ShowOperator();
-    private ShowOperator(){}
+public class ShowManager {
+    private static ShowManager instance = new ShowManager();
+    private ShowManager(){}
 
-    public static ShowOperator getInstance() {
+    public static ShowManager getInstance() {
         return instance;
     }
 

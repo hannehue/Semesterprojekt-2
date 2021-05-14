@@ -1,4 +1,4 @@
-package Java.domain.dataoperators;
+package Java.domain.services;
 
 import Java.domain.data.Job;
 import Java.domain.data.Role;
@@ -6,15 +6,15 @@ import Java.interfaces.IJob;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class JobOperator {
-    private static JobOperator instance = new JobOperator();
-    private JobOperator(){}
+public class JobManager {
+    private static JobManager instance = new JobManager();
+    private JobManager(){}
 
     private final ObservableList<IJob> tempList = FXCollections.observableArrayList();
 
     public void addJob(int productionId) {
         for (IJob job : tempList) {
-            PersonOperator.getInstance().getPersonById(job.getPersonId()).addJob(job);
+            PersonManager.getInstance().getPersonById(job.getPersonId()).addJob(job);
         }
         tempList.clear();
     }
@@ -48,7 +48,7 @@ public class JobOperator {
         return tempList;
     }
 
-    public static JobOperator getInstance() {
+    public static JobManager getInstance() {
         return instance;
     }
 }

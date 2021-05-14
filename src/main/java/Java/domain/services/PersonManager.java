@@ -1,4 +1,4 @@
-package Java.domain.dataoperators;
+package Java.domain.services;
 
 import Java.domain.data.Person;
 import Java.interfaces.ICredit;
@@ -9,11 +9,11 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class PersonOperator {
-    private static PersonOperator instance = new PersonOperator();
-    private PersonOperator(){}
+public class PersonManager {
+    private static PersonManager instance = new PersonManager();
+    private PersonManager(){}
 
-    public static PersonOperator getInstance() {
+    public static PersonManager getInstance() {
         return instance;
     }
 
