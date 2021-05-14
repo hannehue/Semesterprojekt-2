@@ -42,7 +42,7 @@ public class DashboardController implements Initializable {
         Metoder
     ------------------------------------------------------------------------------------------------------------------ */
 
-    private static DashboardController instance = new DashboardController();
+    private static final DashboardController instance = new DashboardController();
 
     private DashboardController(){
     }
