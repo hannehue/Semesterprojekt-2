@@ -49,22 +49,6 @@ public class ApplicationManager {
         return temp;
     }
 
-
-
-    public void onStop(){
-
-        //dataLoader.addCreditsToDatabase((ArrayList<IPerson>) personList);
-        //dataLoader.addCreditsToDatabase((ArrayList<IMovie>) movieList);
-        //dataLoader.addCreditsToDatabase((ArrayList<IShow>) showMap);
-
-        try {
-            dataLoader.writeAllCredits();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public UserType getUserType() {
         return userType;
     }
