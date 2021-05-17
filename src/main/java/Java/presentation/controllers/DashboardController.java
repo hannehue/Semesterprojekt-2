@@ -1,20 +1,18 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
-import Java.interfaces.ICredit;
-import Java.interfaces.IEpisode;
-import Java.interfaces.ISeason;
-import Java.interfaces.IShow;
-import Java.presentation.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import Java.domain.data.*;
+import Java.domain.services.*;
+import Java.interfaces.*;
+import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /* ------------------------------------------------------------------------------------------------------------------
@@ -27,25 +25,24 @@ public class DashboardController implements Initializable {
     @FXML
     protected AnchorPane movieToApprove;
     @FXML
-    protected AnchorPane programToApprove;
+    protected AnchorPane showToApprove;
+    @FXML
+    protected AnchorPane seasonToApprove;
+    @FXML
+    protected AnchorPane episodeToApprove;
+
+    private ObservableList<IPerson> personObservableList;
+    private ObservableList<IMovie> movieObservableList;
+    private ObservableMap<Integer, IShow> showObservableMap;
+    private ObservableMap<Integer, ISeason> seasonObservableMap = FXCollections.observableHashMap();
+    private ObservableMap<Integer, IEpisode> episodeObservableMap = FXCollections.observableHashMap();
 
 
     /* ------------------------------------------------------------------------------------------------------------------
         Metoder
     ------------------------------------------------------------------------------------------------------------------ */
-    @FXML
-    public void handleReloadPerson(MouseEvent mouseEvent) {
-        reloadPerson();
-    }
-    @FXML
-    public void handleReloadMovie(MouseEvent mouseEvent) {
-        reloadMovie();
-    }
-    @FXML
-    public void handleReloadProgram(MouseEvent mouseEvent) {
-        reloadProgram();
-    }
-    private static DashboardController instance = new DashboardController();
+
+    private static final DashboardController instance = new DashboardController();
 
     private DashboardController(){
     }
@@ -54,207 +51,125 @@ public class DashboardController implements Initializable {
         return instance;
     }
 
-    protected EventHandler<ActionEvent> handleApprovePerson(int Event) {
-        for (ICredit personCredit: ApplicationManager.getInstance().getPersonList()) {
-            if (personCredit.getCreditID() == Event) {
-                personCredit.setApproved(true);
-            }
+
+    private void handleApproveCredit(int id, Class<? extends ICredit> credit) {
+        if (Show.class.getTypeName().equals(credit.getTypeName())) {
+            ApplicationManager.getInstance().approveCredit(id, showObservableMap);
+        } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
+            ApplicationManager.getInstance().approveCredit(id, movieObservableList);
+        } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
+            ApplicationManager.getInstance().approveCredit(id, personObservableList);
+        } else if (Season.class.getTypeName().equals(credit.getTypeName())) {
+            ApplicationManager.getInstance().approveCredit(id, seasonObservableMap);
+        } else if (Episode.class.getTypeName().equals(credit.getTypeName())) {
+            ApplicationManager.getInstance().approveCredit(id, episodeObservableMap);
         }
-        reloadPerson();
-        return null;
     }
 
-    protected EventHandler<ActionEvent> handleApproveMovie(int Event) {
-        for (ICredit movieCredit: ApplicationManager.getInstance().getMovieList()) {
-            if (movieCredit.getCreditID() == Event) {
-                movieCredit.setApproved(true);
-            }
-        }
-        reloadMovie();
-        return null;
+    private void addItem(AnchorPane listToApprove, ICredit credit, int offset){
+        Pane personPane = new Pane();
+        listToApprove.getChildren().add(personPane);
+        personPane.setLayoutY(offset);
+        personPane.setId(String.valueOf(credit.getCreditID()));
+
+        Label personLabel = new Label("Name: " + credit.getName());
+        personLabel.setLayoutX(20);
+        personPane.getChildren().add(personLabel);
+
+
+        Button approveButton = new Button();
+        approveButton.setText("Godkend");
+        approveButton.setLayoutX(300);
+        personPane.getChildren().add(approveButton);
+        int finalButtonCounter = credit.getCreditID();
+        approveButton.setOnAction(actionEvent -> handleApproveCredit(finalButtonCounter, credit.getClass()));
     }
 
-    protected EventHandler<ActionEvent> handleApproveShow(int Event) {
-        for (IShow showCredit: ApplicationManager.getInstance().getShowList()) {
-            if (showCredit.getCreditID() == Event) {
-                showCredit.setApproved(true);
+    private void removeItem(AnchorPane listToApprove, ICredit credit){
+        Node removechild = null;
+        for (Node child: listToApprove.getChildren()){
+            if (Integer.parseInt(child.getId()) == credit.getCreditID()){
+                removechild = child;
             }
         }
-        reloadProgram();
-        return null;
+        if(removechild != null){
+            listToApprove.getChildren().remove(removechild);
+        }
     }
 
-    protected EventHandler<ActionEvent> handleApproveSeason(int showId, int season) {
-        for (IShow show: ApplicationManager.getInstance().getShowList()) {
-            if (show.getCreditID() == showId) {
-                for (ISeason s: show.getSeasons()) {
-                    if (s.getCreditID() == season) {
-                        s.setApproved(true);
-                    }
-                    show.setAllSeasonApproved(true);
-                    if (!show.isApproved() || !s.isAllEpisodesApproved()) {
-                        show.setAllSeasonApproved(false);
-                    }
-                }
+    private void setContent(AnchorPane listToApprove, ObservableList<? extends ICredit> creditList){
+        int offset = 20;
+        for (ICredit credit : creditList){
+            if (!credit.isApproved()) {
+                addItem(listToApprove, credit, offset);
+                offset += 30;
             }
         }
-        reloadProgram();
-        return null;
-    }
 
-    protected EventHandler<ActionEvent> handleApproveEpisode(int showId, int season, int episode) {
-        for (IShow sh: ApplicationManager.getInstance().getShowList()) {
-            if (sh.getCreditID() == showId) {
-                for (ISeason s: sh.getSeasons()) {
-                    if (s.getCreditID() == season) {
-                        for (IEpisode e: s.getEpisodes()) {
-                            if (e.getCreditID() == episode) {
-                                e.setApproved(true);
-                            }
-                            s.setAllEpisodeApproved(true);
-                            if (!e.isApproved()) {
-                                s.setAllEpisodeApproved(false);
-                            }
+        creditList.addListener((ListChangeListener<ICredit>) change -> {
+            int offset1 = 20;
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    for (ICredit credit : change.getAddedSubList()){
+                        if (!credit.isApproved()){
+                            addItem(listToApprove, credit, offset1);
+                            offset1 += 30;
                         }
                     }
+                } else if (change.wasRemoved()) {
+                    for (ICredit credit : change.getRemoved()){
+                        System.out.println("Removed credit: " + credit);
+                        removeItem(listToApprove, credit);
+                    }
                 }
             }
-        }
-        reloadProgram();
-        return null;
+        });
     }
-
-
-
-
-    private void reloadPerson() {
-        personToApprove.getChildren().clear();
-
+    private <T extends ICredit> void setContent(AnchorPane listToApprove, ObservableMap<Integer, T> creditList){
         int offset = 20;
-        for (ICredit personCredit: ApplicationManager.getInstance().getPersonList()) {
-            if (!personCredit.isApproved()) {
-                Pane personPane = new Pane();
-                personToApprove.getChildren().add(personPane);
-                personPane.setLayoutY(offset);
-                personPane.setId(String.valueOf(personCredit.getCreditID()));
-
-                Label personLabel = new Label("Name: " + personCredit.getName());
-                personLabel.setLayoutX(20);
-                personPane.getChildren().add(personLabel);
-
-
-                Button approveButton = new Button();
-                approveButton.setText("Godkend");
-                approveButton.setLayoutX(300);
-                personPane.getChildren().add(approveButton);
-                int finalButtonCounter = personCredit.getCreditID();
-                approveButton.setOnAction(actionEvent -> handleApprovePerson(finalButtonCounter));
-
+        for (Map.Entry<Integer, T> credit : creditList.entrySet()){
+            if (!credit.getValue().isApproved()) {
+                addItem(listToApprove, credit.getValue(), offset);
                 offset += 30;
             }
         }
-    }
 
-    private void reloadMovie() {
-        movieToApprove.getChildren().clear();
-
-        int offset = 20;
-        for (ICredit movieCredit: ApplicationManager.getInstance().getMovieList()) {
-            if (!movieCredit.isApproved()) {
-                Pane pane = new Pane();
-                movieToApprove.getChildren().add(pane);
-                pane.setLayoutY(offset);
-                pane.setId(String.valueOf(movieCredit.getCreditID()));
-
-                Label label = new Label("Name: " + movieCredit.getName());
-                label.setLayoutX(20);
-                pane.getChildren().add(label);
-
-                Button approveButton = new Button();
-                approveButton.setText("Godkend");
-                approveButton.setLayoutX(300);
-                pane.getChildren().add(approveButton);
-                int finalButtonCounter = movieCredit.getCreditID();
-                approveButton.setOnAction(actionEvent -> handleApproveMovie(finalButtonCounter));
-
-                offset += 30;
-            }
-        }
-    }
-
-    private void reloadProgram() {
-        programToApprove.getChildren().clear();;
-
-        int offset = 20;
-        for (IShow show: ApplicationManager.getInstance().getShowList()) {
-            if (!show.isApproved()) {
-                Pane pane = new Pane();
-                programToApprove.getChildren().add(pane);
-                pane.setLayoutY(offset);
-
-                Label label = new Label("Title: " + show.getName());
-                label.setLayoutX(20);
-                pane.getChildren().add(label);
-
-                Button approveButton = new Button();
-                approveButton.setText("Godkend");
-                approveButton.setLayoutX(300);
-                pane.getChildren().add(approveButton);
-                int finalButtonCounter = show.getCreditID();
-                approveButton.setOnAction(actionEvent -> handleApproveShow(finalButtonCounter));
-
-                offset += 30;
-            } else if (!show.isAllSeasonApproved()) {
-                for (ISeason season: show.getSeasons()) {
-                    if (!season.isApproved()) {
-                        Pane pane = new Pane();
-                        programToApprove.getChildren().add(pane);
-                        pane.setLayoutY(offset);
-
-                        Label label = new Label("Title: " + show.getName() + " - Sæsson: " + season.getName());
-                        label.setLayoutX(20);
-                        pane.getChildren().add(label);
-
-                        Button approveButton = new Button();
-                        approveButton.setText("Godkend");
-                        approveButton.setLayoutX(300);
-                        pane.getChildren().add(approveButton);
-                        int showID = show.getCreditID();
-                        int finalButtonCounter = season.getCreditID();
-                        approveButton.setOnAction(actionEvent -> handleApproveSeason(showID, finalButtonCounter));
-
+        creditList.addListener(new MapChangeListener<Integer, T>() {
+            @Override
+            public void onChanged(Change<? extends Integer, ? extends T> change) {
+                int offset = 20;
+                System.out.println("change in map");
+                if (change.wasAdded()) {
+                    System.out.println("change add");
+                    ICredit credit = change.getValueAdded();
+                    if (!credit.isApproved()){
+                        addItem(listToApprove, credit, offset);
                         offset += 30;
-                    } else if (!season.isAllEpisodesApproved()) {
-                        for (IEpisode episode: season.getEpisodes()) {
-                            if (!episode.isApproved()) {
-                                Pane pane = new Pane();
-                                programToApprove.getChildren().add(pane);
-                                pane.setLayoutY(offset);
-
-                                Label label = new Label("Title: " + show.getName() + " - Episode: " + episode.getName());
-                                label.setLayoutX(20);
-                                pane.getChildren().add(label);
-
-                                Button approveButton = new Button();
-                                approveButton.setText("Godkend");
-                                approveButton.setLayoutX(300);
-                                pane.getChildren().add(approveButton);
-                                int showID = show.getCreditID();
-                                int seasonId = season.getCreditID();
-                                int finalButtonCounter = episode.getCreditID();
-                                approveButton.setOnAction(actionEvent -> handleApproveEpisode(showID, seasonId, finalButtonCounter));
-
-                                offset += 30;
-                            }
-                        }
+                    }
+                } else if (change.wasRemoved()) {
+                    System.out.println("change removed");
+                    ICredit credit = change.getValueRemoved();
+                    if (!credit.isApproved()){
+                        removeItem(listToApprove, credit);
                     }
                 }
             }
-        }
+        });
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        movieObservableList = MovieManager.getInstance().getMovies();
+        setContent(movieToApprove, movieObservableList);
+        personObservableList = PersonManager.getInstance().getPersonList();
+        setContent(personToApprove, personObservableList);
+        showObservableMap = ShowManager.getInstance().getShowList();
+        setContent(showToApprove, showObservableMap);
 
+        seasonObservableMap = SeasonManager.getInstance().getSeasonMap();
+        episodeObservableMap = EpisodeManager.getInstance().getEpisodeMap();
+        setContent(seasonToApprove, seasonObservableMap);
+        setContent(episodeToApprove, episodeObservableMap);
     }
 }

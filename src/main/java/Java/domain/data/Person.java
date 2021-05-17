@@ -1,4 +1,4 @@
-package Java.domain;
+package Java.domain.data;
 
 import Java.interfaces.IJob;
 import Java.interfaces.IPerson;
@@ -41,6 +41,10 @@ public class Person extends Credit implements IPerson {
     @Override
     public void setJobs(ArrayList<IJob> jobs) {
         this.jobs = jobs;
+    }
+    @Override
+    public void addJob(IJob job){
+        jobs.add(job);
     }
 
     @Override

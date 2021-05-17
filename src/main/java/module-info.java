@@ -13,4 +13,6 @@ module Java {
     opens Java.interfaces to javafx.fxml;
     exports Java.domain;
     opens Java.domain to javafx.fxml;
+    exports Java.domain.data;
+    opens Java.domain.data to javafx.fxml;
 }

@@ -1,4 +1,4 @@
-package Java.domain;
+package Java.domain.data;
 
 public enum Category {
     AKTUALITET("Aktualitet"),

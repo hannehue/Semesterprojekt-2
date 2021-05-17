@@ -1,8 +1,6 @@
 package Java.interfaces;
 
-import Java.domain.Role;
-
-import java.util.ArrayList;
+import Java.domain.data.Role;
 
 public interface IJob {
 

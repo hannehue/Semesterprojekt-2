@@ -1,30 +1,32 @@
-package Java.domain;
+package Java.domain.data;
 
 import Java.interfaces.IEpisode;
 import Java.interfaces.ISeason;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Season extends Credit implements ISeason {
     private int showID;
-    private ArrayList<IEpisode> episodes;
+    private ObservableList<Integer> episodes;
     private boolean allEpisodesApproved;
 
     public Season(String name, Date dateAdded, int creditID, boolean approved, String description , int showID,  Boolean allEpisodesApproved){
         super(name,dateAdded, creditID, approved, description);
         this.showID = showID;
-        this.episodes = new ArrayList<>();
+        this.episodes = FXCollections.observableArrayList();
         this.allEpisodesApproved = allEpisodesApproved;
     }
 
     @Override
-    public ArrayList<IEpisode> getEpisodes() {
+    public ObservableList<Integer> getEpisodes() {
         return episodes;
     }
 
     @Override
-    public void setEpisodes(ArrayList<IEpisode> episodes) {
+    public void setEpisodes(ObservableList<Integer> episodes) {
         this.episodes = episodes;
     }
 
@@ -41,10 +43,7 @@ public class Season extends Credit implements ISeason {
 
     @Override
     public String toString() {
-        return "Season{" +
-                "showID='" + showID + '\'' +
-                ", episodes=" + episodes +
-                '}';
+        return this.getName();
     }
 
     @Override
@@ -56,8 +55,8 @@ public class Season extends Credit implements ISeason {
 
         seasonFileString += "--";
 
-        for (IEpisode episode: getEpisodes()){
-            seasonFileString += episode.toFileString() + "--";
+        for (Integer episode: getEpisodes()){
+            seasonFileString += episode + "--";
         }
         seasonFileString += "##" + isAllEpisodesApproved();
 
@@ -77,7 +76,7 @@ public class Season extends Credit implements ISeason {
         return episodes.size();
     }
 
-    public void addEpisode(IEpisode episode){
+    public void addEpisode(Integer episode){
         episodes.add(episode);
     }
 }

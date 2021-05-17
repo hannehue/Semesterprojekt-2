@@ -1,6 +1,6 @@
 package Java.presentation.controllers;
 
-import Java.domain.ApplicationManager;
+import Java.domain.services.PersonManager;
 import Java.interfaces.ICredit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,21 +51,11 @@ public class SearchController implements Initializable {
 
     public void setContent() {
         ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
-        observableResults.addAll(search(MenuController.getInstance().getSearchString()));
+        String searchString = MenuController.getInstance().getSearchString();
+        ArrayList<ICredit> searchResult = PersonManager.getInstance().searchPerson(searchString);
+        observableResults.addAll(searchResult);
         System.out.println(observableResults);
         SearchList.setItems(observableResults);
-    }
-
-    /* should be moved to domain layer */
-    private ArrayList<ICredit> search(String getsearchString){
-        String searchStringChecked = getsearchString.toLowerCase();
-        ArrayList<ICredit> creditList = new ArrayList<>();
-        for(ICredit person : ApplicationManager.getInstance().getPersonList()) {
-            if (person != null && person.getName().toLowerCase().contains(searchStringChecked) && person.isApproved()){
-                creditList.add(person);
-            }
-        }
-        return creditList;
     }
 
     public void handleClickedItem(MouseEvent mouseEvent) {

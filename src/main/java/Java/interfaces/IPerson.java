@@ -1,7 +1,5 @@
 package Java.interfaces;
 
-import Java.domain.Job;
-
 import java.util.ArrayList;
 
 public interface IPerson extends ICredit{
@@ -10,6 +8,7 @@ public interface IPerson extends ICredit{
 
     ArrayList<IJob> getJobs();
     void setJobs(ArrayList<IJob> jobs);
+    void addJob(IJob job);
 
     String getPhoneNumber();
     void setPhoneNumber(String phoneNumber);
@@ -22,6 +21,7 @@ public interface IPerson extends ICredit{
 
     String getPersonEmail();
     void setPersonEmail(String personEmail);
+
 
     String toFileString();
 }
