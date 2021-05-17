@@ -43,13 +43,6 @@ public class DatabaseLoader {
     private DatabaseLoader(){
 
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-        /*
-        personFile = new File(DatabaseLoader.class.getClassLoader().getResource("Persons.txt").getFile());
-        groupFile = new File(DatabaseLoader.class.getClassLoader().getResource("Groups.txt").getFile());
-        movieFile = new File(DatabaseLoader.class.getClassLoader().getResource("Movies.txt").getFile());
-        showFile = new File(DatabaseLoader.class.getClassLoader().getResource("Shows.txt").getFile());
-        */
-
 
         //Create connection to database
         try {
@@ -57,7 +50,6 @@ public class DatabaseLoader {
             this.connection = DriverManager.getConnection(
                     "jdbc:postgresql://hattie.db.elephantsql.com:5432/bpmfwbjk",
                     "bpmfwbjk" ,
-                    /** TILFØJ PASSWORD HER **/
                     "Q2w3lGuOmhrrTotMtUu8dyp6Hh4tbbl6");
         } catch (SQLException e) {
             System.out.println("Went wrong at connection creation");
@@ -173,7 +165,7 @@ public class DatabaseLoader {
                 );
                 //JobList for person. ALSO NEEDS TO BE REWORKED FOR EVENTUAL MULTIPLE JOBS
                 ArrayList<IJob> jobs = new ArrayList<>();
-                jobs.add(new Job(((Role.values()[queryResult.getInt("job_role_id") - 1])), queryResult.getInt("production_id")));
+                jobs.add(new Job(queryResult.getInt("person_id"), ((Role.values()[queryResult.getInt("job_role_id") - 1])), queryResult.getInt("production_id")));
                 tempPerson.setJobs(jobs);
             }
         } catch (SQLException throwables) {
@@ -189,7 +181,6 @@ public class DatabaseLoader {
     //Needs to be implemented to return an arraylist of matching searches
     public ObservableList<IPerson> searchQueryToPersonList(String searchString) {
         ObservableList<IPerson> personObservableList = FXCollections.observableArrayList();
-        IPerson tempPerson = null;
         try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
                     "SELECT * FROM credits, persons WHERE LOWER(name) LIKE LOWER(?)"

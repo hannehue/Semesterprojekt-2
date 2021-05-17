@@ -1,5 +1,6 @@
 package Java.domain.services;
 
+import Java.data.DatabaseLoader;
 import Java.domain.data.Person;
 import Java.interfaces.ICredit;
 import Java.interfaces.IPerson;
@@ -55,13 +56,8 @@ public class PersonManager {
      * @param findPerson
      * @return
      */
-    public ArrayList<ICredit> searchPerson(String findPerson) {
-        ArrayList<ICredit> creditList = new ArrayList<>();
-        for (ICredit person : getPersonList()) {
-            if (person.getName().toLowerCase().contains(findPerson)) {
-                creditList.add(person);
-            }
-        }
+    public ObservableList<? extends ICredit> searchPerson(String findPerson) {
+        ObservableList<? extends ICredit> creditList = DatabaseLoader.getInstance().searchQueryToPersonList(findPerson);
         return creditList;
     }
 

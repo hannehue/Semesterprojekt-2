@@ -1,6 +1,5 @@
 package Java.data;
 
-import Java.domain.Person;
 import Java.interfaces.*;
 
 import java.util.ArrayList;

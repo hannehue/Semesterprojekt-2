@@ -41,11 +41,6 @@ public class CreditSystemController extends Application {
         this.primaryStage = primaryStage;
 
     }
-    
-    @Override
-    public void stop() {
-        ApplicationManager.getInstance().onStop();
-    }
 
     //sætter root for scenen, så den ved hvilken fil der skal vises
     public void setRoot(String fxml, Object controller) throws IOException {
