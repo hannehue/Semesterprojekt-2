@@ -9,7 +9,7 @@
 <<<<<<< HEAD
 <GridPane alignment="CENTER" hgap="5" prefHeight="139.0" prefWidth="1067.0" vgap="5" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.presentation.controllers.MenuController">
 =======
-<GridPane alignment="CENTER" hgap="5" prefHeight="139.0" prefWidth="1067.0" vgap="5" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.Presentation.controllers.MenuController">
+<GridPane alignment="CENTER" hgap="5" prefHeight="139.0" prefWidth="1067.0" vgap="5" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.presentation.controllers.MenuController">
 >>>>>>> CreditInterface
     <padding>
         <Insets bottom="5" left="5" right="5" top="5" />
