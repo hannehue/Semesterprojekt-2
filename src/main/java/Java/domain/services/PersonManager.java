@@ -56,9 +56,8 @@ public class PersonManager {
      * @param findPerson
      * @return
      */
-    public ObservableList<? extends ICredit> searchPerson(String findPerson) {
-        ObservableList<? extends ICredit> creditList = DatabaseLoader.getInstance().searchQueryToPersonList(findPerson);
-        return creditList;
+    public ArrayList<IPerson> searchPerson(String findPerson) {
+        return DatabaseLoader.getInstance().searchQueryToPersonList(findPerson);
     }
 
 }

@@ -180,16 +180,20 @@ public class DatabaseLoader {
     }
 
     //Needs to be implemented to return an arraylist of matching searches
-    public ObservableList<IPerson> searchQueryToPersonList(String searchString) {
-        ObservableList<IPerson> personObservableList = FXCollections.observableArrayList();
+    public ArrayList<IPerson> searchQueryToPersonList(String searchString) {
+        ArrayList<IPerson> personObservableList = new ArrayList<>();
         try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
-                    "SELECT * FROM credits, persons WHERE LOWER(name) LIKE LOWER(?)"
+                    "SELECT * FROM credits, persons WHERE LOWER(name) LIKE LOWER(?) " +
+                            "AND credits.credit_id = persons.credit_id"
             );
             queryStatement.setString(1, "%" + searchString + "%");
-            queryStatement.execute();
+            queryStatement.executeQuery();
+
+
             while (queryStatement.getResultSet().next()) {
                 ResultSet queryResult = queryStatement.getResultSet();
+                System.out.println(queryResult.getString("name"));
                 personObservableList.add(new Person(
                         /* Name         */ queryResult.getString("name"),
                         /* Date         */ formatter.parse(queryResult.getString("date_added")),
@@ -225,19 +229,23 @@ public class DatabaseLoader {
         return tempGroup;
     }
 
-    public IMovie searchQueryToMovie(String searchString){
+    public ArrayList<IMovie> searchQueryToMovieList(String searchString){
         try {
-            IMovie tempMovie = null;
+            ArrayList<IMovie> movieList = new ArrayList<>();
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
-                    "SELECT * FROM credits, movies, productions, categories WHERE LOWER(name) LIKE LOWER(?)"
+                    "SELECT * FROM credits, movies, productions, categories WHERE LOWER(name) LIKE LOWER(?)" +
+                            "AND credits.credit_id = productions.credit_id " +
+                            "AND productions.production_id = movies.production_id " +
+                            "AND productions.category_id = categories.category_id"
             );
             //inserts searchString into SQL statement
             queryStatement.setString(1, "%" + searchString + "%");
-            //gets a SINGLE result set that matches query. This most likely need to be reworked!!!!
-            ResultSet queryResult = queryStatement.executeQuery();
+            queryStatement.executeQuery();
 
-            while (queryResult.next()) {
-                tempMovie = new Movie(
+            while (queryStatement.getResultSet().next()) {
+                ResultSet queryResult = queryStatement.getResultSet();
+                System.out.println(queryStatement.getResultSet().getRow());
+                movieList.add(new Movie(
                         /* Name         */ queryResult.getString("name"),
                         /* Date         */ formatter.parse(queryResult.getString("date_added")),
                         /* CreditID     */ queryResult.getInt("credit_id"),
@@ -249,9 +257,9 @@ public class DatabaseLoader {
                         /** .... **/
                         /* lengthInSecs */ queryResult.getInt("length_in_secs"),
                         /* Releasedate  */ formatter.parse(queryResult.getString("release_date"))
-                        );
+                        ));
             }
-            return tempMovie;
+            return movieList;
 
         } catch (ParseException e){
             e.printStackTrace();
@@ -285,7 +293,6 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args){
-        System.out.println(getInstance().searchQueryToMovie("ow").getName());
     }
 
 

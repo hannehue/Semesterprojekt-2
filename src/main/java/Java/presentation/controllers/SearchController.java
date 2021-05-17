@@ -1,5 +1,7 @@
 package Java.presentation.controllers;
 
+import Java.domain.ApplicationManager;
+import Java.domain.services.MovieManager;
 import Java.domain.services.PersonManager;
 import Java.interfaces.ICredit;
 import javafx.collections.FXCollections;
@@ -51,7 +53,9 @@ public class SearchController implements Initializable {
 
     public void setContent() {
         String searchString = MenuController.getInstance().getSearchString();
-        ObservableList<? extends ICredit> observableResults = PersonManager.getInstance().searchPerson(searchString);
+        //ObservableList<? extends ICredit> observableResults = PersonManager.getInstance().searchPerson(searchString);
+        ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
+        observableResults.addAll(ApplicationManager.getInstance().search(searchString));
 
         //ArrayList<ICredit> searchResult = PersonManager.getInstance().searchPerson(searchString);
         //observableResults.addAll(searchResult);

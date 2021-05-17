@@ -1,10 +1,13 @@
 package Java.domain.services;
 
+import Java.data.DatabaseLoader;
 import Java.domain.data.Category;
 import Java.domain.data.Movie;
 import Java.interfaces.IMovie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
 
 public class MovieManager {
     private static MovieManager instance = new MovieManager();
@@ -33,6 +36,10 @@ public class MovieManager {
                 null);
         movieList.add(movie);
         System.out.println(movie.getName());
+    }
+
+    public ArrayList<IMovie> searchMovie(String findMovie){
+        return DatabaseLoader.getInstance().searchQueryToMovieList(findMovie);
     }
 
 }

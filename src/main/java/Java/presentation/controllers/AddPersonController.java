@@ -53,7 +53,8 @@ public class AddPersonController implements Initializable {
     }
 
     public void handleFindPerson(ActionEvent actionEvent) {
-        ObservableList<? extends ICredit> searchList = PersonManager.getInstance().searchPerson(findPerson.getText().toLowerCase());
+        ObservableList<ICredit> searchList = FXCollections.observableArrayList();
+                searchList.addAll(PersonManager.getInstance().searchPerson(findPerson.getText().toLowerCase()));
         //setContent(searchList);
         setCharacterNameField();
     }

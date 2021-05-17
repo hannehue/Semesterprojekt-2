@@ -4,10 +4,12 @@ import Java.data.DatabaseLoader;
 import Java.domain.data.*;
 import Java.domain.services.*;
 import Java.interfaces.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ApplicationManager {
 
@@ -79,4 +81,12 @@ public class ApplicationManager {
             map.put(id, credit);
         }
     }
+
+    public ArrayList<ICredit> search(String searchString){
+        ArrayList<ICredit> creditsList = new ArrayList();
+        creditsList.addAll(PersonManager.getInstance().searchPerson(searchString));
+        creditsList.addAll(MovieManager.getInstance().searchMovie(searchString));
+        return creditsList;
+    }
+
 }
