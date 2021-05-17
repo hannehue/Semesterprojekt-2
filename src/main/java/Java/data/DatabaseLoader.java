@@ -20,22 +20,15 @@ public class DatabaseLoader {
 
     private static DatabaseLoader instance;
 
-    private Scanner inputStream = null;
-    private FileWriter outputStream = null;
-
-    private File personFile;
     private ArrayList<String[]> personArraylist;
 
-    private File groupFile;
     private ArrayList<String[]> groupArraylist;
 
-    private File movieFile;
     private ArrayList<String[]> movieArrayList;
 
-    private File showFile;
     private ArrayList<String[]> showArrayList;
 
-    private SimpleDateFormat formatter;
+    private final SimpleDateFormat formatter;
 
     private Connection connection;
 
@@ -64,32 +57,6 @@ public class DatabaseLoader {
             instance = new DatabaseLoader();
         }
         return instance;
-    }
-
-    public void writeCredits(File file, ArrayList<String[]> creditList) throws IOException {
-        outputStream = new FileWriter(file, false);
-
-        for (int row = 0; row < creditList.size(); row++) {
-            outputStream.write(stringArraytoString(creditList.get(row)) + "\n");
-        }
-        outputStream.close();
-    }
-
-    public void writeAllCredits() throws IOException {
-        for (int i = 0; i < 4; i++) {
-            writeCredits(personFile, personArraylist);
-            writeCredits(groupFile, groupArraylist);
-            writeCredits(movieFile, movieArrayList);
-            writeCredits(showFile, showArrayList);
-        }
-    }
-
-    public String stringArraytoString(String[] strings) {
-        String line = "";
-        for (int column = 0; column < strings.length; column++) {
-            line += strings[column] + ",";
-        }
-        return line;
     }
 
     public String[] creditToStringArray(ICredit credit) {
@@ -344,18 +311,5 @@ public class DatabaseLoader {
     public ArrayList<String[]> getShowArrayList() {
         return showArrayList;
     }
-
-    public File getPersonFile() {
-        return personFile;
-    }
-
-    public File getGroupFile() {
-        return groupFile;
-    }
-
-    public File getMovieFile() {
-        return movieFile;
-    }
-
 
 }
