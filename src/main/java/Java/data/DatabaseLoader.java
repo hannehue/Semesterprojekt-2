@@ -2,6 +2,8 @@ package Java.data;
 
 import Java.domain.*;
 import Java.interfaces.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.text.ParseException;
@@ -142,11 +144,7 @@ public class DatabaseLoader {
         }
     }
 
-    /** Disse 3 vil jeg gerne rykke i en (facade) klasse for sig selv, sammen med de andre der kommer -Hans **/
-
-
-
-    public IPerson SearchQueryToPerson(String searchString) {
+    public IPerson searchQueryToPerson(String searchString) {
         //Deaclare person to be returned
         IPerson tempPerson = null;
         //Query & person creation try block
@@ -189,8 +187,8 @@ public class DatabaseLoader {
     }
 
     //Needs to be implemented to return an arraylist of matching searches
-    public ArrayList<IPerson> SearchQueryToPersonList(String searchString) {
-        ArrayList<IPerson> personArrayList = new ArrayList<>();
+    public ObservableList<IPerson> searchQueryToPersonList(String searchString) {
+        ObservableList<IPerson> personObservableList = FXCollections.observableArrayList();
         IPerson tempPerson = null;
         try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
@@ -200,7 +198,7 @@ public class DatabaseLoader {
             queryStatement.execute();
             while (queryStatement.getResultSet().next()) {
                 ResultSet queryResult = queryStatement.getResultSet();
-                personArrayList.add(new Person(
+                personObservableList.add(new Person(
                         /* Name         */ queryResult.getString("name"),
                         /* Date         */ formatter.parse(queryResult.getString("date_added")),
                         /* CreditID     */ queryResult.getInt("credit_id"),
@@ -219,7 +217,7 @@ public class DatabaseLoader {
             e.printStackTrace();
             System.out.println("Parse error at queryToPerson");
         }
-        return personArrayList;
+        return personObservableList;
     }
 
     public IGroup queryToGroup(String[] strings){
@@ -235,22 +233,43 @@ public class DatabaseLoader {
         return tempGroup;
     }
 
-    public IMovie queryToMovie(String[] strings){
-        IMovie tempMovie = null;
+    public IMovie searchQueryToMovie(String searchString){
         try {
-            tempMovie = new Movie(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
-                    Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
-                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8])
-                    );
-            for (String staff : new ArrayList<>(Arrays.asList(strings[9].split(";"))) ) {
-                tempMovie.addStaffID(Integer.parseInt(staff));
+            IMovie tempMovie = null;
+            PreparedStatement queryStatement = getInstance().connection.prepareStatement(
+                    "SELECT * FROM credits, movies, productions, categories WHERE LOWER(name) LIKE LOWER(?)"
+            );
+            //inserts searchString into SQL statement
+            queryStatement.setString(1, "%" + searchString + "%");
+            //gets a SINGLE result set that matches query. This most likely need to be reworked!!!!
+            ResultSet queryResult = queryStatement.executeQuery();
+
+            while (queryResult.next()) {
+                tempMovie = new Movie(
+                        /* Name         */ queryResult.getString("name"),
+                        /* Date         */ formatter.parse(queryResult.getString("date_added")),
+                        /* CreditID     */ queryResult.getInt("credit_id"),
+                        /* Approved     */ queryResult.getBoolean("approved"),
+                        /* description  */ queryResult.getString("description"),
+                        /* productionID */ queryResult.getInt("production_id"),
+                        /** Genovervej **/
+                        /* category     */ new Category[]{Category.values()[queryResult.getInt("category_id") - 1]},
+                        /** .... **/
+                        /* lengthInSecs */ queryResult.getInt("length_in_secs"),
+                        /* Releasedate  */ formatter.parse(queryResult.getString("release_date"))
+                        );
             }
+            return tempMovie;
+
         } catch (ParseException e){
             e.printStackTrace();
-            System.err.println("Failed when initializing movie from string array");
+            System.err.println("Failed when initializing movie search string");
             return null;
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("SQL Exception at search query to Movie");
         }
-        return tempMovie;
+        return null;
     }
 
     public IEpisode queryToEpisode(String[] strings){
@@ -274,27 +293,7 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args){
-        //getInstance().queryToPerson("Jens");
-        System.out.println(getInstance().SearchQueryToPerson("en").getName());
-        System.out.println(getInstance().SearchQueryToPerson("en").getPersonID());
-        System.out.println(getInstance().SearchQueryToPerson("Je").getJobs());
-
-        /*
-        try {
-            PreparedStatement statement = getInstance().connection.prepareStatement("SELECT * From persons, credits");
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                System.out.println(resultSet.getString("name") + "\t" +
-                        resultSet.getString("credit_id") + "\t" + resultSet.getString("person_id"));
-            }
-
-
-        } catch (SQLException e) {
-            System.out.println("Went wrong at prepared Statement");
-            e.printStackTrace();
-        }
-
-         */
+        System.out.println(getInstance().searchQueryToMovie("ow").getName());
     }
 
 
