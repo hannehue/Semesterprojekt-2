@@ -151,8 +151,8 @@ public class DatabaseLoader {
             //gets a SINGLE result set that matches query. This most likely need to be reworked!!!!
             ResultSet queryResult = queryStatement.executeQuery();
             //Instantiates a new person in the tempPerson variable
-            System.out.println(queryResult);
             while (queryResult.next()) {
+                System.out.println(queryResult.toString());
                 tempPerson = new Person(
                         /* Name         */ queryResult.getString("name"),
                         /* Date         */ formatter.parse(queryResult.getString("date_added")),

@@ -19,24 +19,6 @@ public class ApplicationManager {
     private int idTracker = -1; //should be moved to database (tracker id for Movie og Person)
 
     private ApplicationManager() {
-
-        /*try{
-            dataLoader = DatabaseLoader.getInstance();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        /*
-        for (String[] strings: dataLoader.getPersonArraylist()){
-            personList.add(dataLoader.queryToPerson(strings));
-        }
-        for (String[] strings: dataLoader.getMovieArrayList()){
-            movieList.add(dataLoader.queryToMovie(strings));
-        }
-
-        System.out.println(personList.toString());*/
     }
 
     public static ApplicationManager getInstance() {
