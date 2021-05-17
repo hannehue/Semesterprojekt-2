@@ -28,7 +28,7 @@ public class Job implements IJob {
             if (characterName != null) {
                 return role.toString() + " som " + characterName;
             }
-            return role.toString();
+            return role.toString() + " | " + productionID;
         }
         catch (NullPointerException e) {
             return "asdfasdfasl;dfkj";
