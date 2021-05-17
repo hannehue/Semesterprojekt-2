@@ -44,7 +44,7 @@ public class PersonManager {
 
 
     public ObservableList<IPerson> getPersonList(){
-        return  personList;
+        return personList;
     }
 
 

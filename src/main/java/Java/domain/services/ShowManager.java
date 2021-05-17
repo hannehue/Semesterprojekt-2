@@ -39,7 +39,7 @@ public class ShowManager {
     }
 
     public ArrayList<IShow> getAllShows(){
-        return (ArrayList<IShow>) showMap.values();
+        return new ArrayList<>(showMap.values());
     }
 
     public IShow searchShowName(String name){
