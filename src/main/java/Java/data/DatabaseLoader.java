@@ -159,6 +159,7 @@ public class DatabaseLoader {
             //gets a SINGLE result set that matches query. This most likely need to be reworked!!!!
             ResultSet queryResult = queryStatement.executeQuery();
             //Instantiates a new person in the tempPerson variable
+            System.out.println(queryResult);
             while (queryResult.next()) {
                 tempPerson = new Person(
                         /* Name         */ queryResult.getString("name"),
@@ -173,7 +174,7 @@ public class DatabaseLoader {
                 );
                 //JobList for person. ALSO NEEDS TO BE REWORKED FOR EVENTUAL MULTIPLE JOBS
                 ArrayList<IJob> jobs = new ArrayList<>();
-                jobs.add(new Job(((Role.values()[queryResult.getInt("job_role_id") - 1])), queryResult.getInt("production_id")));
+                //jobs.add(new Job(((Role.values()[queryResult.getInt("job_role_id") - 1])), queryResult.getInt("production_id")));
                 tempPerson.setJobs(jobs);
             }
         } catch (SQLException throwables) {
