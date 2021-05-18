@@ -20,27 +20,20 @@ public class DatabaseLoader {
 
     private static DatabaseLoader instance;
 
-    private Scanner inputStream = null;
-    private FileWriter outputStream = null;
-
-    private File personFile;
     private ArrayList<String[]> personArraylist;
 
-    private File groupFile;
     private ArrayList<String[]> groupArraylist;
 
-    private File movieFile;
     private ArrayList<String[]> movieArrayList;
 
-    private File showFile;
     private ArrayList<String[]> showArrayList;
 
-    private SimpleDateFormat formatter;
+    private final SimpleDateFormat formatter;
 
     private Connection connection;
 
 
-    private DatabaseLoader(){
+    private DatabaseLoader() {
 
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 
@@ -49,7 +42,7 @@ public class DatabaseLoader {
             DriverManager.registerDriver(new org.postgresql.Driver());
             this.connection = DriverManager.getConnection(
                     "jdbc:postgresql://hattie.db.elephantsql.com:5432/bpmfwbjk",
-                    "bpmfwbjk" ,
+                    "bpmfwbjk",
                     "Q2w3lGuOmhrrTotMtUu8dyp6Hh4tbbl6");
         } catch (SQLException e) {
             System.out.println("Went wrong at connection creation");
@@ -57,37 +50,11 @@ public class DatabaseLoader {
         }
     }
 
-    public static DatabaseLoader getInstance(){
-        if (instance == null){
+    public static DatabaseLoader getInstance() {
+        if (instance == null) {
             instance = new DatabaseLoader();
         }
         return instance;
-    }
-
-    public void writeCredits(File file, ArrayList<String[]> creditList) throws IOException {
-        outputStream = new FileWriter(file, false);
-
-        for (int row = 0; row < creditList.size(); row++) {
-            outputStream.write(stringArraytoString(creditList.get(row)) + "\n");
-        }
-        outputStream.close();
-    }
-
-    public void writeAllCredits() throws IOException {
-        for (int i = 0; i < 4; i++) {
-            writeCredits(personFile,personArraylist);
-            writeCredits(groupFile, groupArraylist);
-            writeCredits(movieFile, movieArrayList);
-            writeCredits(showFile,showArrayList);
-        }
-    }
-
-    public String stringArraytoString(String[] strings){
-        String line = "";
-        for (int column = 0; column < strings.length; column++) {
-            line += strings[column] + ",";
-        }
-        return line;
     }
 
     public String[] creditToStringArray(ICredit credit) {
@@ -95,41 +62,41 @@ public class DatabaseLoader {
         return credit.toFileString().split(",");
     }
 
-    public void addCreditToDatabase(ICredit credit){
+    public void addCreditToDatabase(ICredit credit) {
         if (credit instanceof IPerson) {
             personArraylist.add(creditToStringArray(credit));
 
-        } else if (credit instanceof IMovie){
+        } else if (credit instanceof IMovie) {
             movieArrayList.add(creditToStringArray(credit));
 
-        } else if (credit instanceof IGroup){
+        } else if (credit instanceof IGroup) {
             groupArraylist.add(creditToStringArray(credit));
 
-        } else if (credit instanceof IShow){
+        } else if (credit instanceof IShow) {
             showArrayList.add(creditToStringArray(credit));
         }
     }
 
-    public void addCreditsToDatabase(ArrayList<? extends ICredit> readList){
-        if(readList.size() == 0 || readList == null){
+    public void addCreditsToDatabase(ArrayList<? extends ICredit> readList) {
+        if (readList.size() == 0 || readList == null) {
             return;
         }
 
         ArrayList<String[]> tempList = new ArrayList<>();
-        for (ICredit p: readList){
-            if (p != null){
+        for (ICredit p : readList) {
+            if (p != null) {
                 tempList.add(creditToStringArray(p));
             }
         }
         if (readList.get(0) instanceof IPerson) {
             personArraylist = tempList;
 
-        } else if (readList.get(0) instanceof IMovie){
+        } else if (readList.get(0) instanceof IMovie) {
             movieArrayList = tempList;
 
-        } else if (readList.get(0) instanceof IGroup){
+        } else if (readList.get(0) instanceof IGroup) {
             groupArraylist = tempList;
-        } else if (readList.get(0) instanceof IShow){
+        } else if (readList.get(0) instanceof IShow) {
             showArrayList = tempList;
         }
     }
@@ -142,7 +109,7 @@ public class DatabaseLoader {
             //PreparedStatement that gets all results from credits, persons, jobs & job_roles tables where a name looks
             //like the search string, case insensitive
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
-                "SELECT * FROM credits, persons, jobs, job_roles WHERE LOWER(name) LIKE LOWER(?)"
+                    "SELECT * FROM credits, persons, jobs, job_roles WHERE LOWER(name) LIKE LOWER(?)"
             );
             //inserts searchString into SQL statement
             queryStatement.setString(1, "%" + searchString + "%");
@@ -183,16 +150,16 @@ public class DatabaseLoader {
         try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
                     "SELECT * FROM credits, persons WHERE LOWER(name) LIKE LOWER(?) " +
-                            "AND credits.credit_id = persons.credit_id"
+                            "AND credits.credit_id = persons.credit_id " /* +
+                            "AND jobs.person_id = persons.person_id " +
+                            "AND jobs.job_role_id = job_roles.job_role_id" */
             );
             queryStatement.setString(1, "%" + searchString + "%");
             queryStatement.executeQuery();
-
-
             while (queryStatement.getResultSet().next()) {
                 ResultSet queryResult = queryStatement.getResultSet();
                 System.out.println(queryResult.getString("name"));
-                personObservableList.add(new Person(
+                IPerson tempPerson = new Person(
                         /* Name         */ queryResult.getString("name"),
                         /* Date         */ formatter.parse(queryResult.getString("date_added")),
                         /* CreditID     */ queryResult.getInt("credit_id"),
@@ -202,7 +169,43 @@ public class DatabaseLoader {
                         /* phone number */ queryResult.getString("phone_number"),
                         /* personal info*/ queryResult.getString("personal_info"),
                         /* email        */ queryResult.getString("email")
-                ));
+                );
+
+                // Job handling
+                // Runs new query, using persons, jobs and job_roles
+                PreparedStatement jobQueryStatement = getInstance().connection.prepareStatement(
+                        "SELECT * FROM persons, jobs, job_roles WHERE jobs.person_id = persons.person_id " +
+                                "AND jobs.job_role_id = job_roles.job_role_id"
+                );
+                jobQueryStatement.executeQuery();
+                //Temporary job list
+                ArrayList<IJob> jobs = new ArrayList<>();
+                //Result set handling
+                while (jobQueryStatement.getResultSet().next()) {
+                    //Gets net result set
+                    ResultSet jobResult = jobQueryStatement.getResultSet();
+                    // Job initialization
+                    // Checks whether the current job belongs to the current tempPerson, from the first query
+                    if (tempPerson.getPersonID() == jobResult.getInt("person_id")) {
+//                        if (jobResult.getInt("job_role_id") != 1) {
+                            jobs.add(new Job(
+                                    /* PersonID         */        jobResult.getInt("person_id"),
+                                    /* Role from roleID */ ((Role.values()[jobResult.getInt("job_role_id") - 1])),
+                                    /* ProductionID     */ jobResult.getInt("production_id")));
+//                        } else {
+//                            jobs.add(new Job(
+//                                    /* PersonID         */        jobResult.getInt("person_id"),
+//                                    /* Role from roleID */ ((Role.values()[jobResult.getInt("job_role_id") - 1])),
+//                                    /* Character name   */ /* need name in database */
+//                                    /* ProductionID     */ jobResult.getInt("production_id")));
+//                        }
+                    }
+                }
+                // Takes the temporary job list, and sets it to the current tempPerson
+                tempPerson.setJobs(jobs);
+
+                //Adds the current temp person to the observable list to be returned
+                personObservableList.add(tempPerson);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -214,12 +217,79 @@ public class DatabaseLoader {
         return personObservableList;
     }
 
-    public IGroup queryToGroup(String[] strings){
+    public Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
+        try {
+            // Set autoCommit to false, so only both prepared statements run
+            getConnection().setAutoCommit(false);
+
+            // insert statement to insert info into creditsTable
+            PreparedStatement insertToCredits = getInstance().connection.prepareStatement(
+                    "INSERT INTO credits(name, date_added, approved, description)"
+                    + "VALUES(?, ?, ?, ?)"
+                    //set prepared statement to return generated credit_ID
+            , Statement.RETURN_GENERATED_KEYS);
+
+            //insert values from IPerson to preparedStatement
+            insertToCredits.setString(1, person.getName());
+            insertToCredits.setString(2, person.getDateAdded().toString());
+            insertToCredits.setBoolean(3, person.isApproved());
+            insertToCredits.setString(4, person.getDescription());
+            //execute but NOT commit
+            insertToCredits.executeUpdate();
+            //get generated credit_ID
+            int creditID = 0;
+            while (insertToCredits.getGeneratedKeys().next()) {
+                creditID = insertToCredits.getGeneratedKeys().getInt(1);
+            }
+
+            // insert statement to insert indo into persons table
+            PreparedStatement insertPerson = getInstance().connection.prepareStatement(
+                    "INSERT INTO persons(credit_id, phone_number, email, personal_info)"
+                    + "VALUES(?, ?, ?, ?)"
+                    //set prepared statement to return generated person_ID
+            , Statement.RETURN_GENERATED_KEYS);
+
+            //insert values from IPerson to preparedStatement
+            insertPerson.setInt(1, creditID);
+            insertPerson.setString(2, person.getPhoneNumber());
+            insertPerson.setString(3, person.getPersonEmail());
+            insertPerson.setString(4, person.getPersonalInfo());
+            //execute but NOT commit
+            insertPerson.executeUpdate();
+            // get generated person_ID
+            int personID = 0;
+            while (insertPerson.getGeneratedKeys().next()) {
+                personID = insertPerson.getGeneratedKeys().getInt(1);
+            }
+
+            // Insert generated IDs to a map, with corresponding key names
+            Map<String, Integer> returnIDs = new HashMap<>();
+            returnIDs.put("creditID", creditID);
+            returnIDs.put("personID", personID);
+
+            //commit changes to database
+            getInstance().getConnection().commit();
+            //set auto commit to true again, as that is the default
+            getInstance().getConnection().setAutoCommit(true);
+            //return ID map
+            return returnIDs;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("ERROR AT ADD PERSON TO DATABASE");
+            getInstance().getConnection().setAutoCommit(true);
+        }
+        System.out.println("No user added");
+        return null;
+    }
+
+
+    public IGroup queryToGroup(String[] strings) {
         IGroup tempGroup = null;
         try {
             tempGroup = new Group(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
                     Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]));
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
             System.err.println("Failed when initializing group from string array");
             return null;
@@ -227,7 +297,7 @@ public class DatabaseLoader {
         return tempGroup;
     }
 
-    public ArrayList<IMovie> searchQueryToMovieList(String searchString){
+    public ArrayList<IMovie> searchQueryToMovieList(String searchString) {
         try {
             ArrayList<IMovie> movieList = new ArrayList<>();
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
@@ -255,22 +325,22 @@ public class DatabaseLoader {
                         /** .... **/
                         /* lengthInSecs */ queryResult.getInt("length_in_secs"),
                         /* Releasedate  */ formatter.parse(queryResult.getString("release_date"))
-                        ));
+                ));
             }
             return movieList;
 
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
             System.err.println("Failed when initializing movie search string");
             return null;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("SQL Exception at search query to Movie");
         }
         return null;
     }
 
-    public IEpisode queryToEpisode(String[] strings){
+    public IEpisode queryToEpisode(String[] strings) {
         IEpisode tempEpisode = null;
         try {
             tempEpisode = new Episode(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
@@ -281,7 +351,7 @@ public class DatabaseLoader {
             for (String staff : new ArrayList<String>(Arrays.asList(strings[9].split(";")))) {
                 tempEpisode.addStaffID(Integer.parseInt(staff));
             }
-        } catch (ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
             System.err.println("Failed when initializing episode from string array");
             return null;
@@ -289,7 +359,24 @@ public class DatabaseLoader {
         return tempEpisode;
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
+
+        try {
+            Map<String, Integer> IDs = getInstance().addPersonToDatabase(
+                    new Person(
+                            "Hans Pedersen",
+                            "Jeg er sej",
+                            "12345678",
+                            "Yeet",
+                            "bareMig@gmail.com"
+                    )
+            );
+            System.out.println(IDs.get("creditID") + " --- " + IDs.get("personID"));
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
     }
 
 
@@ -312,19 +399,5 @@ public class DatabaseLoader {
     public ArrayList<String[]> getShowArrayList() {
         return showArrayList;
     }
-
-    public File getPersonFile() {
-        return personFile;
-    }
-
-    public File getGroupFile() {
-        return groupFile;
-    }
-
-    public File getMovieFile() {
-        return movieFile;
-    }
-
-
 
 }
