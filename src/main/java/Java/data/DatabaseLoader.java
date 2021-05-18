@@ -426,7 +426,7 @@ public class DatabaseLoader {
 
     public static void main(String[] args) {
 
-        try {
+//        try {
             /*
             Map<String, Integer> IDs = getInstance().addPersonToDatabase(
                     new Person(
@@ -477,9 +477,9 @@ public class DatabaseLoader {
 
 
 //            System.out.println(IDs.get("creditID") + " --- " + IDs.get("productionID") + " --- " + IDs.get("movieID"));
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+//        } catch (SQLException e){
+//            e.printStackTrace();
+//        }
 
 
     }
