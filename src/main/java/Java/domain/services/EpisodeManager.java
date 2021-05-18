@@ -22,19 +22,14 @@ public class EpisodeManager {
 
     private final ObservableMap<Integer, IEpisode> episodeMap = FXCollections.observableHashMap();
 
-    public void addEpisode(String title, int length, int seasonId, int id) {
+    public void addEpisode(int seasonId, int length, String title) {
         ISeason season = SeasonManager.getInstance().getSeasonById(seasonId);
         IEpisode episode = new Episode(
                 getNextEpisode(season.getCreditID()) + " - " + title,
-                new Date(),
-                id,
-                false,
                 "description",
-                ApplicationManager.getInstance().nextId(),
                 null,
                 length,
-                null,
-                season.getCreditID()
+                new Date()
         );
         season.getEpisodes().add(episode.getCreditID());
         episodeMap.put(episode.getCreditID(), episode);

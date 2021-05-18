@@ -11,6 +11,21 @@ public class Movie extends Production implements IMovie {
         //Add cast and productionTeam to constructor when person and role are implemented
         super(name, dateAdded, creditID, approved, description, productionID, category, lengthInSecs, releaseDate);
     }
+
+    public Movie(String name, String desciption, Category[] categories, int lengthInSecs, Date releaseDate){
+        super(
+                name,
+                new Date(),
+                0,
+                false,
+                desciption,
+                0,
+                categories,
+                lengthInSecs,
+                releaseDate
+        );
+    }
+
     //Overloaded constructor to send a string to production to get a
 
     @Override

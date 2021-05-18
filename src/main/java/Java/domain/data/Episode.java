@@ -15,6 +15,21 @@ public class Episode extends Production implements IEpisode {
         this.seasonID = seasonID;
     }
 
+    public Episode(String name, String description, Category[] category, int lengthInSecs, Date releaseDate){
+        super(
+                name,
+                new Date(),
+                0,
+                false,
+                description,
+                0,
+                category,
+                lengthInSecs,
+                releaseDate
+        );
+        this.seasonID = 0;
+    }
+
     @Override
     public String toString() {
         return "Name: " + getName() + ", CreditID: " + getCreditID() +

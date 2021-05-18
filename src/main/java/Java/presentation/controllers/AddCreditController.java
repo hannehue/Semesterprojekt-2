@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AddCreditController implements Initializable {
@@ -124,13 +125,12 @@ public class AddCreditController implements Initializable {
      */
     @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
-        int id = ApplicationManager.getInstance().nextId();
-        MovieManager.getInstance().addMovie(
+        int id = MovieManager.getInstance().addMovie(
                 movieTitle.getText(),
                 movieDescription.getText(),
                 null,
-                id,
-                Integer.parseInt(movieLength.getText())
+                Integer.parseInt(movieLength.getText()),
+                new Date()
                 );
         JobManager.getInstance().addJob(id);
     }

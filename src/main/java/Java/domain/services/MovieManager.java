@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MovieManager {
     private static MovieManager instance = new MovieManager();
@@ -23,19 +24,17 @@ public class MovieManager {
         return movieList;
     }
 
-    public void addMovie(String name, String description, Category[] categories, int id, int length) {
+    public int addMovie(String name, String description, Category[] categories, int length, Date releaseDate) {
         IMovie movie = new Movie(
                 name,
-                null,
-                id,
-                false,
                 description,
-                1, // Change later
                 categories,
                 length,
-                null);
+                releaseDate);
         movieList.add(movie);
+        //call to database, get the Id
         System.out.println(movie.getName());
+        return 0;
     }
 
     public ArrayList<IMovie> searchMovie(String findMovie){
