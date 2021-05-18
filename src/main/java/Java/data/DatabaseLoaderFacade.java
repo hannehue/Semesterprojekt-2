@@ -2,6 +2,7 @@ package Java.data;
 
 import Java.interfaces.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -30,7 +31,12 @@ public class DatabaseLoaderFacade {
 
     }
     public void putInDatabase(IMovie movie){
-
+        try {
+            DatabaseLoader.getInstance().addMovieToDatabase(movie);
+        } catch (SQLException e) {
+            System.out.println("Error at put movie in database");
+            e.printStackTrace();
+        }
     }
     public void putInDatabase(IProduction production) {
 

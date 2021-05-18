@@ -176,12 +176,12 @@ public class DatabaseLoader {
     public Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
         // Set autoCommit to false, so only both prepared statements run
         getConnection().setAutoCommit(false);
-        Savepoint beforeAddPerson = getInstance().getConnection().setSavepoint();
+        Savepoint beforeAddPerson = getConnection().setSavepoint();
         try {
 
 
             // insert statement to insert info into creditsTable
-            PreparedStatement insertToCredits = getInstance().connection.prepareStatement(
+            PreparedStatement insertToCredits = getConnection().prepareStatement(
                     "INSERT INTO credits(name, date_added, approved, description)"
                     + "VALUES(?, ?, ?, ?)"
                     //set prepared statement to return generated credit_ID
@@ -199,7 +199,7 @@ public class DatabaseLoader {
             int creditID = insertToCredits.getGeneratedKeys().getInt(1);
 
             // insert statement to insert indo into persons table
-            PreparedStatement insertPerson = getInstance().connection.prepareStatement(
+            PreparedStatement insertPerson = getConnection().prepareStatement(
                     "INSERT INTO persons(credit_id, phone_number, email, personal_info)"
                     + "VALUES(?, ?, ?, ?)"
                     //set prepared statement to return generated person_ID
@@ -222,17 +222,17 @@ public class DatabaseLoader {
             returnIDs.put("personID", personID);
 
             //commit changes to database
-            getInstance().getConnection().commit();
+            getConnection().commit();
             //set auto commit to true again, as that is the default
-            getInstance().getConnection().setAutoCommit(true);
+            getConnection().setAutoCommit(true);
             //return ID map
             return returnIDs;
 
         } catch (SQLException e){
             e.printStackTrace();
             System.out.println("ERROR AT ADD PERSON TO DATABASE");
-            getInstance().getConnection().rollback(beforeAddPerson);
-            getInstance().getConnection().setAutoCommit(true);
+            getConnection().rollback(beforeAddPerson);
+            getConnection().setAutoCommit(true);
         }
         System.out.println("No user added");
         return null;
@@ -295,12 +295,12 @@ public class DatabaseLoader {
     }
 
     public Map<String, Integer> addMovieToDatabase(IMovie movie) throws SQLException{
-        getInstance().getConnection().setAutoCommit(false);
-        Savepoint beforeAddMovie = getInstance().getConnection().setSavepoint();
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddMovie = getConnection().setSavepoint();
 
         try {
 
-            PreparedStatement insertCredit = getInstance().getConnection().prepareStatement(
+            PreparedStatement insertCredit = getConnection().prepareStatement(
                     "INSERT INTO credits(name, date_added, approved, description)"
                     + "VALUES(?, ?, ?, ?)"
             , Statement.RETURN_GENERATED_KEYS);
@@ -315,7 +315,7 @@ public class DatabaseLoader {
             int creditID = insertCredit.getGeneratedKeys().getInt(1);
 
 
-            PreparedStatement insertProduction = getInstance().getConnection().prepareStatement(
+            PreparedStatement insertProduction = getConnection().prepareStatement(
                     "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
                             + "VALUES(?, ?, ?, ?)"
                     , Statement.RETURN_GENERATED_KEYS);
@@ -328,7 +328,7 @@ public class DatabaseLoader {
             insertProduction.getGeneratedKeys().next();
             int productionID = insertProduction.getGeneratedKeys().getInt(1);
 
-            PreparedStatement insertMovie = getInstance().getConnection().prepareStatement(
+            PreparedStatement insertMovie = getConnection().prepareStatement(
                     "INSERT INTO movies(production_id)"
                             + "VALUES(?)"
                     , Statement.RETURN_GENERATED_KEYS);
@@ -350,8 +350,8 @@ public class DatabaseLoader {
         } catch (SQLException e){
             System.out.println("WENT WRONG AT ADD MOVIE TO DATABASE");
             e.printStackTrace();
-            getInstance().getConnection().rollback(beforeAddMovie);
-            getInstance().getConnection().setAutoCommit(true);
+            getConnection().rollback(beforeAddMovie);
+            getConnection().setAutoCommit(true);
         }
         System.out.println("No movie added");
         return null;
@@ -374,6 +374,22 @@ public class DatabaseLoader {
             return null;
         }
         return tempEpisode;
+    }
+
+    public Map<String, Integer> addEpisodeToDatabase(IEpisode episode){
+
+        return null;
+    }
+
+    public Map<String, Integer> addSeasonToDatabase(ISeason season){
+
+        return null;
+    }
+
+    public Map<String, Integer> addShowToDatabase(IShow show) throws SQLException{
+        getConnection().setAutoCommit(false);
+
+        return null;
     }
 
     public static void main(String[] args) {
