@@ -23,6 +23,21 @@ public class Person extends Credit implements IPerson {
         this.personEmail = personEmail;
     }
 
+    public Person(String name, String description, String phoneNumber, String personalInfo, String personEmail){
+        super(
+                name,
+                new Date(),
+                0,
+                false,
+                description
+        );
+        this.personID = 0;
+        this.jobs = new ArrayList<IJob>();
+        this.phoneNumber = phoneNumber;
+        this.personalInfo = personalInfo;
+        this.personEmail = personEmail;
+    }
+
     @Override
     public int getPersonID() {
         return personID;

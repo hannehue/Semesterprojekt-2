@@ -189,10 +189,18 @@ public class DatabaseLoader {
                     // Job initialization
                     // Checks whether the current job belongs to the current tempPerson, from the first query
                     if (tempPerson.getPersonID() == jobResult.getInt("person_id")) {
-                        jobs.add(new Job(
-                                /* PersonID         */        jobResult.getInt("person_id"),
-                                /* Role from roleID */ ((Role.values()[jobResult.getInt("job_role_id") - 1])),
-                                /* ProductionID     */ jobResult.getInt("production_id")));
+//                        if (jobResult.getInt("job_role_id") != 1) {
+                            jobs.add(new Job(
+                                    /* PersonID         */        jobResult.getInt("person_id"),
+                                    /* Role from roleID */ ((Role.values()[jobResult.getInt("job_role_id") - 1])),
+                                    /* ProductionID     */ jobResult.getInt("production_id")));
+//                        } else {
+//                            jobs.add(new Job(
+//                                    /* PersonID         */        jobResult.getInt("person_id"),
+//                                    /* Role from roleID */ ((Role.values()[jobResult.getInt("job_role_id") - 1])),
+//                                    /* Character name   */ /* need name in database */
+//                                    /* ProductionID     */ jobResult.getInt("production_id")));
+//                        }
                     }
                 }
                 // Takes the temporary job list, and sets it to the current tempPerson
@@ -209,6 +217,72 @@ public class DatabaseLoader {
             System.out.println("Parse error at queryToPerson");
         }
         return personObservableList;
+    }
+
+    public Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
+        try {
+            // Set autoCommit to false, so only both prepared statements run
+            getConnection().setAutoCommit(false);
+
+            // insert statement to insert info into creditsTable
+            PreparedStatement insertToCredits = getInstance().connection.prepareStatement(
+                    "INSERT INTO credits(name, date_added, approved, description)"
+                    + "VALUES(?, ?, ?, ?)"
+                    //set prepared statement to return generated credit_ID
+            , Statement.RETURN_GENERATED_KEYS);
+
+            //insert values from IPerson to preparedStatement
+            insertToCredits.setString(1, person.getName());
+            insertToCredits.setString(2, person.getDateAdded().toString());
+            insertToCredits.setBoolean(3, person.isApproved());
+            insertToCredits.setString(4, person.getDescription());
+            //execute but NOT commit
+            insertToCredits.executeUpdate();
+            //get generated credit_ID
+            int creditID = 0;
+            while (insertToCredits.getGeneratedKeys().next()) {
+                creditID = insertToCredits.getGeneratedKeys().getInt(1);
+            }
+
+            // insert statement to insert indo into persons table
+            PreparedStatement insertPerson = getInstance().connection.prepareStatement(
+                    "INSERT INTO persons(credit_id, phone_number, email, personal_info)"
+                    + "VALUES(?, ?, ?, ?)"
+                    //set prepared statement to return generated person_ID
+            , Statement.RETURN_GENERATED_KEYS);
+
+            //insert values from IPerson to preparedStatement
+            insertPerson.setInt(1, creditID);
+            insertPerson.setString(2, person.getPhoneNumber());
+            insertPerson.setString(3, person.getPersonEmail());
+            insertPerson.setString(4, person.getPersonalInfo());
+            //execute but NOT commit
+            insertPerson.executeUpdate();
+            // get generated person_ID
+            int personID = 0;
+            while (insertPerson.getGeneratedKeys().next()) {
+                personID = insertPerson.getGeneratedKeys().getInt(1);
+            }
+
+            // Insert generated IDs to a map, with corresponding key names
+            Map<String, Integer> returnIDs = new HashMap<>();
+            returnIDs.put("creditID", creditID);
+            returnIDs.put("personID", personID);
+
+            //commit changes to database
+            getInstance().getConnection().commit();
+            //set auto commit to true again, as that is the default
+            getInstance().getConnection().setAutoCommit(true);
+            //return ID map
+            return returnIDs;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("ERROR AT ADD PERSON TO DATABASE");
+            getInstance().getConnection().setAutoCommit(true);
+        }
+        System.out.println("No user added");
+        return null;
     }
 
 
@@ -289,6 +363,23 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args) {
+
+        try {
+            Map<String, Integer> IDs = getInstance().addPersonToDatabase(
+                    new Person(
+                            "Hans Pedersen",
+                            "Jeg er sej",
+                            "12345678",
+                            "Yeet",
+                            "bareMig@gmail.com"
+                    )
+            );
+            System.out.println(IDs.get("creditID") + " --- " + IDs.get("personID"));
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
     }
 
 
