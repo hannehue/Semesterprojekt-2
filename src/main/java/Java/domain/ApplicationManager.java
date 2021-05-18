@@ -39,6 +39,9 @@ public class ApplicationManager {
      * @param observableList
      * @param <T>
      */
+
+
+
     public  <T extends ICredit> void approveCredit(int id, ObservableList<T> observableList) {
         T approveCredit = null;
         for (T credit: observableList) {
