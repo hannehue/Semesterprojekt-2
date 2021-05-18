@@ -57,11 +57,6 @@ public class DatabaseLoader {
         return instance;
     }
 
-    public String[] creditToStringArray(ICredit credit) {
-
-        return credit.toFileString().split(",");
-    }
-
     public IPerson searchQueryToPerson(String searchString) {
         //Deaclare person to be returned
         IPerson tempPerson = null;
@@ -303,6 +298,8 @@ public class DatabaseLoader {
         }
         return null;
     }
+
+    
 
     public IEpisode queryToEpisode(String[] strings) {
         IEpisode tempEpisode = null;
