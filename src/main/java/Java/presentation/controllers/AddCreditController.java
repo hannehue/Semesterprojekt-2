@@ -108,12 +108,11 @@ public class AddCreditController implements Initializable {
      */
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
-        int id = ApplicationManager.getInstance().nextId();
-        EpisodeManager.getInstance().addEpisode(
-                episodeTitle.getText(),
-                Integer.parseInt(episodeLength.getText()),
-                ((ISeason) choiceBoxSeason.getValue()).getCreditID(),
-                id);
+        int id = EpisodeManager.getInstance().addEpisode(
+            ((ISeason) choiceBoxSeason.getValue()).getCreditID(),
+            Integer.parseInt(episodeLength.getText()),
+            episodeTitle.getText()
+        );
         JobManager.getInstance().addJob(id);
     }
 
@@ -145,8 +144,9 @@ public class AddCreditController implements Initializable {
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
         PersonManager.getInstance().addPerson(
                 personName.getText(),
-                null,
+                null, //description
                 personPhone.getText(),
+                null, //personalinfo
                 personEmail.getText());
     }
 

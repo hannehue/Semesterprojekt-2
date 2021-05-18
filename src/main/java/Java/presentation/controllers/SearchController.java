@@ -53,13 +53,8 @@ public class SearchController implements Initializable {
 
     public void setContent() {
         String searchString = MenuController.getInstance().getSearchString();
-        //ObservableList<? extends ICredit> observableResults = PersonManager.getInstance().searchPerson(searchString);
         ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
         observableResults.addAll(ApplicationManager.getInstance().search(searchString));
-
-        //ArrayList<ICredit> searchResult = PersonManager.getInstance().searchPerson(searchString);
-        //observableResults.addAll(searchResult);
-        System.out.println(observableResults);
         SearchList.setItems(observableResults);
     }
 

@@ -22,7 +22,7 @@ public class EpisodeManager {
 
     private final ObservableMap<Integer, IEpisode> episodeMap = FXCollections.observableHashMap();
 
-    public void addEpisode(int seasonId, int length, String title) {
+    public int addEpisode(int seasonId, int length, String title) {
         ISeason season = SeasonManager.getInstance().getSeasonById(seasonId);
         IEpisode episode = new Episode(
                 getNextEpisode(season.getCreditID()) + " - " + title,
@@ -34,6 +34,7 @@ public class EpisodeManager {
         season.getEpisodes().add(episode.getCreditID());
         episodeMap.put(episode.getCreditID(), episode);
         System.out.println("tilføjet " + episode.getName());
+        return 0;
     }
 
     public String getNextEpisode(Integer seasonId) {
