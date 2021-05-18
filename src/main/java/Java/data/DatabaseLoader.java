@@ -55,8 +55,6 @@ public class DatabaseLoader {
             System.out.println("Went wrong at connection creation");
             e.printStackTrace();
         }
-
-
     }
 
     public static DatabaseLoader getInstance(){

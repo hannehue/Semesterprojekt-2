@@ -156,54 +156,30 @@ public class MenuController implements Initializable {
     //Søge felt
     public void handleOpenSearch(MouseEvent mouseEvent) {
         //Hvis søgefeltet er synligt
-        if (searchField.visibleProperty().get()){
-            /*/Ignorer at der skal søge hvis brugeren ikke har indtastet noget
-            if (!searchField.getText().equalsIgnoreCase("")) {
-                //gemmer søgestrengen
-                searchString = searchField.getText();
-                //prøver at åbne søgeresultat ind i content
-                try {
-                    setContentPane("SearchResult.fxml", (Object) SearchController.getInstance());
-                    SearchController.getInstance().setContent();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //Hvis der ikke er indtastet noget
-            } else {
-                searchField.setPromptText("Indtast noget");
-            }
-            //Hvis søgefeltet ikke er åbent, så start animation
-            */
-        } else {
+        if (!searchField.visibleProperty().get()){
             searchField.setVisible(true);
             Timeline timeline = new Timeline();
             KeyValue keyValue = new KeyValue(searchField.translateXProperty(), 0, Interpolator.LINEAR);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(3000), keyValue);
             timeline.getKeyFrames().add(keyFrame);
             timeline.play();
-            timeline.setOnFinished(event -> searchField.setPromptText(ApplicationManager.getInstance().getSearchFieldPlaceholder()));
         }
     }
 
     public void submitSearch(MouseEvent mouseEvent){
         System.out.println("clicked submit search");
         if (searchField.visibleProperty().get()){
-            //Ignorer at der skal søge hvis brugeren ikke har indtastet noget
             if (!searchField.getText().equalsIgnoreCase("")) {
-                //gemmer søgestrengen
                 searchString = searchField.getText();
-                //prøver at åbne søgeresultat ind i content
                 try {
                     setContentPane("SearchResult.fxml", (Object) SearchController.getInstance());
                     SearchController.getInstance().setContent();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //Hvis der ikke er indtastet noget
             } else {
                 searchField.setPromptText("Indtast noget");
             }
-            //Hvis søgefeltet ikke er åbent, så start animation
         }
     }
 

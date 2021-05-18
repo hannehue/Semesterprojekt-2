@@ -15,7 +15,6 @@ public class ApplicationManager {
 
     private DatabaseLoader dataLoader;
     private UserType userType;
-    private String searchFieldPlaceholder = "";
 
     private static final ApplicationManager instance = new ApplicationManager();
 
@@ -32,15 +31,6 @@ public class ApplicationManager {
 
     public void setUserType(UserType userTypeSetter) {
         userType = userTypeSetter;
-    }
-
-
-    public String getSearchFieldPlaceholder() {
-        return searchFieldPlaceholder;
-    }
-
-    public void setSearchFieldPlaceholder(String searchFieldPlaceholder) {
-        ApplicationManager.getInstance().searchFieldPlaceholder = searchFieldPlaceholder;
     }
 
     /**
