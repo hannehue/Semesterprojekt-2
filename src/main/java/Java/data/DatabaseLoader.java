@@ -476,7 +476,7 @@ public class DatabaseLoader {
              */
 
 
-            System.out.println(IDs.get("creditID") + " --- " + IDs.get("productionID") + " --- " + IDs.get("movieID"));
+//            System.out.println(IDs.get("creditID") + " --- " + IDs.get("productionID") + " --- " + IDs.get("movieID"));
         } catch (SQLException e){
             e.printStackTrace();
         }
