@@ -23,11 +23,7 @@ public class SeasonManager {
         IShow show = ShowManager.getInstance().getShowById(showId);
         ISeason season = new Season(
                 "S" + (show.getNumberOfSeason() + 1),
-                new Date(),
-                ApplicationManager.getInstance().nextId(),
-                false,
                 description,
-                show.getCreditID(),
                 false
         );
         show.getSeasons().add(season.getCreditID());

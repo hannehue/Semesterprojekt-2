@@ -21,16 +21,12 @@ public class PersonManager {
 
     private final ObservableList<IPerson> personList = FXCollections.observableArrayList();
 
-    public void addPerson(String name, String description, String phoneNumber, String email) {
+    public void addPerson(String name, String description, String phoneNumber, String personalInfo, String email) {
         IPerson person = new Person(
                 name,
-                new Date(),
-                ApplicationManager.getInstance().nextId(), // change later
-                false,
                 description,
-                ApplicationManager.getInstance().nextId(),
                 phoneNumber,
-                null,
+                personalInfo,
                 email);
         personList.add(person);
     }

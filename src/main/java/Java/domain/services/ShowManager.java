@@ -21,11 +21,9 @@ public class ShowManager {
     public void addShow(String title, String description) {
         IShow show = new Show(
                 title,
-                null,
-                ApplicationManager.getInstance().nextId(),
-                false,
                 "desc",
-                true);
+                true
+        );
         showMap.put(show.getCreditID(), show);
         System.out.println("Added show: " + show.getName());
     }

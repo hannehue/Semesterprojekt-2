@@ -19,6 +19,18 @@ public class Show extends Credit implements IShow {
         this.allSeasonApproved = allSeasonApproved;
     }
 
+    public Show(String showName, String description, boolean allSeasonApproved){
+        super(
+                showName,
+                new Date(),
+                0,
+                false,
+                description
+        );
+        this.seasons = FXCollections.observableArrayList();
+        this.allSeasonApproved = allSeasonApproved;
+    }
+
     @Override
     public boolean isAllSeasonApproved() {
         return allSeasonApproved;

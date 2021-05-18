@@ -20,6 +20,19 @@ public class Season extends Credit implements ISeason {
         this.allEpisodesApproved = allEpisodesApproved;
     }
 
+    public Season(String name, String description , Boolean allEpisodesApproved){
+        super(
+                name,
+                new Date(),
+                0,
+                false,
+                description
+        );
+        this.showID = 0;
+        this.episodes = FXCollections.observableArrayList();
+        this.allEpisodesApproved = allEpisodesApproved;
+    }
+
     @Override
     public ObservableList<Integer> getEpisodes() {
         return episodes;
