@@ -34,15 +34,15 @@ public class ShowManager {
         return showMap;
     }
 
-    public IShow getShowById(int showId){
+    public IShow getShowById(int showId) {
         return showMap.get(showId);
     }
 
-    public ArrayList<IShow> getAllShows(){
+    public ArrayList<IShow> getAllShows() {
         return new ArrayList<>(showMap.values());
     }
 
-    public IShow searchShowName(String name){
+    public IShow searchShowName(String name) {
         for (IShow show : showMap.values()){
             if (show.getName() == name ) {
                 return show;

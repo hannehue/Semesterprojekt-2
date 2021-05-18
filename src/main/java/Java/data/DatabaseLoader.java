@@ -283,7 +283,6 @@ public class DatabaseLoader {
             for (String staff : new ArrayList<String>(Arrays.asList(strings[9].split(";")))) {
                 tempEpisode.addStaffID(Integer.parseInt(staff));
             }
-
         } catch (ParseException e){
             e.printStackTrace();
             System.err.println("Failed when initializing episode from string array");

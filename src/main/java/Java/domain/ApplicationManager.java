@@ -18,19 +18,12 @@ public class ApplicationManager {
     private String searchFieldPlaceholder = "";
 
     private static final ApplicationManager instance = new ApplicationManager();
-    private int idTracker = -1; //should be moved to database (tracker id for Movie og Person)
 
     private ApplicationManager() {
     }
 
     public static ApplicationManager getInstance() {
         return instance;
-    }
-
-    public int nextId() {
-        int temp = idTracker;
-        idTracker--;
-        return temp;
     }
 
     public UserType getUserType() {

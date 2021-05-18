@@ -1,6 +1,7 @@
 package Java.domain.services;
 
 import Java.data.DatabaseLoader;
+import Java.domain.ApplicationManager;
 import Java.domain.data.Person;
 import Java.interfaces.ICredit;
 import Java.interfaces.IPerson;
@@ -24,10 +25,10 @@ public class PersonManager {
         IPerson person = new Person(
                 name,
                 new Date(),
-                1, // change later
+                ApplicationManager.getInstance().nextId(), // change later
                 false,
                 description,
-                1,
+                ApplicationManager.getInstance().nextId(),
                 phoneNumber,
                 null,
                 email);
