@@ -1,6 +1,7 @@
 package Java.domain.services;
 
 import Java.data.DatabaseLoader;
+import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Person;
 import Java.interfaces.ICredit;
@@ -13,6 +14,7 @@ import java.util.Date;
 
 public class PersonManager {
     private static PersonManager instance = new PersonManager();
+    private DatabaseLoaderFacade database = new DatabaseLoaderFacade();
     private PersonManager(){}
 
     public static PersonManager getInstance() {
@@ -28,7 +30,7 @@ public class PersonManager {
                 phoneNumber,
                 personalInfo,
                 email);
-        personList.add(person);
+        database.putInDatabase(person);
     }
 
     public IPerson getPersonById(int personId){

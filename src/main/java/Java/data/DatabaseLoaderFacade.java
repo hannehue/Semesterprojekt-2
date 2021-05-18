@@ -2,6 +2,7 @@ package Java.data;
 
 import Java.interfaces.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -13,6 +14,11 @@ public class DatabaseLoaderFacade {
     public void putInDatabase(IPerson person){
         //Ijob følger med her, derfor er der ikke en putInDatabase(IJob)
         //charactername er givet i IJob
+        try {
+            DatabaseLoader.getInstance().addPersonToDatabase(person);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
     public void putInDatabase(ICompany company){
 

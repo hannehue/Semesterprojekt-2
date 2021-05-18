@@ -75,4 +75,8 @@ public class ApplicationManager {
         return creditsList;
     }
 
+    public void searchShow( String search, ObservableList<IShow> list){
+        list.add(new Show("name", "desc", false));
+    }
+
 }
