@@ -20,14 +20,6 @@ public class DatabaseLoader {
 
     private static DatabaseLoader instance;
 
-    private ArrayList<String[]> personArraylist;
-
-    private ArrayList<String[]> groupArraylist;
-
-    private ArrayList<String[]> movieArrayList;
-
-    private ArrayList<String[]> showArrayList;
-
     private final SimpleDateFormat formatter;
 
     private Connection connection;
@@ -178,33 +170,13 @@ public class DatabaseLoader {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddPerson = getConnection().setSavepoint();
         try {
-
-
-            // insert statement to insert info into creditsTable
-            PreparedStatement insertToCredits = getConnection().prepareStatement(
-                    "INSERT INTO credits(name, date_added, approved, description)"
-                    + "VALUES(?, ?, ?, ?)"
-                    //set prepared statement to return generated credit_ID
-            , Statement.RETURN_GENERATED_KEYS);
-
-            //insert values from IPerson to preparedStatement
-            insertToCredits.setString(1, person.getName());
-            insertToCredits.setString(2, person.getDateAdded().toString());
-            insertToCredits.setBoolean(3, person.isApproved());
-            insertToCredits.setString(4, person.getDescription());
-            //execute but NOT commit
-            insertToCredits.executeUpdate();
-            //get generated credit_ID
-            insertToCredits.getGeneratedKeys().next();
-            int creditID = insertToCredits.getGeneratedKeys().getInt(1);
-
+            int creditID = addCreditToDatabase(person);
             // insert statement to insert indo into persons table
             PreparedStatement insertPerson = getConnection().prepareStatement(
                     "INSERT INTO persons(credit_id, phone_number, email, personal_info)"
                     + "VALUES(?, ?, ?, ?)"
                     //set prepared statement to return generated person_ID
             , Statement.RETURN_GENERATED_KEYS);
-
             //insert values from IPerson to preparedStatement
             insertPerson.setInt(1, creditID);
             insertPerson.setString(2, person.getPhoneNumber());
@@ -215,19 +187,16 @@ public class DatabaseLoader {
             // get generated person_ID
             insertPerson.getGeneratedKeys().next();
             int personID = insertPerson.getGeneratedKeys().getInt(1);
-
             // Insert generated IDs to a map, with corresponding key names
             Map<String, Integer> returnIDs = new HashMap<>();
             returnIDs.put("creditID", creditID);
             returnIDs.put("personID", personID);
-
             //commit changes to database
             getConnection().commit();
             //set auto commit to true again, as that is the default
             getConnection().setAutoCommit(true);
             //return ID map
             return returnIDs;
-
         } catch (SQLException e){
             e.printStackTrace();
             System.out.println("ERROR AT ADD PERSON TO DATABASE");
@@ -299,34 +268,8 @@ public class DatabaseLoader {
         Savepoint beforeAddMovie = getConnection().setSavepoint();
 
         try {
-
-            PreparedStatement insertCredit = getConnection().prepareStatement(
-                    "INSERT INTO credits(name, date_added, approved, description)"
-                    + "VALUES(?, ?, ?, ?)"
-            , Statement.RETURN_GENERATED_KEYS);
-
-            insertCredit.setString(1, movie.getName());
-            insertCredit.setString(2, movie.getDateAdded().toString());
-            insertCredit.setBoolean(3, movie.isApproved());
-            insertCredit.setString(4, movie.getDescription());
-            insertCredit.executeUpdate();
-
-            insertCredit.getGeneratedKeys().next();
-            int creditID = insertCredit.getGeneratedKeys().getInt(1);
-
-
-            PreparedStatement insertProduction = getConnection().prepareStatement(
-                    "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
-                            + "VALUES(?, ?, ?, ?)"
-                    , Statement.RETURN_GENERATED_KEYS);
-
-            insertProduction.setInt(1, creditID);
-            insertProduction.setInt(2, Category.valueOf(movie.getCategories()[0].toString().toUpperCase()).ordinal());
-            insertProduction.setInt(3, movie.getLengthInSecs());
-            insertProduction.setString(4, movie.getReleaseDate().toString());
-            insertProduction.executeUpdate();
-            insertProduction.getGeneratedKeys().next();
-            int productionID = insertProduction.getGeneratedKeys().getInt(1);
+            int creditID = addCreditToDatabase(movie);
+            int productionID = addProductionToDatabase(movie, creditID);
 
             PreparedStatement insertMovie = getConnection().prepareStatement(
                     "INSERT INTO movies(production_id)"
@@ -376,20 +319,109 @@ public class DatabaseLoader {
         return tempEpisode;
     }
 
+    public Map<String, Integer> addShowToDatabase(IShow show) throws SQLException{
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddShow = getConnection().setSavepoint();
+        try {
+            int creditID = addCreditToDatabase(show);
+
+            PreparedStatement insertShow = getConnection().prepareStatement(
+                    "INSERT INTO shows(credit_id, all_seasons_approved)"
+                            + "VALUES(?, ?)"
+                    , Statement.RETURN_GENERATED_KEYS);
+
+            insertShow.setInt(1, creditID);
+            insertShow.setBoolean(2, show.isAllSeasonApproved());
+            insertShow.executeUpdate();
+            insertShow.getGeneratedKeys().next();
+            int showID = insertShow.getGeneratedKeys().getInt(1);
+
+            HashMap<String, Integer> showIDs = new HashMap<>();
+            showIDs.put("creditID", creditID);
+            showIDs.put("showID", showID);
+            getConnection().commit();
+            getConnection().setAutoCommit(false);
+            return showIDs;
+
+        } catch (SQLException e){
+            System.out.println("WENT WRONG AT ADD SHOW TO DATABASE");
+            e.printStackTrace();
+        }
+        System.out.println("show not added");
+        return null;
+    }
+
     public Map<String, Integer> addEpisodeToDatabase(IEpisode episode){
 
         return null;
     }
 
-    public Map<String, Integer> addSeasonToDatabase(ISeason season){
+    public Map<String, Integer> addSeasonToDatabase(ISeason season) throws SQLException{
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddSeason = getConnection().setSavepoint();
+        try {
+            int creditID = addCreditToDatabase(season);
+
+            PreparedStatement insertSeason = getConnection().prepareStatement(
+                    "INSERT INTO seasons(credit_id, show_id, all_episodes_approved)"
+                    + "VALUES(?, ?, ?)"
+            , Statement.RETURN_GENERATED_KEYS);
+
+            insertSeason.setInt(1, creditID);
+            insertSeason.setInt(2, season.getShowID());
+            insertSeason.setBoolean(3, season.isAllEpisodesApproved());
+            insertSeason.executeUpdate();
+            insertSeason.getGeneratedKeys().next();
+            int seasonID = insertSeason.getGeneratedKeys().getInt(1);
+
+            Map<String, Integer> showIDs = new HashMap<>();
+            showIDs.put("creditID", creditID);
+            showIDs.put("showID", season.getShowID());
+            showIDs.put("seasonID", seasonID);
+
+            getConnection().commit();
+            getConnection().setAutoCommit(false);
+
+            return showIDs;
+
+        } catch (SQLException e) {
+            System.out.println("WENT WRONG AT ADD SEASON TO DATABASE");
+            e.printStackTrace();
+        }
+
 
         return null;
     }
 
-    public Map<String, Integer> addShowToDatabase(IShow show) throws SQLException{
-        getConnection().setAutoCommit(false);
+    public int addCreditToDatabase(ICredit credit) throws SQLException{
+        PreparedStatement insertCredit = getConnection().prepareStatement(
+                "INSERT INTO credits(name, date_added, approved, description)"
+                        + "VALUES(?, ?, ?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
 
-        return null;
+        insertCredit.setString(1, credit.getName());
+        insertCredit.setString(2, credit.getDateAdded().toString());
+        insertCredit.setBoolean(3, credit.isApproved());
+        insertCredit.setString(4, credit.getDescription());
+        insertCredit.executeUpdate();
+
+        insertCredit.getGeneratedKeys().next();
+        return insertCredit.getGeneratedKeys().getInt(1);
+    }
+
+    public int addProductionToDatabase(IProduction production, int creditID) throws SQLException{
+        PreparedStatement insertProduction = getConnection().prepareStatement(
+                "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
+                        + "VALUES(?, ?, ?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
+
+        insertProduction.setInt(1, creditID);
+        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal());
+        insertProduction.setInt(3, production.getLengthInSecs());
+        insertProduction.setString(4, production.getReleaseDate().toString());
+        insertProduction.executeUpdate();
+        insertProduction.getGeneratedKeys().next();
+        return insertProduction.getGeneratedKeys().getInt(1);
     }
 
     public static void main(String[] args) {
@@ -407,6 +439,7 @@ public class DatabaseLoader {
             );
 
              */
+            /*
             Category[] categories = {Category.FILM};
 
             Map<String, Integer> IDs = getInstance().addMovieToDatabase(
@@ -418,6 +451,30 @@ public class DatabaseLoader {
                             new Date(1415228400000L)
                     )
             );
+             */
+            /*
+            Map<String, Integer> IDs = getInstance().addShowToDatabase(
+                    new Show(
+                            "The 100",
+                            "Yeet a couple 100 people to die on earth",
+                            false
+                    )
+            );
+             */
+
+            /** NOT DONE **/
+
+            /*
+            Map<String, Integer> IDs = getInstance().addSeasonToDatabase(
+                    new Season(
+                            "Season 1",
+                            "100 people are sent to the earth",
+
+                            false
+                    )
+            );
+             */
+
 
             System.out.println(IDs.get("creditID") + " --- " + IDs.get("productionID") + " --- " + IDs.get("movieID"));
         } catch (SQLException e){
@@ -427,25 +484,7 @@ public class DatabaseLoader {
 
     }
 
-
     private Connection getConnection() {
         return connection;
     }
-
-    public ArrayList<String[]> getPersonArraylist() {
-        return personArraylist;
-    }
-
-    public ArrayList<String[]> getGroupArraylist() {
-        return groupArraylist;
-    }
-
-    public ArrayList<String[]> getMovieArrayList() {
-        return movieArrayList;
-    }
-
-    public ArrayList<String[]> getShowArrayList() {
-        return showArrayList;
-    }
-
 }
