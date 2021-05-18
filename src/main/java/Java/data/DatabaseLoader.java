@@ -62,45 +62,6 @@ public class DatabaseLoader {
         return credit.toFileString().split(",");
     }
 
-    public void addCreditToDatabase(ICredit credit) {
-        if (credit instanceof IPerson) {
-            personArraylist.add(creditToStringArray(credit));
-
-        } else if (credit instanceof IMovie) {
-            movieArrayList.add(creditToStringArray(credit));
-
-        } else if (credit instanceof IGroup) {
-            groupArraylist.add(creditToStringArray(credit));
-
-        } else if (credit instanceof IShow) {
-            showArrayList.add(creditToStringArray(credit));
-        }
-    }
-
-    public void addCreditsToDatabase(ArrayList<? extends ICredit> readList) {
-        if (readList.size() == 0 || readList == null) {
-            return;
-        }
-
-        ArrayList<String[]> tempList = new ArrayList<>();
-        for (ICredit p : readList) {
-            if (p != null) {
-                tempList.add(creditToStringArray(p));
-            }
-        }
-        if (readList.get(0) instanceof IPerson) {
-            personArraylist = tempList;
-
-        } else if (readList.get(0) instanceof IMovie) {
-            movieArrayList = tempList;
-
-        } else if (readList.get(0) instanceof IGroup) {
-            groupArraylist = tempList;
-        } else if (readList.get(0) instanceof IShow) {
-            showArrayList = tempList;
-        }
-    }
-
     public IPerson searchQueryToPerson(String searchString) {
         //Deaclare person to be returned
         IPerson tempPerson = null;
@@ -218,9 +179,11 @@ public class DatabaseLoader {
     }
 
     public Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
+        // Set autoCommit to false, so only both prepared statements run
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddPerson = getInstance().getConnection().setSavepoint();
         try {
-            // Set autoCommit to false, so only both prepared statements run
-            getConnection().setAutoCommit(false);
+
 
             // insert statement to insert info into creditsTable
             PreparedStatement insertToCredits = getInstance().connection.prepareStatement(
@@ -277,6 +240,7 @@ public class DatabaseLoader {
         } catch (SQLException e){
             e.printStackTrace();
             System.out.println("ERROR AT ADD PERSON TO DATABASE");
+            getInstance().getConnection().rollback(beforeAddPerson);
             getInstance().getConnection().setAutoCommit(true);
         }
         System.out.println("No user added");
