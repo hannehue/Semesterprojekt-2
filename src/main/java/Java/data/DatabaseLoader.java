@@ -195,10 +195,8 @@ public class DatabaseLoader {
             //execute but NOT commit
             insertToCredits.executeUpdate();
             //get generated credit_ID
-            int creditID = 0;
-            while (insertToCredits.getGeneratedKeys().next()) {
-                creditID = insertToCredits.getGeneratedKeys().getInt(1);
-            }
+            insertToCredits.getGeneratedKeys().next();
+            int creditID = insertToCredits.getGeneratedKeys().getInt(1);
 
             // insert statement to insert indo into persons table
             PreparedStatement insertPerson = getInstance().connection.prepareStatement(
@@ -215,10 +213,8 @@ public class DatabaseLoader {
             //execute but NOT commit
             insertPerson.executeUpdate();
             // get generated person_ID
-            int personID = 0;
-            while (insertPerson.getGeneratedKeys().next()) {
-                personID = insertPerson.getGeneratedKeys().getInt(1);
-            }
+            insertPerson.getGeneratedKeys().next();
+            int personID = insertPerson.getGeneratedKeys().getInt(1);
 
             // Insert generated IDs to a map, with corresponding key names
             Map<String, Integer> returnIDs = new HashMap<>();
@@ -241,7 +237,6 @@ public class DatabaseLoader {
         System.out.println("No user added");
         return null;
     }
-
 
     public IGroup queryToGroup(String[] strings) {
         IGroup tempGroup = null;
@@ -299,7 +294,68 @@ public class DatabaseLoader {
         return null;
     }
 
-    
+    public Map<String, Integer> addMovieToDatabase(IMovie movie) throws SQLException{
+        getInstance().getConnection().setAutoCommit(false);
+        Savepoint beforeAddMovie = getInstance().getConnection().setSavepoint();
+
+        try {
+
+            PreparedStatement insertCredit = getInstance().getConnection().prepareStatement(
+                    "INSERT INTO credits(name, date_added, approved, description)"
+                    + "VALUES(?, ?, ?, ?)"
+            , Statement.RETURN_GENERATED_KEYS);
+
+            insertCredit.setString(1, movie.getName());
+            insertCredit.setString(2, movie.getDateAdded().toString());
+            insertCredit.setBoolean(3, movie.isApproved());
+            insertCredit.setString(4, movie.getDescription());
+            insertCredit.executeUpdate();
+
+            insertCredit.getGeneratedKeys().next();
+            int creditID = insertCredit.getGeneratedKeys().getInt(1);
+
+
+            PreparedStatement insertProduction = getInstance().getConnection().prepareStatement(
+                    "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
+                            + "VALUES(?, ?, ?, ?)"
+                    , Statement.RETURN_GENERATED_KEYS);
+
+            insertProduction.setInt(1, creditID);
+            insertProduction.setInt(2, Category.valueOf(movie.getCategories()[0].toString().toUpperCase()).ordinal());
+            insertProduction.setInt(3, movie.getLengthInSecs());
+            insertProduction.setString(4, movie.getReleaseDate().toString());
+            insertProduction.executeUpdate();
+            insertProduction.getGeneratedKeys().next();
+            int productionID = insertProduction.getGeneratedKeys().getInt(1);
+
+            PreparedStatement insertMovie = getInstance().getConnection().prepareStatement(
+                    "INSERT INTO movies(production_id)"
+                            + "VALUES(?)"
+                    , Statement.RETURN_GENERATED_KEYS);
+            insertMovie.setInt(1, productionID);
+            insertMovie.executeUpdate();
+            insertMovie.getGeneratedKeys().next();
+            int movieID = insertMovie.getGeneratedKeys().getInt(1);
+
+            Map<String, Integer> movieIDs = new HashMap<>();
+            movieIDs.put("creditID", creditID);
+            movieIDs.put("productionID", productionID);
+            movieIDs.put("movieID", movieID);
+
+            getConnection().commit();
+            getConnection().setAutoCommit(true);
+
+            return movieIDs;
+
+        } catch (SQLException e){
+            System.out.println("WENT WRONG AT ADD MOVIE TO DATABASE");
+            e.printStackTrace();
+            getInstance().getConnection().rollback(beforeAddMovie);
+            getInstance().getConnection().setAutoCommit(true);
+        }
+        System.out.println("No movie added");
+        return null;
+    }
 
     public IEpisode queryToEpisode(String[] strings) {
         IEpisode tempEpisode = null;
@@ -323,6 +379,7 @@ public class DatabaseLoader {
     public static void main(String[] args) {
 
         try {
+            /*
             Map<String, Integer> IDs = getInstance().addPersonToDatabase(
                     new Person(
                             "Hans Pedersen",
@@ -332,7 +389,21 @@ public class DatabaseLoader {
                             "bareMig@gmail.com"
                     )
             );
-            System.out.println(IDs.get("creditID") + " --- " + IDs.get("personID"));
+
+             */
+            Category[] categories = {Category.FILM};
+
+            Map<String, Integer> IDs = getInstance().addMovieToDatabase(
+                    new Movie(
+                            "Interstellar",
+                            "A very good movie",
+                            categories,
+                            10140,
+                            new Date(1415228400000L)
+                    )
+            );
+
+            System.out.println(IDs.get("creditID") + " --- " + IDs.get("productionID") + " --- " + IDs.get("movieID"));
         } catch (SQLException e){
             e.printStackTrace();
         }
