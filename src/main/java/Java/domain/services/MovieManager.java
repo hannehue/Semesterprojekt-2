@@ -1,6 +1,7 @@
 package Java.domain.services;
 
 import Java.data.DatabaseLoader;
+import Java.data.DatabaseLoaderFacade;
 import Java.domain.data.Category;
 import Java.domain.data.Movie;
 import Java.interfaces.IMovie;
@@ -38,7 +39,7 @@ public class MovieManager {
     }
 
     public ArrayList<IMovie> searchMovie(String findMovie){
-        return DatabaseLoader.getInstance().searchQueryToMovieList(findMovie);
+        return DatabaseLoaderFacade.getInstance().searchMoviesFromDatabase(findMovie);
     }
 
 }

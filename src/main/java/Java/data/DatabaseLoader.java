@@ -42,7 +42,7 @@ public class DatabaseLoader {
         }
     }
 
-    public static DatabaseLoader getInstance() {
+    static DatabaseLoader getInstance() {
         if (instance == null) {
             instance = new DatabaseLoader();
         }

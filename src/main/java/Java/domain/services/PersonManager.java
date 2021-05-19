@@ -55,7 +55,7 @@ public class PersonManager {
      * @return
      */
     public ArrayList<IPerson> searchPerson(String findPerson) {
-        return DatabaseLoader.getInstance().searchQueryToPersonList(findPerson);
+        return DatabaseLoaderFacade.getInstance().searchPersonsFromDatabase(findPerson);
     }
 
 }

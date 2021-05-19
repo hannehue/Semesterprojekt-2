@@ -91,4 +91,11 @@ public class DatabaseLoaderFacade {
         return null;
     }
 
+
+    public ArrayList<IPerson> searchPersonsFromDatabase(String searchString){
+        return DatabaseLoader.getInstance().searchQueryToPersonList(searchString);
+    }
+    public ArrayList<IMovie> searchMoviesFromDatabase(String searchString){
+        return DatabaseLoader.getInstance().searchQueryToMovieList(searchString);
+    }
 }
