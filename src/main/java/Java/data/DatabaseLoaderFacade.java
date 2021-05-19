@@ -5,6 +5,7 @@ import Java.interfaces.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class DatabaseLoaderFacade {
 
@@ -46,15 +47,24 @@ public class DatabaseLoaderFacade {
     public void putInDatabase(ISeason season) {
 
     }
-    public void putInDatabase(IShow show) {
+    public Map<String, Integer> putInDatabase(IShow show) {
+        try {
+            return DatabaseLoader.getInstance().addShowToDatabase(show);
+        } catch (SQLException e) {
+            System.out.println("Show not added. Exception thrown by DBloaderFacade." +
+                    " Most likely error at setAutoCommit to false");
+            e.printStackTrace();
+            return null;
+        }
 
     }
-    public void putInDatabase(IMovie movie){
+    public Map<String, Integer> putInDatabase(IMovie movie){
         try {
-            DatabaseLoader.getInstance().addMovieToDatabase(movie);
+            return DatabaseLoader.getInstance().addMovieToDatabase(movie);
         } catch (SQLException e) {
             System.out.println("Error at put movie in database");
             e.printStackTrace();
+            return null;
         }
     }
     public void putInDatabase(IProduction production) {

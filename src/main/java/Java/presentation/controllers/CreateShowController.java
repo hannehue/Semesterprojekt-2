@@ -1,6 +1,7 @@
 package Java.presentation.controllers;
 
 import Java.domain.services.ShowManager;
+import Java.interfaces.IShow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
@@ -26,10 +27,11 @@ public class CreateShowController {
 
     @FXML
     protected void handleAddShow(ActionEvent Event) throws IOException {
-        ShowManager.getInstance().addShow(
+        IShow show = ShowManager.getInstance().addShow(
                 showTitle.getText(),
                 showDescription.getText()
         );
+        AddCreditController.getInstance().choiceBoxShow.setValue(show.getName());
         AddCreditController.getInstance().disposeCreateShow();
     }
 
