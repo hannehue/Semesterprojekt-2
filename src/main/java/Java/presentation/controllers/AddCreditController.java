@@ -35,6 +35,8 @@ public class AddCreditController implements Initializable {
     @FXML
     protected TextField personPhone;
     @FXML
+    protected TextField personDescription;
+    @FXML
     protected TextField movieTitle;
     @FXML
     protected TextField movieDescription;
@@ -144,9 +146,9 @@ public class AddCreditController implements Initializable {
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
         PersonManager.getInstance().addPerson(
                 personName.getText(),
-                null, //description
+                personDescription.getText(), //description
                 personPhone.getText(),
-                null, //personalinfo
+                "", //personalinfo
                 personEmail.getText());
     }
 

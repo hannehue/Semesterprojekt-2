@@ -220,6 +220,37 @@ public class DatabaseLoader {
         return tempGroup;
     }
 
+    public int addCreditToDatabase(ICredit credit) throws SQLException{
+        PreparedStatement insertCredit = getConnection().prepareStatement(
+                "INSERT INTO credits(name, date_added, approved, description)"
+                        + "VALUES(?, ?, ?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
+
+        insertCredit.setString(1, credit.getName());
+        insertCredit.setString(2, credit.getDateAdded().toString());
+        insertCredit.setBoolean(3, credit.isApproved());
+        insertCredit.setString(4, credit.getDescription());
+        insertCredit.executeUpdate();
+
+        insertCredit.getGeneratedKeys().next();
+        return insertCredit.getGeneratedKeys().getInt(1);
+    }
+
+    public int addProductionToDatabase(IProduction production, int creditID) throws SQLException{
+        PreparedStatement insertProduction = getConnection().prepareStatement(
+                "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
+                        + "VALUES(?, ?, ?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
+
+        insertProduction.setInt(1, creditID);
+        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal());
+        insertProduction.setInt(3, production.getLengthInSecs());
+        insertProduction.setString(4, production.getReleaseDate().toString());
+        insertProduction.executeUpdate();
+        insertProduction.getGeneratedKeys().next();
+        return insertProduction.getGeneratedKeys().getInt(1);
+    }
+
     public ArrayList<IMovie> searchQueryToMovieList(String searchString) {
         try {
             ArrayList<IMovie> movieList = new ArrayList<>();
@@ -391,37 +422,6 @@ public class DatabaseLoader {
 
 
         return null;
-    }
-
-    public int addCreditToDatabase(ICredit credit) throws SQLException{
-        PreparedStatement insertCredit = getConnection().prepareStatement(
-                "INSERT INTO credits(name, date_added, approved, description)"
-                        + "VALUES(?, ?, ?, ?)"
-                , Statement.RETURN_GENERATED_KEYS);
-
-        insertCredit.setString(1, credit.getName());
-        insertCredit.setString(2, credit.getDateAdded().toString());
-        insertCredit.setBoolean(3, credit.isApproved());
-        insertCredit.setString(4, credit.getDescription());
-        insertCredit.executeUpdate();
-
-        insertCredit.getGeneratedKeys().next();
-        return insertCredit.getGeneratedKeys().getInt(1);
-    }
-
-    public int addProductionToDatabase(IProduction production, int creditID) throws SQLException{
-        PreparedStatement insertProduction = getConnection().prepareStatement(
-                "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
-                        + "VALUES(?, ?, ?, ?)"
-                , Statement.RETURN_GENERATED_KEYS);
-
-        insertProduction.setInt(1, creditID);
-        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal());
-        insertProduction.setInt(3, production.getLengthInSecs());
-        insertProduction.setString(4, production.getReleaseDate().toString());
-        insertProduction.executeUpdate();
-        insertProduction.getGeneratedKeys().next();
-        return insertProduction.getGeneratedKeys().getInt(1);
     }
 
     public static void main(String[] args) {

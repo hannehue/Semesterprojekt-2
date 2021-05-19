@@ -7,6 +7,18 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class DatabaseLoaderFacade {
+
+    private static DatabaseLoaderFacade instance;
+
+    private DatabaseLoaderFacade(){};
+
+    public static DatabaseLoaderFacade getInstance() {
+        if (instance == null){
+            instance = new DatabaseLoaderFacade();
+        }
+        return instance;
+    }
+
     //---------------------------------------------------------
     //                        Put
     //Metoder som tager en parameter i forhold til hvad der skal sendes til databsen
@@ -14,6 +26,13 @@ public class DatabaseLoaderFacade {
     public void putInDatabase(IPerson person){
         //Ijob følger med her, derfor er der ikke en putInDatabase(IJob)
         //charactername er givet i IJob
+        try {
+            DatabaseLoader.getInstance().addPersonToDatabase(person);
+        } catch (SQLException e) {
+            System.out.println("Person not added. Exception thrown by DBloaderFacade." +
+                    " Most likely error at setAutoCommit to false");
+            e.printStackTrace();
+        }
     }
     public void putInDatabase(ICompany company){
 
@@ -71,4 +90,5 @@ public class DatabaseLoaderFacade {
     public IProduction getFromDatabase(IProduction production){
         return null;
     }
+
 }

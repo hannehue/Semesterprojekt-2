@@ -39,12 +39,14 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <Label layoutX="14.0" prefHeight="26.0" text="Navn:" />
+                                        <Label layoutX="10.0" prefHeight="26.0" text="Navn:" />
                                         <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Email:" />
                                         <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Telefon:" />
+                                        <Label layoutX="10.0" layoutY="90.0" prefHeight="26.0" text="Beskrivelse:" />
                                         <TextField fx:id="personName" layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
                                         <TextField fx:id="personEmail" layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
                                         <TextField fx:id="personPhone" layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <TextField fx:id="personDescription" layoutX="230.0" layoutY="90.0" prefHeight="26.0" prefWidth="295.0" />
                                         <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" />
                                     </children>
                                 </AnchorPane>
