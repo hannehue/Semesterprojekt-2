@@ -31,7 +31,7 @@ public class CreateShowController {
                 showTitle.getText(),
                 showDescription.getText()
         );
-        AddCreditController.getInstance().choiceBoxShow.setValue(show.getName());
+        AddCreditController.getInstance().choiceBoxShow.setValue(show);
         AddCreditController.getInstance().disposeCreateShow();
     }
 

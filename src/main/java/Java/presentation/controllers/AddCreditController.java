@@ -59,6 +59,8 @@ public class AddCreditController implements Initializable {
     private Stage createShow;
     private Stage createSeason;
 
+    private IShow currentShow;
+
     private static AddCreditController instance = new AddCreditController();
 
     private AddCreditController() {
@@ -203,7 +205,9 @@ public class AddCreditController implements Initializable {
 
 
     protected void addSeason(String description) {
-        SeasonManager.getInstance().addSeason(description, ((IShow) choiceBoxShow.getValue()).getCreditID());
+        getInstance().choiceBoxSeason.setValue(
+                SeasonManager.getInstance().addSeason(description, ((IShow) choiceBoxShow.getValue()))
+        );
     }
 
     /**

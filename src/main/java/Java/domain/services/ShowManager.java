@@ -27,6 +27,7 @@ public class ShowManager {
                 false
         );
         Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(show);
+        show.setIDMap(IDs);
         show.setCreditID(IDs.get("creditID"));
         showMap.put(IDs.get("showID"), show);
         System.out.println("Added show: " + show.getName());

@@ -3,6 +3,7 @@ package Java.domain.data;
 import Java.interfaces.ICredit;
 
 import java.util.Date;
+import java.util.Map;
 
 public abstract class Credit implements ICredit {
 
@@ -11,6 +12,7 @@ public abstract class Credit implements ICredit {
     private int creditID;
     private boolean approved;
     private String description;
+    private Map<String, Integer> IDMap;
 
 
     public Credit(String name, Date dateAdded, int creditID, boolean approved, String description){
@@ -80,5 +82,15 @@ public abstract class Credit implements ICredit {
     @Override
     public String toFileString(){
         return "No";
+    }
+
+    @Override
+    public Map<String, Integer> getIDMap() {
+        return IDMap;
+    }
+
+    @Override
+    public void setIDMap(Map<String, Integer> IDs) {
+        this.IDMap = IDs;
     }
 }

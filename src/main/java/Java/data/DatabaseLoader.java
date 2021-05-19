@@ -382,11 +382,6 @@ public class DatabaseLoader {
         return null;
     }
 
-    public Map<String, Integer> addEpisodeToDatabase(IEpisode episode){
-
-        return null;
-    }
-
     public Map<String, Integer> addSeasonToDatabase(ISeason season) throws SQLException{
         getConnection().setAutoCommit(false);
         Savepoint beforeAddSeason = getConnection().setSavepoint();
@@ -395,8 +390,8 @@ public class DatabaseLoader {
 
             PreparedStatement insertSeason = getConnection().prepareStatement(
                     "INSERT INTO seasons(credit_id, show_id, all_episodes_approved)"
-                    + "VALUES(?, ?, ?)"
-            , Statement.RETURN_GENERATED_KEYS);
+                            + "VALUES(?, ?, ?)"
+                    , Statement.RETURN_GENERATED_KEYS);
 
             insertSeason.setInt(1, creditID);
             insertSeason.setInt(2, season.getShowID());
@@ -420,6 +415,11 @@ public class DatabaseLoader {
             e.printStackTrace();
         }
 
+
+        return null;
+    }
+
+    public Map<String, Integer> addEpisodeToDatabase(IEpisode episode){
 
         return null;
     }

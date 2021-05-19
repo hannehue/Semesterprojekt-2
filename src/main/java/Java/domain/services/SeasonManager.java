@@ -1,5 +1,6 @@
 package Java.domain.services;
 
+import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Season;
 import Java.interfaces.ISeason;
@@ -8,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
 import java.util.Date;
+import java.util.Map;
 
 public class SeasonManager {
     private static SeasonManager instance = new SeasonManager();
@@ -19,16 +21,19 @@ public class SeasonManager {
 
     private final ObservableMap<Integer, ISeason> seasonMap = FXCollections.observableHashMap();
 
-    public void addSeason(String description, int showId) {
-        IShow show = ShowManager.getInstance().getShowById(showId);
+    public ISeason addSeason(String description, IShow show) {
+
         ISeason season = new Season(
-                "S" + (show.getNumberOfSeason() + 1),
+                "Season" + (show.getNumberOfSeason() + 1),
                 description,
                 false
         );
+        season.setShowID(show.getIDMap().get("showID"));
+        Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(season);
         show.getSeasons().add(season.getCreditID());
         seasonMap.put(season.getCreditID(), season);
         show.setAllSeasonApproved(false);
+        return season;
     }
 
 
