@@ -68,6 +68,8 @@
                               <TextField fx:id="episodeTitle" layoutX="230.0" layoutY="90.0" prefHeight="27.0" prefWidth="283.0" />
                               <Label layoutX="14.0" layoutY="120.0" prefHeight="26.0" prefWidth="48.0" text="Længde" />
                               <TextField fx:id="episodeLength" layoutX="230.0" layoutY="120.0" prefHeight="27.0" prefWidth="283.0" />
+                               <Label layoutX="10.0" layoutY="150.0" prefHeight="26.0" text="Categori"/>
+                               <ChoiceBox fx:id="choiceBoxCategory" layoutX="230.0" layoutY="150.0" prefHeight="27.0" prefWidth="249.0"/>
                                <Pane fx:id="episodePeoplePane" layoutX="9.0" layoutY="244.0" prefHeight="214.0" prefWidth="522.0">
                                <children>
                                </children>

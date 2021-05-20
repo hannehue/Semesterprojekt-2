@@ -419,8 +419,41 @@ public class DatabaseLoader {
         return null;
     }
 
-    public Map<String, Integer> addEpisodeToDatabase(IEpisode episode){
+    public Map<String, Integer> addEpisodeToDatabase(IEpisode episode) throws SQLException{
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddEpisode = getConnection().setSavepoint();
 
+        try {
+
+            int creditID = addCreditToDatabase(episode);
+            int productionID = addProductionToDatabase(episode, creditID);
+
+            PreparedStatement insertEpisode = getConnection().prepareStatement(
+                    "INSERT INTO episodes(production_id, season_id)"
+                            + "VALUES(?, ?)"
+            ,Statement.RETURN_GENERATED_KEYS);
+
+            insertEpisode.setInt(1, productionID);
+            insertEpisode.setInt(2, episode.getSeasonID());
+            insertEpisode.executeUpdate();
+            insertEpisode.getGeneratedKeys().next();
+            int episodeID = insertEpisode.getGeneratedKeys().getInt(1);
+
+            Map<String, Integer> IDs = new HashMap<>();
+            IDs.put("creditID", creditID);
+            IDs.put("productionID", productionID);
+            IDs.put("episodeID", episodeID);
+
+            getConnection().commit();
+            getConnection().setAutoCommit(true);
+
+            return IDs;
+
+        } catch (SQLException e){
+            System.out.println("WENT WRONG AT ADD EPISODE TO DATABASE");
+            e.printStackTrace();
+        }
+        System.out.println("Episode not added");
         return null;
     }
 

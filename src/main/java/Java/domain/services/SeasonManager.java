@@ -30,6 +30,8 @@ public class SeasonManager {
         );
         season.setShowID(show.getIDMap().get("showID"));
         Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(season);
+        season.setIDMap(IDs);
+        season.setCreditID(IDs.get("creditID"));
         show.getSeasons().add(season.getCreditID());
         seasonMap.put(season.getCreditID(), season);
         show.setAllSeasonApproved(false);

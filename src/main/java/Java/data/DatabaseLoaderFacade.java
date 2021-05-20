@@ -41,8 +41,15 @@ public class DatabaseLoaderFacade {
     public void putInDatabase(ICredit credit) {
 
     }
-    public void putInDatabase(IEpisode episode) {
-
+    public Map<String, Integer> putInDatabase(IEpisode episode) {
+        try {
+            return DatabaseLoader.getInstance().addEpisodeToDatabase(episode);
+        } catch (SQLException e) {
+            System.out.println("Episode not added. Exception thrown by DBloaderFacade." +
+                    " Most likely error at setAutoCommit to false");
+            e.printStackTrace();
+            return null;
+        }
     }
     public Map<String, Integer> putInDatabase(ISeason season) {
         try {

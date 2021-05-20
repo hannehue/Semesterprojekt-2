@@ -1,6 +1,7 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
+import Java.domain.data.Category;
 import Java.domain.services.*;
 import Java.interfaces.IJob;
 import Java.interfaces.ISeason;
@@ -28,6 +29,8 @@ public class AddCreditController implements Initializable {
     protected ChoiceBox choiceBoxShow;
     @FXML
     protected ChoiceBox choiceBoxSeason;
+    @FXML
+    protected ChoiceBox choiceBoxCategory;
     @FXML
     protected TextField personName;
     @FXML
@@ -113,9 +116,10 @@ public class AddCreditController implements Initializable {
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
         int id = EpisodeManager.getInstance().addEpisode(
-            ((ISeason) choiceBoxSeason.getValue()).getCreditID(),
+            ((ISeason) choiceBoxSeason.getValue()),
             Integer.parseInt(episodeLength.getText()),
-            episodeTitle.getText()
+            episodeTitle.getText(),
+            (Category) choiceBoxCategory.getValue()
         );
         JobManager.getInstance().addJob(id);
     }
@@ -262,5 +266,6 @@ public class AddCreditController implements Initializable {
         ObservableList<IJob> episodeList = JobManager.getInstance().getTempList();
         PersonList.setItems(episodeList);
 
+        choiceBoxCategory.getItems().addAll(Category.values());
     }
 }
