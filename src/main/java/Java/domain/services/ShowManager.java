@@ -1,5 +1,6 @@
 package Java.domain.services;
 
+import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Show;
 import Java.interfaces.IShow;
@@ -7,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ShowManager {
     private static ShowManager instance = new ShowManager();
@@ -18,14 +20,18 @@ public class ShowManager {
 
     private final ObservableMap<Integer, IShow> showMap = FXCollections.observableHashMap();
 
-    public void addShow(String title, String description) {
+    public IShow addShow(String title, String description) {
         IShow show = new Show(
                 title,
-                "desc",
-                true
+                description,
+                false
         );
-        showMap.put(show.getCreditID(), show);
+        Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(show);
+        show.setIDMap(IDs);
+        show.setCreditID(IDs.get("creditID"));
+        showMap.put(IDs.get("showID"), show);
         System.out.println("Added show: " + show.getName());
+        return show;
     }
 
     public ObservableMap<Integer, IShow> getShowList() {
