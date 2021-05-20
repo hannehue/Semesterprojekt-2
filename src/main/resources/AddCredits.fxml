@@ -19,11 +19,14 @@
                                         <Label layoutX="10.0" prefHeight="26.0" prefWidth="199.0" text="Titel" />
                                         <Label layoutX="10.0" layoutY="35.0" prefHeight="26.0" prefWidth="199.0" text="Beskrivelse:" />
                                         <Label layoutX="10.0" layoutY="70.0" prefHeight="26.0" prefWidth="199.0" text="Længde i sekunder:">
+
                                             <font>
                                                 <Font name="System Bold" size="13.0" />
                                             </font>
                                         </Label>
                                         <TextField fx:id="movieLength" layoutX="200.0" layoutY="69.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <Label layoutX="10.0" layoutY="105.0" prefHeight="26.0" prefWidth="199.0" text="Kategori"/>
+                                        <ChoiceBox fx:id="choiceBoxCategoryMovie" layoutX="200.0" layoutY="105.0" prefHeight="27.0" prefWidth="249.0"/>
                                         <Button contentDisplay="CENTER" layoutX="200.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
                                         <Pane fx:id="moviePeoplePane" layoutX="9.0" layoutY="244.0" prefHeight="214.0" prefWidth="522.0">
                                             <children>

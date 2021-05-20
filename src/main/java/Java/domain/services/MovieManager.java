@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class MovieManager {
     private static MovieManager instance = new MovieManager();
@@ -32,6 +33,7 @@ public class MovieManager {
                 categories,
                 length,
                 releaseDate);
+        Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(movie);
         movieList.add(movie);
         //call to database, get the Id
         System.out.println(movie.getName());

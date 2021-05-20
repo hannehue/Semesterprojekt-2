@@ -32,6 +32,8 @@ public class AddCreditController implements Initializable {
     @FXML
     protected ChoiceBox choiceBoxCategory;
     @FXML
+    protected ChoiceBox choiceBoxCategoryMovie;
+    @FXML
     protected TextField personName;
     @FXML
     protected TextField personEmail;
@@ -135,7 +137,7 @@ public class AddCreditController implements Initializable {
         int id = MovieManager.getInstance().addMovie(
                 movieTitle.getText(),
                 movieDescription.getText(),
-                null,
+                new Category[]{(Category) choiceBoxCategoryMovie.getValue()},
                 Integer.parseInt(movieLength.getText()),
                 new Date()
                 );
@@ -267,5 +269,6 @@ public class AddCreditController implements Initializable {
         PersonList.setItems(episodeList);
 
         choiceBoxCategory.getItems().addAll(Category.values());
+        choiceBoxCategoryMovie.getItems().addAll(Category.values());
     }
 }
