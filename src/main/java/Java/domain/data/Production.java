@@ -29,6 +29,8 @@ public abstract class Production extends Credit implements IProduction {
         return productionID;
     }
 
+
+
     @Override
     public Category[] getCategories() {
         return categories;
@@ -54,7 +56,8 @@ public abstract class Production extends Credit implements IProduction {
         staffIDs.add(id);
     }
 
-    public void setProductionID(int programID) {
+    @Override
+    public void setProductionID(int productionID) {
         this.productionID = productionID;
     }
 

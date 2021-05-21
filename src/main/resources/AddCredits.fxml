@@ -19,11 +19,14 @@
                                         <Label layoutX="10.0" prefHeight="26.0" prefWidth="199.0" text="Titel" />
                                         <Label layoutX="10.0" layoutY="35.0" prefHeight="26.0" prefWidth="199.0" text="Beskrivelse:" />
                                         <Label layoutX="10.0" layoutY="70.0" prefHeight="26.0" prefWidth="199.0" text="Længde i sekunder:">
+
                                             <font>
                                                 <Font name="System Bold" size="13.0" />
                                             </font>
                                         </Label>
                                         <TextField fx:id="movieLength" layoutX="200.0" layoutY="69.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <Label layoutX="10.0" layoutY="105.0" prefHeight="26.0" prefWidth="199.0" text="Kategori"/>
+                                        <ChoiceBox fx:id="choiceBoxCategoryMovie" layoutX="200.0" layoutY="105.0" prefHeight="27.0" prefWidth="249.0"/>
                                         <Button contentDisplay="CENTER" layoutX="200.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
                                         <Pane fx:id="moviePeoplePane" layoutX="9.0" layoutY="244.0" prefHeight="214.0" prefWidth="522.0">
                                             <children>
@@ -39,12 +42,14 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
-                                        <Label layoutX="14.0" prefHeight="26.0" text="Navn:" />
+                                        <Label layoutX="10.0" prefHeight="26.0" text="Navn:" />
                                         <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Email:" />
                                         <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Telefon:" />
+                                        <Label layoutX="10.0" layoutY="90.0" prefHeight="26.0" text="Beskrivelse:" />
                                         <TextField fx:id="personName" layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
                                         <TextField fx:id="personEmail" layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
                                         <TextField fx:id="personPhone" layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
+                                        <TextField fx:id="personDescription" layoutX="230.0" layoutY="90.0" prefHeight="26.0" prefWidth="295.0" />
                                         <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" />
                                     </children>
                                 </AnchorPane>
@@ -67,6 +72,8 @@
                               <TextField fx:id="episodeTitle" layoutX="234.0" layoutY="214.0" prefHeight="27.0" prefWidth="283.0" />
                               <Label layoutX="15.0" layoutY="245.0" prefHeight="26.0" prefWidth="122.0" text="Længde" />
                               <TextField fx:id="episodeLength" layoutX="234.0" layoutY="244.0" prefHeight="27.0" prefWidth="283.0" />
+                               <Label layoutX="10.0" layoutY="150.0" prefHeight="26.0" text="Categori"/>
+                               <ChoiceBox fx:id="choiceBoxCategory" layoutX="230.0" layoutY="150.0" prefHeight="27.0" prefWidth="249.0"/>
                                <Pane fx:id="episodePeoplePane" layoutX="13.0" layoutY="368.0" prefHeight="214.0" prefWidth="522.0" />
                             <Button layoutX="492.0" layoutY="184.0" mnemonicParsing="false" onAction="#handleGetEpisodeName" text="+" />
                               <TextField fx:id="episodeId" disable="true" layoutX="234.0" layoutY="184.0" prefHeight="27.0" prefWidth="248.0" />

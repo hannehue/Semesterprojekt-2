@@ -8,6 +8,7 @@ import java.util.Date;
 public interface IProduction extends ICredit {
 
     int getProductionID();
+    void setProductionID(int id);
     int getLengthInSecs();
 
     Category[] getCategories();
