@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class PersonManager {
     private static PersonManager instance = new PersonManager();
-    private DatabaseLoaderFacade database = new DatabaseLoaderFacade();
+    private DatabaseLoaderFacade database = DatabaseLoaderFacade.getInstance();
     private PersonManager(){}
 
     public static PersonManager getInstance() {

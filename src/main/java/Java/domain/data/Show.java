@@ -13,8 +13,8 @@ public class Show extends Credit implements IShow {
     private ObservableList<Integer> seasons;
     private boolean allSeasonApproved;
 
-    public Show(String showName, Date dateadded, int showID, boolean approved,  String description, boolean allSeasonApproved){
-        super(showName, dateadded, showID, approved, description);
+    public Show(String showName, Date dateadded, int creditID, boolean approved,  String description, boolean allSeasonApproved){
+        super(showName, dateadded, creditID, approved, description);
         this.seasons = FXCollections.observableArrayList();
         this.allSeasonApproved = allSeasonApproved;
     }

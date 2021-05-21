@@ -55,7 +55,7 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                  <TitledPane animated="false" onMouseClicked="#handleGetShows" prefHeight="669.0" prefWidth="545.0" text="Tilføj Episode">
+                  <TitledPane animated="false" prefHeight="669.0" prefWidth="545.0" text="Tilføj Episode"> <!-- onMouseClicked="#handleGetShows"-->
                      <content>
                         <Pane minHeight="0.0" minWidth="0.0" prefHeight="588.0" prefWidth="541.0">
                            <children>
@@ -72,8 +72,8 @@
                               <TextField fx:id="episodeTitle" layoutX="234.0" layoutY="214.0" prefHeight="27.0" prefWidth="283.0" />
                               <Label layoutX="15.0" layoutY="245.0" prefHeight="26.0" prefWidth="122.0" text="Længde" />
                               <TextField fx:id="episodeLength" layoutX="234.0" layoutY="244.0" prefHeight="27.0" prefWidth="283.0" />
-                               <Label layoutX="10.0" layoutY="150.0" prefHeight="26.0" text="Categori"/>
-                               <ChoiceBox fx:id="choiceBoxCategory" layoutX="230.0" layoutY="150.0" prefHeight="27.0" prefWidth="249.0"/>
+                               <Label layoutX="10.0" layoutY="274.0" prefHeight="26.0" text="Categori"/>
+                               <ChoiceBox fx:id="choiceBoxCategory" layoutX="230.0" layoutY="274.0" prefHeight="27.0" prefWidth="249.0"/>
                                <Pane fx:id="episodePeoplePane" layoutX="13.0" layoutY="368.0" prefHeight="214.0" prefWidth="522.0" />
                             <Button layoutX="492.0" layoutY="184.0" mnemonicParsing="false" onAction="#handleGetEpisodeName" text="+" />
                               <TextField fx:id="episodeId" disable="true" layoutX="234.0" layoutY="184.0" prefHeight="27.0" prefWidth="248.0" />

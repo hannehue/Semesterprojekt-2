@@ -1,6 +1,7 @@
 package Java.domain;
 
 import Java.data.DatabaseLoader;
+import Java.data.DatabaseLoaderFacade;
 import Java.domain.data.*;
 import Java.domain.services.*;
 import Java.interfaces.*;
@@ -76,7 +77,8 @@ public class ApplicationManager {
     }
 
     public void searchShow( String search, ObservableList<IShow> list){
-        list.add(new Show("name", "desc", false));
+        list.addAll(DatabaseLoaderFacade.getInstance().searchShowsFromDatabase(search));
+        //list.add(new Show("name", "desc", false));
     }
 
 }

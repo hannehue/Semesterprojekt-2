@@ -137,4 +137,8 @@ public class DatabaseLoaderFacade {
     public ArrayList<IMovie> searchMoviesFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToMovieList(searchString);
     }
+
+    public ArrayList<IShow> searchShowsFromDatabase(String searchString){
+        return DatabaseLoader.getInstance().searchQueryToShowList(searchString);
+    }
 }

@@ -165,6 +165,118 @@ public class DatabaseLoader {
         return personObservableList;
     }
 
+    public ArrayList<IMovie> searchQueryToMovieList(String searchString) {
+        try {
+            ArrayList<IMovie> movieList = new ArrayList<>();
+            PreparedStatement queryStatement = getInstance().connection.prepareStatement(
+                    "SELECT * FROM credits, movies, productions, categories WHERE LOWER(name) LIKE LOWER(?)" +
+                            "AND credits.credit_id = productions.credit_id " +
+                            "AND productions.production_id = movies.production_id " +
+                            "AND productions.category_id = categories.category_id"
+            );
+            //inserts searchString into SQL statement
+            queryStatement.setString(1, "%" + searchString + "%");
+            queryStatement.executeQuery();
+
+            while (queryStatement.getResultSet().next()) {
+                ResultSet queryResult = queryStatement.getResultSet();
+                movieList.add(new Movie(
+                        /* Name         */ queryResult.getString("name"),
+                        /* Date         */ formatter.parse(queryResult.getString("date_added")),
+                        /* CreditID     */ queryResult.getInt("credit_id"),
+                        /* Approved     */ queryResult.getBoolean("approved"),
+                        /* description  */ queryResult.getString("description"),
+                        /* productionID */ queryResult.getInt("production_id"),
+                        /** Genovervej **/
+                        /* category     */ new Category[]{Category.values()[queryResult.getInt("category_id") - 1]},
+                        /** .... **/
+                        /* lengthInSecs */ queryResult.getInt("length_in_secs"),
+                        /* Releasedate  */ formatter.parse(queryResult.getString("release_date"))
+                ));
+            }
+            return movieList;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.err.println("Failed when initializing movie search string");
+            return null;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQL Exception at search query to Movie");
+        }
+        return null;
+    }
+
+    public ArrayList<IShow> searchQueryToShowList(String searchString){
+        try {
+            ArrayList<IShow> showList = new ArrayList<>();
+            PreparedStatement searchQuery = getConnection().prepareStatement(
+                "SELECT * FROM credits, shows WHERE LOWER(name) LIKE LOWER(?)" +
+                        "AND credits.credit_id = shows.credit_id"
+            );
+            searchQuery.setString(1, "%" + searchString + "%");
+            searchQuery.executeQuery();
+
+            while (searchQuery.getResultSet().next()){
+                ResultSet queryResult = searchQuery.getResultSet();
+                Map<String, Integer> IDs = new HashMap<>();
+                IDs.put("showID", queryResult.getInt("show_id"));
+                IShow show =                         new Show(
+                        /* Name         */ queryResult.getString("name"),
+                        /* Date         */ formatter.parse(queryResult.getString("date_added")),
+                        /* CreditID     */ queryResult.getInt("credit_id"),
+                        /* Approved     */ queryResult.getBoolean("approved"),
+                        /* description  */ queryResult.getString("description"),
+                        /* IsAllSeasonsApproved*/ queryResult.getBoolean("all_seasons_approved")
+                );
+                show.setIDMap(IDs);
+                showList.add(show);
+            }
+            return showList;
+
+        } catch (SQLException e){
+            e.printStackTrace();
+            System.out.println("SQL Exception at search query to Show");
+        } catch (ParseException e) {
+            System.out.println("Parse exception a search query to show");
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public IGroup queryToGroup(String[] strings) {
+        IGroup tempGroup = null;
+        try {
+            tempGroup = new Group(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
+                    Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.err.println("Failed when initializing group from string array");
+            return null;
+        }
+        return tempGroup;
+    }
+
+    public IEpisode queryToEpisode(String[] strings) {
+        IEpisode tempEpisode = null;
+        try {
+            tempEpisode = new Episode(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
+                    Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
+                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8])
+                    , Integer.parseInt(strings[10]));
+
+            for (String staff : new ArrayList<String>(Arrays.asList(strings[9].split(";")))) {
+                tempEpisode.addStaffID(Integer.parseInt(staff));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.err.println("Failed when initializing episode from string array");
+            return null;
+        }
+        return tempEpisode;
+    }
+
     public Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
         // Set autoCommit to false, so only both prepared statements run
         getConnection().setAutoCommit(false);
@@ -207,19 +319,6 @@ public class DatabaseLoader {
         return null;
     }
 
-    public IGroup queryToGroup(String[] strings) {
-        IGroup tempGroup = null;
-        try {
-            tempGroup = new Group(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
-                    Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]));
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.err.println("Failed when initializing group from string array");
-            return null;
-        }
-        return tempGroup;
-    }
-
     public int addCreditToDatabase(ICredit credit) throws SQLException{
         PreparedStatement insertCredit = getConnection().prepareStatement(
                 "INSERT INTO credits(name, date_added, approved, description)"
@@ -249,49 +348,6 @@ public class DatabaseLoader {
         insertProduction.executeUpdate();
         insertProduction.getGeneratedKeys().next();
         return insertProduction.getGeneratedKeys().getInt(1);
-    }
-
-    public ArrayList<IMovie> searchQueryToMovieList(String searchString) {
-        try {
-            ArrayList<IMovie> movieList = new ArrayList<>();
-            PreparedStatement queryStatement = getInstance().connection.prepareStatement(
-                    "SELECT * FROM credits, movies, productions, categories WHERE LOWER(name) LIKE LOWER(?)" +
-                            "AND credits.credit_id = productions.credit_id " +
-                            "AND productions.production_id = movies.production_id " +
-                            "AND productions.category_id = categories.category_id"
-            );
-            //inserts searchString into SQL statement
-            queryStatement.setString(1, "%" + searchString + "%");
-            queryStatement.executeQuery();
-
-            while (queryStatement.getResultSet().next()) {
-                ResultSet queryResult = queryStatement.getResultSet();
-                System.out.println(queryStatement.getResultSet().getRow());
-                movieList.add(new Movie(
-                        /* Name         */ queryResult.getString("name"),
-                        /* Date         */ formatter.parse(queryResult.getString("date_added")),
-                        /* CreditID     */ queryResult.getInt("credit_id"),
-                        /* Approved     */ queryResult.getBoolean("approved"),
-                        /* description  */ queryResult.getString("description"),
-                        /* productionID */ queryResult.getInt("production_id"),
-                        /** Genovervej **/
-                        /* category     */ new Category[]{Category.values()[queryResult.getInt("category_id") - 1]},
-                        /** .... **/
-                        /* lengthInSecs */ queryResult.getInt("length_in_secs"),
-                        /* Releasedate  */ formatter.parse(queryResult.getString("release_date"))
-                ));
-            }
-            return movieList;
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.err.println("Failed when initializing movie search string");
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("SQL Exception at search query to Movie");
-        }
-        return null;
     }
 
     public Map<String, Integer> addMovieToDatabase(IMovie movie) throws SQLException{
@@ -329,25 +385,6 @@ public class DatabaseLoader {
         }
         System.out.println("No movie added");
         return null;
-    }
-
-    public IEpisode queryToEpisode(String[] strings) {
-        IEpisode tempEpisode = null;
-        try {
-            tempEpisode = new Episode(strings[0], formatter.parse(strings[1]), Integer.parseInt(strings[2]),
-                    Boolean.parseBoolean(strings[3]), strings[4], Integer.parseInt(strings[5]),
-                    Category.getCategoriesFromString(strings[6]), Integer.parseInt(strings[7]), formatter.parse(strings[8])
-                    , Integer.parseInt(strings[10]));
-
-            for (String staff : new ArrayList<String>(Arrays.asList(strings[9].split(";")))) {
-                tempEpisode.addStaffID(Integer.parseInt(staff));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.err.println("Failed when initializing episode from string array");
-            return null;
-        }
-        return tempEpisode;
     }
 
     public Map<String, Integer> addShowToDatabase(IShow show) throws SQLException{

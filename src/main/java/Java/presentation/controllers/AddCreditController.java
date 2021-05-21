@@ -5,6 +5,7 @@ import Java.domain.ApplicationManager;
 import Java.domain.data.Category;
 import Java.domain.services.*;
 import Java.interfaces.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -208,7 +209,7 @@ public class AddCreditController implements Initializable {
 
     protected void addSeason(String description) {
         getInstance().choiceBoxSeason.setValue(
-                SeasonManager.getInstance().addSeason(description, ((IShow) showSearch.get.getValue()))
+                SeasonManager.getInstance().addSeason(description, ((IShow) showSearchList.getSelectionModel().getSelectedItem()))
         );
     }
 
@@ -275,6 +276,7 @@ public class AddCreditController implements Initializable {
             @Override
             public void handle(KeyEvent event) {
                 if (showSearch.getText().length() > 3){
+                    showSearchList.getItems().clear();
                     ApplicationManager.getInstance().searchShow(showSearch.getText(), showList);
                 }
             }
