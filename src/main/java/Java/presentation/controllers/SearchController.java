@@ -16,7 +16,9 @@ import javafx.scene.layout.Pane;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 
 public class SearchController implements Initializable {
@@ -55,7 +57,22 @@ public class SearchController implements Initializable {
         String searchString = MenuController.getInstance().getSearchString();
         ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
         observableResults.addAll(ApplicationManager.getInstance().search(searchString));
-        SearchList.setItems(observableResults);
+
+        //Opretter ny observableliste det endelige resultat bliver lagt i
+        ObservableList<StringBuilder> observableList = FXCollections.observableArrayList();
+        //går igennem hver credit
+        for (ICredit e: observableResults) {
+            //Opretter en ny stringbuilder for hver credit der er blevet returneret
+            StringBuilder stringBuilder = new StringBuilder();
+            //Splitter ved ","
+            String[] observableResultsString = e.toString().split(",");
+            //Tilføj hver linje der er blevet splittet til string builder
+            for (String s: observableResultsString) { stringBuilder.append(s).append("\n"); }
+            //tilføj til liste
+            observableList.add(stringBuilder);
+        }
+
+        SearchList.setItems(observableList);
     }
 
     public void handleClickedItem(MouseEvent mouseEvent) {
