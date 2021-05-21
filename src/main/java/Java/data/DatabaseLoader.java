@@ -118,6 +118,9 @@ public class DatabaseLoader {
                         /* personal info*/ queryResult.getString("personal_info"),
                         /* email        */ queryResult.getString("email")
                 );
+                Map<String, Integer> IDs = new HashMap<>();
+                IDs.put("creditID" ,tempPerson.getCreditID());
+                IDs.put("personID" ,tempPerson.getPersonID());
 
                 // Job handling
                 // Runs new query, using persons, jobs and job_roles
@@ -180,7 +183,7 @@ public class DatabaseLoader {
 
             while (queryStatement.getResultSet().next()) {
                 ResultSet queryResult = queryStatement.getResultSet();
-                movieList.add(new Movie(
+                IMovie movie = new Movie(
                         /* Name         */ queryResult.getString("name"),
                         /* Date         */ formatter.parse(queryResult.getString("date_added")),
                         /* CreditID     */ queryResult.getInt("credit_id"),
@@ -192,7 +195,12 @@ public class DatabaseLoader {
                         /** .... **/
                         /* lengthInSecs */ queryResult.getInt("length_in_secs"),
                         /* Releasedate  */ formatter.parse(queryResult.getString("release_date"))
-                ));
+                );
+                Map<String, Integer> IDs = new HashMap<>();
+                IDs.put("creditID" ,movie.getCreditID());
+                IDs.put("productionID" ,movie.getProductionID());
+                IDs.put("movieID" ,queryResult.getInt("movie_id"));
+                movieList.add(movie);
             }
             return movieList;
 
@@ -220,7 +228,6 @@ public class DatabaseLoader {
             while (searchQuery.getResultSet().next()){
                 ResultSet queryResult = searchQuery.getResultSet();
                 Map<String, Integer> IDs = new HashMap<>();
-                IDs.put("showID", queryResult.getInt("show_id"));
                 IShow show =                         new Show(
                         /* Name         */ queryResult.getString("name"),
                         /* Date         */ formatter.parse(queryResult.getString("date_added")),
@@ -229,6 +236,8 @@ public class DatabaseLoader {
                         /* description  */ queryResult.getString("description"),
                         /* IsAllSeasonsApproved*/ queryResult.getBoolean("all_seasons_approved")
                 );
+                IDs.put("showID", queryResult.getInt("show_id"));
+                IDs.put("creditID", show.getCreditID());
                 show.setIDMap(IDs);
                 showList.add(show);
             }
@@ -240,6 +249,48 @@ public class DatabaseLoader {
         } catch (ParseException e) {
             System.out.println("Parse exception a search query to show");
             e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public ArrayList<ISeason> queryGetSeasonForShow(IShow show){
+
+        try {
+            ArrayList<ISeason> seasonList = new ArrayList<>();
+            PreparedStatement getSeasonQuery = getConnection().prepareStatement(
+                    "SELECT * FROM credits, seasons WHERE seasons.show_id = ?" +
+                            "AND credits.credit_id = seasons.credit_id"
+            );
+            getSeasonQuery.setInt(1, show.getIDMap().get("showID"));
+            getSeasonQuery.executeQuery();
+
+            while (getSeasonQuery.getResultSet().next()){
+                ResultSet seasonResult = getSeasonQuery.getResultSet();
+                ISeason season = new Season(
+                        /* Name         */ seasonResult.getString("name"),
+                        /* Date         */ formatter.parse(seasonResult.getString("date_added")),
+                        /* CreditID     */ seasonResult.getInt("credit_id"),
+                        /* Approved     */ seasonResult.getBoolean("approved"),
+                        /* description  */ seasonResult.getString("description"),
+                        /* showID       */ seasonResult.getInt("show_id"),
+                        /* AllEpisodesApproved*/ seasonResult.getBoolean("all_episodes_approved")
+                );
+                Map<String, Integer> IDs = new HashMap<>();
+                IDs.put("creditID", season.getCreditID());
+                IDs.put("showID", season.getShowID());
+                IDs.put("seasonID", seasonResult.getInt("season_id"));
+                seasonList.add(season);
+            }
+            return seasonList;
+
+
+        } catch (SQLException e){
+            System.out.println("ERROR AT queryGetSeasonForShow");
+        } catch (ParseException e) {
+            System.out.println("PARSE ERROR AT queryGetSeasonForShow");
+            e.printStackTrace();
+
         }
 
         return null;

@@ -92,16 +92,10 @@ public class AddCreditController implements Initializable {
      */
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
-        ICredit selectedCredit = (ICredit)  showSearchList.getSelectionModel().getSelectedItem();
-        if ( selectedCredit  != null) {
-            IShow show = ShowManager.getInstance().getShowById(selectedCredit.getCreditID());
-            if (show != null) {
-                for (Integer seasonId : show.getSeasons()) {
-                    ISeason season = SeasonManager.getInstance().getSeasonById(seasonId);
-                    choiceBoxSeason.getItems().add(season);
-                }
+        IShow selectedCredit = (IShow) showSearchList.getSelectionModel().getSelectedItem();
+            if (selectedCredit != null) {
+                choiceBoxSeason.getItems().addAll(DatabaseLoaderFacade.getInstance().getFromDatabase(selectedCredit));
             }
-        }
         System.out.println("Showing choicebox wiht conttens " + choiceBoxSeason.getItems());
         choiceBoxSeason.show();
     }

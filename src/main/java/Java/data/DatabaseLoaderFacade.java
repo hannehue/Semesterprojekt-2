@@ -117,12 +117,14 @@ public class DatabaseLoaderFacade {
     public IEpisode getFromDatabase(IEpisode episode){
         return null;
     }
-    public ISeason getFromDatabase(ISeason season){
+    public ArrayList<ISeason> getFromDatabase(IShow show){
+        return DatabaseLoader.getInstance().queryGetSeasonForShow(show);
+    }
+    /*public IShow getFromDatabase(IShow show){
         return null;
     }
-    public IShow getFromDatabase(IShow show){
-        return null;
-    }
+
+     */
     public IMovie getFromDatabase(IMovie movie){
         return null;
     }
