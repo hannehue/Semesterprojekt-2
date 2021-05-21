@@ -239,6 +239,9 @@ public class DatabaseLoader {
                 IDs.put("showID", queryResult.getInt("show_id"));
                 IDs.put("creditID", show.getCreditID());
                 show.setIDMap(IDs);
+                ObservableList seasons = FXCollections.observableArrayList();
+                seasons.addAll(getInstance().queryGetSeasonForShow(show));
+                show.setSeasons(seasons);
                 showList.add(show);
             }
             return showList;

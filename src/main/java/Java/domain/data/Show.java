@@ -5,12 +5,11 @@ import Java.interfaces.IShow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Show extends Credit implements IShow {
 
-    private ObservableList<Integer> seasons;
+    private ObservableList<ISeason> seasons;
     private boolean allSeasonApproved;
 
     public Show(String showName, Date dateadded, int creditID, boolean approved,  String description, boolean allSeasonApproved){
@@ -42,12 +41,12 @@ public class Show extends Credit implements IShow {
     }
 
     @Override
-    public ObservableList<Integer> getSeasons() {
+    public ObservableList<ISeason> getSeasons() {
         return seasons;
     }
 
     @Override
-    public void setSeasons(ObservableList<Integer> seasons) {
+    public void setSeasons(ObservableList<ISeason> seasons) {
         this.seasons = seasons;
     }
 
@@ -57,7 +56,7 @@ public class Show extends Credit implements IShow {
         return showString;
     }
 
-    public void addSeason(Integer season) {
+    public void addSeason(ISeason season) {
         this.seasons.add(season);
     }
 
