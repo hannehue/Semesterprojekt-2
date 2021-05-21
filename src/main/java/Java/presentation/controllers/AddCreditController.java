@@ -3,10 +3,7 @@ package Java.presentation.controllers;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Category;
 import Java.domain.services.*;
-import Java.interfaces.IJob;
-import Java.interfaces.IMovie;
-import Java.interfaces.ISeason;
-import Java.interfaces.IShow;
+import Java.interfaces.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -118,13 +115,13 @@ public class AddCreditController implements Initializable {
      */
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
-        int id = EpisodeManager.getInstance().addEpisode(
+        IEpisode episode = EpisodeManager.getInstance().addEpisode(
             ((ISeason) choiceBoxSeason.getValue()),
             Integer.parseInt(episodeLength.getText()),
             episodeTitle.getText(),
             (Category) choiceBoxCategory.getValue()
         );
-        JobManager.getInstance().addJob(id);
+        JobManager.getInstance().addJob(episode.getProductionID());
     }
 
     /**
@@ -142,7 +139,6 @@ public class AddCreditController implements Initializable {
                 Integer.parseInt(movieLength.getText()),
                 new Date()
                 );
-        System.out.println(" ADD CREDITS CRONTROLLER PROD ID: " + movie.getIDMap().get("productionID"));
         JobManager.getInstance().addJob(movie.getIDMap().get("productionID"));
     }
 

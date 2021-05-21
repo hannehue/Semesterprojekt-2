@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
 import java.util.Date;
+import java.util.Map;
 
 public class EpisodeManager {
     private static EpisodeManager instance = new EpisodeManager();
@@ -25,7 +26,7 @@ public class EpisodeManager {
 
     private final ObservableMap<Integer, IEpisode> episodeMap = FXCollections.observableHashMap();
 
-    public int addEpisode(ISeason season, int length, String title, Category category) {
+    public IEpisode addEpisode(ISeason season, int length, String title, Category category) {
         IEpisode episode = new Episode(
                 getNextEpisode(season.getCreditID()) + " - " + title,
                 "description",
@@ -34,11 +35,12 @@ public class EpisodeManager {
                 new Date()
         );
         episode.setSeasonID(season.getIDMap().get("seasonID"));
-        DatabaseLoaderFacade.getInstance().putInDatabase(episode);
+        Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(episode);
+        episode.setProductionID(IDs.get("productionID"));
         season.getEpisodes().add(episode.getCreditID());
         episodeMap.put(episode.getCreditID(), episode);
         System.out.println("tilføjet " + episode.getName());
-        return 0;
+        return episode;
     }
 
     public String getNextEpisode(Integer seasonId) {
