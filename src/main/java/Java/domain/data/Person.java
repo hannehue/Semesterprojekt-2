@@ -59,6 +59,7 @@ public class Person extends Credit implements IPerson {
     }
     @Override
     public void addJob(IJob job){
+
         jobs.add(job);
     }
 
@@ -118,7 +119,7 @@ public class Person extends Credit implements IPerson {
 
             characterNames = j.getCharacterName();
 
-            jobString += roles + "--" + j.getProgram() + "--" + characterNames + ",";
+            jobString += roles + "--" + j.getProductionID() + "--" + characterNames + ",";
         }
         personString += jobString;
 

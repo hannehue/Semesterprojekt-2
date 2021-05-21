@@ -24,16 +24,31 @@ public class DatabaseLoaderFacade {
     //                        Put
     //Metoder som tager en parameter i forhold til hvad der skal sendes til databsen
     //---------------------------------------------------------
-    public void putInDatabase(IPerson person){
+    public Map<String, Integer> putInDatabase(IPerson person){
         //Ijob følger med her, derfor er der ikke en putInDatabase(IJob)
         //charactername er givet i IJob
         try {
-            DatabaseLoader.getInstance().addPersonToDatabase(person);
+            return DatabaseLoader.getInstance().addPersonToDatabase(person);
         } catch (SQLException e) {
             System.out.println("Person not added. Exception thrown by DBloaderFacade." +
                     " Most likely error at setAutoCommit to false");
             e.printStackTrace();
+            return null;
         }
+    }
+
+    public Map<String, Integer> putInDatabase(IJob job){
+
+        try {
+            return DatabaseLoader.getInstance().addJobToDatabase(job);
+        } catch (SQLException e){
+            System.out.println("Job not added. Exception thrown by DBloaderFacade." +
+                    " Most likely error at setAutoCommit to false");
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
     public void putInDatabase(ICompany company){
 

@@ -36,12 +36,12 @@ public class Job implements IJob {
     }
 
     @Override
-    public int getProgram() {
+    public int getProductionID() {
         return productionID;
     }
 
     @Override
-    public void setProgram(int program) {
+    public void setProductionID(int productionID) {
         this.productionID = productionID;
     }
 

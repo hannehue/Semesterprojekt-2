@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class PersonManager {
     private static PersonManager instance = new PersonManager();
@@ -29,7 +30,8 @@ public class PersonManager {
                 phoneNumber,
                 personalInfo,
                 email);
-        DatabaseLoaderFacade.getInstance().putInDatabase(person);
+        Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(person);
+        person.setIDMap(IDs);
     }
 
     public IPerson getPersonById(int personId){

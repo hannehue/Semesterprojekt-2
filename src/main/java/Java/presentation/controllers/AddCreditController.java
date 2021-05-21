@@ -4,6 +4,7 @@ import Java.domain.ApplicationManager;
 import Java.domain.data.Category;
 import Java.domain.services.*;
 import Java.interfaces.IJob;
+import Java.interfaces.IMovie;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
 import javafx.collections.ObservableList;
@@ -134,14 +135,15 @@ public class AddCreditController implements Initializable {
      */
     @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
-        int id = MovieManager.getInstance().addMovie(
+        IMovie movie = MovieManager.getInstance().addMovie(
                 movieTitle.getText(),
                 movieDescription.getText(),
                 new Category[]{(Category) choiceBoxCategoryMovie.getValue()},
                 Integer.parseInt(movieLength.getText()),
                 new Date()
                 );
-        JobManager.getInstance().addJob(id);
+        System.out.println(" ADD CREDITS CRONTROLLER PROD ID: " + movie.getIDMap().get("productionID"));
+        JobManager.getInstance().addJob(movie.getIDMap().get("productionID"));
     }
 
     /**

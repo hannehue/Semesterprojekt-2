@@ -26,7 +26,7 @@ public class MovieManager {
         return movieList;
     }
 
-    public int addMovie(String name, String description, Category[] categories, int length, Date releaseDate) {
+    public IMovie addMovie(String name, String description, Category[] categories, int length, Date releaseDate) {
         IMovie movie = new Movie(
                 name,
                 description,
@@ -35,9 +35,11 @@ public class MovieManager {
                 releaseDate);
         Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(movie);
         movieList.add(movie);
+        movie.setIDMap(IDs);
         //call to database, get the Id
-        System.out.println(movie.getName());
-        return 0;
+        System.out.println(movie.getName() + " added");
+        System.out.printf("IDs" + IDs.get("productionID"));
+        return movie;
     }
 
     public ArrayList<IMovie> searchMovie(String findMovie){

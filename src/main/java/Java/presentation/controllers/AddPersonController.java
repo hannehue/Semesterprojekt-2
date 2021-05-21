@@ -5,6 +5,7 @@ import Java.domain.services.JobManager;
 import Java.domain.services.PersonManager;
 import Java.interfaces.ICredit;
 import Java.interfaces.IJob;
+import Java.interfaces.IPerson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,7 +34,7 @@ public class AddPersonController implements Initializable {
 
     protected TextField characterName = new TextField();
     private ListView SearchList;
-    private ICredit personToCredit;
+    private IPerson personToCredit;
     private static AddPersonController instance = new AddPersonController();
 
     private AddPersonController() {
@@ -55,16 +56,16 @@ public class AddPersonController implements Initializable {
     public void handleFindPerson(ActionEvent actionEvent) {
         ObservableList<ICredit> searchList = FXCollections.observableArrayList();
                 searchList.addAll(PersonManager.getInstance().searchPerson(findPerson.getText().toLowerCase()));
-        //setContent(searchList);
+        setContent(searchList);
         setCharacterNameField();
     }
 
     public void handleAddPerson(ActionEvent actionEvent) {
         IJob job;
         if (jobRole.getValue() == Role.SKUESPILLER) {
-            JobManager.getInstance().addTempJob(personToCredit.getCreditID(), jobRole.getValue(), characterName.getText(), 0);
+            JobManager.getInstance().addTempJob(personToCredit.getPersonID(), jobRole.getValue(), characterName.getText(), 0);
         } else {
-            JobManager.getInstance().addTempJob(personToCredit.getCreditID(), jobRole.getValue(), 0);
+            JobManager.getInstance().addTempJob(personToCredit.getPersonID(), jobRole.getValue(), 0);
         }
     }
 
@@ -73,7 +74,7 @@ public class AddPersonController implements Initializable {
      *
      * @param creditList
      */
-    private void setContent(ArrayList<ICredit> creditList) {
+    private void setContent(ObservableList<ICredit> creditList) {
         ObservableList<ICredit> observableResults = FXCollections.observableArrayList();
         observableResults.addAll(creditList);
         System.out.println(observableResults);
@@ -93,7 +94,7 @@ public class AddPersonController implements Initializable {
     }
 
     private void handleClickedItem(MouseEvent event) {
-        personToCredit = (ICredit) SearchList.getSelectionModel().getSelectedItem();
+        personToCredit = (IPerson) SearchList.getSelectionModel().getSelectedItem();
         findPerson.setText(personToCredit.getName());
         SearchList.setVisible(false);
     }

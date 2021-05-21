@@ -301,7 +301,7 @@ public class DatabaseLoader {
         try {
             int creditID = addCreditToDatabase(movie);
             int productionID = addProductionToDatabase(movie, creditID);
-
+            System.out.println(productionID);
             PreparedStatement insertMovie = getConnection().prepareStatement(
                     "INSERT INTO movies(production_id)"
                             + "VALUES(?)"
@@ -371,12 +371,14 @@ public class DatabaseLoader {
             showIDs.put("creditID", creditID);
             showIDs.put("showID", showID);
             getConnection().commit();
-            getConnection().setAutoCommit(false);
+            getConnection().setAutoCommit(true);
             return showIDs;
 
         } catch (SQLException e){
             System.out.println("WENT WRONG AT ADD SHOW TO DATABASE");
             e.printStackTrace();
+            getConnection().rollback(beforeAddShow);
+            getConnection().setAutoCommit(true);
         }
         System.out.println("show not added");
         return null;
@@ -406,13 +408,15 @@ public class DatabaseLoader {
             showIDs.put("seasonID", seasonID);
 
             getConnection().commit();
-            getConnection().setAutoCommit(false);
+            getConnection().setAutoCommit(true);
 
             return showIDs;
 
         } catch (SQLException e) {
             System.out.println("WENT WRONG AT ADD SEASON TO DATABASE");
             e.printStackTrace();
+            getConnection().rollback(beforeAddSeason);
+            getConnection().setAutoCommit(true);
         }
 
 
@@ -452,8 +456,46 @@ public class DatabaseLoader {
         } catch (SQLException e){
             System.out.println("WENT WRONG AT ADD EPISODE TO DATABASE");
             e.printStackTrace();
+            getConnection().rollback(beforeAddEpisode);
+            getConnection().setAutoCommit(true);
         }
         System.out.println("Episode not added");
+        return null;
+    }
+
+    public Map<String, Integer> addJobToDatabase(IJob job) throws SQLException{
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddJob = getConnection().setSavepoint();
+
+        try{
+
+            PreparedStatement insertJob = getConnection().prepareStatement(
+                    "INSERT INTO jobs(person_id, job_role_id, production_id)"
+                    + "VALUES(?, ?, ?)"
+            ,Statement.RETURN_GENERATED_KEYS);
+
+            insertJob.setInt(1, job.getPersonId());
+            insertJob.setInt(2, (job.getRole().ordinal() + 1));
+            insertJob.setInt(3, job.getProductionID());
+            insertJob.executeUpdate();
+            insertJob.getGeneratedKeys().next();
+            int jobID = insertJob.getGeneratedKeys().getInt(1);
+
+            Map<String, Integer> IDs = new HashMap<>();
+            IDs.put("jobID", jobID);
+
+            getConnection().commit();
+            getConnection().setAutoCommit(true);
+
+            return IDs;
+        } catch (SQLException e){
+            getConnection().rollback();
+            System.out.println("WENT WRONG AT ADD JOB TO DATABASE");
+            e.printStackTrace();
+            getConnection().rollback(beforeAddJob);
+            getConnection().setAutoCommit(true);
+        }
+        System.out.println("Job not added");
         return null;
     }
 
@@ -513,6 +555,20 @@ public class DatabaseLoader {
 //        } catch (SQLException e){
 //            e.printStackTrace();
 //        }
+/*
+        try {
+            getInstance().addJobToDatabase(
+                    new Job(
+                            1,
+                            Role.DUKKEFØRER,
+                            1
+                    )
+            );
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+ */
 
 
     }
