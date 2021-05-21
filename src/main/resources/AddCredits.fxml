@@ -61,7 +61,7 @@
                            <children>
                               <Label layoutX="10.0" layoutY="1.0" prefHeight="26.0" text="Serie" />
                                  <TextField fx:id="showSearch" layoutX="230.0" layoutY="1.0" prefHeight="22.0" prefWidth="249.0" promptText="Søg" />
-                              <Label layoutX="14.0" layoutY="154.0" prefHeight="26.0" text="Sæsson" />
+                              <Label layoutX="14.0" layoutY="154.0" prefHeight="26.0" text="Sæson" />
                               <Label layoutX="14.0" layoutY="184.0" prefHeight="26.0" text="Episode:" />
                               <Button contentDisplay="CENTER" layoutX="414.0" layoutY="586.0" mnemonicParsing="false" onAction="#handleSendEpisodeButton" text="Godkend og send" />
                               <Button layoutX="491.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleCreateShow" text="+" />

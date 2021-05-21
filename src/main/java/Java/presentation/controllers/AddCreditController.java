@@ -208,7 +208,7 @@ public class AddCreditController implements Initializable {
 
     protected void addSeason(String description) {
         getInstance().choiceBoxSeason.setValue(
-                SeasonManager.getInstance().addSeason(description, ((IShow) choiceBoxShow.getValue()))
+                SeasonManager.getInstance().addSeason(description, ((IShow) showSearch.get.getValue()))
         );
     }
 
