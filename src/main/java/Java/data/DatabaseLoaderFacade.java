@@ -10,8 +10,8 @@ public class DatabaseLoaderFacade {
 
     private static DatabaseLoaderFacade instance;
 
-    private DatabaseLoaderFacade(){};
 
+    private DatabaseLoaderFacade(){};
     public static DatabaseLoaderFacade getInstance() {
         if (instance == null){
             instance = new DatabaseLoaderFacade();
@@ -23,6 +23,12 @@ public class DatabaseLoaderFacade {
     //                        Put
     //Metoder som tager en parameter i forhold til hvad der skal sendes til databsen
     //---------------------------------------------------------
+    public void putInDatabase(ICredit credit) {
+
+    } // As you never put a raw credit into database, this is not needed
+    public void putInDatabase(IProduction production) {
+
+    } // As you never put a raw production into database, this is not needed
     public Map<String, Integer> putInDatabase(IPerson person){
         //Ijob følger med her, derfor er der ikke en putInDatabase(IJob)
         //charactername er givet i IJob
@@ -35,7 +41,6 @@ public class DatabaseLoaderFacade {
             return null;
         }
     }
-
     public Map<String, Integer> putInDatabase(IJob job){
 
         try {
@@ -48,12 +53,6 @@ public class DatabaseLoaderFacade {
 
 
         return null;
-    }
-    public void putInDatabase(ICompany company){
-
-    }
-    public void putInDatabase(ICredit credit) {
-
     }
     public Map<String, Integer> putInDatabase(IEpisode episode) {
         try {
@@ -95,9 +94,9 @@ public class DatabaseLoaderFacade {
             return null;
         }
     }
-    public void putInDatabase(IProduction production) {
+    public void putInDatabase(ICompany company){
 
-    }
+    } // Company not added in gui, and therefore never added to databse
 
     //---------------------------------------------------------
     //                       Get
@@ -117,6 +116,7 @@ public class DatabaseLoaderFacade {
         return null;
     }
     public ArrayList<ISeason> getFromDatabase(IShow show){
+        //This function takes a show, and finds all matching seasons, and thereby episodes also, in the database
         return DatabaseLoader.getInstance().queryGetSeasonsForShow(show);
     }
     /*public IShow getFromDatabase(IShow show){
@@ -138,7 +138,6 @@ public class DatabaseLoaderFacade {
     public ArrayList<IMovie> searchMoviesFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToMovieList(searchString);
     }
-
     public ArrayList<IShow> searchShowsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToShowList(searchString);
     }

@@ -253,6 +253,11 @@ public class DatabaseLoader {
         return null;
     }
 
+    public ArrayList<IGroup> searchQueryToGroup(String searchString) {
+        IGroup tempGroup = null;
+        return null;
+    }
+
     public ArrayList<ISeason> queryGetSeasonsForShow(IShow show) {
 
         try {
@@ -350,11 +355,6 @@ public class DatabaseLoader {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public IGroup queryToGroup(String[] strings) {
-        IGroup tempGroup = null;
-            return tempGroup;
     }
 
     public Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
@@ -615,7 +615,7 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args) {
-        
+
     }
 
     private Connection getConnection() {
