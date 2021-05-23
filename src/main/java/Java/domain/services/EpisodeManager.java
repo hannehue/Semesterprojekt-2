@@ -28,7 +28,7 @@ public class EpisodeManager {
 
     public IEpisode addEpisode(ISeason season, int length, String title, Category category) {
         IEpisode episode = new Episode(
-                getNextEpisode(season.getCreditID()) + " - " + title,
+                getNextEpisode(season) + " - " + title,
                 "description",
                 new Category[]{category},
                 length,
@@ -37,14 +37,13 @@ public class EpisodeManager {
         episode.setSeasonID(season.getIDMap().get("seasonID"));
         Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(episode);
         episode.setProductionID(IDs.get("productionID"));
-        season.getEpisodes().add(episode.getCreditID());
+        season.getEpisodes().add(episode);
         episodeMap.put(episode.getCreditID(), episode);
         System.out.println("tilføjet " + episode.getName());
         return episode;
     }
 
-    public String getNextEpisode(Integer seasonId) {
-        ISeason season = SeasonManager.getInstance().getSeasonById(seasonId);
+    public String getNextEpisode(ISeason season) {
         String episodeString = season + "E" + (season.getNumberOfEpisode() + 1);
         return episodeString;
     }

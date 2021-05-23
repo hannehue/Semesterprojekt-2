@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -95,6 +96,9 @@ public class AddCreditController implements Initializable {
         IShow selectedCredit = (IShow) showSearchList.getSelectionModel().getSelectedItem();
             if (selectedCredit != null) {
                 choiceBoxSeason.getItems().addAll(DatabaseLoaderFacade.getInstance().getFromDatabase(selectedCredit));
+
+                ArrayList<ISeason> seasons = new ArrayList<>();
+                seasons.addAll(choiceBoxSeason.getItems());
             }
         System.out.println("Showing choicebox wiht conttens " + choiceBoxSeason.getItems());
         choiceBoxSeason.show();
@@ -234,7 +238,7 @@ public class AddCreditController implements Initializable {
 
 
     private void reloadNextEpisode() {
-        episodeId.setText(EpisodeManager.getInstance().getNextEpisode(((ISeason) choiceBoxSeason.getValue()).getCreditID()));
+        episodeId.setText(EpisodeManager.getInstance().getNextEpisode(((ISeason) choiceBoxSeason.getValue())));
     }
 
     public void handleRemovePersons(ActionEvent actionEvent) {

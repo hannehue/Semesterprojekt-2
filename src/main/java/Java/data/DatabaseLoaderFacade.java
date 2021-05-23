@@ -4,7 +4,6 @@ import Java.interfaces.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 public class DatabaseLoaderFacade {
@@ -118,7 +117,7 @@ public class DatabaseLoaderFacade {
         return null;
     }
     public ArrayList<ISeason> getFromDatabase(IShow show){
-        return DatabaseLoader.getInstance().queryGetSeasonForShow(show);
+        return DatabaseLoader.getInstance().queryGetSeasonsForShow(show);
     }
     /*public IShow getFromDatabase(IShow show){
         return null;

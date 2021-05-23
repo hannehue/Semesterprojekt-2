@@ -5,14 +5,11 @@ import Java.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Locale;
-import java.util.Scanner;
 import java.util.*;
 import java.sql.*;
 
@@ -240,7 +237,7 @@ public class DatabaseLoader {
                 IDs.put("creditID", show.getCreditID());
                 show.setIDMap(IDs);
                 ObservableList seasons = FXCollections.observableArrayList();
-                seasons.addAll(getInstance().queryGetSeasonForShow(show));
+                seasons.addAll(getInstance().queryGetSeasonsForShow(show));
                 show.setSeasons(seasons);
                 showList.add(show);
             }
@@ -257,7 +254,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ArrayList<ISeason> queryGetSeasonForShow(IShow show){
+    public ArrayList<ISeason> queryGetSeasonsForShow(IShow show){
 
         try {
             ArrayList<ISeason> seasonList = new ArrayList<>();
@@ -283,6 +280,16 @@ public class DatabaseLoader {
                 IDs.put("creditID", season.getCreditID());
                 IDs.put("showID", season.getShowID());
                 IDs.put("seasonID", seasonResult.getInt("season_id"));
+                season.setIDMap(IDs);
+                ObservableList<IEpisode> episodeObservableList = FXCollections.observableArrayList();
+
+                if (episodeObservableList != null){
+                    episodeObservableList.clear();
+                }
+                episodeObservableList.addAll(queryGetEpisodesForShow(season));
+                season.setEpisodes(episodeObservableList);
+                System.out.println(episodeObservableList.size());
+
                 seasonList.add(season);
             }
             return seasonList;
@@ -290,6 +297,71 @@ public class DatabaseLoader {
 
         } catch (SQLException e){
             System.out.println("ERROR AT queryGetSeasonForShow");
+            e.printStackTrace();
+        } catch (ParseException e) {
+            System.out.println("PARSE ERROR AT queryGetSeasonForShow");
+            e.printStackTrace();
+
+        }
+
+        return null;
+    }
+
+    public ArrayList<IEpisode> queryGetEpisodesForShow(ISeason season){
+        try {
+            ArrayList<IEpisode> episodeList  = new ArrayList<>();
+            PreparedStatement getEpisodeQuery = getConnection().prepareStatement(
+                    "SELECT *" +
+                            "FROM productions " +
+                            "INNER JOIN episodes " +
+                            "ON productions.production_id = episodes.production_id " +
+                            "INNER JOIN seasons " +
+                            "ON seasons.season_id = episodes.season_id " +
+                            "INNER JOIN credits " +
+                            "ON productions.credit_id = credits.credit_id " +
+                            "WHERE seasons.season_id = ? "
+            );
+
+
+          /*  "SELECT * FROM credits, movies, productions, categories WHERE LOWER(name) LIKE LOWER(?)" +
+                    "AND credits.credit_id = productions.credit_id " +
+                    "AND productions.production_id = movies.production_id " +
+                    "AND productions.category_id = categories.category_id"  */
+
+            System.out.println(season.getIDMap().get("seasonID"));
+            getEpisodeQuery.setInt(1, season.getIDMap().get("seasonID"));
+
+            getEpisodeQuery.executeQuery();
+
+            while (getEpisodeQuery.getResultSet().next()){
+                ResultSet episodeResult = getEpisodeQuery.getResultSet();
+
+                IEpisode episode = new Episode(
+                        /* Name         */ episodeResult.getString("name"),
+                        /* Date         */ formatter.parse(episodeResult.getString("date_added")),
+                        /* CreditID     */ episodeResult.getInt("credit_id"),
+                        /* Approved     */ episodeResult.getBoolean("approved"),
+                        /* description  */ episodeResult.getString("description"),
+                        /* productionID */ episodeResult.getInt("production_id"),
+                        /* category     */ new Category[]{Category.values()[episodeResult.getInt("category_id") - 1]},
+                        /* lengthInSecs */ episodeResult.getInt("length_in_secs"),
+                        /* release_date */ formatter.parse(episodeResult.getString("release_date")),
+                        /* seasonID     */ episodeResult.getInt("season_id")
+                );
+                System.out.println(episode.getName());
+                Map<String, Integer> IDs = new HashMap<>();
+                IDs.put("creditID", episode.getCreditID());
+                IDs.put("productionID", episode.getProductionID());
+                IDs.put("seasonID", episode.getSeasonID());
+                IDs.put("episodeID", episodeResult.getInt("episode_id"));
+                episodeList.add(episode);
+            }
+            return episodeList;
+
+
+        } catch (SQLException e){
+            System.out.println("ERROR AT queryGetEpisodeForShow");
+            e.printStackTrace();
         } catch (ParseException e) {
             System.out.println("PARSE ERROR AT queryGetSeasonForShow");
             e.printStackTrace();
