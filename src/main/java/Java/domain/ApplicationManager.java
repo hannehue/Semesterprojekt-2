@@ -73,6 +73,7 @@ public class ApplicationManager {
         ArrayList<ICredit> creditsList = new ArrayList();
         creditsList.addAll(PersonManager.getInstance().searchPerson(searchString));
         creditsList.addAll(MovieManager.getInstance().searchMovie(searchString));
+        creditsList.addAll(ShowManager.getInstance().searchShows(searchString));
         return creditsList;
     }
 

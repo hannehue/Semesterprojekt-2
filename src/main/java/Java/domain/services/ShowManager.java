@@ -1,5 +1,6 @@
 package Java.domain.services;
 
+import Java.data.DatabaseLoader;
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Show;
@@ -32,6 +33,10 @@ public class ShowManager {
         showMap.put(IDs.get("showID"), show);
         System.out.println("Added show: " + show.getName());
         return show;
+    }
+
+    public ArrayList<IShow> searchShows(String searchString){
+        return DatabaseLoaderFacade.getInstance().searchShowsFromDatabase(searchString);
     }
 
     public ObservableMap<Integer, IShow> getShowList() {
