@@ -16,6 +16,4 @@ public interface IProduction extends ICredit {
     Date getReleaseDate();
 
     ArrayList<Integer> getStaffIDs();
-
-    String toFileString();
 }

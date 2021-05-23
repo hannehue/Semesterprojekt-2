@@ -36,28 +36,4 @@ public class Movie extends Production implements IMovie {
                ", Movie length: " + (getLengthInSecs() / 60 / 60) + " hours " + getLengthInSecs() / 60 % 60  + " minutes " +
                ", Release date: " + getReleaseDate() + " Staff IDs: " + getStaffIDs();
     }
-
-    @Override
-    public String toFileString() {
-        String movieFileString = "";
-        movieFileString += getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() +
-                "," + getDescription() + "," + getProductionID() + ",";
-
-        String categories = "";
-        for (Category category: getCategories()){
-            categories += category.toString() + ";";
-        }
-        movieFileString += categories.substring(0, categories.length() - 1) + ",";
-
-        movieFileString += getLengthInSecs() + "," + getReleaseDate() + ",";
-
-        String staffIDString = "";
-        for(Integer staffId: getStaffIDs()){
-            staffIDString += staffId + ";";
-        }
-        movieFileString += staffIDString.substring(0, staffIDString.length() - 1) + ",";
-
-        return movieFileString;
-    }
-
 }

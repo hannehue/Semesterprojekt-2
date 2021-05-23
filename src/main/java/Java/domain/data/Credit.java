@@ -80,11 +80,6 @@ public abstract class Credit implements ICredit {
     }
 
     @Override
-    public String toFileString(){
-        return "No";
-    }
-
-    @Override
     public Map<String, Integer> getIDMap() {
         return IDMap;
     }

@@ -50,12 +50,6 @@ public class Show extends Credit implements IShow {
         this.seasons = seasons;
     }
 
-    @Override
-    public String toFileString() {
-        String showString = "" + getName() + "::" + getDateAdded() + "::" + getCreditID() + "::" + isApproved() + "::" + getDescription() + "::" + getCreditID() + "::";
-        return showString;
-    }
-
     public void addSeason(ISeason season) {
         this.seasons.add(season);
     }

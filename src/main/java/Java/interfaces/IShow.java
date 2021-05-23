@@ -12,5 +12,4 @@ public interface IShow extends ICredit {
 
 
     int getNumberOfSeason();
-    String toFileString();
 }

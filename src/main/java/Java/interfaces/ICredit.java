@@ -22,7 +22,6 @@ public interface ICredit {
     void setApproved(boolean approved);
 
     //getters/setters for Season class
-    String toFileString();
 
     Map<String, Integer> getIDMap();
     void setIDMap(Map<String, Integer> IDs);

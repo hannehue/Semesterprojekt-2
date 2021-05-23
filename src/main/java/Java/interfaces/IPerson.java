@@ -21,7 +21,4 @@ public interface IPerson extends ICredit{
 
     String getPersonEmail();
     void setPersonEmail(String personEmail);
-
-
-    String toFileString();
 }

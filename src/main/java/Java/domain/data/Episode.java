@@ -40,31 +40,6 @@ public class Episode extends Production implements IEpisode {
     }
 
     @Override
-    public String toFileString() {
-        String EpisodeFileString = "";
-        EpisodeFileString += getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() +
-                "," + getDescription() + "," + getProductionID() + ",";
-
-        String categories = "";
-        for (Category category: getCategories()){
-            categories += category.toString() + ";";
-        }
-        EpisodeFileString += categories.substring(0, categories.length() - 1) + ",";
-
-        EpisodeFileString += getLengthInSecs() + "," + getReleaseDate() + ",";
-
-        String staffIDString = "";
-        for(Integer staffId: getStaffIDs()){
-            staffIDString += staffId + ";";
-        }
-        EpisodeFileString += staffIDString.substring(0, staffIDString.length() - 1) + ",";
-
-        EpisodeFileString += getSeasonID();
-
-        return EpisodeFileString;
-    }
-
-    @Override
     public int getSeasonID() {
         return seasonID;
     }

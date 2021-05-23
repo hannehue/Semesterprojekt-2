@@ -102,30 +102,6 @@ public class Person extends Credit implements IPerson {
         return "Name: " + getName() + ", PersonID: " + personID + "\n" +
                 "Jobs:\n" + jobString;
     }
-    @Override
-    public String toFileString() {
-        String personString = getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() +
-                "," + getDescription() + "," + getPersonID() + "," + getPhoneNumber() + "," +
-                getPersonalInfo() + "," + getEmail() + ",";
-
-        //Koreografi;Fotografer--165--Mand i hættetrøje ved tanken;Hans Jensen,
-        String jobString = "";
-
-        for (IJob j : getJobs()) {
-            String roles = "";
-            String characterNames = "";
-
-            roles = j.getRole().toString();
-
-            characterNames = j.getCharacterName();
-
-            jobString += roles + "--" + j.getProductionID() + "--" + characterNames + ",";
-        }
-        personString += jobString;
-
-        System.out.println(personString);
-        return personString;
-    }
 
     @Override
     public String getPersonEmail() {
