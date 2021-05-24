@@ -8,6 +8,7 @@ import Java.interfaces.IEpisode;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import java.util.Date;
@@ -24,7 +25,7 @@ public class EpisodeManager {
         return instance;
     }
 
-    private final ObservableMap<Integer, IEpisode> episodeMap = FXCollections.observableHashMap();
+    private final ObservableList<IEpisode> episodeList = FXCollections.observableArrayList();
 
     public IEpisode addEpisode(ISeason season, int length, String title, Category category) {
         IEpisode episode = new Episode(
@@ -38,7 +39,7 @@ public class EpisodeManager {
         Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(episode);
         episode.setProductionID(IDs.get("productionID"));
         season.getEpisodes().add(episode);
-        episodeMap.put(episode.getCreditID(), episode);
+        episodeList.add(episode);
         System.out.println("tilføjet " + episode.getName());
         return episode;
     }
@@ -48,8 +49,23 @@ public class EpisodeManager {
         return episodeString;
     }
 
-    public ObservableMap<Integer, IEpisode> getEpisodeMap(){
-        return episodeMap;
+    public ObservableList<IEpisode> getEpisodeList(){
+        return episodeList;
+    }
+
+    public void addToList(ISeason season){
+        for (IEpisode episode: season.getEpisodes()){
+            episodeList.add(episode);
+        }
+    }
+
+    public IEpisode getEpisodeById(int episodeCreditId) {
+        for (IEpisode episode : episodeList) {
+            if (episode.getCreditID() == episodeCreditId) {
+                return episode;
+            }
+        }
+        return null;
     }
 
 }
