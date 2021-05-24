@@ -612,6 +612,49 @@ public class DatabaseLoader {
         return null;
     }
 
+
+    public void getAllUnApprovedCredits() throws SQLException {
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddJob = getConnection().setSavepoint();
+        try {
+            PreparedStatement getAllUnApprovedCredits = getConnection().prepareStatement(
+                    " SELECT * FROM credits" +
+                    "LEFT JOIN persons p on credits.credit_id = p.credit_id" +
+                    "LEFT JOIN productions production on credits.credit_id = production.credit_id" +
+                    "LEFT JOIN movies m on production.production_id = m.production_id"  + 
+                    "LEFT JOIN seasons s on credits.credit_id = s.credit_id"  +
+                    "LEFT JOIN shows show on credits.credit_id = show.credit_id" +
+                    "LEFT JOIN episodes e on production.production_id = e.production_id" +
+                    "WHERE approved = false "
+                    );
+            getAllUnApprovedCredits.execute();
+
+            while(getAllUnApprovedCredits.getResultSet().next()) {
+                ResultSet result = getResultSet();
+
+                int credit_id = result.getInt("credit_id");
+                String name = result.getString("name");
+                Date date_added = formatter.parse(result.getString("date_added"));
+                boolean approve = result.getBoolean("approved");
+                String description = result.getString("description");
+            }
+
+
+
+        } catch(SQLException e){
+            getConnection.rollback();
+            System.out.println("WENT WRONG AT GET UNAPPROVED CREDITS JOB IN DATABASE");
+            e.printStackTrace();
+            getConnection().rollback(beforeAddJob);
+            getConnection().setAutoCommit(true);
+
+        }
+        return null;
+    }
+
+
+
+
     public static void main(String[] args) {
 
     }
