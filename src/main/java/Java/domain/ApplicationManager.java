@@ -4,6 +4,7 @@ import Java.data.DatabaseLoaderFacade;
 import Java.domain.data.*;
 import Java.domain.services.*;
 import Java.interfaces.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
