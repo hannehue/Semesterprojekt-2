@@ -82,11 +82,25 @@ public class ApplicationManager {
         }
     }
 
-    public ArrayList<ICredit> search(String searchString){
+    public ObservableList<StringBuilder> search(String searchString){
         ArrayList<ICredit> creditsList = new ArrayList();
         creditsList.addAll(PersonManager.getInstance().searchPerson(searchString));
         creditsList.addAll(MovieManager.getInstance().searchMovie(searchString));
-        return creditsList;
+        //Opretter ny observableliste det endelige resultat bliver lagt i
+        ObservableList<StringBuilder> observableList = FXCollections.observableArrayList();
+        //går igennem hver credit
+        for (ICredit e: creditsList) {
+            //Opretter en ny stringbuilder for hver credit der er blevet returneret
+            StringBuilder stringBuilder = new StringBuilder();
+            //Splitter ved ","
+            String[] observableResultsString = e.toString().split(",");
+            //Tilføj hver linje der er blevet splittet til string builder
+            for (String s: observableResultsString) { stringBuilder.append(s).append("\n"); }
+            //tilføj til liste
+            observableList.add(stringBuilder);
+        }
+
+        return observableList;
     }
 
 }
