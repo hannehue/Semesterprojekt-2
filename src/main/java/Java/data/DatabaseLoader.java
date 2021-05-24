@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.*;
 import java.sql.*;
@@ -235,7 +234,7 @@ public class DatabaseLoader {
                 IDs.put("showID", queryResult.getInt("show_id"));
                 IDs.put("creditID", show.getCreditID());
                 show.setIDMap(IDs);
-                ObservableList seasons = FXCollections.observableArrayList();
+                ObservableList<ISeason> seasons = FXCollections.observableArrayList();
                 seasons.addAll(getInstance().queryGetSeasonsForShow(show));
                 show.setSeasons(seasons);
                 showList.add(show);
@@ -254,7 +253,6 @@ public class DatabaseLoader {
     }
 
     public ArrayList<IGroup> searchQueryToGroup(String searchString) {
-        IGroup tempGroup = null;
         return null;
     }
 
