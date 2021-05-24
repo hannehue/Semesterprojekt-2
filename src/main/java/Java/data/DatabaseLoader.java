@@ -1,14 +1,21 @@
 package Java.data;
 
 import Java.domain.data.*;
+import Java.domain.services.EpisodeManager;
+import Java.domain.services.MovieManager;
+import Java.domain.services.PersonManager;
+import Java.domain.services.SeasonManager;
+import Java.domain.services.ShowManager;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javafx.collections.ObservableList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Date;
 import java.util.*;
 import java.sql.*;
 
@@ -611,6 +618,119 @@ public class DatabaseLoader {
         System.out.println("Job not added");
         return null;
     }
+
+
+    public void getAllUnApprovedCredits() throws SQLException {
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddJob = getConnection().setSavepoint();
+        try {
+            PreparedStatement getAllUnApprovedCredits = getConnection().prepareStatement(
+                    "SELECT * FROM credits " +
+                    "LEFT JOIN persons p on credits.credit_id = p.credit_id " +
+                    "LEFT JOIN productions production on credits.credit_id = production.credit_id " +
+                    "LEFT JOIN movies m on production.production_id = m.production_id "  + 
+                    "LEFT JOIN seasons s on credits.credit_id = s.credit_id "  +
+                    "LEFT JOIN shows show on credits.credit_id = show.credit_id " +
+                    "LEFT JOIN episodes e on production.production_id = e.production_id " +
+                    "WHERE credits.approved = false"
+                    );
+            getAllUnApprovedCredits.execute();
+
+            while(getAllUnApprovedCredits.getResultSet().next()) {
+                ResultSet result = getAllUnApprovedCredits.getResultSet();
+
+                int credit_id = result.getInt("credit_id");
+                String name = result.getString("name");
+                Date date_added = formatter.parse(result.getString("date_added"));
+                boolean approved = result.getBoolean("approved");
+                String description = result.getString("description");
+
+                int person_id = result.getInt("person_id");
+                int movie_id = result.getInt("movie_id");
+                int show_id = result.getInt("show_id");
+                int season_id = result.getInt("season_id");
+                int episode_id = result.getInt("episode_id");
+                if (person_id != 0){
+                    IPerson tempPerson = new Person(
+                            name,
+                            date_added,
+                            credit_id,
+                            approved,
+                            description,
+                            person_id,
+                            result.getString("phone_number"),
+                            result.getString("personal_info"),
+                            result.getString("email")
+                            );
+                    PersonManager.getInstance().getPersonList().add(tempPerson);
+                    System.out.println("person " + tempPerson);
+                }
+                if (movie_id != 0){
+                    IMovie movie = new Movie(
+                            name,
+                            date_added,
+                            credit_id,
+                            approved,
+                            description,
+                            result.getInt("production_id"),
+                            new Category[]{Category.values()[result.getInt("category_id") - 1]},
+                            result.getInt("length_in_secs"),
+                            formatter.parse(result.getString("release_date"))
+                    );
+                    MovieManager.getInstance().getMovies().add(movie);
+                    System.out.println("movie " + movie);
+                }
+                if (show_id != 0){
+                    IShow show = new Show(
+                            name,
+                            date_added,
+                            credit_id,
+                            approved,
+                            description,
+                            result.getBoolean("all_seasons_approved")
+                    );
+                    ShowManager.getInstance().getShowList();
+                    System.out.println("show " + show);
+                }
+                if (season_id != 0){
+                  ISeason season = new Season(
+                          name,
+                          date_added,
+                          credit_id,
+                          approved,
+                          description,
+                          result.getInt("show_id"),
+                          result.getBoolean("all_episodes_approved")
+                  );
+                  System.out.println("season " + season);
+                  SeasonManager.getInstance().getSeasonList().add(season);
+                }
+                if (episode_id != 0){
+                  IEpisode episode = new Episode(
+                          name,
+                          date_added,
+                          credit_id,
+                          approved,
+                          description,
+                          result.getInt("production_id"),
+                          new Category[]{Category.values()[result.getInt("category_id") - 1]},
+                          result.getInt("length_in_secs"),
+                          formatter.parse(result.getString("release_date")),
+                          result.getInt("season_id")
+                  );
+                  System.out.println("episode " + episode);
+                  EpisodeManager.getInstance().getEpisodeList().add(episode);
+                }
+            }
+        } catch(Exception e){
+            System.out.println("WENT WRONG AT GET UNAPPROVED CREDITS JOB IN DATABASE");
+            e.printStackTrace();
+
+        }
+    }
+
+
+
 
     public static void main(String[] args) {
 

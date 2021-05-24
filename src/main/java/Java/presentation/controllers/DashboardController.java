@@ -1,5 +1,6 @@
 package Java.presentation.controllers;
 
+import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.*;
 import Java.domain.services.*;
@@ -12,12 +13,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 /* ------------------------------------------------------------------------------------------------------------------
-Denne Controller alt funktionalitet på de forskellige sider
------------------------------------------------------------------------------------------------------------------- */
+   Denne Controller alt funktionalitet på de forskellige sider
+   ------------------------------------------------------------------------------------------------------------------ */
 
 public class DashboardController implements Initializable {
     @FXML
@@ -39,8 +41,8 @@ public class DashboardController implements Initializable {
 
 
     /* ------------------------------------------------------------------------------------------------------------------
-        Metoder
-    ------------------------------------------------------------------------------------------------------------------ */
+       Metoder
+       ------------------------------------------------------------------------------------------------------------------ */
 
     private static final DashboardController instance = new DashboardController();
 
@@ -160,16 +162,23 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        DatabaseLoaderFacade database = DatabaseLoaderFacade.getInstance();
+        try {
+          database.getAllUnApprovedCredits();
+        }
+        catch (SQLException e){
+          e.printStackTrace();
+        }
         movieObservableList = MovieManager.getInstance().getMovies();
         setContent(movieToApprove, movieObservableList);
-        personObservableList = PersonManager.getInstance().getPersonList();
-        setContent(personToApprove, personObservableList);
-        showObservableList = ShowManager.getInstance().getShowList();
-        setContent(showToApprove, showObservableList);
+        //personObservableList = PersonManager.getInstance().getPersonList();
+        //setContent(personToApprove, personObservableList);
+        //showObservableMap = ShowManager.getInstance().getShowList();
+        //setContent(showToApprove, showObservableMap);
 
-        seasonObservableList = SeasonManager.getInstance().getSeasonList();
-        episodeObservableList = EpisodeManager.getInstance().getEpisodeList();
-        setContent(seasonToApprove, seasonObservableList);
-        setContent(episodeToApprove, episodeObservableList);
+        //seasonObservableMap = SeasonManager.getInstance().getSeasonMap();
+        //episodeObservableMap = EpisodeManager.getInstance().getEpisodeMap();
+        //setContent(seasonToApprove, seasonObservableMap);
+        //setContent(episodeToApprove, episodeObservableMap);
     }
 }

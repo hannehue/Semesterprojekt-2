@@ -1,8 +1,6 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoader;
 import Java.data.DatabaseLoaderFacade;
-import Java.domain.ApplicationManager;
 import Java.domain.data.Show;
 import Java.interfaces.IPerson;
 import Java.interfaces.ISeason;

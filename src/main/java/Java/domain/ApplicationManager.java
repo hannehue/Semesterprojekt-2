@@ -1,20 +1,16 @@
 package Java.domain;
 
-import Java.data.DatabaseLoader;
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.data.*;
 import Java.domain.services.*;
 import Java.interfaces.*;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ApplicationManager {
 
-    private DatabaseLoader dataLoader;
     private UserType userType;
 
     private static final ApplicationManager instance = new ApplicationManager();
@@ -40,10 +36,7 @@ public class ApplicationManager {
      * @param observableList
      * @param <T>
      */
-
-
-
-    public  <T extends ICredit> void approveCredit(int id, ObservableList<T> observableList) {
+    public <T extends ICredit> void approveCredit(int id, ObservableList<T> observableList) {
         T approveCredit = null;
         for (T credit: observableList) {
             if (credit.getCreditID() == id) {
