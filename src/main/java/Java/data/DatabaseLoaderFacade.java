@@ -135,6 +135,10 @@ public class DatabaseLoaderFacade {
       DatabaseLoader.getInstance().getAllUnApprovedCredits();
     }
 
+    public void setCreditApproveState(ICredit credit, boolean bool) throws SQLException{
+        DatabaseLoader.getInstance().setCreditApproveState(credit, bool);
+    }
+
     public ArrayList<IPerson> searchPersonsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToPersonList(searchString);
     }

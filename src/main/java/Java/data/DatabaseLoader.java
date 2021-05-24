@@ -9,8 +9,6 @@ import Java.domain.services.ShowManager;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import javafx.collections.ObservableList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -322,9 +320,7 @@ public class DatabaseLoader {
                             "ON seasons.season_id = episodes.season_id " +
                             "INNER JOIN credits " +
                             "ON productions.credit_id = credits.credit_id " +
-                            "WHERE seasons.season_id = ? "
-            );
-            getEpisodeQuery.setInt(1, season.getIDMap().get("seasonID"));
+                            "WHERE seasons.season_id = ? "); getEpisodeQuery.setInt(1, season.getIDMap().get("seasonID"));
             getEpisodeQuery.executeQuery();
 
             while (getEpisodeQuery.getResultSet().next()) {
@@ -723,9 +719,30 @@ public class DatabaseLoader {
                 }
             }
         } catch(Exception e){
-            System.out.println("WENT WRONG AT GET UNAPPROVED CREDITS JOB IN DATABASE");
+            System.out.println("WENT WRONG AT GET UNAPPROVED CREDITS IN DATABASE");
             e.printStackTrace();
+        }
+    }
 
+    public void setCreditApproveState(ICredit credit, boolean bool) throws SQLException {
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddJob = getConnection().setSavepoint();
+        try {
+            PreparedStatement updateJob = getConnection().prepareStatement(
+                "UPDATE credits SET approved = ? " +
+                "WHERE credits.credit_id = ?");
+            updateJob.setBoolean(1, bool);
+            updateJob.setInt(2, credit.getCreditID());
+            updateJob.executeUpdate();
+            getConnection().commit();
+            //set auto commit to true again, as that is the default
+            getConnection().setAutoCommit(true);
+        } catch (SQLException e) {
+            getConnection().rollback();
+            System.out.println("WENT WRONG APPROVE CREDIT in DATABASE");
+            e.printStackTrace();
+            getConnection().rollback(beforeAddJob);
+            getConnection().setAutoCommit(true);
         }
     }
 
