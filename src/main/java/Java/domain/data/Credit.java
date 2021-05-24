@@ -23,11 +23,20 @@ public abstract class Credit implements ICredit {
         this.description = description;
     }
 
-    /*
+/*
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }*/
+        //Opretter en ny stringbuilder for hver credit der er blevet returneret
+        StringBuilder stringBuilder = new StringBuilder();
+        //Splitter ved ","
+        String[] observableResultsString = this.toString().split(",");
+        //Tilføj hver linje der er blevet splittet til string builder
+        for (String s: observableResultsString) { stringBuilder.append(s).append("\n"); }
+        //tilføj til liste
+        return stringBuilder.toString();
+    }
+
+ */
 
     @Override
     public String getName() {
@@ -87,5 +96,17 @@ public abstract class Credit implements ICredit {
     @Override
     public void setIDMap(Map<String, Integer> IDs) {
         this.IDMap = IDs;
+    }
+
+    @Override
+    public String buildView() {
+        //Opretter en ny stringbuilder for hver credit der er blevet returneret
+        StringBuilder stringBuilder = new StringBuilder();
+        //Splitter ved ","
+        String[] observableResultsString = this.toString().split(",");
+        //Tilføj hver linje der er blevet splittet til string builder
+        for (String s: observableResultsString) { stringBuilder.append(s).append("\n"); }
+        //tilføj til liste
+        return stringBuilder.toString();
     }
 }

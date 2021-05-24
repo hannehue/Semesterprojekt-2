@@ -69,15 +69,17 @@ public class ApplicationManager {
         }
     }
 
-    public ObservableList<StringBuilder> search(String searchString){
+    public ObservableList<ICredit> search(String searchString){
         ArrayList<ICredit> creditsList = new ArrayList();
         creditsList.addAll(PersonManager.getInstance().searchPerson(searchString));
         creditsList.addAll(MovieManager.getInstance().searchMovie(searchString));
         creditsList.addAll(ShowManager.getInstance().searchShows(searchString));
         //Opretter ny observableliste det endelige resultat bliver lagt i
-        ObservableList<StringBuilder> observableList = FXCollections.observableArrayList();
+        ObservableList<ICredit> observableList = FXCollections.observableArrayList();
         //går igennem hver credit
         for (ICredit e: creditsList) {
+            observableList.add(e);
+            /*
             //Opretter en ny stringbuilder for hver credit der er blevet returneret
             StringBuilder stringBuilder = new StringBuilder();
             //Splitter ved ","
@@ -86,6 +88,7 @@ public class ApplicationManager {
             for (String s: observableResultsString) { stringBuilder.append(s).append("\n"); }
             //tilføj til liste
             observableList.add(stringBuilder);
+             */
         }
 
         return observableList;

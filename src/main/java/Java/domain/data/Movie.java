@@ -26,8 +26,6 @@ public class Movie extends Production implements IMovie {
         );
     }
 
-    //Overloaded constructor to send a string to production to get a
-
     @Override
     public String toString() {
         return "Name: " + getName() + ", CreditID: " + getCreditID() +

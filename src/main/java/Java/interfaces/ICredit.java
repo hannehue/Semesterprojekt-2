@@ -26,4 +26,5 @@ public interface ICredit {
     Map<String, Integer> getIDMap();
     void setIDMap(Map<String, Integer> IDs);
 
+    String buildView();
 }
