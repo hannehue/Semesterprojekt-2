@@ -5,8 +5,8 @@ import Java.domain.data.*;
 import Java.domain.services.*;
 import Java.interfaces.*;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ApplicationManager {
@@ -46,21 +46,16 @@ public class ApplicationManager {
         if (approveCredit != null){
             observableList.remove(approveCredit);
             approveCredit.setApproved(true);
+            try {
+              DatabaseLoaderFacade.getInstance().setCreditApproveState((ICredit) approveCredit, true);
+            }
+            catch (SQLException e){
+              e.printStackTrace();
+            }
             observableList.add(approveCredit);
         }
     }
 
-
-    public <T extends ICredit> void approveCredit(int id, ObservableMap<Integer,T> map) {
-        T credit = null;
-        if (map.containsKey(id)) {
-            credit = map.remove(id);
-            credit.setApproved(true);
-        }
-        if (credit != null) {
-            map.put(id, credit);
-        }
-    }
 
     public ObservableList<ICredit> search(String searchString){
         ArrayList<ICredit> creditsList = new ArrayList();

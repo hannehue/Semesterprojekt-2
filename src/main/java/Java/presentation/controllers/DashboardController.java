@@ -127,38 +127,6 @@ public class DashboardController implements Initializable {
             }
         });
     }
-    private <T extends ICredit> void setContent(AnchorPane listToApprove, ObservableMap<Integer, T> creditList){
-        int offset = 20;
-        for (Map.Entry<Integer, T> credit : creditList.entrySet()){
-            if (!credit.getValue().isApproved()) {
-                addItem(listToApprove, credit.getValue(), offset);
-                offset += 30;
-            }
-        }
-
-        creditList.addListener(new MapChangeListener<Integer, T>() {
-            @Override
-            public void onChanged(Change<? extends Integer, ? extends T> change) {
-                int offset = 20;
-                System.out.println("change in map");
-                if (change.wasAdded()) {
-                    System.out.println("change add");
-                    ICredit credit = change.getValueAdded();
-                    if (!credit.isApproved()){
-                        addItem(listToApprove, credit, offset);
-                        offset += 30;
-                    }
-                } else if (change.wasRemoved()) {
-                    System.out.println("change removed");
-                    ICredit credit = change.getValueRemoved();
-                    if (!credit.isApproved()){
-                        removeItem(listToApprove, credit);
-                    }
-                }
-            }
-        });
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -171,14 +139,14 @@ public class DashboardController implements Initializable {
         }
         movieObservableList = MovieManager.getInstance().getMovies();
         setContent(movieToApprove, movieObservableList);
-        //personObservableList = PersonManager.getInstance().getPersonList();
-        //setContent(personToApprove, personObservableList);
-        //showObservableMap = ShowManager.getInstance().getShowList();
-        //setContent(showToApprove, showObservableMap);
+        personObservableList = PersonManager.getInstance().getPersonList();
+        setContent(personToApprove, personObservableList);
+        showObservableList = ShowManager.getInstance().getShowList();
+        setContent(showToApprove, showObservableList);
 
-        //seasonObservableMap = SeasonManager.getInstance().getSeasonMap();
-        //episodeObservableMap = EpisodeManager.getInstance().getEpisodeMap();
-        //setContent(seasonToApprove, seasonObservableMap);
-        //setContent(episodeToApprove, episodeObservableMap);
+        seasonObservableList = SeasonManager.getInstance().getSeasonList();
+        episodeObservableList = EpisodeManager.getInstance().getEpisodeList();
+        setContent(seasonToApprove, seasonObservableList);
+        setContent(episodeToApprove, episodeObservableList);
     }
 }
