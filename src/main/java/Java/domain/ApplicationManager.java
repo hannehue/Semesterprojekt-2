@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class ApplicationManager {
 
     private UserType userType;
-    private DatabaseLoaderFacade database = new DatabaseLoaderFacade();
 
     private static final ApplicationManager instance = new ApplicationManager();
 

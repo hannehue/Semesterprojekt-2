@@ -1,5 +1,6 @@
 package Java.presentation.controllers;
 
+import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.*;
 import Java.domain.services.*;
@@ -12,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -160,6 +162,13 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        DatabaseLoaderFacade database = DatabaseLoaderFacade.getInstance();
+        try {
+          database.getAllUnApprovedCredits();
+        }
+        catch (SQLException e){
+          e.printStackTrace();
+        }
         movieObservableList = MovieManager.getInstance().getMovies();
         setContent(movieToApprove, movieObservableList);
         //personObservableList = PersonManager.getInstance().getPersonList();

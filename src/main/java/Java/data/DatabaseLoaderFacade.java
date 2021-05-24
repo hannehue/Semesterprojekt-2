@@ -131,6 +131,9 @@ public class DatabaseLoaderFacade {
         return null;
     }
 
+    public void getAllUnApprovedCredits() throws SQLException {
+      DatabaseLoader.getInstance().getAllUnApprovedCredits();
+    }
 
     public ArrayList<IPerson> searchPersonsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToPersonList(searchString);
