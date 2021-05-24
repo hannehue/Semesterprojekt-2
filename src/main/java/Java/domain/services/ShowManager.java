@@ -2,8 +2,11 @@ package Java.domain.services;
 
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.data.Show;
+import Java.interfaces.IPerson;
+import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ public class ShowManager {
         return instance;
     }
 
-    private final ObservableList<IShow> showMap = FXCollections.observableArrayList();
+    private final ObservableList<IShow> showList = FXCollections.observableArrayList();
 
     public IShow addShow(String title, String description) {
         IShow show = new Show(
@@ -28,33 +31,52 @@ public class ShowManager {
         Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(show);
         show.setIDMap(IDs);
         show.setCreditID(IDs.get("creditID"));
-        showMap.put(IDs.get("showID"), show);
+        showList.add(show);
         System.out.println("Added show: " + show.getName());
         return show;
     }
 
     public ArrayList<IShow> searchShows(String searchString){
-        return DatabaseLoaderFacade.getInstance().searchShowsFromDatabase(searchString);
+        ArrayList<IShow> shows = DatabaseLoaderFacade.getInstance().searchShowsFromDatabase(searchString);
+        showList.setAll(shows);
+        populateSeasonList();
+        return shows;
     }
 
-    public ObservableMap<Integer, IShow> getShowList() {
-        return showMap;
+    public ObservableList<IShow> getShowList() {
+        return showList;
     }
 
-    public IShow getShowById(int showId) {
-        return showMap.get(showId);
+    public IShow getShowById(int showCreditId) {
+        for (IShow show : showList){
+            if (show.getCreditID() == showCreditId){
+                return show;
+            }
+        }
+        System.out.println("Show not in list");
+        return null;
     }
 
-    public ArrayList<IShow> getAllShows() {
-        return new ArrayList<>(showMap.values());
+    public ObservableList<IShow> getAllShows() {
+        return showList;
     }
 
     public IShow searchShowName(String name) {
-        for (IShow show : showMap.values()){
+        for (IShow show : showList){
             if (show.getName() == name ) {
                 return show;
             }
         }
         return null;
     }
+
+    public void populateSeasonList(){
+
+        for(IShow show: showList){
+            ArrayList<ISeason> seasons = new ArrayList<>();
+            seasons.addAll(show.getSeasons());
+            SeasonManager.getInstance().addToList(seasons);
+        }
+    }
+
 }

@@ -32,12 +32,14 @@ public class PersonManager {
                 personalInfo,
                 email);
         Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(person);
-        person.setIDMap(IDs);
+        person.setCreditID(IDs.get("creditID"));
+        person.setPersonID(IDs.get("personID"));
+
     }
 
-    public IPerson getPersonById(int personId){
+    public IPerson getPersonById(int personCreditId){
         for (IPerson person : personList){
-            if (person.getCreditID() == personId){
+            if (person.getCreditID() == personCreditId){
                 return person;
             }
         }
@@ -58,7 +60,10 @@ public class PersonManager {
      * @return
      */
     public ArrayList<IPerson> searchPerson(String findPerson) {
-        return DatabaseLoaderFacade.getInstance().searchPersonsFromDatabase(findPerson);
+        ArrayList<IPerson> people = new ArrayList<>();
+        people.addAll(DatabaseLoaderFacade.getInstance().searchPersonsFromDatabase(findPerson));
+        personList.setAll(people);
+        return people;
     }
 
 }

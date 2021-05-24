@@ -33,9 +33,9 @@ public class DashboardController implements Initializable {
 
     private ObservableList<IPerson> personObservableList;
     private ObservableList<IMovie> movieObservableList;
-    private ObservableMap<Integer, IShow> showObservableMap;
-    private ObservableMap<Integer, ISeason> seasonObservableMap = FXCollections.observableHashMap();
-    private ObservableMap<Integer, IEpisode> episodeObservableMap = FXCollections.observableHashMap();
+    private ObservableList<IShow> showObservableList;
+    private ObservableList<ISeason> seasonObservableList;
+    private ObservableList<IEpisode> episodeObservableList;
 
 
     /* ------------------------------------------------------------------------------------------------------------------
@@ -54,15 +54,15 @@ public class DashboardController implements Initializable {
 
     private void handleApproveCredit(int id, Class<? extends ICredit> credit) {
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
-            ApplicationManager.getInstance().approveCredit(id, showObservableMap);
+            ApplicationManager.getInstance().approveCredit(id, showObservableList);
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
             ApplicationManager.getInstance().approveCredit(id, movieObservableList);
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
             ApplicationManager.getInstance().approveCredit(id, personObservableList);
         } else if (Season.class.getTypeName().equals(credit.getTypeName())) {
-            ApplicationManager.getInstance().approveCredit(id, seasonObservableMap);
+            ApplicationManager.getInstance().approveCredit(id, seasonObservableList);
         } else if (Episode.class.getTypeName().equals(credit.getTypeName())) {
-            ApplicationManager.getInstance().approveCredit(id, episodeObservableMap);
+            ApplicationManager.getInstance().approveCredit(id, episodeObservableList);
         }
     }
 
