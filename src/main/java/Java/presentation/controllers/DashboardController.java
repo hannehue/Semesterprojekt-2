@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /* ------------------------------------------------------------------------------------------------------------------
-Denne Controller alt funktionalitet på de forskellige sider
------------------------------------------------------------------------------------------------------------------- */
+   Denne Controller alt funktionalitet på de forskellige sider
+   ------------------------------------------------------------------------------------------------------------------ */
 
 public class DashboardController implements Initializable {
     @FXML
@@ -39,8 +39,8 @@ public class DashboardController implements Initializable {
 
 
     /* ------------------------------------------------------------------------------------------------------------------
-        Metoder
-    ------------------------------------------------------------------------------------------------------------------ */
+       Metoder
+       ------------------------------------------------------------------------------------------------------------------ */
 
     private static final DashboardController instance = new DashboardController();
 
@@ -162,14 +162,14 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         movieObservableList = MovieManager.getInstance().getMovies();
         setContent(movieToApprove, movieObservableList);
-        personObservableList = PersonManager.getInstance().getPersonList();
-        setContent(personToApprove, personObservableList);
-        showObservableMap = ShowManager.getInstance().getShowList();
-        setContent(showToApprove, showObservableMap);
+        //personObservableList = PersonManager.getInstance().getPersonList();
+        //setContent(personToApprove, personObservableList);
+        //showObservableMap = ShowManager.getInstance().getShowList();
+        //setContent(showToApprove, showObservableMap);
 
-        seasonObservableMap = SeasonManager.getInstance().getSeasonMap();
-        episodeObservableMap = EpisodeManager.getInstance().getEpisodeMap();
-        setContent(seasonToApprove, seasonObservableMap);
-        setContent(episodeToApprove, episodeObservableMap);
+        //seasonObservableMap = SeasonManager.getInstance().getSeasonMap();
+        //episodeObservableMap = EpisodeManager.getInstance().getEpisodeMap();
+        //setContent(seasonToApprove, seasonObservableMap);
+        //setContent(episodeToApprove, episodeObservableMap);
     }
 }

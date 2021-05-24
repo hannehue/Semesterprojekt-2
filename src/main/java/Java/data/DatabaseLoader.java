@@ -1,6 +1,9 @@
 package Java.data;
 
 import Java.domain.data.*;
+import Java.domain.services.MovieManager;
+import Java.domain.services.PersonManager;
+import Java.domain.services.ShowManager;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -635,8 +638,57 @@ public class DatabaseLoader {
                 int credit_id = result.getInt("credit_id");
                 String name = result.getString("name");
                 Date date_added = formatter.parse(result.getString("date_added"));
-                boolean approve = result.getBoolean("approved");
+                boolean approved = result.getBoolean("approved");
                 String description = result.getString("description");
+
+                int person_id = result.getInt("person_id");
+                int movie_id = result.getInt("movie_id");
+                int show_id = result.getInt("show_id");
+                int season_id = result.getInt("season_id");
+                int episode_id = result.getInt("episode_id");
+                if (person_id != null){
+                    tempPerson = new Person(
+                            name,
+                            date_added,
+                            credit_id,
+                            approved,
+                            description,
+                            person_id,
+                            result.getString("phone_number"),
+                            result.getString("personal_info"),
+                            result.getString("email")
+                            );
+                    PersonManager.getInstance().getPersonList().add(tempPerson);
+                }
+                if (movie_id != null){
+                    IMovie movie = new Movie(
+                            name,
+                            date_added,
+                            credit_id,
+                            approved,
+                            description,
+                            result.getInt("production_id"),
+                            new Category[]{Category.values()[queryResult.getInt("category_id") - 1]},
+                            result.getInt("length_in_secs"),
+                            formatter.parse(result.getString("release_date"))
+                    );
+                    MovieManager.getInstance().getMovies().add(movie);
+                }
+                if (show_id != null){
+                    IShow show = new Show(
+                            /* Name         */ queryResult.getString("name"),
+                            /* Date         */ formatter.parse(queryResult.getString("date_added")),
+                            /* CreditID     */ queryResult.getInt("credit_id"),
+                            /* Approved     */ queryResult.getBoolean("approved"),
+                            /* description  */ queryResult.getString("description"),
+                            /* IsAllSeasonsApproved*/ queryResult.getBoolean("all_seasons_approved")
+                    );
+                    ShowManager.getInstance().getShowList().
+                }
+                if (season_id != null){
+                }
+                if (episode_id != null){
+                }
             }
 
 

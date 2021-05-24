@@ -1,8 +1,6 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoader;
 import Java.data.DatabaseLoaderFacade;
-import Java.domain.ApplicationManager;
 import Java.domain.data.Show;
 import Java.interfaces.IShow;
 import javafx.collections.FXCollections;
@@ -19,7 +17,7 @@ public class ShowManager {
         return instance;
     }
 
-    private final ObservableMap<Integer, IShow> showMap = FXCollections.observableHashMap();
+    private final ObservableList<IShow> showMap = FXCollections.observableArrayList();
 
     public IShow addShow(String title, String description) {
         IShow show = new Show(
