@@ -4,6 +4,7 @@ import Java.data.DatabaseLoader;
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.data.Category;
 import Java.domain.data.Movie;
+import Java.domain.factories.Factory;
 import Java.interfaces.IMovie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,8 +43,8 @@ public class MovieManager {
         return movie;
     }
 
-    public ArrayList<IMovie> searchMovie(String findMovie){
-        return DatabaseLoaderFacade.getInstance().searchMoviesFromDatabase(findMovie);
+    public ObservableList<IMovie> searchMovie(String findMovie){
+        return Factory.getInstance().getMovies(findMovie);
     }
 
 }

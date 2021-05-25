@@ -2,6 +2,7 @@ package Java.data;
 
 import Java.interfaces.*;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
@@ -103,9 +104,6 @@ public class DatabaseLoaderFacade {
     //Metoder som tager en parameter og returnere det fra databasen
     //---------------------------------------------------------
     //returns ændres når metode der skal kaldes er lavet
-    public IPerson getFromDatabase(IPerson person){
-        return null;
-    }
     public ICompany getFromDatabase(ICompany company){
         return null;
     }
@@ -130,7 +128,6 @@ public class DatabaseLoaderFacade {
     public IProduction getFromDatabase(IProduction production){
         return null;
     }
-
     public void getAllUnApprovedCredits() throws SQLException {
       DatabaseLoader.getInstance().getAllUnApprovedCredits();
     }
@@ -143,10 +140,14 @@ public class DatabaseLoaderFacade {
         DatabaseLoader.getInstance().deletePerson(creditid);
     }
 
-    public ArrayList<IPerson> searchPersonsFromDatabase(String searchString){
+    public ResultSet getJobsForPerson(IPerson person){
+        return DatabaseLoader.getInstance().queryGetJobsForPerson(person);
+    }
+
+    public ResultSet searchPersonsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToPersonList(searchString);
     }
-    public ArrayList<IMovie> searchMoviesFromDatabase(String searchString){
+    public ResultSet searchMoviesFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToMovieList(searchString);
     }
     public ArrayList<IShow> searchShowsFromDatabase(String searchString){

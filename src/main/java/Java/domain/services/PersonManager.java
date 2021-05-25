@@ -4,6 +4,7 @@ import Java.data.DatabaseLoader;
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Person;
+import Java.domain.factories.Factory;
 import Java.interfaces.ICredit;
 import Java.interfaces.IPerson;
 import javafx.collections.FXCollections;
@@ -61,7 +62,7 @@ public class PersonManager {
      */
     public ArrayList<IPerson> searchPerson(String findPerson) {
         ArrayList<IPerson> people = new ArrayList<>();
-        people.addAll(DatabaseLoaderFacade.getInstance().searchPersonsFromDatabase(findPerson));
+        people.addAll(Factory.getInstance().getPersons(findPerson));
         personList.setAll(people);
         return people;
     }

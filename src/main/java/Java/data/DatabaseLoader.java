@@ -9,6 +9,7 @@ import Java.domain.services.ShowManager;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +49,10 @@ public class DatabaseLoader {
             instance = new DatabaseLoader();
         }
         return instance;
+    }
+
+    public static void main(String[] args) {
+
     }
 
     public IPerson searchQueryToPerson(String searchString) {
@@ -93,7 +98,7 @@ public class DatabaseLoader {
     }
 
     //Needs to be implemented to return an arraylist of matching searches
-    public ArrayList<IPerson> searchQueryToPersonList(String searchString) {
+    public ResultSet searchQueryToPersonList(String searchString) {
         ArrayList<IPerson> personObservableList = new ArrayList<>();
         try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
@@ -104,110 +109,55 @@ public class DatabaseLoader {
             );
             queryStatement.setString(1, "%" + searchString + "%");
             queryStatement.executeQuery();
-            while (queryStatement.getResultSet().next()) {
-                ResultSet queryResult = queryStatement.getResultSet();
-                IPerson tempPerson = new Person(
-                        /* Name         */ queryResult.getString("name"),
-                        /* Date         */ formatter.parse(queryResult.getString("date_added")),
-                        /* CreditID     */ queryResult.getInt("credit_id"),
-                        /* Approved     */ queryResult.getBoolean("approved"),
-                        /* description  */ queryResult.getString("description"),
-                        /* personID     */ queryResult.getInt("person_id"),
-                        /* phone number */ queryResult.getString("phone_number"),
-                        /* personal info*/ queryResult.getString("personal_info"),
-                        /* email        */ queryResult.getString("email")
-                );
-                Map<String, Integer> IDs = new HashMap<>();
-                IDs.put("creditID", tempPerson.getCreditID());
-                IDs.put("personID", tempPerson.getPersonID());
-                tempPerson.setIDMap(IDs);
 
-                // Job handling
-                // Runs new query, using persons, jobs and job_roles
-                PreparedStatement jobQueryStatement = getInstance().connection.prepareStatement(
-                        "SELECT * FROM persons, jobs, job_roles WHERE jobs.person_id = persons.person_id " +
-                                "AND jobs.job_role_id = job_roles.job_role_id"
-                );
-                jobQueryStatement.executeQuery();
-                //Temporary job list
-                ArrayList<IJob> jobs = new ArrayList<>();
-                //Result set handling
-                while (jobQueryStatement.getResultSet().next()) {
-                    //Gets net result set
-                    ResultSet jobResult = jobQueryStatement.getResultSet();
-                    // Job initialization
-                    // Checks whether the current job belongs to the current tempPerson, from the first query
-                    if (tempPerson.getPersonID() == jobResult.getInt("person_id")) {
-//                        if (jobResult.getInt("job_role_id") != 1) {
-                        jobs.add(new Job(
-                                /* PersonID         */        jobResult.getInt("person_id"),
-                                /* Role from roleID */ ((Role.values()[jobResult.getInt("job_role_id") - 1])),
-                                /* ProductionID     */ jobResult.getInt("production_id")));
-//                        } else {
-//                            jobs.add(new Job(
-//                                    /* PersonID         */        jobResult.getInt("person_id"),
-//                                    /* Role from roleID */ ((Role.values()[jobResult.getInt("job_role_id") - 1])),
-//                                    /* Character name   */ /* need name in database */
-//                                    /* ProductionID     */ jobResult.getInt("production_id")));
-//                        }
-                    }
-                }
-                // Takes the temporary job list, and sets it to the current tempPerson
-                tempPerson.setJobs(jobs);
-                //Adds the current temp person to the observable list to be returned
-                personObservableList.add(tempPerson);
-            }
+            return queryStatement.getResultSet();
+
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             System.out.println("SQL ERROR at queryToPerson");
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.out.println("Parse error at queryToPerson");
         }
-        return personObservableList;
+        return null;
     }
 
-    public ArrayList<IMovie> searchQueryToMovieList(String searchString) {
+    public ResultSet queryGetJobsForPerson(IPerson person) {
         try {
-            ArrayList<IMovie> movieList = new ArrayList<>();
+            // Job handling
+            // Runs new query, using persons, jobs and job_roles
+            PreparedStatement jobQueryStatement = getInstance().connection.prepareStatement(
+                    "SELECT * FROM persons " +
+                            "INNER JOIN jobs " +
+                            "    ON persons.person_id = jobs.person_id " +
+                            "INNER JOIN job_roles " +
+                            "    ON jobs.job_role_id = job_roles.job_role_id " +
+                            "WHERE persons.person_id = ? "
+            );
+            jobQueryStatement.setInt(1, person.getPersonID());
+            jobQueryStatement.executeQuery();
+            return jobQueryStatement.getResultSet();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public ResultSet searchQueryToMovieList(String searchString) {
+        try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
-                    "SELECT * FROM credits, movies, productions, categories WHERE LOWER(name) LIKE LOWER(?)" +
-                            "AND credits.credit_id = productions.credit_id " +
-                            "AND productions.production_id = movies.production_id " +
-                            "AND productions.category_id = categories.category_id"
+                    "SELECT * FROM credits " +
+                            "INNER JOIN productions " +
+                            "    ON credits.credit_id = productions.credit_id " +
+                            "INNER JOIN movies " +
+                            "    ON productions.production_id = movies.production_id " +
+                            "INNER JOIN categories " +
+                            "    ON productions.category_id = categories.category_id " +
+                            "WHERE LOWER(name) LIKE LOWER(?)"
             );
             //inserts searchString into SQL statement
             queryStatement.setString(1, "%" + searchString + "%");
             queryStatement.executeQuery();
 
-            while (queryStatement.getResultSet().next()) {
-                ResultSet queryResult = queryStatement.getResultSet();
-                IMovie movie = new Movie(
-                        /* Name         */ queryResult.getString("name"),
-                        /* Date         */ formatter.parse(queryResult.getString("date_added")),
-                        /* CreditID     */ queryResult.getInt("credit_id"),
-                        /* Approved     */ queryResult.getBoolean("approved"),
-                        /* description  */ queryResult.getString("description"),
-                        /* productionID */ queryResult.getInt("production_id"),
-                        /** Genovervej **/
-                        /* category     */ new Category[]{Category.values()[queryResult.getInt("category_id") - 1]},
-                        /** .... **/
-                        /* lengthInSecs */ queryResult.getInt("length_in_secs"),
-                        /* Releasedate  */ formatter.parse(queryResult.getString("release_date"))
-                );
-                Map<String, Integer> IDs = new HashMap<>();
-                IDs.put("creditID", movie.getCreditID());
-                IDs.put("productionID", movie.getProductionID());
-                IDs.put("movieID", queryResult.getInt("movie_id"));
-                movie.setIDMap(IDs);
-                movieList.add(movie);
-            }
-            return movieList;
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-            System.err.println("Failed when initializing movie search string");
-            return null;
+            return queryStatement.getResultSet();
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("SQL Exception at search query to Movie");
@@ -320,7 +270,8 @@ public class DatabaseLoader {
                             "ON seasons.season_id = episodes.season_id " +
                             "INNER JOIN credits " +
                             "ON productions.credit_id = credits.credit_id " +
-                            "WHERE seasons.season_id = ? "); getEpisodeQuery.setInt(1, season.getIDMap().get("seasonID"));
+                            "WHERE seasons.season_id = ? ");
+            getEpisodeQuery.setInt(1, season.getIDMap().get("seasonID"));
             getEpisodeQuery.executeQuery();
 
             while (getEpisodeQuery.getResultSet().next()) {
@@ -615,24 +566,23 @@ public class DatabaseLoader {
         return null;
     }
 
-
     public void getAllUnApprovedCredits() throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddJob = getConnection().setSavepoint();
         try {
             PreparedStatement getAllUnApprovedCredits = getConnection().prepareStatement(
                     "SELECT * FROM credits " +
-                    "LEFT JOIN persons p on credits.credit_id = p.credit_id " +
-                    "LEFT JOIN productions production on credits.credit_id = production.credit_id " +
-                    "LEFT JOIN movies m on production.production_id = m.production_id "  + 
-                    "LEFT JOIN seasons s on credits.credit_id = s.credit_id "  +
-                    "LEFT JOIN shows show on credits.credit_id = show.credit_id " +
-                    "LEFT JOIN episodes e on production.production_id = e.production_id " +
-                    "WHERE credits.approved = false"
-                    );
+                            "LEFT JOIN persons p on credits.credit_id = p.credit_id " +
+                            "LEFT JOIN productions production on credits.credit_id = production.credit_id " +
+                            "LEFT JOIN movies m on production.production_id = m.production_id " +
+                            "LEFT JOIN seasons s on credits.credit_id = s.credit_id " +
+                            "LEFT JOIN shows show on credits.credit_id = show.credit_id " +
+                            "LEFT JOIN episodes e on production.production_id = e.production_id " +
+                            "WHERE credits.approved = false"
+            );
             getAllUnApprovedCredits.execute();
 
-            while(getAllUnApprovedCredits.getResultSet().next()) {
+            while (getAllUnApprovedCredits.getResultSet().next()) {
                 ResultSet result = getAllUnApprovedCredits.getResultSet();
 
                 int credit_id = result.getInt("credit_id");
@@ -646,7 +596,7 @@ public class DatabaseLoader {
                 int show_id = result.getInt("show_id");
                 int season_id = result.getInt("season_id");
                 int episode_id = result.getInt("episode_id");
-                if (person_id != 0){
+                if (person_id != 0) {
                     IPerson tempPerson = new Person(
                             name,
                             date_added,
@@ -657,11 +607,11 @@ public class DatabaseLoader {
                             result.getString("phone_number"),
                             result.getString("personal_info"),
                             result.getString("email")
-                            );
+                    );
                     PersonManager.getInstance().getPersonList().add(tempPerson);
                     System.out.println("person " + tempPerson);
                 }
-                if (movie_id != 0){
+                if (movie_id != 0) {
                     IMovie movie = new Movie(
                             name,
                             date_added,
@@ -676,7 +626,7 @@ public class DatabaseLoader {
                     MovieManager.getInstance().getMovies().add(movie);
                     System.out.println("movie " + movie);
                 }
-                if (show_id != 0){
+                if (show_id != 0) {
                     IShow show = new Show(
                             name,
                             date_added,
@@ -688,37 +638,37 @@ public class DatabaseLoader {
                     ShowManager.getInstance().getShowList();
                     System.out.println("show " + show);
                 }
-                if (season_id != 0){
-                  ISeason season = new Season(
-                          name,
-                          date_added,
-                          credit_id,
-                          approved,
-                          description,
-                          result.getInt("show_id"),
-                          result.getBoolean("all_episodes_approved")
-                  );
-                  System.out.println("season " + season);
-                  SeasonManager.getInstance().getSeasonList().add(season);
+                if (season_id != 0) {
+                    ISeason season = new Season(
+                            name,
+                            date_added,
+                            credit_id,
+                            approved,
+                            description,
+                            result.getInt("show_id"),
+                            result.getBoolean("all_episodes_approved")
+                    );
+                    System.out.println("season " + season);
+                    SeasonManager.getInstance().getSeasonList().add(season);
                 }
-                if (episode_id != 0){
-                  IEpisode episode = new Episode(
-                          name,
-                          date_added,
-                          credit_id,
-                          approved,
-                          description,
-                          result.getInt("production_id"),
-                          new Category[]{Category.values()[result.getInt("category_id") - 1]},
-                          result.getInt("length_in_secs"),
-                          formatter.parse(result.getString("release_date")),
-                          result.getInt("season_id")
-                  );
-                  System.out.println("episode " + episode);
-                  EpisodeManager.getInstance().getEpisodeList().add(episode);
+                if (episode_id != 0) {
+                    IEpisode episode = new Episode(
+                            name,
+                            date_added,
+                            credit_id,
+                            approved,
+                            description,
+                            result.getInt("production_id"),
+                            new Category[]{Category.values()[result.getInt("category_id") - 1]},
+                            result.getInt("length_in_secs"),
+                            formatter.parse(result.getString("release_date")),
+                            result.getInt("season_id")
+                    );
+                    System.out.println("episode " + episode);
+                    EpisodeManager.getInstance().getEpisodeList().add(episode);
                 }
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             System.out.println("WENT WRONG AT GET UNAPPROVED CREDITS IN DATABASE");
             e.printStackTrace();
         }
@@ -729,8 +679,8 @@ public class DatabaseLoader {
         Savepoint beforeAddJob = getConnection().setSavepoint();
         try {
             PreparedStatement updateJob = getConnection().prepareStatement(
-                "UPDATE credits SET approved = ? " +
-                "WHERE credits.credit_id = ?");
+                    "UPDATE credits SET approved = ? " +
+                            "WHERE credits.credit_id = ?");
             updateJob.setBoolean(1, bool);
             updateJob.setInt(2, credit.getCreditID());
             updateJob.executeUpdate();
@@ -770,11 +720,6 @@ public class DatabaseLoader {
             getConnection().rollback(beforeAddJob);
             getConnection().setAutoCommit(true);
         }
-    }
-
-
-    public static void main(String[] args) {
-
     }
 
     private Connection getConnection() {
