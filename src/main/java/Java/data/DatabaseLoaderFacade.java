@@ -110,18 +110,13 @@ public class DatabaseLoaderFacade {
     public ICredit getFromDatabase(ICredit credit){
         return null;
     }
-    public IEpisode getFromDatabase(IEpisode episode){
-        return null;
-    }
-    public ArrayList<ISeason> getFromDatabase(IShow show){
+    public ResultSet getFromDatabase(IShow show){
         //This function takes a show, and finds all matching seasons, and thereby episodes also, in the database
         return DatabaseLoader.getInstance().queryGetSeasonsForShow(show);
     }
-    /*public IShow getFromDatabase(IShow show){
-        return null;
+    public ResultSet getFromDatabase(ISeason season){
+        return DatabaseLoader.getInstance().queryGetEpisodesForShow(season);
     }
-
-     */
     public IMovie getFromDatabase(IMovie movie){
         return null;
     }
@@ -150,7 +145,7 @@ public class DatabaseLoaderFacade {
     public ResultSet searchMoviesFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToMovieList(searchString);
     }
-    public ArrayList<IShow> searchShowsFromDatabase(String searchString){
+    public ResultSet searchShowsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToShowList(searchString);
     }
 }

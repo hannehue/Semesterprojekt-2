@@ -1,17 +1,13 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoader;
 import Java.data.DatabaseLoaderFacade;
-import Java.domain.ApplicationManager;
 import Java.domain.data.Person;
-import Java.domain.factories.Factory;
-import Java.interfaces.ICredit;
+import Java.domain.objectMapping.Factory;
 import Java.interfaces.IPerson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 public class PersonManager {

@@ -2,12 +2,11 @@ package Java.domain.services;
 
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.data.Show;
-import Java.interfaces.IPerson;
+import Java.domain.objectMapping.Factory;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -36,8 +35,8 @@ public class ShowManager {
         return show;
     }
 
-    public ArrayList<IShow> searchShows(String searchString){
-        ArrayList<IShow> shows = DatabaseLoaderFacade.getInstance().searchShowsFromDatabase(searchString);
+    public ObservableList<IShow> searchShows(String searchString){
+        ObservableList<IShow> shows = Factory.getInstance().getShow(searchString);
         showList.setAll(shows);
         populateSeasonList();
         return shows;

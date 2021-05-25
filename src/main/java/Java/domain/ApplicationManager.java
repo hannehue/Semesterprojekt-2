@@ -2,6 +2,7 @@ package Java.domain;
 
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.data.*;
+import Java.domain.objectMapping.Factory;
 import Java.domain.services.*;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
@@ -84,7 +85,7 @@ public class ApplicationManager {
     }
 
     public void searchShow( String search, ObservableList<IShow> list){
-        list.addAll(DatabaseLoaderFacade.getInstance().searchShowsFromDatabase(search));
+        list.addAll(Factory.getInstance().getShow(search));
         //list.add(new Show("name", "desc", false));
     }
 
