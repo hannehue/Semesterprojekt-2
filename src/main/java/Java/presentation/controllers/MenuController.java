@@ -1,6 +1,7 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
+import Java.domain.services.MovieManager;
 import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -240,6 +241,15 @@ public class MenuController implements Initializable {
     public void handleAddUser(MouseEvent mouseEvent) {
         try {
             setContentPane("AddUsers.fxml", AddUserController.getInstance());
+            hideMenu();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void handleCreditOverlook(MouseEvent mouseEvent){
+        try{
+            setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
             hideMenu();
         } catch (Exception e){
             e.printStackTrace();
