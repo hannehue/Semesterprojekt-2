@@ -112,7 +112,7 @@ public class Factory {
         return null;
     }
 
-    private ObservableList<ISeason> getSeasonsForShow(IShow show) {
+    public ObservableList<ISeason> getSeasonsForShow(IShow show) {
         ResultSet seasonResultSet = DatabaseLoaderFacade.getInstance().getFromDatabase(show);
         ObservableList<ISeason> seasonList = FXCollections.observableArrayList();
         try {

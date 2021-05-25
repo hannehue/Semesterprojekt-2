@@ -3,6 +3,7 @@ package Java.presentation.controllers;
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Category;
+import Java.domain.objectMapping.Factory;
 import Java.domain.services.*;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
@@ -95,7 +96,7 @@ public class AddCreditController implements Initializable {
         choiceBoxSeason.getItems().clear();
         IShow selectedCredit = (IShow) showSearchList.getSelectionModel().getSelectedItem();
             if (selectedCredit != null) {
-                choiceBoxSeason.getItems().addAll(DatabaseLoaderFacade.getInstance().getFromDatabase(selectedCredit));
+                choiceBoxSeason.getItems().addAll(Factory.getInstance().getSeasonsForShow(selectedCredit));
 
                 ArrayList<ISeason> seasons = new ArrayList<>();
                 seasons.addAll(choiceBoxSeason.getItems());
