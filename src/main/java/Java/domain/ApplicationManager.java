@@ -69,16 +69,6 @@ public class ApplicationManager {
         //går igennem hver credit
         for (ICredit e: creditsList) {
             observableList.add(e);
-            /*
-            //Opretter en ny stringbuilder for hver credit der er blevet returneret
-            StringBuilder stringBuilder = new StringBuilder();
-            //Splitter ved ","
-            String[] observableResultsString = e.toString().split(",");
-            //Tilføj hver linje der er blevet splittet til string builder
-            for (String s: observableResultsString) { stringBuilder.append(s).append("\n"); }
-            //tilføj til liste
-            observableList.add(stringBuilder);
-             */
         }
 
         return observableList;
@@ -86,7 +76,6 @@ public class ApplicationManager {
 
     public void searchShow( String search, ObservableList<IShow> list){
         list.addAll(Factory.getInstance().getShow(search));
-        //list.add(new Show("name", "desc", false));
     }
 
 }
