@@ -55,6 +55,11 @@ public class DashboardController implements Initializable {
 
 
     private void handleApproveCredit(int id, Class<? extends ICredit> credit) {
+        personObservableList.clear();
+        movieObservableList.clear();
+        showObservableList.clear();
+        seasonObservableList.clear();
+        episodeObservableList.clear();
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
             ApplicationManager.getInstance().approveCredit(id, showObservableList);
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
