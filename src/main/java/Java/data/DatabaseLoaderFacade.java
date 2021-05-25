@@ -139,6 +139,10 @@ public class DatabaseLoaderFacade {
         DatabaseLoader.getInstance().setCreditApproveState(credit, bool);
     }
 
+    public void deletePerson(int creditid) throws SQLException{
+        DatabaseLoader.getInstance().deletePerson(creditid);
+    }
+
     public ArrayList<IPerson> searchPersonsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToPersonList(searchString);
     }

@@ -746,7 +746,31 @@ public class DatabaseLoader {
         }
     }
 
-
+    public void deletePerson(int creditId) throws SQLException {
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddJob = getConnection().setSavepoint();
+        try {
+            PreparedStatement updateJob = getConnection().prepareStatement(
+                    "DELETE FROM persons WHERE credit_id = ?; "
+            );
+            updateJob.setInt(1, creditId);
+            updateJob.executeUpdate();
+            updateJob = getConnection().prepareStatement(
+                    "DELETE FROM credits WHERE credit_id = ?; "
+            );
+            updateJob.setInt(1, creditId);
+            updateJob.executeUpdate();
+            getConnection().commit();
+            //set auto commit to true again, as that is the default
+            getConnection().setAutoCommit(true);
+        } catch (SQLException e) {
+            getConnection().rollback();
+            System.out.println("WENT WRONG APPROVE CREDIT in DATABASE");
+            e.printStackTrace();
+            getConnection().rollback(beforeAddJob);
+            getConnection().setAutoCommit(true);
+        }
+    }
 
 
     public static void main(String[] args) {

@@ -1,11 +1,7 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
-import Java.domain.services.MovieManager;
-import Java.domain.services.PersonManager;
 import Java.interfaces.ICredit;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,18 +9,14 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 
 public class SearchController implements Initializable {
-    private ListView SearchList;
+    private ListView<ICredit> SearchList;
 
     @FXML
     protected Pane searchPane;
@@ -40,7 +32,7 @@ public class SearchController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        SearchList = new ListView();
+        SearchList = new ListView<>();
         SearchList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -65,8 +57,6 @@ public class SearchController implements Initializable {
             }
         });
     }
-
-
 
     public void setContent() {
         String searchString = MenuController.getInstance().getSearchString();
