@@ -3,6 +3,7 @@ package Java.presentation.controllers;
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.*;
+import Java.domain.objectMapping.Factory;
 import Java.domain.services.*;
 import Java.interfaces.*;
 import javafx.collections.*;
@@ -135,13 +136,8 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DatabaseLoaderFacade database = DatabaseLoaderFacade.getInstance();
-        try {
-          database.getAllUnApprovedCredits();
-        }
-        catch (SQLException e){
-          e.printStackTrace();
-        }
+        Factory factory = Factory.getInstance();
+        factory.getAllUnapprovedCredits();
         movieObservableList = MovieManager.getInstance().getMovies();
         setContent(movieToApprove, movieObservableList);
         personObservableList = PersonManager.getInstance().getPersonList();

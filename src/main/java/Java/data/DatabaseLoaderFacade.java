@@ -123,8 +123,8 @@ public class DatabaseLoaderFacade {
     public IProduction getFromDatabase(IProduction production){
         return null;
     }
-    public void getAllUnApprovedCredits() throws SQLException {
-      DatabaseLoader.getInstance().getAllUnApprovedCredits();
+    public ResultSet getAllUnApprovedCredits() throws SQLException {
+      return DatabaseLoader.getInstance().getAllUnApprovedCredits();
     }
 
     public void setCreditApproveState(ICredit credit, boolean bool) throws SQLException{
