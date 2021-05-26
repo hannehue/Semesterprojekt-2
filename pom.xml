@@ -11,7 +11,7 @@
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
         <maven.compiler.target>15</maven.compiler.target>
-        <javafx.version>15.0.1</javafx.version>
+        <javafx.version>16</javafx.version>
     </properties>
 
 
