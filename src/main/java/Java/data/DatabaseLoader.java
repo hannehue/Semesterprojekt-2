@@ -1,15 +1,13 @@
 package Java.data;
 
-import Java.domain.data.Category;
-import Java.domain.data.Job;
-import Java.domain.data.Person;
-import Java.domain.data.Role;
+import Java.domain.data.*;
 import Java.interfaces.*;
 
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -47,10 +45,6 @@ public class DatabaseLoader {
         return instance;
     }
 
-    public static void main(String[] args) {
-
-    }
-    //Needs to be implemented to return an arraylist of matching searches
     public ResultSet searchQueryToPersonList(String searchString) {
         ArrayList<IPerson> personObservableList = new ArrayList<>();
         try {
@@ -72,7 +66,6 @@ public class DatabaseLoader {
         }
         return null;
     }
-
     public ResultSet queryGetJobsForPerson(IPerson person) {
         try {
             // Job handling
@@ -509,7 +502,117 @@ public class DatabaseLoader {
         }
     }
 
+
+    public void updateMovie(IMovie movie) throws SQLException{
+        getConnection().setAutoCommit(false);
+        Savepoint beforeUpdateMovie = getConnection().setSavepoint();
+        try {
+            PreparedStatement updateMovie = getConnection().prepareStatement(
+                    "WITH updated_credit AS(" +
+                            "UPDATE credits " +
+                            "SET name = ?, " +
+                            "approved = ?, " +
+                            "description = ? " +
+                            "WHERE credit_id = ?) " +
+                        "UPDATE productions " +
+                            "SET category_id = ?, " +
+                            "length_in_secs = ?, " +
+                            "release_date = ? " +
+                            "WHERE productions.credit_id = ?"
+            );
+
+            updateMovie.setString(1, movie.getName());
+            updateMovie.setBoolean(2, false);
+            updateMovie.setString(3, movie.getDescription());
+            updateMovie.setInt(4, movie.getCreditID());
+            updateMovie.setInt(5, Category.valueOf(movie.getCategories()[0].toString().toUpperCase()).ordinal());
+            updateMovie.setInt(6, movie.getLengthInSecs());
+            updateMovie.setString(7, movie.getReleaseDate().toString());
+            updateMovie.setInt(8, movie.getCreditID());
+            updateMovie.executeUpdate();
+            getConnection().commit();
+
+            getConnection().setAutoCommit(true);
+
+        } catch (SQLException e){
+            getConnection().rollback(beforeUpdateMovie);
+            getConnection().setAutoCommit(true);
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePerson(IPerson person) throws SQLException{
+        getConnection().setAutoCommit(false);
+        Savepoint beforeUpdatePerson = getConnection().setSavepoint();
+
+        try {
+
+            PreparedStatement updatePerson = getConnection().prepareStatement(
+                    "WITH update_credit AS(" +
+                            "UPDATE credits " +
+                                "SET name = ?, " +
+                                "approved = ?, " +
+                                "description = ?" +
+                            "WHERE credit_id = ?) " +
+                            "UPDATE persons " +
+                                "SET phone_number = ?, " +
+                                "email = ?, " +
+                                "personal_info = ? " +
+                            "WHERE persons.credit_id = ?"
+            );
+
+            updatePerson.setString(1, person.getName());
+            updatePerson.setBoolean(2, false);
+            updatePerson.setString(3, person.getDescription());
+            updatePerson.setInt(4, person.getCreditID());
+            updatePerson.setString(5, person.getPhoneNumber());
+            updatePerson.setString(6, person.getPersonEmail());
+            updatePerson.setString(7, person.getPersonalInfo());
+            updatePerson.setInt(8, person.getCreditID());
+            updatePerson.executeUpdate();
+            getConnection().commit();
+
+            getConnection().setAutoCommit(true);
+        } catch (SQLException e){
+            getConnection().rollback(beforeUpdatePerson);
+            getConnection().setAutoCommit(true);
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void updateShow(IShow show) throws SQLException{
+        getConnection().setAutoCommit(false);
+        Savepoint beforeUpdatePerson = getConnection().setSavepoint();
+    }
+
     private Connection getConnection() {
         return connection;
+    }
+
+    public static void main(String[] args) {
+
+/*
+        Category[] categories = new Category[]{Category.FILM};
+        try {
+            getInstance().updateMovie(
+                    new Movie(
+                            "Interstellar",
+                            new Date(),
+                            18,
+                            false,
+                            "A very good movie",
+                            4,
+                            categories,
+                            10420,
+                            new Date(1415228400000L)
+                    )
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+ */
     }
 }
