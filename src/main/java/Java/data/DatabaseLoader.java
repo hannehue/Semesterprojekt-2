@@ -1,11 +1,15 @@
 package Java.data;
 
 import Java.domain.data.Category;
+import Java.domain.data.Job;
+import Java.domain.data.Person;
+import Java.domain.data.Role;
 import Java.interfaces.*;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -44,6 +48,31 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args) {
+/*
+        IPerson tempPerson = new Person(
+                "Actor test",
+                "Test to see if actor works with characterName",
+                "52525252",
+                "I am an ACTOR!",
+                "Actor@Actor.gmail.com"
+        );
+ */
+
+        IJob tempJob = new Job(
+                9,
+                Role.SKUESPILLER,
+                "Murphy",
+                18
+        );
+
+        //tempPerson.addJob(tempJob);
+
+
+        try {
+            getInstance().addJobToDatabase(tempJob);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 /*
         Category[] categories = new Category[]{Category.FILM};
@@ -436,9 +465,23 @@ public class DatabaseLoader {
             insertJob.getGeneratedKeys().next();
             int jobID = insertJob.getGeneratedKeys().getInt(1);
 
+            int characterNameID = 0;
+            if (job.getRole().ordinal() + 1 == 1){
+                PreparedStatement insertCharacterName = getConnection().prepareStatement(
+                        "INSERT INTO character_names(job_id, character_name) " +
+                                "VALUES(?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
+                insertCharacterName.setInt(1, jobID);
+                insertCharacterName.setString(2, job.getCharacterName());
+                insertCharacterName.executeUpdate();
+                insertCharacterName.getGeneratedKeys().next();
+                characterNameID = insertCharacterName.getGeneratedKeys().getInt(1);
+            }
+
+
             Map<String, Integer> IDs = new HashMap<>();
             IDs.put("jobID", jobID);
-
+            if (characterNameID != 0) IDs.put("characterNameID", characterNameID);
             getConnection().commit();
             getConnection().setAutoCommit(true);
 
