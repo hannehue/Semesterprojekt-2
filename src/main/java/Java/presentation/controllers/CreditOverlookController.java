@@ -87,11 +87,7 @@ public class CreditOverlookController implements Initializable {
                 public void handle(ActionEvent actionEvent) {
                     System.out.println(getItem().getCreditID() + " + " + getItem().getName());
                     ApplicationManager.getInstance().approveCredit(getItem().getCreditID(), thisview.getItems());
-                    thisview.getItems().clear();
-
-                    setContent(movieObservableList);
-                    setContent(personObservableList);
-                    setContent(showObservableList);
+                    thisview.getItems().remove(getItem());
                 }
             });
             name = new Label();
@@ -128,9 +124,9 @@ public class CreditOverlookController implements Initializable {
         FilterShowButton.setToggleGroup(toggleGroup);
         FilterAllButton.selectedProperty().set(true);
 
-        DatabaseLoaderFacade database = DatabaseLoaderFacade.getInstance();
+
         try {
-            database.getAllUnApprovedCredits();
+            DatabaseLoaderFacade.getInstance().getAllUnApprovedCredits();
         }
         catch (SQLException e){
             e.printStackTrace();
@@ -163,6 +159,7 @@ public class CreditOverlookController implements Initializable {
             }
         }
         if (ApprovalBox.getSelectionModel().getSelectedItem().toString().equals("Approved")){
+            thisview.getItems().clear();
             switch (toggleGroup.getSelectedToggle().toString()){
                 case "Persons": thisview.setItems(ApplicationManager.getInstance().search(searchString, "persons")); break;
                 case "Movies": thisview.setItems(ApplicationManager.getInstance().search(searchString, "movie")); break;
