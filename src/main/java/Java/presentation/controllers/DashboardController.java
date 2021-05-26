@@ -56,11 +56,6 @@ public class DashboardController implements Initializable {
 
 
     private void handleApproveCredit(int id, Class<? extends ICredit> credit) {
-        personObservableList.clear();
-        movieObservableList.clear();
-        showObservableList.clear();
-        seasonObservableList.clear();
-        episodeObservableList.clear();
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
             ApplicationManager.getInstance().approveCredit(id, showObservableList);
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
@@ -137,6 +132,13 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Factory factory = Factory.getInstance();
+        if (personObservableList != null) personObservableList.clear();
+        if (movieObservableList != null) movieObservableList.clear();
+        if (showObservableList != null) showObservableList.clear();
+        if (seasonObservableList != null) seasonObservableList.clear();
+        if (episodeObservableList != null) episodeObservableList.clear();
+
+
         factory.getAllUnapprovedCredits();
         movieObservableList = MovieManager.getInstance().getMovies();
         setContent(movieToApprove, movieObservableList);
@@ -144,10 +146,9 @@ public class DashboardController implements Initializable {
         setContent(personToApprove, personObservableList);
         showObservableList = ShowManager.getInstance().getShowList();
         setContent(showToApprove, showObservableList);
-
         seasonObservableList = SeasonManager.getInstance().getSeasonList();
-        episodeObservableList = EpisodeManager.getInstance().getEpisodeList();
         setContent(seasonToApprove, seasonObservableList);
+        episodeObservableList = EpisodeManager.getInstance().getEpisodeList();
         setContent(episodeToApprove, episodeObservableList);
     }
 }
