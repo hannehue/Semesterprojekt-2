@@ -1,13 +1,11 @@
 package Java.data;
 
-import Java.domain.data.*;
+import Java.domain.data.Category;
 import Java.interfaces.*;
 
 import java.sql.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -45,6 +43,31 @@ public class DatabaseLoader {
         return instance;
     }
 
+    public static void main(String[] args) {
+
+/*
+        Category[] categories = new Category[]{Category.FILM};
+        try {
+            getInstance().updateMovie(
+                    new Movie(
+                            "Interstellar",
+                            new Date(),
+                            18,
+                            false,
+                            "A very good movie",
+                            4,
+                            categories,
+                            10420,
+                            new Date(1415228400000L)
+                    )
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+ */
+    }
+
     public ResultSet searchQueryToPersonList(String searchString) {
         ArrayList<IPerson> personObservableList = new ArrayList<>();
         try {
@@ -66,6 +89,7 @@ public class DatabaseLoader {
         }
         return null;
     }
+
     public ResultSet queryGetJobsForPerson(IPerson person) {
         try {
             // Job handling
@@ -502,8 +526,7 @@ public class DatabaseLoader {
         }
     }
 
-
-    public void updateMovie(IMovie movie) throws SQLException{
+    public void updateMovie(IMovie movie) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeUpdateMovie = getConnection().setSavepoint();
         try {
@@ -514,13 +537,12 @@ public class DatabaseLoader {
                             "approved = ?, " +
                             "description = ? " +
                             "WHERE credit_id = ?) " +
-                        "UPDATE productions " +
+                            "UPDATE productions " +
                             "SET category_id = ?, " +
                             "length_in_secs = ?, " +
                             "release_date = ? " +
                             "WHERE productions.credit_id = ?"
             );
-
             updateMovie.setString(1, movie.getName());
             updateMovie.setBoolean(2, false);
             updateMovie.setString(3, movie.getDescription());
@@ -531,17 +553,15 @@ public class DatabaseLoader {
             updateMovie.setInt(8, movie.getCreditID());
             updateMovie.executeUpdate();
             getConnection().commit();
-
             getConnection().setAutoCommit(true);
-
-        } catch (SQLException e){
+        } catch (SQLException e) {
             getConnection().rollback(beforeUpdateMovie);
             getConnection().setAutoCommit(true);
             e.printStackTrace();
         }
     }
 
-    public void updatePerson(IPerson person) throws SQLException{
+    public void updatePerson(IPerson person) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeUpdatePerson = getConnection().setSavepoint();
 
@@ -550,14 +570,14 @@ public class DatabaseLoader {
             PreparedStatement updatePerson = getConnection().prepareStatement(
                     "WITH update_credit AS(" +
                             "UPDATE credits " +
-                                "SET name = ?, " +
-                                "approved = ?, " +
-                                "description = ?" +
+                            "SET name = ?, " +
+                            "approved = ?, " +
+                            "description = ?" +
                             "WHERE credit_id = ?) " +
                             "UPDATE persons " +
-                                "SET phone_number = ?, " +
-                                "email = ?, " +
-                                "personal_info = ? " +
+                            "SET phone_number = ?, " +
+                            "email = ?, " +
+                            "personal_info = ? " +
                             "WHERE persons.credit_id = ?"
             );
 
@@ -573,7 +593,7 @@ public class DatabaseLoader {
             getConnection().commit();
 
             getConnection().setAutoCommit(true);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             getConnection().rollback(beforeUpdatePerson);
             getConnection().setAutoCommit(true);
             e.printStackTrace();
@@ -582,37 +602,42 @@ public class DatabaseLoader {
 
     }
 
-    public void updateShow(IShow show) throws SQLException{
+    public void updateShow(IShow show) throws SQLException {
         getConnection().setAutoCommit(false);
-        Savepoint beforeUpdatePerson = getConnection().setSavepoint();
+        Savepoint beforeUpdateShow = getConnection().setSavepoint();
+        try {
+            PreparedStatement updateShow = getConnection().prepareStatement(
+                    "WITH updated_credit AS(" +
+                            "UPDATE credits " +
+                            "SET name = ?, " +
+                            "approved = ?, " +
+                            "description = ? " +
+                            "WHERE credit_id = ?) " +
+                            "UPDATE shows " +
+                            "all_seasons_approved = ?" +
+                            "WHERE shows.credit_id = ?"
+            );
+
+            updateShow.setString(1, show.getName());
+            updateShow.setBoolean(2, false);
+            updateShow.setString(3, show.getDescription());
+            updateShow.setInt(4, show.getCreditID());
+            updateShow.setBoolean(5, show.isAllSeasonApproved());
+            updateShow.setInt(6, show.getCreditID());
+            updateShow.executeUpdate();
+            getConnection().commit();
+
+            getConnection().setAutoCommit(true);
+
+        } catch (SQLException e) {
+            getConnection().rollback(beforeUpdateShow);
+            getConnection().setAutoCommit(true);
+            e.printStackTrace();
+        }
+
     }
 
     private Connection getConnection() {
         return connection;
-    }
-
-    public static void main(String[] args) {
-
-/*
-        Category[] categories = new Category[]{Category.FILM};
-        try {
-            getInstance().updateMovie(
-                    new Movie(
-                            "Interstellar",
-                            new Date(),
-                            18,
-                            false,
-                            "A very good movie",
-                            4,
-                            categories,
-                            10420,
-                            new Date(1415228400000L)
-                    )
-            );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
- */
     }
 }
