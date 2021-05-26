@@ -506,14 +506,14 @@ public class DatabaseLoader {
 
     public void setCreditApproveState(ICredit credit, boolean bool) throws SQLException {
         getConnection().setAutoCommit(false);
-        Savepoint beforeAddJob = getConnection().setSavepoint();
+        Savepoint beforeSetApproveState = getConnection().setSavepoint();
         try {
-            PreparedStatement updateJob = getConnection().prepareStatement(
+            PreparedStatement updateApproveState = getConnection().prepareStatement(
                     "UPDATE credits SET approved = ? " +
                             "WHERE credits.credit_id = ?");
-            updateJob.setBoolean(1, bool);
-            updateJob.setInt(2, credit.getCreditID());
-            updateJob.executeUpdate();
+            updateApproveState.setBoolean(1, bool);
+            updateApproveState.setInt(2, credit.getCreditID());
+            updateApproveState.executeUpdate();
             getConnection().commit();
             //set auto commit to true again, as that is the default
             getConnection().setAutoCommit(true);
@@ -521,7 +521,7 @@ public class DatabaseLoader {
             getConnection().rollback();
             System.out.println("WENT WRONG APPROVE CREDIT in DATABASE");
             e.printStackTrace();
-            getConnection().rollback(beforeAddJob);
+            getConnection().rollback(beforeSetApproveState);
             getConnection().setAutoCommit(true);
         }
     }
