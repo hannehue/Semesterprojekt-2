@@ -666,7 +666,43 @@ public class DatabaseLoader {
         }
     }
 
-    
+    public void updateEpisode(IEpisode episode) throws SQLException{
+        getConnection().setAutoCommit(false);
+        Savepoint beforeUpdateEpisode = getConnection().setSavepoint();
+        try {
+            PreparedStatement updateEpisode = getConnection().prepareStatement(
+                    "WITH updated_credit AS(" +
+                            "UPDATE credits " +
+                            "SET name = ?, " +
+                            "approved = ?, " +
+                            "description = ?" +
+                            "WHERE credit_id = ?) " +
+                            "UPDATE productions " +
+                            "SET category_id = ?, " +
+                            "length_in_secs = ?, " +
+                            "release_date = ? " +
+                            "WHERE productions.credit_id = ?"
+            );
+
+            updateEpisode.setString(1, episode.getName());
+            updateEpisode.setBoolean(2, false);
+            updateEpisode.setString(3, episode.getDescription());
+            updateEpisode.setInt(4, episode.getCreditID());
+            updateEpisode.setInt(5, Category.valueOf(episode.getCategories()[0].toString().toUpperCase()).ordinal());
+            updateEpisode.setInt(6, episode.getLengthInSecs());
+            updateEpisode.setString(7, episode.getReleaseDate().toString());
+            updateEpisode.setInt(8, episode.getCreditID());
+            updateEpisode.executeUpdate();
+            getConnection().commit();
+            getConnection().setAutoCommit(true);
+        } catch (SQLException e){
+            getConnection().rollback(beforeUpdateEpisode);
+            getConnection().setAutoCommit(true);
+            e.printStackTrace();
+        }
+
+
+    }
 
     private Connection getConnection() {
         return connection;
