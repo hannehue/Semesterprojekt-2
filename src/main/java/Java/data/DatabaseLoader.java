@@ -617,7 +617,6 @@ public class DatabaseLoader {
                             "all_seasons_approved = ?" +
                             "WHERE shows.credit_id = ?"
             );
-
             updateShow.setString(1, show.getName());
             updateShow.setBoolean(2, false);
             updateShow.setString(3, show.getDescription());
@@ -626,9 +625,7 @@ public class DatabaseLoader {
             updateShow.setInt(6, show.getCreditID());
             updateShow.executeUpdate();
             getConnection().commit();
-
             getConnection().setAutoCommit(true);
-
         } catch (SQLException e) {
             getConnection().rollback(beforeUpdateShow);
             getConnection().setAutoCommit(true);
@@ -636,6 +633,40 @@ public class DatabaseLoader {
         }
 
     }
+
+    public void updateSeason(ISeason season) throws SQLException{
+        getConnection().setAutoCommit(false);
+        Savepoint beforeUpdateSeason = getConnection().setSavepoint();
+        try {
+
+            PreparedStatement updateSeason = connection.prepareStatement(
+                    "WITH updated_credit AS(" +
+                            "UPDATE credits " +
+                            "SET name = ?, " +
+                            "approved = ?, " +
+                            "description = ?, " +
+                            "WHERE credit_id = ?) " +
+                            "UPDATE seasons " +
+                            "SET all_episodes_approved = ? " +
+                            "WHERE seaons.credit_id = ?"
+            );
+            updateSeason.setString(1, season.getName());
+            updateSeason.setBoolean(2, false);
+            updateSeason.setString(3, season.getDescription());
+            updateSeason.setInt(4, season.getCreditID());
+            updateSeason.setBoolean(5, season.isAllEpisodesApproved());
+            updateSeason.setInt(6, season.getCreditID());
+            updateSeason.executeUpdate();
+            getConnection().commit();
+            getConnection().setAutoCommit(true);
+        } catch (SQLException e){
+            getConnection().rollback(beforeUpdateSeason);
+            getConnection().setAutoCommit(true);
+            e.printStackTrace();
+        }
+    }
+
+    
 
     private Connection getConnection() {
         return connection;
