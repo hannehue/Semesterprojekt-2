@@ -62,5 +62,4 @@ public class PersonManager {
         personList.setAll(people);
         return people;
     }
-
 }

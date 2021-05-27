@@ -148,4 +148,8 @@ public class DatabaseLoaderFacade {
     public ResultSet searchShowsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToShowList(searchString);
     }
+
+    public ResultSet getJobRoles() throws SQLException {
+        return DatabaseLoader.getInstance().getAllJobRoles();
+    }
 }

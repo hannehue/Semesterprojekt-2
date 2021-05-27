@@ -521,6 +521,23 @@ public class DatabaseLoader {
         return null;
     }
 
+    public ResultSet getAllJobRoles() throws SQLException {
+        getConnection().setAutoCommit(false);
+        Savepoint beforeAddJob = getConnection().setSavepoint();
+        try {
+            PreparedStatement getAllJobRoles = getConnection().prepareStatement(
+                    "SELECT * FROM job_roles"
+            );
+            getAllJobRoles.execute();
+            return getAllJobRoles.getResultSet();
+        } catch (Exception e){
+            System.out.println("WENT WRONG AT GETTING JOB ROLES IN DATABASE");
+            getConnection().rollback(beforeAddJob);
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void setCreditApproveState(ICredit credit, boolean bool) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeSetApproveState = getConnection().setSavepoint();
