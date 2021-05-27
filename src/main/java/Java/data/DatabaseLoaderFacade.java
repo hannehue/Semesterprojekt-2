@@ -188,4 +188,8 @@ public class DatabaseLoaderFacade {
     public void deletePerson(int creditid) throws SQLException{
         DatabaseLoader.getInstance().deletePerson(creditid);
     }
+
+    public void deleteCredit(ICredit credit){
+        DatabaseLoader.getInstance().deleteCredit(credit);
+    }
 }

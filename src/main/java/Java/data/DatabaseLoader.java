@@ -48,6 +48,21 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args) {
+
+        try{
+            getInstance().getConnection().setAutoCommit(false);
+            PreparedStatement deleteStmt = getInstance().getConnection().prepareStatement(
+                    "DELETE FROM credits WHERE credit_id = 128"
+            );
+            deleteStmt.executeUpdate();
+            deleteStmt.executeUpdate();
+            getInstance().getConnection().commit();
+            getInstance().getConnection().setAutoCommit(true);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 
     public ResultSet searchQueryToPersonList(String searchString) {
@@ -722,6 +737,53 @@ public class DatabaseLoader {
             getConnection().rollback(beforeDeletePerson);
             getConnection().setAutoCommit(true);
         }
+    }
+
+
+    public void deleteCredit(ICredit credit){
+        try {
+            getConnection().setAutoCommit(false);
+            if (credit instanceof IShow){
+                deleteShow((IShow) credit);
+            }
+            getConnection().commit();
+        }
+            catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+    }
+
+    public void deleteShow(IShow show)throws SQLException{
+        for (ISeason season : show.getSeasons()){
+            deleteSeason(season);
+        }
+        PreparedStatement deleteShow = getConnection().prepareStatement(
+                "DELETE FROM credits WHERE credit_id = ?"
+        );
+        deleteShow.setInt(1, show.getCreditID());
+        deleteShow.executeUpdate();
+    }
+
+    public void deleteSeason(ISeason season) throws SQLException{
+        for (IEpisode episode : season.getEpisodes()){
+            deleteEpisode(episode);
+        }
+        PreparedStatement deleteSeason = getConnection().prepareStatement(
+                "DELETE FROM credits WHERE credit_id = ?"
+        );
+        deleteSeason.setInt(1, season.getCreditID());
+        deleteSeason.executeUpdate();
+    }
+
+    public void deleteEpisode(IEpisode episode) throws SQLException{
+
+        PreparedStatement deleteEpisode = getConnection().prepareStatement(
+                "DELETE FROM credits WHERE credit_id = ?"
+        );
+        deleteEpisode.setInt(1, episode.getCreditID());
+        deleteEpisode.executeUpdate();
     }
 
     private Connection getConnection() {
