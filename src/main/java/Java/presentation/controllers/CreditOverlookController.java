@@ -6,6 +6,8 @@ import Java.domain.services.MovieManager;
 import Java.domain.services.PersonManager;
 import Java.domain.services.ShowManager;
 import Java.interfaces.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -73,6 +75,8 @@ public class CreditOverlookController implements Initializable {
         private Label itemJobs;
         private ComboBox jobRoles;
         private ComboBox movieList;
+        private TextField characterName;
+        private Button Godkend;
 
         public CustomCell(){
             super();
@@ -98,6 +102,7 @@ public class CreditOverlookController implements Initializable {
                     thisview.getItems().remove(getItem());
                 }
             });
+
             name = new Label();
             pane = new GridPane();
 
@@ -105,6 +110,17 @@ public class CreditOverlookController implements Initializable {
             itemName = new TextField();
             itemDescription = new TextArea();
             itemJobs = new Label();
+            Godkend = new Button();
+            Godkend.setText("Godkend");
+            Godkend.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    //Kode til at gemme et nyt job
+                    System.out.println("NOT IMPLEMENTED YET");
+
+                    //reload edit
+                }
+            });
 
 
             ColumnConstraints col1 = new ColumnConstraints();
@@ -177,6 +193,18 @@ public class CreditOverlookController implements Initializable {
 
             }
 
+            characterName = new TextField();
+            characterName.setVisible(false);
+
+            jobRoles.valueProperty().addListener(new ChangeListener() {
+                @Override
+                public void changed(ObservableValue observableValue, Object o, Object t1) {
+                    if (jobRoles.getSelectionModel().getSelectedItem().toString().equals("Skuespiller")){
+                        characterName.setVisible(true);
+                    }
+                }
+            });
+
             itemName.setText(null);
             itemDescription.setText(null);
 
@@ -184,6 +212,8 @@ public class CreditOverlookController implements Initializable {
             pane.add(itemDescription, 0,1);
             movieRolePane.add(jobRoles,0,0);
             movieRolePane.add(movieList,1,0);
+            movieRolePane.add(characterName,0,1);
+            movieRolePane.add(Godkend, 1,1);
             pane.add(movieRolePane,0,2);
             pane.add(itemJobs,0,3);
 
