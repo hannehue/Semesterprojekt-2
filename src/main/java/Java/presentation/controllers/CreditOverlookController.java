@@ -2,11 +2,7 @@ package Java.presentation.controllers;
 
 import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
-<<<<<<< HEAD
 import Java.domain.objectMapping.CustomCellFactory;
-=======
->>>>>>> 3LayerFix-Mapping
-import Java.domain.services.CustomCell;
 import Java.domain.services.MovieManager;
 import Java.domain.services.PersonManager;
 import Java.domain.services.ShowManager;
@@ -18,15 +14,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-<<<<<<< HEAD
-=======
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
->>>>>>> 3LayerFix-Mapping
-import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -88,32 +75,22 @@ public class CreditOverlookController implements Initializable {
         movieObservableList = MovieManager.getInstance().getMovies();
         personObservableList = PersonManager.getInstance().getPersonList();
         showObservableList = ShowManager.getInstance().getShowList();
-<<<<<<< HEAD
 
         //hent ting
         ObservableList<ICredit> observableList = ApplicationManager.getInstance().search("");
-            //tilføj listener
-            observableList.addListener(new ListChangeListener<ICredit>() {
-                @Override
-                public void onChanged(Change<? extends ICredit> change) {
-                    System.out.println("something changed");
-                }
-            });
+        //tilføj listener
+        observableList.addListener(new ListChangeListener<ICredit>() {
+            @Override
+            public void onChanged(Change<? extends ICredit> change) {
+                System.out.println("something changed");
+            }
+        });
         //sætter hver celle til at bruge CustomCell
         listView.setCellFactory(new CustomCellFactory());
         //gør listen redigerings mulig
         listView.setEditable(true);
         //sætter ting ind
         listView.setItems(observableList);
-=======
-        thisview.setCellFactory(new Callback<ListView<ICredit>, ListCell<ICredit>>() {
-            @Override
-            public ListCell<ICredit> call(ListView<ICredit> listView) {
-                return new CustomCell();
-            }
-        });
-        thisview.getItems().addAll(ApplicationManager.getInstance().search(""));
->>>>>>> 3LayerFix-Mapping
     }
 
 
