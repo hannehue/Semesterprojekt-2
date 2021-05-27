@@ -510,7 +510,9 @@ public class DatabaseLoader {
         }
     }
 
-
+    //------------------------------------------------------------
+    // UPDATE/EDIT METHODS
+    //------------------------------------------------------------
 
     public void updateMovie(IMovie movie) throws SQLException {
         getConnection().setAutoCommit(false);
@@ -690,8 +692,6 @@ public class DatabaseLoader {
 
     }
 
-
-
     //------------------------------------------------------------
     // DELETE METHODS
     //------------------------------------------------------------
@@ -729,9 +729,17 @@ public class DatabaseLoader {
                 deleteShow((IShow) credit);
             } else if (credit instanceof ISeason) {
                 deleteSeason((ISeason) credit);
-            } else {
+            } else if (credit instanceof IJob){
+                //To delete a single job
+                PreparedStatement deleteJob = getConnection().prepareStatement(
+                        "DELETE FROM jobs WHERE jobs.person_id = ?"
+                );
+                deleteJob.setInt(1, ((IJob) credit).getPersonId());
+                deleteJob.executeUpdate();
+            }
+            else {
                 PreparedStatement deleteCredit = getConnection().prepareStatement(
-                        "DELETE FROM credits where credit_id = ?"
+                        "DELETE FROM credits WHERE credit_id = ?"
                 );
                 deleteCredit.setInt(1, credit.getCreditID());
                 deleteCredit.executeUpdate();
@@ -791,7 +799,7 @@ public class DatabaseLoader {
         } catch (SQLException e){
             e.printStackTrace();
         }
-        
+
  */
 
     }
