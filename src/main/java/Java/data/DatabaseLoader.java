@@ -47,24 +47,6 @@ public class DatabaseLoader {
         return instance;
     }
 
-    public static void main(String[] args) {
-
-        try{
-            getInstance().getConnection().setAutoCommit(false);
-            PreparedStatement deleteStmt = getInstance().getConnection().prepareStatement(
-                    "DELETE FROM credits WHERE credit_id = 128"
-            );
-            deleteStmt.executeUpdate();
-            deleteStmt.executeUpdate();
-            getInstance().getConnection().commit();
-            getInstance().getConnection().setAutoCommit(true);
-
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-
-    }
-
     public ResultSet searchQueryToPersonList(String searchString) {
         ArrayList<IPerson> personObservableList = new ArrayList<>();
         try {
@@ -713,6 +695,7 @@ public class DatabaseLoader {
     //------------------------------------------------------------
     // DELETE METHODS
     //------------------------------------------------------------
+
     public void deletePerson(int creditId) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeDeletePerson = getConnection().setSavepoint();
@@ -739,20 +722,28 @@ public class DatabaseLoader {
         }
     }
 
-
     public void deleteCredit(ICredit credit){
         try {
             getConnection().setAutoCommit(false);
             if (credit instanceof IShow){
                 deleteShow((IShow) credit);
+            } else if (credit instanceof ISeason) {
+                deleteSeason((ISeason) credit);
+            } else {
+                PreparedStatement deleteCredit = getConnection().prepareStatement(
+                        "DELETE FROM credits where credit_id = ?"
+                );
+                deleteCredit.setInt(1, credit.getCreditID());
+                deleteCredit.executeUpdate();
+                //deleteCredit.setInt(1, credit.getCreditID());
             }
             getConnection().commit();
+            getConnection().setAutoCommit(true);
         }
             catch (SQLException e) {
 
             e.printStackTrace();
         }
-
     }
 
     public void deleteShow(IShow show)throws SQLException{
@@ -784,6 +775,25 @@ public class DatabaseLoader {
         );
         deleteEpisode.setInt(1, episode.getCreditID());
         deleteEpisode.executeUpdate();
+    }
+
+    public static void main(String[] args) {
+/*
+        try{
+            getInstance().getConnection().setAutoCommit(false);
+            PreparedStatement deleteStmt = getInstance().getConnection().prepareStatement(
+                    "DELETE FROM credits WHERE credit_id = 23"
+            );
+            deleteStmt.executeUpdate();
+            getInstance().getConnection().commit();
+            getInstance().getConnection().setAutoCommit(true);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+ */
+
     }
 
     private Connection getConnection() {
