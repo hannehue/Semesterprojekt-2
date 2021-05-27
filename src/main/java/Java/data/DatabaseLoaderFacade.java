@@ -20,10 +20,9 @@ public class DatabaseLoaderFacade {
         return instance;
     }
 
-    //---------------------------------------------------------
-    //                        Put
-    //Metoder som tager en parameter i forhold til hvad der skal sendes til databsen
-    //---------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------
+    //PUT METHODS. TAKES A NED OBJECT WITHOUT IDS AND ADDS IT TO DB. RETURNS A HASHMAP WITH GENERATED IDS
+    //---------------------------------------------------------------------------------------------------
     public void putInDatabase(ICredit credit) {
 
     } // As you never put a raw credit into database, this is not needed
@@ -98,11 +97,9 @@ public class DatabaseLoaderFacade {
     public void putInDatabase(ICompany company){
 
     } // Company not added in gui, and therefore never added to databse
-
-    //---------------------------------------------------------
-    //                       Get
-    //Metoder som tager en parameter og returnere det fra databasen
-    //---------------------------------------------------------
+    //----------------------------------------------------------------------
+    // SPECIFIC GETTERS. DEPEND ON EXISTING OBJECT (OR STATE I.E. UNAPPROVED
+    //----------------------------------------------------------------------
     //returns ændres når metode der skal kaldes er lavet
     public ICompany getFromDatabase(ICompany company){
         return null;
@@ -123,22 +120,18 @@ public class DatabaseLoaderFacade {
     public IProduction getFromDatabase(IProduction production){
         return null;
     }
-    public ResultSet getAllUnApprovedCredits() throws SQLException {
-      return DatabaseLoader.getInstance().getAllUnApprovedCredits();
-    }
-
-    public void setCreditApproveState(ICredit credit, boolean bool) throws SQLException{
-        DatabaseLoader.getInstance().setCreditApproveState(credit, bool);
-    }
-
-    public void deletePerson(int creditid) throws SQLException{
-        DatabaseLoader.getInstance().deletePerson(creditid);
-    }
-
     public ResultSet getJobsForPerson(IPerson person){
         return DatabaseLoader.getInstance().queryGetJobsForPerson(person);
     }
-
+    public ResultSet getJobRoles() throws SQLException {
+        return DatabaseLoader.getInstance().getAllJobRoles();
+    }
+    public ResultSet getAllUnApprovedCredits() throws SQLException {
+        return DatabaseLoader.getInstance().getAllUnApprovedCredits();
+    }
+    //-----------------------------------------------------------
+    // SEARCH METHODS
+    //-----------------------------------------------------------
     public ResultSet searchPersonsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToPersonList(searchString);
     }
@@ -148,8 +141,51 @@ public class DatabaseLoaderFacade {
     public ResultSet searchShowsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToShowList(searchString);
     }
-
-    public ResultSet getJobRoles() throws SQLException {
-        return DatabaseLoader.getInstance().getAllJobRoles();
+    //-----------------------------------------------------------
+    // UPDATE METHODS
+    //-----------------------------------------------------------
+    public void updateCredit(IMovie movie){
+        try {
+            DatabaseLoader.getInstance().updateMovie(movie);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateCredit(IPerson person){
+        try {
+            DatabaseLoader.getInstance().updatePerson(person);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateCredit(IShow show){
+        try {
+            DatabaseLoader.getInstance().updateShow(show);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateCredit(ISeason season){
+        try {
+            DatabaseLoader.getInstance().updateSeason(season);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateCredit(IEpisode episode){
+        try {
+            DatabaseLoader.getInstance().updateEpisode(episode);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void setCreditApproveState(ICredit credit, boolean bool) throws SQLException{
+        DatabaseLoader.getInstance().setCreditApproveState(credit, bool);
+    }
+    //------------------------------------------------------------
+    // DELETE METHODS
+    //------------------------------------------------------------
+    public void deletePerson(int creditid) throws SQLException{
+        DatabaseLoader.getInstance().deletePerson(creditid);
     }
 }

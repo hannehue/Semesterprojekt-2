@@ -48,53 +48,6 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args) {
-/*
-        IPerson tempPerson = new Person(
-                "Actor test",
-                "Test to see if actor works with characterName",
-                "52525252",
-                "I am an ACTOR!",
-                "Actor@Actor.gmail.com"
-        );
- */
-
-        IJob tempJob = new Job(
-                9,
-                Role.SKUESPILLER,
-                "Murphy",
-                18
-        );
-
-        //tempPerson.addJob(tempJob);
-
-
-        try {
-            getInstance().addJobToDatabase(tempJob);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-/*
-        Category[] categories = new Category[]{Category.FILM};
-        try {
-            getInstance().updateMovie(
-                    new Movie(
-                            "Interstellar",
-                            new Date(),
-                            18,
-                            false,
-                            "A very good movie",
-                            4,
-                            categories,
-                            10420,
-                            new Date(1415228400000L)
-                    )
-            );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
- */
     }
 
     public ResultSet searchQueryToPersonList(String searchString) {
@@ -290,7 +243,7 @@ public class DatabaseLoader {
                 , Statement.RETURN_GENERATED_KEYS);
 
         insertProduction.setInt(1, creditID);
-        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal());
+        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal() + 1);
         insertProduction.setInt(3, production.getLengthInSecs());
         insertProduction.setString(4, production.getReleaseDate().toString());
         insertProduction.executeUpdate();
@@ -560,31 +513,7 @@ public class DatabaseLoader {
         }
     }
 
-    public void deletePerson(int creditId) throws SQLException {
-        getConnection().setAutoCommit(false);
-        Savepoint beforeAddJob = getConnection().setSavepoint();
-        try {
-            PreparedStatement updateJob = getConnection().prepareStatement(
-                    "DELETE FROM persons WHERE credit_id = ?; "
-            );
-            updateJob.setInt(1, creditId);
-            updateJob.executeUpdate();
-            updateJob = getConnection().prepareStatement(
-                    "DELETE FROM credits WHERE credit_id = ?; "
-            );
-            updateJob.setInt(1, creditId);
-            updateJob.executeUpdate();
-            getConnection().commit();
-            //set auto commit to true again, as that is the default
-            getConnection().setAutoCommit(true);
-        } catch (SQLException e) {
-            getConnection().rollback();
-            System.out.println("WENT WRONG APPROVE CREDIT in DATABASE");
-            e.printStackTrace();
-            getConnection().rollback(beforeAddJob);
-            getConnection().setAutoCommit(true);
-        }
-    }
+
 
     public void updateMovie(IMovie movie) throws SQLException {
         getConnection().setAutoCommit(false);
@@ -762,6 +691,37 @@ public class DatabaseLoader {
         }
 
 
+    }
+
+
+
+    //------------------------------------------------------------
+    // DELETE METHODS
+    //------------------------------------------------------------
+    public void deletePerson(int creditId) throws SQLException {
+        getConnection().setAutoCommit(false);
+        Savepoint beforeDeletePerson = getConnection().setSavepoint();
+        try {
+            PreparedStatement deletePersonStatement = getConnection().prepareStatement(
+                    "DELETE FROM persons WHERE credit_id = ?; "
+            );
+            deletePersonStatement.setInt(1, creditId);
+            deletePersonStatement.executeUpdate();
+            deletePersonStatement = getConnection().prepareStatement(
+                    "DELETE FROM credits WHERE credit_id = ?; "
+            );
+            deletePersonStatement.setInt(1, creditId);
+            deletePersonStatement.executeUpdate();
+            getConnection().commit();
+            //set auto commit to true again, as that is the default
+            getConnection().setAutoCommit(true);
+        } catch (SQLException e) {
+            getConnection().rollback();
+            System.out.println("WENT WRONG DELETE PERSON in DATABASE");
+            e.printStackTrace();
+            getConnection().rollback(beforeDeletePerson);
+            getConnection().setAutoCommit(true);
+        }
     }
 
     private Connection getConnection() {
