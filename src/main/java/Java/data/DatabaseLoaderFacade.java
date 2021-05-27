@@ -97,9 +97,9 @@ public class DatabaseLoaderFacade {
     public void putInDatabase(ICompany company){
 
     } // Company not added in gui, and therefore never added to databse
-    //----------------------------------------------------------------------
-    // SPECIFIC GETTERS. DEPEND ON EXISTING OBJECT (OR STATE I.E. UNAPPROVED
-    //----------------------------------------------------------------------
+    //-----------------------------------------------------------------------
+    // SPECIFIC GETTERS. DEPEND ON EXISTING OBJECT (OR STATE I.E. UNAPPROVED)
+    //-----------------------------------------------------------------------
     //returns ændres når metode der skal kaldes er lavet
     public ICompany getFromDatabase(ICompany company){
         return null;
@@ -185,10 +185,6 @@ public class DatabaseLoaderFacade {
     //------------------------------------------------------------
     // DELETE METHODS
     //------------------------------------------------------------
-    public void deletePerson(int creditid) throws SQLException{
-        DatabaseLoader.getInstance().deletePerson(creditid);
-    }
-
     public void deleteCredit(ICredit credit){
         DatabaseLoader.getInstance().deleteCredit(credit);
     }
