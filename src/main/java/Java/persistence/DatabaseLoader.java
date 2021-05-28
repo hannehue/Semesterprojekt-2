@@ -598,7 +598,7 @@ public class DatabaseLoader {
                             "description = ? " +
                             "WHERE credit_id = ?) " +
                             "UPDATE shows " +
-                            "all_seasons_approved = ?" +
+                            "SET all_seasons_approved = ?" +
                             "WHERE shows.credit_id = ?"
             );
             updateShow.setString(1, show.getName());
@@ -628,11 +628,11 @@ public class DatabaseLoader {
                             "UPDATE credits " +
                             "SET name = ?, " +
                             "approved = ?, " +
-                            "description = ?, " +
+                            "description = ? " +
                             "WHERE credit_id = ?) " +
                             "UPDATE seasons " +
                             "SET all_episodes_approved = ? " +
-                            "WHERE seaons.credit_id = ?"
+                            "WHERE seasons.credit_id = ?"
             );
             updateSeason.setString(1, season.getName());
             updateSeason.setBoolean(2, false);

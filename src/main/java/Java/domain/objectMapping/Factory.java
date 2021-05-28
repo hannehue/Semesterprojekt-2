@@ -14,10 +14,8 @@ import java.util.*;
 public class Factory {
 
     private static Factory instance;
-    private SimpleDateFormat formatter;
 
     private Factory() {
-        formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
     }
 
     public static Factory getInstance() {
