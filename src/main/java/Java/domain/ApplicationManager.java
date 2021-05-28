@@ -1,6 +1,6 @@
 package Java.domain;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.data.*;
 import Java.domain.objectMapping.Factory;
 import Java.domain.services.*;

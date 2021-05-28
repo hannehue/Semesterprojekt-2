@@ -1,6 +1,5 @@
 package Java.presentation.controllers;
 
-import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.*;
 import Java.domain.objectMapping.Factory;
@@ -14,8 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
-import java.sql.SQLException;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 /* ------------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,6 @@
 package Java.domain.objectMapping;
 
-import Java.data.DatabaseLoaderFacade;
-import Java.domain.data.*;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.services.*;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
@@ -9,7 +8,6 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 

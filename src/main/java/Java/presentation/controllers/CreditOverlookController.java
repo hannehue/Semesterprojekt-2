@@ -1,30 +1,21 @@
 package Java.presentation.controllers;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.services.CustomCell;
 import Java.domain.services.MovieManager;
 import Java.domain.services.PersonManager;
 import Java.domain.services.ShowManager;
 import Java.interfaces.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 

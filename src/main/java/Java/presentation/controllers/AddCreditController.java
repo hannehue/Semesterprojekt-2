@@ -1,6 +1,5 @@
 package Java.presentation.controllers;
 
-import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Category;
 import Java.domain.objectMapping.Factory;
@@ -24,7 +23,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;

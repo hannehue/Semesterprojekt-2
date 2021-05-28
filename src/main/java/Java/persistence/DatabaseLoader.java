@@ -1,15 +1,11 @@
-package Java.data;
+package Java.persistence;
 
 import Java.domain.data.Category;
-import Java.domain.data.Job;
-import Java.domain.data.Person;
-import Java.domain.data.Role;
 import Java.interfaces.*;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.interfaces.ICredit;
 import Java.interfaces.IJob;
