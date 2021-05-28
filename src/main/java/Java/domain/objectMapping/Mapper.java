@@ -17,14 +17,14 @@ public class Mapper {
         formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
     }
 
-    protected static Mapper getInstance() {
+    static Mapper getInstance() {
         if (instance == null) {
             instance = new Mapper();
         }
         return instance;
     }
 
-    public IPerson mapPerson(ResultSet personResultSet) {
+    IPerson mapPerson(ResultSet personResultSet) {
         try {
             IPerson tempPerson = new Person(
                     /* Name         */ personResultSet.getString("name"),
@@ -46,7 +46,7 @@ public class Mapper {
         return null;
     }
 
-    public IJob mapJob(ResultSet jobResultSet) {
+    IJob mapJob(ResultSet jobResultSet) {
         try {
             // Job initialization
             // Checks whether the current job belongs to the current tempPerson, from the first query
@@ -70,7 +70,7 @@ public class Mapper {
         return null;
     }
 
-    public IMovie mapMovie(ResultSet movieResultSet) {
+    IMovie mapMovie(ResultSet movieResultSet) {
 
         try {
             IMovie movie = new Movie(
@@ -96,7 +96,7 @@ public class Mapper {
         return null;
     }
 
-    public IShow mapShow(ResultSet showResultSet) {
+    IShow mapShow(ResultSet showResultSet) {
         try {
             return new Show(
                     /* Name         */ showResultSet.getString("name"),
@@ -113,7 +113,7 @@ public class Mapper {
         return null;
     }
 
-    public ISeason mapSeason(ResultSet seasonResultSet) {
+    ISeason mapSeason(ResultSet seasonResultSet) {
         try {
             return new Season(
                     /* Name         */ seasonResultSet.getString("name"),
@@ -131,7 +131,7 @@ public class Mapper {
         return null;
     }
 
-    public IEpisode mapEpisode(ResultSet episodeResultSet){
+    IEpisode mapEpisode(ResultSet episodeResultSet){
 
         try {
                 return new Episode(

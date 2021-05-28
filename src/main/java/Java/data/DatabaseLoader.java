@@ -1,15 +1,11 @@
 package Java.data;
 
 import Java.domain.data.Category;
-import Java.domain.data.Job;
-import Java.domain.data.Person;
-import Java.domain.data.Role;
 import Java.interfaces.*;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -48,53 +44,6 @@ public class DatabaseLoader {
     }
 
     public static void main(String[] args) {
-/*
-        IPerson tempPerson = new Person(
-                "Actor test",
-                "Test to see if actor works with characterName",
-                "52525252",
-                "I am an ACTOR!",
-                "Actor@Actor.gmail.com"
-        );
- */
-
-        IJob tempJob = new Job(
-                9,
-                Role.SKUESPILLER,
-                "Murphy",
-                18
-        );
-
-        //tempPerson.addJob(tempJob);
-
-
-        try {
-            getInstance().addJobToDatabase(tempJob);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-/*
-        Category[] categories = new Category[]{Category.FILM};
-        try {
-            getInstance().updateMovie(
-                    new Movie(
-                            "Interstellar",
-                            new Date(),
-                            18,
-                            false,
-                            "A very good movie",
-                            4,
-                            categories,
-                            10420,
-                            new Date(1415228400000L)
-                    )
-            );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
- */
     }
 
     public ResultSet searchQueryToPersonList(String searchString) {

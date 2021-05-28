@@ -1,7 +1,6 @@
 package Java.domain.objectMapping;
 
 import Java.data.DatabaseLoaderFacade;
-import Java.domain.data.*;
 import Java.domain.services.*;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;
@@ -9,17 +8,15 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Factory {
 
     private static Factory instance;
-    private SimpleDateFormat formatter;
 
     private Factory() {
-        formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
     }
 
     public static Factory getInstance() {
@@ -166,14 +163,6 @@ public class Factory {
         try{
             ResultSet unapprovedResultSet = DatabaseLoaderFacade.getInstance().getAllUnApprovedCredits();
             while (unapprovedResultSet.next()) {
-                /*
-                String name = unapprovedResultSet.getString("name");
-                Date date_added = formatter.parse(unapprovedResultSet.getString("date_added"));
-                boolean approved = unapprovedResultSet.getBoolean("approved");
-                String description = unapprovedResultSet.getString("description");
-
-                 */
-                int credit_id = unapprovedResultSet.getInt("credit_id");
                 int person_id = unapprovedResultSet.getInt("person_id");
                 int movie_id = unapprovedResultSet.getInt("movie_id");
                 int show_id = unapprovedResultSet.getInt("show_id");
@@ -181,95 +170,28 @@ public class Factory {
                 int episode_id = unapprovedResultSet.getInt("episode_id");
                 if (person_id != 0) {
                     IPerson tempPerson = Mapper.getInstance().mapPerson(unapprovedResultSet);
-                    /*
-                            new Person(
-                            name,
-                            date_added,
-                            credit_id,
-                            approved,
-                            description,
-                            person_id,
-                            unapprovedResultSet.getString("phone_number"),
-                            unapprovedResultSet.getString("personal_info"),
-                            unapprovedResultSet.getString("email")
-                    );
-                     */
                     PersonManager.getInstance().getPersonList().add(tempPerson);
                     System.out.println("person " + tempPerson);
                 }else if (movie_id != 0) {
                     IMovie movie = Mapper.getInstance().mapMovie(unapprovedResultSet);
-                            /*
-                            new Movie(
-                            name,
-                            date_added,
-                            credit_id,
-                            approved,
-                            description,
-                            unapprovedResultSet.getInt("production_id"),
-                            new Category[]{Category.values()[unapprovedResultSet.getInt("category_id") - 1]},
-                            unapprovedResultSet.getInt("length_in_secs"),
-                            formatter.parse(unapprovedResultSet.getString("release_date"))
-                    );
-
-                             */
                     MovieManager.getInstance().getMovies().add(movie);
                     System.out.println("movie " + movie);
                 } else if (show_id != 0) {
                     IShow show = Mapper.getInstance().mapShow(unapprovedResultSet);
-                            /*new Show(
-                            name,
-                            date_added,
-                            credit_id,
-                            approved,
-                            description,
-                            unapprovedResultSet.getBoolean("all_seasons_approved")
-                    );
-
-                             */
                     ShowManager.getInstance().getShowList();
                     System.out.println("show " + show);
                 } else if (season_id != 0) {
                     ISeason season = Mapper.getInstance().mapSeason(unapprovedResultSet);
-                            /* new Season(
-                            name,
-                            date_added,
-                            credit_id,
-                            approved,
-                            description,
-                            unapprovedResultSet.getInt("show_id"),
-                            unapprovedResultSet.getBoolean("all_episodes_approved")
-                    );
-
-                             */
                     System.out.println("season " + season);
                     SeasonManager.getInstance().getSeasonList().add(season);
                 }else if (episode_id != 0) {
                     IEpisode episode = Mapper.getInstance().mapEpisode(unapprovedResultSet);
-                            /*new Episode(
-                            name,
-                            date_added,
-                            credit_id,
-                            approved,
-                            description,
-                            unapprovedResultSet.getInt("production_id"),
-                            new Category[]{Category.values()[unapprovedResultSet.getInt("category_id") - 1]},
-                            unapprovedResultSet.getInt("length_in_secs"),
-                            formatter.parse(unapprovedResultSet.getString("release_date")),
-                            unapprovedResultSet.getInt("season_id")
-                    );
-
-                             */
                     System.out.println("episode " + episode);
                     EpisodeManager.getInstance().getEpisodeList().add(episode);
                 }
             }
-
-
         } catch (SQLException e){
             e.printStackTrace();
         }
-
-
     }
-
 }
