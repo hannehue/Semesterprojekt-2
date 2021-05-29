@@ -252,17 +252,17 @@ public class AddCreditController implements Initializable {
         PersonList = new ListView();
         PersonList.setPrefHeight(200);
         PersonList.setPrefWidth(493);
-        moviePeoplePane.getChildren().add(PersonList);
         ObservableList<IJob> observableResults = JobManager.getInstance().getTempList();
         PersonList.setItems(observableResults);
+        moviePeoplePane.getChildren().add(PersonList);
 
 
         episodePersonList = new ListView();
         episodePersonList.setPrefHeight(200);
         episodePersonList.setPrefWidth(493);
-        episodePeoplePane.getChildren().add(PersonList);
         ObservableList<IJob> episodeList = JobManager.getInstance().getTempList();
-        PersonList.setItems(episodeList);
+        episodePersonList.setItems(episodeList);
+        episodePeoplePane.getChildren().add(episodePersonList);
 
         showSearchList = new ListView();
         showSearchList.setPrefHeight(104);
