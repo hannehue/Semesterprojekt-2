@@ -14,8 +14,6 @@ public class DatabaseLoader {
 
     private static DatabaseLoader instance;
 
-    private final SimpleDateFormat formatter;
-
     private Connection connection;
 
 
@@ -65,27 +63,6 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ResultSet queryGetJobsForPerson(IPerson person) {
-        try {
-            // Job handling
-            // Runs new query, using persons, jobs and job_roles
-            PreparedStatement jobQueryStatement = getInstance().connection.prepareStatement(
-                    "SELECT * FROM persons " +
-                            "INNER JOIN jobs " +
-                            "    ON persons.person_id = jobs.person_id " +
-                            "INNER JOIN job_roles " +
-                            "    ON jobs.job_role_id = job_roles.job_role_id " +
-                            "WHERE persons.person_id = ? "
-            );
-            jobQueryStatement.setInt(1, person.getPersonID());
-            jobQueryStatement.executeQuery();
-            return jobQueryStatement.getResultSet();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
-    }
-
     public ResultSet searchQueryToMovieList(String searchString) {
         try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
@@ -110,10 +87,6 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ArrayList<IGroup> searchQueryToGroup(String searchString) {
-        return null;
-    }
-
     public ResultSet searchQueryToShowList(String searchString) {
         try {
             PreparedStatement searchQuery = getConnection().prepareStatement(
@@ -127,6 +100,31 @@ public class DatabaseLoader {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("SQL Exception at search query to Show");
+        }
+        return null;
+    }
+
+    public ArrayList<IGroup> searchQueryToGroup(String searchString) {
+        return null;
+    }
+
+    public ResultSet queryGetJobsForPerson(IPerson person) {
+        try {
+            // Job handling
+            // Runs new query, using persons, jobs and job_roles
+            PreparedStatement jobQueryStatement = getInstance().connection.prepareStatement(
+                    "SELECT * FROM persons " +
+                            "INNER JOIN jobs " +
+                            "    ON persons.person_id = jobs.person_id " +
+                            "INNER JOIN job_roles " +
+                            "    ON jobs.job_role_id = job_roles.job_role_id " +
+                            "WHERE persons.person_id = ? "
+            );
+            jobQueryStatement.setInt(1, person.getPersonID());
+            jobQueryStatement.executeQuery();
+            return jobQueryStatement.getResultSet();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return null;
     }
@@ -172,6 +170,36 @@ public class DatabaseLoader {
         return null;
     }
 
+    public int addCreditToDatabase(ICredit credit) throws SQLException {
+        PreparedStatement insertCredit = getConnection().prepareStatement(
+                "INSERT INTO credits(name, date_added, approved, description)"
+                        + "VALUES(?, ?, ?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
+
+        insertCredit.setString(1, credit.getName());
+        insertCredit.setString(2, credit.getDateAdded().toString());
+        insertCredit.setBoolean(3, credit.isApproved());
+        insertCredit.setString(4, credit.getDescription());
+        insertCredit.executeUpdate();
+        insertCredit.getGeneratedKeys().next();
+        return insertCredit.getGeneratedKeys().getInt(1);
+    }
+
+    public int addProductionToDatabase(IProduction production, int creditID) throws SQLException {
+        PreparedStatement insertProduction = getConnection().prepareStatement(
+                "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
+                        + "VALUES(?, ?, ?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
+
+        insertProduction.setInt(1, creditID);
+        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal() + 1);
+        insertProduction.setInt(3, production.getLengthInSecs());
+        insertProduction.setString(4, production.getReleaseDate().toString());
+        insertProduction.executeUpdate();
+        insertProduction.getGeneratedKeys().next();
+        return insertProduction.getGeneratedKeys().getInt(1);
+    }
+
     public Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
         // Set autoCommit to false, so only both prepared statements run
         getConnection().setAutoCommit(false);
@@ -212,36 +240,6 @@ public class DatabaseLoader {
         }
         System.out.println("No user added");
         return null;
-    }
-
-    public int addCreditToDatabase(ICredit credit) throws SQLException {
-        PreparedStatement insertCredit = getConnection().prepareStatement(
-                "INSERT INTO credits(name, date_added, approved, description)"
-                        + "VALUES(?, ?, ?, ?)"
-                , Statement.RETURN_GENERATED_KEYS);
-
-        insertCredit.setString(1, credit.getName());
-        insertCredit.setString(2, credit.getDateAdded().toString());
-        insertCredit.setBoolean(3, credit.isApproved());
-        insertCredit.setString(4, credit.getDescription());
-        insertCredit.executeUpdate();
-        insertCredit.getGeneratedKeys().next();
-        return insertCredit.getGeneratedKeys().getInt(1);
-    }
-
-    public int addProductionToDatabase(IProduction production, int creditID) throws SQLException {
-        PreparedStatement insertProduction = getConnection().prepareStatement(
-                "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
-                        + "VALUES(?, ?, ?, ?)"
-                , Statement.RETURN_GENERATED_KEYS);
-
-        insertProduction.setInt(1, creditID);
-        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal() + 1);
-        insertProduction.setInt(3, production.getLengthInSecs());
-        insertProduction.setString(4, production.getReleaseDate().toString());
-        insertProduction.executeUpdate();
-        insertProduction.getGeneratedKeys().next();
-        return insertProduction.getGeneratedKeys().getInt(1);
     }
 
     public Map<String, Integer> addMovieToDatabase(IMovie movie) throws SQLException {
@@ -691,32 +689,6 @@ public class DatabaseLoader {
     //------------------------------------------------------------
     // DELETE METHODS
     //------------------------------------------------------------
-
-    public void deletePerson(int creditId) throws SQLException {
-        getConnection().setAutoCommit(false);
-        Savepoint beforeDeletePerson = getConnection().setSavepoint();
-        try {
-            PreparedStatement deletePersonStatement = getConnection().prepareStatement(
-                    "DELETE FROM persons WHERE credit_id = ?; "
-            );
-            deletePersonStatement.setInt(1, creditId);
-            deletePersonStatement.executeUpdate();
-            deletePersonStatement = getConnection().prepareStatement(
-                    "DELETE FROM credits WHERE credit_id = ?; "
-            );
-            deletePersonStatement.setInt(1, creditId);
-            deletePersonStatement.executeUpdate();
-            getConnection().commit();
-            //set auto commit to true again, as that is the default
-            getConnection().setAutoCommit(true);
-        } catch (SQLException e) {
-            getConnection().rollback();
-            System.out.println("WENT WRONG DELETE PERSON in DATABASE");
-            e.printStackTrace();
-            getConnection().rollback(beforeDeletePerson);
-            getConnection().setAutoCommit(true);
-        }
-    }
 
     public void deleteCredit(ICredit credit){
         try {
