@@ -119,6 +119,10 @@ public class AddCreditController implements Initializable {
             (Category) choiceBoxCategory.getValue()
         );
         JobManager.getInstance().addJob(episode.getProductionID());
+        showSearch.clear();
+        episodeId.clear();
+        episodeTitle.clear();
+        episodeLength.clear();
     }
 
     /**
@@ -137,6 +141,9 @@ public class AddCreditController implements Initializable {
                 new Date()
                 );
         JobManager.getInstance().addJob(movie.getIDMap().get("productionID"));
+        movieTitle.clear();
+        movieDescription.clear();
+        movieLength.clear();
     }
 
     /**
@@ -153,6 +160,10 @@ public class AddCreditController implements Initializable {
                 personPhone.getText(),
                 "", //personalinfo
                 personEmail.getText());
+        personName.clear();
+        personEmail.clear();
+        personPhone.clear();
+        personDescription.clear();
     }
 
     /**

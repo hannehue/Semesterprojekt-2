@@ -67,6 +67,9 @@ public class AddPersonController implements Initializable {
         } else {
             JobManager.getInstance().addTempJob(personToCredit.getPersonID(), jobRole.getValue(), 0);
         }
+        findPerson.clear();
+        characterName.clear();
+        characterNamePane.getChildren().clear();
     }
 
     /**
