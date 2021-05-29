@@ -19,8 +19,6 @@ public class DatabaseLoader {
 
     private DatabaseLoader() {
 
-        formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-
         //Create connection to database
         try {
             DriverManager.registerDriver(new org.postgresql.Driver());
