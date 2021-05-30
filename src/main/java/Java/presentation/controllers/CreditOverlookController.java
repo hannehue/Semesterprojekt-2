@@ -56,7 +56,6 @@ public class CreditOverlookController implements Initializable {
 
 
     ToggleGroup toggleGroup = new ToggleGroup();
-    String searchString = "";
     ObservableList<ICredit> fullList = FXCollections.observableArrayList();
     ObservableList<ICredit> approvedList = FXCollections.observableArrayList();
     ObservableList<ICredit> unapprovedList = FXCollections.observableArrayList();
@@ -64,41 +63,24 @@ public class CreditOverlookController implements Initializable {
     ObservableList<ICredit> movieApprovedList = FXCollections.observableArrayList();
     ObservableList<ICredit> showApprovedList = FXCollections.observableArrayList();
 
-    private ObservableList<ICredit> personObservableList = FXCollections.observableArrayList();
-    private ObservableList<ICredit> movieObservableList = FXCollections.observableArrayList();
-    private ObservableList<ICredit> showObservableList = FXCollections.observableArrayList();
+    ObservableList<ICredit> personUnapprovedList = FXCollections.observableArrayList();
+    ObservableList<ICredit> movieUnapprovedList = FXCollections.observableArrayList();
+    ObservableList<ICredit> showUnapprovedList = FXCollections.observableArrayList();
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (!fullList.isEmpty()){
-            fullList.clear();
-        }
-        if (!approvedList.isEmpty()){
-            approvedList.clear();
-        }
-        if (!unapprovedList.isEmpty()){
-            unapprovedList.clear();
-        }
-        if (!personApprovedList.isEmpty()){
-            personApprovedList.clear();
-        }
-        if (!movieApprovedList.isEmpty()){
-            movieApprovedList.clear();
-        }
-        if (!showApprovedList.isEmpty()){
-            showApprovedList.clear();
-        }
-        if (!personObservableList.isEmpty()){
-            personObservableList.clear();
-        }
-        if (!movieObservableList.isEmpty()){
-            movieObservableList.clear();
-        }
-        if (!showObservableList.isEmpty()){
-            showObservableList.clear();
-        }
+        if (!fullList.isEmpty()) fullList.clear(); 
+        if (!approvedList.isEmpty()) approvedList.clear(); 
+        if (!unapprovedList.isEmpty()) unapprovedList.clear(); 
+        if (!personApprovedList.isEmpty()) personApprovedList.clear(); 
+        if (!movieApprovedList.isEmpty()) movieApprovedList.clear(); 
+        if (!showApprovedList.isEmpty()) showApprovedList.clear(); 
+        if (!personUnapprovedList.isEmpty()) personUnapprovedList.clear(); 
+        if (!movieUnapprovedList.isEmpty()) movieUnapprovedList.clear(); 
+        if (!showUnapprovedList.isEmpty()) showUnapprovedList.clear(); 
+        
         ApprovalBox.getSelectionModel().selectFirst();
         FilterAllButton.setToggleGroup(toggleGroup);
         FilterPersonButton.setToggleGroup(toggleGroup);
@@ -131,13 +113,13 @@ public class CreditOverlookController implements Initializable {
             } else {
                 unapprovedList.add(credit);
                 if (credit instanceof IPerson){
-                    personObservableList.add(credit);
+                    personUnapprovedList.add(credit);
                 }
                 if (credit instanceof IMovie){
-                    movieObservableList.add(credit);
+                    movieUnapprovedList.add(credit);
                 }
                 if (credit instanceof IShow){
-                    showObservableList.add(credit);
+                    showUnapprovedList.add(credit);
                 }
             }
         }
@@ -612,9 +594,9 @@ public class CreditOverlookController implements Initializable {
             //fjern liste content
             itemView.getItems().clear();
             switch (toggleGroup.getSelectedToggle().toString()) {
-                case "Persons" -> itemView.setItems(personObservableList);
-                case "Movies" -> itemView.setItems(movieObservableList);
-                case "Shows" -> itemView.setItems(showObservableList);
+                case "Persons" -> itemView.setItems(personUnapprovedList);
+                case "Movies" -> itemView.setItems(movieUnapprovedList);
+                case "Shows" -> itemView.setItems(showUnapprovedList);
                 case "All" -> itemView.setItems(unapprovedList);
                 default -> itemView.setItems(unapprovedList);
             }
@@ -622,7 +604,7 @@ public class CreditOverlookController implements Initializable {
         if (ApprovalBox.getSelectionModel().getSelectedItem().toString().equals("Approved")){
             itemView.getItems().clear();
             switch (toggleGroup.getSelectedToggle().toString()){
-                case "Persons" -> itemView.setItems(personObservableList);
+                case "Persons" -> itemView.setItems(personUnapprovedList);
                 case "Movies" -> itemView.setItems(movieApprovedList);
                 case "Shows" -> itemView.setItems(showApprovedList);
                 case "All" -> itemView.setItems(approvedList);
@@ -636,21 +618,21 @@ public class CreditOverlookController implements Initializable {
         if (ApprovalBox.getSelectionModel().getSelectedItem().equals(Approved)) {
             itemView.setItems(movieApprovedList);
         } else if (ApprovalBox.getSelectionModel().getSelectedItem().equals(Unapproved)){
-            itemView.setItems(movieObservableList);
+            itemView.setItems(movieUnapprovedList);
         }
     }
     public void handleFilterShows(ActionEvent actionEvent){
         if (ApprovalBox.getSelectionModel().getSelectedItem().equals(Approved)) {
             itemView.setItems(showApprovedList);
         } else if (ApprovalBox.getSelectionModel().getSelectedItem().equals(Unapproved)){
-            itemView.setItems(showObservableList);
+            itemView.setItems(showUnapprovedList);
         }
     }
     public void handleFilterPersons(ActionEvent actionEvent){
         if (ApprovalBox.getSelectionModel().getSelectedItem().equals(Approved)) {
             itemView.setItems(personApprovedList);
         } else if (ApprovalBox.getSelectionModel().getSelectedItem().equals(Unapproved)){
-            itemView.setItems(personObservableList);
+            itemView.setItems(personUnapprovedList);
         }
     }
     public void handleFilterAll(ActionEvent actionEvent){

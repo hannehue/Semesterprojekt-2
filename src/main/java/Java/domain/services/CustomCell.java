@@ -2,6 +2,7 @@ package Java.domain.services;
 
 import Java.data.DatabaseLoaderFacade;
 import Java.interfaces.ICredit;
+import Java.interfaces.IPerson;
 import Java.presentation.controllers.CreditOverlookController;
 import Java.presentation.controllers.MenuController;
 import javafx.scene.control.*;
@@ -10,6 +11,7 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.function.IntPredicate;
 
 public class CustomCell extends ListCell<ICredit>{
 
@@ -50,6 +52,23 @@ public class CustomCell extends ListCell<ICredit>{
         } else {
             this.credit = getItem();
             name.setText(credit.buildView());
+            if (getItem() instanceof IPerson){
+                Button deleteBtn = new Button();
+                deleteBtn.setText("Slet person");
+                deleteBtn.setOnAction(actionEvent -> {
+                    try {
+                        DatabaseLoaderFacade.getInstance().deletePerson(getItem().getCreditID());
+                    } catch (SQLException sqlException) {
+                        sqlException.printStackTrace();
+                    }
+                    try {
+                        MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                pane.add(deleteBtn,4,0);
+            }
             if (!getItem().isApproved()){
                 Button approveBtn = new Button();
                 approveBtn.setText("Godkend");
