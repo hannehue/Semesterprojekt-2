@@ -56,11 +56,7 @@ public class CustomCell extends ListCell<ICredit>{
                 Button deleteBtn = new Button();
                 deleteBtn.setText("Slet person");
                 deleteBtn.setOnAction(actionEvent -> {
-                    try {
-                        DatabaseLoaderFacade.getInstance().deletePerson(getItem().getCreditID());
-                    } catch (SQLException sqlException) {
-                        sqlException.printStackTrace();
-                    }
+                    DatabaseLoaderFacade.getInstance().deleteCredit(getItem());
                     try {
                         MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
                     } catch (IOException e) {

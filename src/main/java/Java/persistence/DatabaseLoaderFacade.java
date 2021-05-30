@@ -131,10 +131,6 @@ public class DatabaseLoaderFacade {
         DatabaseLoader.getInstance().setCreditApproveState(credit, bool);
     }
 
-    public void deletePerson(int creditid) throws SQLException{
-        DatabaseLoader.getInstance().deletePerson(creditid);
-    }
-
     public ResultSet getJobsForPerson(IPerson person){
         return DatabaseLoader.getInstance().queryGetJobsForPerson(person);
     }
@@ -168,8 +164,6 @@ public class DatabaseLoaderFacade {
     public void updateCredit(IEpisode iEpisode) throws SQLException {
         DatabaseLoader.getInstance().updateEpisode(iEpisode);
     }
-}
-
     //------------------------------------------------------------
     // DELETE METHODS
     //------------------------------------------------------------
