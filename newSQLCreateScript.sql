@@ -1,20 +1,20 @@
 CREATE TABLE public.credits
 (
-    credit_id integer NOT NULL DEFAULT nextval('credits_credit_id_seq'::regclass),
-    name character varying(50) COLLATE pg_catalog."default" NOT NULL,
-    date_added character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    credit_id SERIAL NOT NULL,
+    name character varying(50) NOT NULL,
+    date_added character varying(50) NOT NULL,
     approved boolean,
-    description character varying(500) COLLATE pg_catalog."default" NOT NULL,
+    description character varying(500) NOT NULL,
     CONSTRAINT credits_pkey PRIMARY KEY (credit_id)
 );
 
 CREATE TABLE public.persons
 (
-    person_id integer NOT NULL DEFAULT nextval('persons_person_id_seq'::regclass),
-    credit_id integer NOT NULL,
-    phone_number character varying(50) COLLATE pg_catalog."default",
-    email character varying(50) COLLATE pg_catalog."default",
-    personal_info character varying(500) COLLATE pg_catalog."default",
+    person_id SERIAL NOT NULL,
+    credit_id INT NOT NULL,
+    phone_number character varying(50),
+    email character varying(50),
+    personal_info character varying(500),
     CONSTRAINT persons_pkey PRIMARY KEY (person_id),
     CONSTRAINT persons_credit_id_fkey FOREIGN KEY (credit_id)
         REFERENCES public.credits (credit_id) MATCH SIMPLE
@@ -24,18 +24,18 @@ CREATE TABLE public.persons
 
 CREATE TABLE public.categories
 (
-    category_id integer NOT NULL DEFAULT nextval('categories_category_id_seq'::regclass),
-    category character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    category_id SERIAL NOT NULL,
+    category character varying(50) NOT NULL,
     CONSTRAINT categories_pkey PRIMARY KEY (category_id)
 );
 
 CREATE TABLE public.productions
 (
-    production_id integer NOT NULL DEFAULT nextval('productions_production_id_seq'::regclass),
+    production_id SERIAL NOT NULL,
     credit_id integer NOT NULL,
     category_id integer NOT NULL,
     length_in_secs integer NOT NULL,
-    release_date character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    release_date character varying(50) NOT NULL,
     CONSTRAINT productions_pkey PRIMARY KEY (production_id),
     CONSTRAINT productions_category_id_fkey FOREIGN KEY (category_id)
         REFERENCES public.categories (category_id) MATCH SIMPLE
@@ -49,7 +49,7 @@ CREATE TABLE public.productions
 
 CREATE TABLE public.shows
 (
-    show_id integer NOT NULL DEFAULT nextval('shows_show_id_seq'::regclass),
+    show_id SERIAL NOT NULL,
     credit_id integer NOT NULL,
     all_seasons_approved boolean,
     CONSTRAINT shows_pkey PRIMARY KEY (show_id),
@@ -61,7 +61,7 @@ CREATE TABLE public.shows
 
 CREATE TABLE public.seasons
 (
-    season_id integer NOT NULL DEFAULT nextval('seasons_season_id_seq'::regclass),
+    season_id SERIAL NOT NULL,
     credit_id integer NOT NULL,
     show_id integer NOT NULL,
     all_episodes_approved boolean,
@@ -78,7 +78,7 @@ CREATE TABLE public.seasons
 
 CREATE TABLE public.groups
 (
-    group_id integer NOT NULL DEFAULT nextval('groups_group_id_seq'::regclass),
+    group_id SERIAL NOT NULL,
     credit_id integer NOT NULL,
     CONSTRAINT groups_pkey PRIMARY KEY (group_id),
     CONSTRAINT groups_credit_id_fkey FOREIGN KEY (credit_id)
@@ -89,7 +89,7 @@ CREATE TABLE public.groups
 
 CREATE TABLE public.companies
 (
-    company_id integer NOT NULL DEFAULT nextval('companies_company_id_seq'::regclass),
+    company_id SERIAL NOT NULL,
     credit_id integer NOT NULL,
     CONSTRAINT companies_pkey PRIMARY KEY (company_id),
     CONSTRAINT companies_credit_id_fkey FOREIGN KEY (credit_id)
@@ -100,7 +100,7 @@ CREATE TABLE public.companies
 
 CREATE TABLE public.movies
 (
-    movie_id integer NOT NULL DEFAULT nextval('movies_movie_id_seq'::regclass),
+    movie_id SERIAL NOT NULL,
     production_id integer,
     CONSTRAINT movies_pkey PRIMARY KEY (movie_id),
     CONSTRAINT movies_production_id_fkey FOREIGN KEY (production_id)
@@ -111,7 +111,7 @@ CREATE TABLE public.movies
 
 CREATE TABLE public.episodes
 (
-    episode_id integer NOT NULL DEFAULT nextval('episodes_episode_id_seq'::regclass),
+    episode_id SERIAL NOT NULL,
     production_id integer,
     season_id integer,
     CONSTRAINT episodes_pkey PRIMARY KEY (episode_id),
@@ -127,14 +127,14 @@ CREATE TABLE public.episodes
 
 CREATE TABLE public.job_roles
 (
-    job_role_id integer NOT NULL DEFAULT nextval('job_roles_job_role_id_seq'::regclass),
-    job_role character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    job_role_id SERIAL NOT NULL,
+    job_role character varying(50) NOT NULL,
     CONSTRAINT job_roles_pkey PRIMARY KEY (job_role_id)
 );
 
 CREATE TABLE public.jobs
 (
-    job_id integer NOT NULL DEFAULT nextval('jobs_job_id_seq'::regclass),
+    job_id SERIAL NOT NULL,
     person_id integer,
     job_role_id integer,
     production_id integer,
@@ -152,6 +152,19 @@ CREATE TABLE public.jobs
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );
+
+
+CREATE TABLE public.character_names
+(
+    character_name_id SERIAL NOT NULL,
+    job_id integer NOT NULL,
+    character_name character varying(50) NOT NULL,
+    CONSTRAINT character_names_pkey PRIMARY KEY (character_name_id),
+    CONSTRAINT character_names_job_id_fkey FOREIGN KEY (job_id)
+        REFERENCES public.jobs (job_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
 
 INSERT INTO job_roles(job_role)
 VALUES	('Skuespiller'),
