@@ -2,7 +2,9 @@ package Java.domain.services;
 
 import Java.data.DatabaseLoaderFacade;
 import Java.interfaces.ICredit;
+import Java.interfaces.IMovie;
 import Java.interfaces.IPerson;
+import Java.interfaces.IShow;
 import Java.presentation.controllers.CreditOverlookController;
 import Java.presentation.controllers.MenuController;
 import javafx.scene.control.*;
@@ -32,7 +34,7 @@ public class CustomCell extends ListCell<ICredit>{
             editBtn.setOnAction(actionEvent -> startEdit());
 
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(85);
+        col1.setPercentWidth(60);
         pane.getColumnConstraints().add(col1);
         pane.add(name,0,0);
         pane.add(editBtn,2,0);
@@ -52,7 +54,7 @@ public class CustomCell extends ListCell<ICredit>{
         } else {
             this.credit = getItem();
             name.setText(credit.buildView());
-            if (getItem() instanceof IPerson){
+            if (this.credit instanceof IPerson){
                 Button deleteBtn = new Button();
                 deleteBtn.setText("Slet person");
                 deleteBtn.setOnAction(actionEvent -> {
@@ -67,7 +69,9 @@ public class CustomCell extends ListCell<ICredit>{
                         e.printStackTrace();
                     }
                 });
-                pane.add(deleteBtn,4,0);
+                if (getItem() instanceof IPerson){
+                    pane.add(deleteBtn,4,0);
+                }
             }
             if (!getItem().isApproved()){
                 Button approveBtn = new Button();
@@ -100,6 +104,5 @@ public class CustomCell extends ListCell<ICredit>{
         if (isEditing()) {
             CreditOverlookController.getInstance().editItem(getItem());
         }
-        getListView().setEditable(false);
     }
 }

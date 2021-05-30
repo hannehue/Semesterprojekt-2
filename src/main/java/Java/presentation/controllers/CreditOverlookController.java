@@ -95,6 +95,7 @@ public class CreditOverlookController implements Initializable {
         fullList = ApplicationManager.getInstance().search("");
 
         itemView.setCellFactory(new CustomCellFactory());
+
         itemView.setEditable(true);
 
         //populate approved lists
@@ -378,8 +379,10 @@ public class CreditOverlookController implements Initializable {
             TextArea showDescription = new TextArea();
                 showDescription.setText(iShow.getDescription());
             ListView showSeasons = new ListView();
+                showSeasons.setEditable(true);
                 showSeasons.setCellFactory(new CustomCellFactory());
                 showSeasons.setItems(iShow.getSeasons());
+
 
             editGrid.add(showNameLabel,1,0);
             editGrid.add(showDescriptionLabel,1,1);
@@ -431,19 +434,19 @@ public class CreditOverlookController implements Initializable {
                 annullerBtn.setText("Annuller");
 
 
-            Label theshow = new Label(ShowManager.getInstance().getShowById(iSeason.getShowID()).getName() + " " + iSeason.getName());
+            //Label theshow = new Label(ShowManager.getInstance().getShowById(iSeason.getShowID()).getName() + " " + iSeason.getName());
             Label seasonDescriptionLabel = new Label("Beskrivelse: ");
             Label seasonEpisodesLabel = new Label("Episoder");
 
             TextArea seasonDescription = new TextArea();
                 seasonDescription.setText(iSeason.getDescription());
             ListView seasonEpisodes = new ListView();
-
+                seasonEpisodes.setEditable(true);
                 seasonEpisodes.setCellFactory(new CustomCellFactory());
                 seasonEpisodes.setItems(iSeason.getEpisodes());
 
 
-            editGrid.add(theshow,1,0);
+            //editGrid.add(theshow,1,0);
             editGrid.add(seasonDescriptionLabel,1,1);
             editGrid.add(seasonEpisodesLabel,1,2);
 
@@ -475,6 +478,7 @@ public class CreditOverlookController implements Initializable {
             });
         }
         if (credit instanceof IEpisode){
+            itemEdit.getChildren().clear();
             col0.setPercentWidth(8);
             col1.setPercentWidth(12);
             col2.setPercentWidth(60);
@@ -517,7 +521,7 @@ public class CreditOverlookController implements Initializable {
             editGrid.add(episodeNameLabel,1,0);
             editGrid.add(episodeDescriptionLabel, 1,1);
             editGrid.add(episodecategoryLabel,1,2);
-            editGrid.add(episodeLengthInSeconds,1,3);
+            editGrid.add(episodeLengthInSecondsLabel,1,3);
 
             editGrid.add(episodeName,2,0);
             editGrid.add(episodeDescription,2,1);
