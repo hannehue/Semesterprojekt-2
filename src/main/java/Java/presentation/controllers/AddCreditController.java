@@ -1,6 +1,5 @@
 package Java.presentation.controllers;
 
-import Java.data.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Category;
 import Java.domain.objectMapping.Factory;
@@ -24,7 +23,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -119,6 +117,10 @@ public class AddCreditController implements Initializable {
             (Category) choiceBoxCategory.getValue()
         );
         JobManager.getInstance().addJob(episode.getProductionID());
+        showSearch.clear();
+        episodeId.clear();
+        episodeTitle.clear();
+        episodeLength.clear();
     }
 
     /**
@@ -137,6 +139,9 @@ public class AddCreditController implements Initializable {
                 new Date()
                 );
         JobManager.getInstance().addJob(movie.getIDMap().get("productionID"));
+        movieTitle.clear();
+        movieDescription.clear();
+        movieLength.clear();
     }
 
     /**
@@ -153,6 +158,10 @@ public class AddCreditController implements Initializable {
                 personPhone.getText(),
                 "", //personalinfo
                 personEmail.getText());
+        personName.clear();
+        personEmail.clear();
+        personPhone.clear();
+        personDescription.clear();
     }
 
     /**
@@ -252,17 +261,17 @@ public class AddCreditController implements Initializable {
         PersonList = new ListView();
         PersonList.setPrefHeight(200);
         PersonList.setPrefWidth(493);
-        moviePeoplePane.getChildren().add(PersonList);
         ObservableList<IJob> observableResults = JobManager.getInstance().getTempList();
         PersonList.setItems(observableResults);
+        moviePeoplePane.getChildren().add(PersonList);
 
 
         episodePersonList = new ListView();
         episodePersonList.setPrefHeight(200);
         episodePersonList.setPrefWidth(493);
-        episodePeoplePane.getChildren().add(PersonList);
         ObservableList<IJob> episodeList = JobManager.getInstance().getTempList();
-        PersonList.setItems(episodeList);
+        episodePersonList.setItems(episodeList);
+        episodePeoplePane.getChildren().add(episodePersonList);
 
         showSearchList = new ListView();
         showSearchList.setPrefHeight(104);

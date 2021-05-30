@@ -153,7 +153,6 @@ public class MenuController implements Initializable {
         Menu.setVisible(false);
     }
 
-
     //Søge felt
     public void handleOpenSearch(MouseEvent mouseEvent) {
         //Hvis søgefeltet er synligt

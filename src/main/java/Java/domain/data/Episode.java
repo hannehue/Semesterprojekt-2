@@ -48,4 +48,9 @@ public class Episode extends Production implements IEpisode {
     public void setSeasonID(int seasonID) {
         this.seasonID = seasonID;
     }
+
+    @Override
+    public void setLengthInSecs(int lengthInSecs) {
+        super.setLengthInSecs(lengthInSecs);
+    }
 }

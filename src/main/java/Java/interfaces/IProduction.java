@@ -12,6 +12,7 @@ public interface IProduction extends ICredit {
     int getLengthInSecs();
 
     Category[] getCategories();
+    void setCategories(Category[] categories);
 
     Date getReleaseDate();
 

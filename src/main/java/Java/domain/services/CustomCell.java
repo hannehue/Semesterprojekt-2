@@ -1,35 +1,38 @@
 package Java.domain.services;
 
+import Java.persistence.DatabaseLoaderFacade;
+import Java.domain.ApplicationManager;
 import Java.interfaces.ICredit;
-import javafx.fxml.Initializable;
+import Java.interfaces.IPerson;
+import Java.presentation.controllers.CreditOverlookController;
+import Java.presentation.controllers.MenuController;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class CustomCell extends ListCell<ICredit>{
 
     private Label name;
     private GridPane pane;
     private Button editBtn;
-    private Button approveBtn;
     private Button godkend;
-    private ColumnConstraints col1 = new ColumnConstraints();
     private ICredit credit;
 
 
     public CustomCell() {
+        super();
         updateSelected(false);
         name = new Label();
         pane = new GridPane();
         editBtn = new Button();
-        editBtn.setText("Edit");
-        editBtn.setOnAction(actionEvent -> startEdit());
+            editBtn.setText("Edit");
+            editBtn.setOnAction(actionEvent -> startEdit());
 
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(85);
+        col1.setPercentWidth(60);
         pane.getColumnConstraints().add(col1);
         pane.add(name,0,0);
         pane.add(editBtn,2,0);
@@ -40,12 +43,45 @@ public class CustomCell extends ListCell<ICredit>{
     @Override
     public void updateItem(ICredit credit, boolean empty){
         super.updateItem(credit, empty);
-
-        if (!empty && credit != null){
-            this.name.setText(credit.buildView());
+        if (isEditing()){
+            getListView().scrollTo(credit);
+        }
+        if (empty || credit == null){
+            setText(null);
+            setGraphic(null);
+        } else {
+            this.credit = getItem();
+            name.setText(credit.buildView());
+            Button deleteBtn = new Button();
+            deleteBtn.setText("Slet kreditering");
+            deleteBtn.setOnAction(actionEvent -> {
+                DatabaseLoaderFacade.getInstance().deleteCredit(getItem());
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            pane.add(deleteBtn,4,0);
+            if (!getItem().isApproved()){
+                Button approveBtn = new Button();
+                approveBtn.setText("Godkend");
+                approveBtn.setOnAction(actionEvent -> {
+                    try {
+                        DatabaseLoaderFacade.getInstance().setCreditApproveState(credit,true);
+                    } catch (SQLException sqlException) {
+                        sqlException.printStackTrace();
+                    }
+                    try {
+                        MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                pane.add(approveBtn,3,0);
+            }
             setGraphic(pane);
         }
-        this.credit = credit;
     }
 
     @Override
@@ -56,12 +92,7 @@ public class CustomCell extends ListCell<ICredit>{
         }
         super.startEdit();
         if (isEditing()) {
-            TextField textField = new TextField();
-            textField.setPromptText(this.credit.getName());
-            pane.getChildren().removeAll();
-            pane.add(textField,0,0);
-
+            CreditOverlookController.getInstance().editItem(getItem());
         }
-        getListView().setEditable(false);
     }
 }

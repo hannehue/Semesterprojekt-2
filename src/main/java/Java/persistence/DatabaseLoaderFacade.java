@@ -1,10 +1,9 @@
-package Java.data;
+package Java.persistence;
 
 import Java.interfaces.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class DatabaseLoaderFacade {
@@ -123,16 +122,13 @@ public class DatabaseLoaderFacade {
     public IProduction getFromDatabase(IProduction production){
         return null;
     }
+
     public ResultSet getAllUnApprovedCredits() throws SQLException {
       return DatabaseLoader.getInstance().getAllUnApprovedCredits();
     }
 
     public void setCreditApproveState(ICredit credit, boolean bool) throws SQLException{
         DatabaseLoader.getInstance().setCreditApproveState(credit, bool);
-    }
-
-    public void deletePerson(int creditid) throws SQLException{
-        DatabaseLoader.getInstance().deletePerson(creditid);
     }
 
     public ResultSet getJobsForPerson(IPerson person){
@@ -151,5 +147,27 @@ public class DatabaseLoaderFacade {
 
     public ResultSet getJobRoles() throws SQLException {
         return DatabaseLoader.getInstance().getAllJobRoles();
+    }
+
+    public void updateCredit(IPerson person) throws SQLException{
+        DatabaseLoader.getInstance().updatePerson(person);
+    }
+    public void updateCredit(IMovie iMovie) throws SQLException {
+        DatabaseLoader.getInstance().updateMovie(iMovie);
+    }
+    public void updateCredit(IShow iShow) throws SQLException {
+        DatabaseLoader.getInstance().updateShow(iShow);
+    }
+    public void updateCredit(ISeason iSeason) throws SQLException {
+        DatabaseLoader.getInstance().updateSeason(iSeason);
+    }
+    public void updateCredit(IEpisode iEpisode) throws SQLException {
+        DatabaseLoader.getInstance().updateEpisode(iEpisode);
+    }
+    //------------------------------------------------------------
+    // DELETE METHODS
+    //------------------------------------------------------------
+    public void deleteCredit(ICredit credit){
+        DatabaseLoader.getInstance().deleteCredit(credit);
     }
 }

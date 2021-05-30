@@ -4,6 +4,9 @@ import Java.interfaces.ICredit;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class Credit implements ICredit {
 
@@ -104,8 +107,15 @@ public abstract class Credit implements ICredit {
         StringBuilder stringBuilder = new StringBuilder();
         //Splitter ved ","
         String[] observableResultsString = this.toString().split(",");
+
         //Tilføj hver linje der er blevet splittet til string builder
-        for (String s: observableResultsString) { stringBuilder.append(s).append("\n"); }
+        for (String s: observableResultsString) {
+            Pattern p = Pattern.compile("\\b.{1," + (80-1) + "}\\b\\W?");
+            Matcher m = p.matcher(s);
+            while (m.find()){
+                stringBuilder.append(m.group()).append("\n");
+            }
+        }
         //tilføj til liste
         return stringBuilder.toString();
     }

@@ -1,27 +1,21 @@
-package Java.data;
+package Java.persistence;
 
 import Java.domain.data.Category;
 import Java.interfaces.*;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
  class DatabaseLoader {
 
     private static DatabaseLoader instance;
 
-    private final SimpleDateFormat formatter;
-
     private Connection connection;
 
 
     private DatabaseLoader() {
-
-        formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 
         //Create connection to database
         try {
@@ -43,8 +37,7 @@ import java.util.Map;
         return instance;
     }
 
-     ResultSet searchQueryToPersonList(String searchString) {
-        ArrayList<IPerson> personObservableList = new ArrayList<>();
+    ResultSet searchQueryToPersonList(String searchString) {
         try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
                     "SELECT * FROM credits, persons WHERE LOWER(name) LIKE LOWER(?) " +
@@ -131,7 +124,7 @@ import java.util.Map;
         return null;
     }
 
-     ResultSet queryGetSeasonsForShow(IShow show) {
+    ResultSet queryGetSeasonsForShow(IShow show) {
         try {
             PreparedStatement getSeasonQuery = getConnection().prepareStatement(
                     "SELECT * FROM credits, seasons WHERE seasons.show_id = ?" +
@@ -172,7 +165,22 @@ import java.util.Map;
         return null;
     }
 
-     Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
+    public int addProductionToDatabase(IProduction production, int creditID) throws SQLException {
+        PreparedStatement insertProduction = getConnection().prepareStatement(
+                "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
+                        + "VALUES(?, ?, ?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
+
+        insertProduction.setInt(1, creditID);
+        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal() + 1);
+        insertProduction.setInt(3, production.getLengthInSecs());
+        insertProduction.setString(4, production.getReleaseDate().toString());
+        insertProduction.executeUpdate();
+        insertProduction.getGeneratedKeys().next();
+        return insertProduction.getGeneratedKeys().getInt(1);
+    }
+
+    Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
         // Set autoCommit to false, so only both prepared statements run
         getConnection().setAutoCommit(false);
         Savepoint beforeAddPerson = getConnection().setSavepoint();
@@ -227,21 +235,6 @@ import java.util.Map;
         insertCredit.executeUpdate();
         insertCredit.getGeneratedKeys().next();
         return insertCredit.getGeneratedKeys().getInt(1);
-    }
-
-     int addProductionToDatabase(IProduction production, int creditID) throws SQLException {
-        PreparedStatement insertProduction = getConnection().prepareStatement(
-                "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
-                        + "VALUES(?, ?, ?, ?)"
-                , Statement.RETURN_GENERATED_KEYS);
-
-        insertProduction.setInt(1, creditID);
-        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal());
-        insertProduction.setInt(3, production.getLengthInSecs());
-        insertProduction.setString(4, production.getReleaseDate().toString());
-        insertProduction.executeUpdate();
-        insertProduction.getGeneratedKeys().next();
-        return insertProduction.getGeneratedKeys().getInt(1);
     }
 
      Map<String, Integer> addMovieToDatabase(IMovie movie) throws SQLException {
@@ -531,6 +524,9 @@ import java.util.Map;
             getConnection().setAutoCommit(true);
         }
     }
+    //------------------------------------------------------------
+    // UPDATE/EDIT METHODS
+    //------------------------------------------------------------
 
      void updateMovie(IMovie movie) throws SQLException {
         getConnection().setAutoCommit(false);
@@ -620,7 +616,7 @@ import java.util.Map;
                             "description = ? " +
                             "WHERE credit_id = ?) " +
                             "UPDATE shows " +
-                            "all_seasons_approved = ?" +
+                            "SET all_seasons_approved = ?" +
                             "WHERE shows.credit_id = ?"
             );
             updateShow.setString(1, show.getName());
@@ -650,11 +646,11 @@ import java.util.Map;
                             "UPDATE credits " +
                             "SET name = ?, " +
                             "approved = ?, " +
-                            "description = ?, " +
+                            "description = ? " +
                             "WHERE credit_id = ?) " +
                             "UPDATE seasons " +
                             "SET all_episodes_approved = ? " +
-                            "WHERE seaons.credit_id = ?"
+                            "WHERE seasons.credit_id = ?"
             );
             updateSeason.setString(1, season.getName());
             updateSeason.setBoolean(2, false);
@@ -707,6 +703,92 @@ import java.util.Map;
             e.printStackTrace();
         }
 
+
+    }
+
+    //------------------------------------------------------------
+    // DELETE METHODS
+    //------------------------------------------------------------
+
+    public void deleteCredit(ICredit credit){
+        try {
+            getConnection().setAutoCommit(false);
+            if (credit instanceof IShow){
+                deleteShow((IShow) credit);
+            } else if (credit instanceof ISeason) {
+                deleteSeason((ISeason) credit);
+            } else if (credit instanceof IJob){
+                //To delete a single job
+                PreparedStatement deleteJob = getConnection().prepareStatement(
+                        "DELETE FROM jobs WHERE jobs.person_id = ?"
+                );
+                deleteJob.setInt(1, ((IJob) credit).getPersonId());
+                deleteJob.executeUpdate();
+            }
+            else {
+                PreparedStatement deleteCredit = getConnection().prepareStatement(
+                        "DELETE FROM credits WHERE credit_id = ?"
+                );
+                deleteCredit.setInt(1, credit.getCreditID());
+                deleteCredit.executeUpdate();
+                //deleteCredit.setInt(1, credit.getCreditID());
+            }
+            getConnection().commit();
+            getConnection().setAutoCommit(true);
+        }
+            catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteShow(IShow show)throws SQLException{
+        for (ISeason season : show.getSeasons()){
+            deleteSeason(season);
+        }
+        PreparedStatement deleteShow = getConnection().prepareStatement(
+                "DELETE FROM credits WHERE credit_id = ?"
+        );
+        deleteShow.setInt(1, show.getCreditID());
+        deleteShow.executeUpdate();
+    }
+
+    public void deleteSeason(ISeason season) throws SQLException{
+        for (IEpisode episode : season.getEpisodes()){
+            deleteEpisode(episode);
+        }
+        PreparedStatement deleteSeason = getConnection().prepareStatement(
+                "DELETE FROM credits WHERE credit_id = ?"
+        );
+        deleteSeason.setInt(1, season.getCreditID());
+        deleteSeason.executeUpdate();
+    }
+
+    public void deleteEpisode(IEpisode episode) throws SQLException{
+
+        PreparedStatement deleteEpisode = getConnection().prepareStatement(
+                "DELETE FROM credits WHERE credit_id = ?"
+        );
+        deleteEpisode.setInt(1, episode.getCreditID());
+        deleteEpisode.executeUpdate();
+    }
+
+    public static void main(String[] args) {
+/*
+        try{
+            getInstance().getConnection().setAutoCommit(false);
+            PreparedStatement deleteStmt = getInstance().getConnection().prepareStatement(
+                    "DELETE FROM credits WHERE credit_id = 23"
+            );
+            deleteStmt.executeUpdate();
+            getInstance().getConnection().commit();
+            getInstance().getConnection().setAutoCommit(true);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+ */
 
     }
 

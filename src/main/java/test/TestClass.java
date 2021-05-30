@@ -1,6 +1,6 @@
 package test;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.services.PersonManager;
 import Java.interfaces.IPerson;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class TestClass {
                 personId = person.getCreditID();
                 assertNotEquals(personId,0);
                 try {
-                    database.deletePerson(personId);
+                    database.deleteCredit(person);
                     System.out.println("Removed person with creditID " + personId);
                 } catch (Exception e){
                     fail();

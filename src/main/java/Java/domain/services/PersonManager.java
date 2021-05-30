@@ -1,6 +1,6 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.data.Person;
 import Java.domain.objectMapping.Factory;
 import Java.interfaces.IPerson;
@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class PersonManager {
     private static PersonManager instance = new PersonManager();
-    private DatabaseLoaderFacade database = DatabaseLoaderFacade.getInstance();
     private PersonManager(){}
 
     public static PersonManager getInstance() {
