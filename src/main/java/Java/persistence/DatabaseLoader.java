@@ -14,14 +14,10 @@ public class DatabaseLoader {
 
     private static DatabaseLoader instance;
 
-    private final SimpleDateFormat formatter;
-
     private Connection connection;
 
 
     private DatabaseLoader() {
-
-        formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
 
         //Create connection to database
         try {
@@ -43,9 +39,6 @@ public class DatabaseLoader {
         return instance;
     }
 
-    public static void main(String[] args) {
-    }
-
     public ResultSet searchQueryToPersonList(String searchString) {
         ArrayList<IPerson> personObservableList = new ArrayList<>();
         try {
@@ -64,27 +57,6 @@ public class DatabaseLoader {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             System.out.println("SQL ERROR at queryToPerson");
-        }
-        return null;
-    }
-
-    public ResultSet queryGetJobsForPerson(IPerson person) {
-        try {
-            // Job handling
-            // Runs new query, using persons, jobs and job_roles
-            PreparedStatement jobQueryStatement = getInstance().connection.prepareStatement(
-                    "SELECT * FROM persons " +
-                            "INNER JOIN jobs " +
-                            "    ON persons.person_id = jobs.person_id " +
-                            "INNER JOIN job_roles " +
-                            "    ON jobs.job_role_id = job_roles.job_role_id " +
-                            "WHERE persons.person_id = ? "
-            );
-            jobQueryStatement.setInt(1, person.getPersonID());
-            jobQueryStatement.executeQuery();
-            return jobQueryStatement.getResultSet();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
         return null;
     }
@@ -113,10 +85,6 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ArrayList<IGroup> searchQueryToGroup(String searchString) {
-        return null;
-    }
-
     public ResultSet searchQueryToShowList(String searchString) {
         try {
             PreparedStatement searchQuery = getConnection().prepareStatement(
@@ -130,6 +98,31 @@ public class DatabaseLoader {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("SQL Exception at search query to Show");
+        }
+        return null;
+    }
+
+    public ArrayList<IGroup> searchQueryToGroup(String searchString) {
+        return null;
+    }
+
+    public ResultSet queryGetJobsForPerson(IPerson person) {
+        try {
+            // Job handling
+            // Runs new query, using persons, jobs and job_roles
+            PreparedStatement jobQueryStatement = getInstance().connection.prepareStatement(
+                    "SELECT * FROM persons " +
+                            "INNER JOIN jobs " +
+                            "    ON persons.person_id = jobs.person_id " +
+                            "INNER JOIN job_roles " +
+                            "    ON jobs.job_role_id = job_roles.job_role_id " +
+                            "WHERE persons.person_id = ? "
+            );
+            jobQueryStatement.setInt(1, person.getPersonID());
+            jobQueryStatement.executeQuery();
+            return jobQueryStatement.getResultSet();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         return null;
     }
@@ -175,6 +168,36 @@ public class DatabaseLoader {
         return null;
     }
 
+    public int addCreditToDatabase(ICredit credit) throws SQLException {
+        PreparedStatement insertCredit = getConnection().prepareStatement(
+                "INSERT INTO credits(name, date_added, approved, description)"
+                        + "VALUES(?, ?, ?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
+
+        insertCredit.setString(1, credit.getName());
+        insertCredit.setString(2, credit.getDateAdded().toString());
+        insertCredit.setBoolean(3, credit.isApproved());
+        insertCredit.setString(4, credit.getDescription());
+        insertCredit.executeUpdate();
+        insertCredit.getGeneratedKeys().next();
+        return insertCredit.getGeneratedKeys().getInt(1);
+    }
+
+    public int addProductionToDatabase(IProduction production, int creditID) throws SQLException {
+        PreparedStatement insertProduction = getConnection().prepareStatement(
+                "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
+                        + "VALUES(?, ?, ?, ?)"
+                , Statement.RETURN_GENERATED_KEYS);
+
+        insertProduction.setInt(1, creditID);
+        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal() + 1);
+        insertProduction.setInt(3, production.getLengthInSecs());
+        insertProduction.setString(4, production.getReleaseDate().toString());
+        insertProduction.executeUpdate();
+        insertProduction.getGeneratedKeys().next();
+        return insertProduction.getGeneratedKeys().getInt(1);
+    }
+
     public Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
         // Set autoCommit to false, so only both prepared statements run
         getConnection().setAutoCommit(false);
@@ -215,36 +238,6 @@ public class DatabaseLoader {
         }
         System.out.println("No user added");
         return null;
-    }
-
-    public int addCreditToDatabase(ICredit credit) throws SQLException {
-        PreparedStatement insertCredit = getConnection().prepareStatement(
-                "INSERT INTO credits(name, date_added, approved, description)"
-                        + "VALUES(?, ?, ?, ?)"
-                , Statement.RETURN_GENERATED_KEYS);
-
-        insertCredit.setString(1, credit.getName());
-        insertCredit.setString(2, credit.getDateAdded().toString());
-        insertCredit.setBoolean(3, credit.isApproved());
-        insertCredit.setString(4, credit.getDescription());
-        insertCredit.executeUpdate();
-        insertCredit.getGeneratedKeys().next();
-        return insertCredit.getGeneratedKeys().getInt(1);
-    }
-
-    public int addProductionToDatabase(IProduction production, int creditID) throws SQLException {
-        PreparedStatement insertProduction = getConnection().prepareStatement(
-                "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
-                        + "VALUES(?, ?, ?, ?)"
-                , Statement.RETURN_GENERATED_KEYS);
-
-        insertProduction.setInt(1, creditID);
-        insertProduction.setInt(2, Category.valueOf(production.getCategories()[0].toString().toUpperCase()).ordinal());
-        insertProduction.setInt(3, production.getLengthInSecs());
-        insertProduction.setString(4, production.getReleaseDate().toString());
-        insertProduction.executeUpdate();
-        insertProduction.getGeneratedKeys().next();
-        return insertProduction.getGeneratedKeys().getInt(1);
     }
 
     public Map<String, Integer> addMovieToDatabase(IMovie movie) throws SQLException {
@@ -509,31 +502,9 @@ public class DatabaseLoader {
         }
     }
 
-    public void deletePerson(int creditId) throws SQLException {
-        getConnection().setAutoCommit(false);
-        Savepoint beforeAddJob = getConnection().setSavepoint();
-        try {
-            PreparedStatement updateJob = getConnection().prepareStatement(
-                    "DELETE FROM persons WHERE credit_id = ?; "
-            );
-            updateJob.setInt(1, creditId);
-            updateJob.executeUpdate();
-            updateJob = getConnection().prepareStatement(
-                    "DELETE FROM credits WHERE credit_id = ?; "
-            );
-            updateJob.setInt(1, creditId);
-            updateJob.executeUpdate();
-            getConnection().commit();
-            //set auto commit to true again, as that is the default
-            getConnection().setAutoCommit(true);
-        } catch (SQLException e) {
-            getConnection().rollback();
-            System.out.println("WENT WRONG APPROVE CREDIT in DATABASE");
-            e.printStackTrace();
-            getConnection().rollback(beforeAddJob);
-            getConnection().setAutoCommit(true);
-        }
-    }
+    //------------------------------------------------------------
+    // UPDATE/EDIT METHODS
+    //------------------------------------------------------------
 
     public void updateMovie(IMovie movie) throws SQLException {
         getConnection().setAutoCommit(false);
@@ -556,7 +527,7 @@ public class DatabaseLoader {
             updateMovie.setBoolean(2, false);
             updateMovie.setString(3, movie.getDescription());
             updateMovie.setInt(4, movie.getCreditID());
-            updateMovie.setInt(5, Category.valueOf(movie.getCategories()[0].toString().toUpperCase().replace(' ', '_')).ordinal()+1);
+            updateMovie.setInt(5, Category.valueOf(movie.getCategories()[0].toString().toUpperCase()).ordinal());
             updateMovie.setInt(6, movie.getLengthInSecs());
             updateMovie.setString(7, movie.getReleaseDate().toString());
             updateMovie.setInt(8, movie.getCreditID());
@@ -607,6 +578,8 @@ public class DatabaseLoader {
             getConnection().setAutoCommit(true);
             e.printStackTrace();
         }
+
+
     }
 
     public void updateShow(IShow show) throws SQLException {
@@ -708,6 +681,92 @@ public class DatabaseLoader {
             e.printStackTrace();
         }
 
+
+    }
+
+    //------------------------------------------------------------
+    // DELETE METHODS
+    //------------------------------------------------------------
+
+    public void deleteCredit(ICredit credit){
+        try {
+            getConnection().setAutoCommit(false);
+            if (credit instanceof IShow){
+                deleteShow((IShow) credit);
+            } else if (credit instanceof ISeason) {
+                deleteSeason((ISeason) credit);
+            } else if (credit instanceof IJob){
+                //To delete a single job
+                PreparedStatement deleteJob = getConnection().prepareStatement(
+                        "DELETE FROM jobs WHERE jobs.person_id = ?"
+                );
+                deleteJob.setInt(1, ((IJob) credit).getPersonId());
+                deleteJob.executeUpdate();
+            }
+            else {
+                PreparedStatement deleteCredit = getConnection().prepareStatement(
+                        "DELETE FROM credits WHERE credit_id = ?"
+                );
+                deleteCredit.setInt(1, credit.getCreditID());
+                deleteCredit.executeUpdate();
+                //deleteCredit.setInt(1, credit.getCreditID());
+            }
+            getConnection().commit();
+            getConnection().setAutoCommit(true);
+        }
+            catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteShow(IShow show)throws SQLException{
+        for (ISeason season : show.getSeasons()){
+            deleteSeason(season);
+        }
+        PreparedStatement deleteShow = getConnection().prepareStatement(
+                "DELETE FROM credits WHERE credit_id = ?"
+        );
+        deleteShow.setInt(1, show.getCreditID());
+        deleteShow.executeUpdate();
+    }
+
+    public void deleteSeason(ISeason season) throws SQLException{
+        for (IEpisode episode : season.getEpisodes()){
+            deleteEpisode(episode);
+        }
+        PreparedStatement deleteSeason = getConnection().prepareStatement(
+                "DELETE FROM credits WHERE credit_id = ?"
+        );
+        deleteSeason.setInt(1, season.getCreditID());
+        deleteSeason.executeUpdate();
+    }
+
+    public void deleteEpisode(IEpisode episode) throws SQLException{
+
+        PreparedStatement deleteEpisode = getConnection().prepareStatement(
+                "DELETE FROM credits WHERE credit_id = ?"
+        );
+        deleteEpisode.setInt(1, episode.getCreditID());
+        deleteEpisode.executeUpdate();
+    }
+
+    public static void main(String[] args) {
+/*
+        try{
+            getInstance().getConnection().setAutoCommit(false);
+            PreparedStatement deleteStmt = getInstance().getConnection().prepareStatement(
+                    "DELETE FROM credits WHERE credit_id = 23"
+            );
+            deleteStmt.executeUpdate();
+            getInstance().getConnection().commit();
+            getInstance().getConnection().setAutoCommit(true);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+ */
 
     }
 

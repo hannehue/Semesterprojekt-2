@@ -169,3 +169,11 @@ public class DatabaseLoaderFacade {
         DatabaseLoader.getInstance().updateEpisode(iEpisode);
     }
 }
+
+    //------------------------------------------------------------
+    // DELETE METHODS
+    //------------------------------------------------------------
+    public void deleteCredit(ICredit credit){
+        DatabaseLoader.getInstance().deleteCredit(credit);
+    }
+}
