@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<<<<<<< HEAD
+<GridPane alignment="CENTER" hgap="5" prefHeight="139.0" prefWidth="1067.0" vgap="5" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.presentation.controllers.MenuController">
+=======
+<GridPane alignment="CENTER" hgap="5" prefHeight="139.0" prefWidth="1067.0" vgap="5" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Java.presentation.controllers.MenuController">
+>>>>>>> CreditInterface
+    <padding>
+        <Insets bottom="5" left="5" right="5" top="5" />
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="921.0" minWidth="246.0" prefWidth="246.0" />
+        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="797.0" minWidth="5.0" prefWidth="512.0" />
+      <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="742.0" minWidth="10.0" prefWidth="308.0" />
+    </columnConstraints>
+    <Pane fx:id="searchPane" layoutX="119.0" prefHeight="90.0" prefWidth="681.0" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+        <Button alignment="TOP_LEFT" layoutX="458.0" layoutY="25.0" mnemonicParsing="false"  prefHeight="22.0" prefWidth="40.0">
+            <graphic>
+                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/search.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <TextField fx:id="searchField" alignment="TOP_LEFT" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="457.0">
+            <font>
+                <Font size="17.0" />
+            </font>
+        </TextField>
+    </Pane>
+    <Pane prefHeight="90.0" prefWidth="122.0" GridPane.columnIndex="2" GridPane.halignment="LEFT">
+      <children>
+          <Pane layoutX="77.0" layoutY="11.0" prefHeight="69.0" prefWidth="145.0">
+              <children>
+                  <SplitMenuButton fx:id="menuButton" layoutX="15.0" layoutY="5.0" mnemonicParsing="false" visible="false">
+                      <items>
+                          <MenuItem fx:id="personalProfile" mnemonicParsing="false" onAction="#handlePersonalProfile" text="Profil" />
+                          <MenuItem fx:id="approveCredit" mnemonicParsing="false" onAction="#handleApproveCredits" text="Godkend Krediteringer" />
+                          <MenuItem fx:id="addCredits" mnemonicParsing="false" onAction="#handleAddCredits" text="Tilføj krediteringer" />
+                          <MenuItem fx:id="addUser" mnemonicParsing="false" onAction="#handleAddUser" text="Tilføj bruger" />
+                          <MenuItem mnemonicParsing="false" onAction="#handleLogout" text="Logud" />
+                      </items>
+                  </SplitMenuButton>
+                  <Button fx:id="loginButton" alignment="CENTER" layoutX="32.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleLogin" text="Login" visible="false" />
+              </children>
+          </Pane>
+      </children>
+    </Pane>
+   <Pane prefHeight="90.0" prefWidth="204.0">
+      <children>
+            <ImageView fitHeight="90.0" fitWidth="247.0" onMouseClicked="#toFrontpage" preserveRatio="true">
+                <image>
+                    <Image url="@TV_2_PLAY_Hvid_RGB.png" />
+                </image>
+            </ImageView>
+      </children>
+   </Pane>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

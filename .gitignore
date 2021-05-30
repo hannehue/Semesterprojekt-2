@@ -11,6 +11,10 @@
 # Generated files
 .idea/**/contentModel.xml
 
+.idea/
+
+.settings/
+
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
@@ -78,3 +82,5 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+.idea/
