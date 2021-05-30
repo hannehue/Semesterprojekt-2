@@ -169,4 +169,7 @@ public class DatabaseLoaderFacade {
     public void updateCredit(ISeason iSeason) throws SQLException {
         DatabaseLoader.getInstance().updateSeason(iSeason);
     }
+    public void updateCredit(IEpisode iEpisode) throws SQLException {
+        DatabaseLoader.getInstance().updateEpisode(iEpisode);
+    }
 }

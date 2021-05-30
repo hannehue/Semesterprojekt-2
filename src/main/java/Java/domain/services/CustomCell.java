@@ -2,15 +2,10 @@ package Java.domain.services;
 
 import Java.data.DatabaseLoaderFacade;
 import Java.interfaces.ICredit;
-import Java.interfaces.ISeason;
-import Java.interfaces.IShow;
 import Java.presentation.controllers.CreditOverlookController;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CustomCell extends ListCell<ICredit>{
@@ -18,7 +13,6 @@ public class CustomCell extends ListCell<ICredit>{
     private Label name;
     private GridPane pane;
     private Button editBtn;
-    private Button approveBtn;
     private Button godkend;
     private ICredit credit;
 
@@ -51,9 +45,20 @@ public class CustomCell extends ListCell<ICredit>{
             setText(null);
             setGraphic(null);
         } else {
-
             this.credit = getItem();
             name.setText(credit.buildView());
+            if (!getItem().isApproved()){
+                Button approveBtn = new Button();
+                approveBtn.setText("Godkend");
+                approveBtn.setOnAction(actionEvent -> {
+                    try {
+                        DatabaseLoaderFacade.getInstance().setCreditApproveState(credit,true);
+                    } catch (SQLException sqlException) {
+                        sqlException.printStackTrace();
+                    }
+                });
+                pane.add(approveBtn,3,0);
+            }
             setGraphic(pane);
         }
     }

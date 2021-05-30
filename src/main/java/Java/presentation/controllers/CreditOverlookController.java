@@ -295,12 +295,10 @@ public class CreditOverlookController implements Initializable {
             godkendBtn.setOnAction(actionEvent -> {
                 movie.setName(movieName.getText());
                 movie.setDescription(movieDescription.getText());
-                System.out.println(categoryComboBox.getSelectionModel().getSelectedItem());
                 Category[] list = new Category[]{
                         categoryComboBox.getSelectionModel().getSelectedItem()
                 };
                 movie.setCategories(list);
-                //movie.setCategories(list);
                 movie.setLengthInSecs( Integer.parseInt(movieLengthInSeconds.getText()));
                 try {
                     DatabaseLoaderFacade.getInstance().updateCredit(movie);
@@ -442,7 +440,89 @@ public class CreditOverlookController implements Initializable {
                 }
             });
         }
-        
+        if (credit instanceof IEpisode){
+            col0.setPercentWidth(8);
+            col1.setPercentWidth(12);
+            col2.setPercentWidth(60);
+            editGrid.getColumnConstraints().add(0, col0);
+            editGrid.getColumnConstraints().add(1, col1);
+            editGrid.getColumnConstraints().add(2,col2);
+
+            IEpisode iEpisode = EpisodeManager.getInstance().getEpisodeById(credit.getCreditID());
+
+            //knap til godkend redigering
+            Button godkendBtn = new Button();
+            Button annullerBtn = new Button();
+                godkendBtn.setText("Godkend redigering");
+                annullerBtn.setText("Annuller");
+
+            Label episodeNameLabel = new Label("Navn: ");
+            Label episodeDescriptionLabel = new Label("Beskrivelse: ");
+            Label episodeLengthInSecondsLabel = new Label("Length in seconds: ");
+            Label episodecategoryLabel = new Label("Kategori");
+
+            TextField episodeName = new TextField();
+                episodeName.setText(iEpisode.getName());
+            TextArea episodeDescription = new TextArea();
+                episodeDescription.setText(iEpisode.getDescription());
+            TextField episodeLengthInSeconds = new TextField();
+            ComboBox<Category> categoryComboBox = new ComboBox<>();
+                categoryComboBox.getItems().addAll(Category.values());
+                categoryComboBox.getSelectionModel().select(iEpisode.getCategories()[0]);
+            episodeLengthInSeconds.textProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                    String newValue) {
+                    if (!newValue.matches("\\d*")) {
+                        episodeLengthInSeconds.setText(newValue.replaceAll("[^\\d]", ""));
+                    }
+                }
+            });
+            episodeLengthInSeconds.setText(String.valueOf(episodeLengthInSeconds));
+
+            editGrid.add(episodeNameLabel,1,0);
+            editGrid.add(episodeDescriptionLabel, 1,1);
+            editGrid.add(episodecategoryLabel,1,2);
+            editGrid.add(episodeLengthInSeconds,1,3);
+
+            editGrid.add(episodeName,2,0);
+            editGrid.add(episodeDescription,2,1);
+            editGrid.add(categoryComboBox, 2,2);
+            editGrid.add(episodeLengthInSeconds,2,3);
+
+            editGrid.add(godkendBtn,3,0);
+            editGrid.add(annullerBtn,3,1);
+
+
+            godkendBtn.setOnAction(actionEvent -> {
+                iEpisode.setName(episodeName.getText());
+                iEpisode.setDescription(episodeDescription.getText());
+                Category[] list = new Category[]{
+                        categoryComboBox.getSelectionModel().getSelectedItem()
+                };
+                iEpisode.setCategories(list);
+                iEpisode.setLengthInSecs(Integer.parseInt(episodeLengthInSeconds.getText()));
+
+                try {
+                    DatabaseLoaderFacade.getInstance().updateCredit(iEpisode);
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
+                }
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            });
+            annullerBtn.setOnAction(actionEvent -> {
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setContent(editGrid);
