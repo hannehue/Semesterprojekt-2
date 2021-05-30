@@ -8,6 +8,7 @@ import Java.interfaces.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -97,4 +98,16 @@ public class ApplicationManager {
         list.addAll(Factory.getInstance().getShow(search));
     }
 
+    public ArrayList<String> JobRoles(){
+        try {
+            ResultSet resultSet = DatabaseLoaderFacade.getInstance().getJobRoles();
+            ArrayList<String> arrayList = new ArrayList<>();
+            while (resultSet.next()) {
+                arrayList.add(resultSet.getString(2));
+            }
+            return arrayList;
+        } catch (SQLException sqlException){
+            return null;
+        }
+    }
 }

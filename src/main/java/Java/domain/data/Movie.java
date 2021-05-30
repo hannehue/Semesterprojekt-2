@@ -27,6 +27,16 @@ public class Movie extends Production implements IMovie {
     }
 
     @Override
+    public void setCategories(Category[] categories) {
+        super.setCategories(categories);
+    }
+
+    @Override
+    public void setLengthInSecs(int lengthInSecs) {
+        super.setLengthInSecs(lengthInSecs);
+    }
+
+    @Override
     public String toString() {
         return "Name: " + getName() + ", CreditID: " + getCreditID() +
                ", Description: " + getDescription() + ", MovieID: " + getProductionID() +

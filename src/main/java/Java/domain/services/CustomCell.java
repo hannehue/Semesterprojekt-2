@@ -1,13 +1,10 @@
 package Java.domain.services;
 
 import Java.interfaces.ICredit;
-import javafx.fxml.Initializable;
+import Java.presentation.controllers.CreditOverlookController;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class CustomCell extends ListCell<ICredit>{
 
@@ -21,12 +18,13 @@ public class CustomCell extends ListCell<ICredit>{
 
 
     public CustomCell() {
+        super();
         updateSelected(false);
         name = new Label();
         pane = new GridPane();
         editBtn = new Button();
-        editBtn.setText("Edit");
-        editBtn.setOnAction(actionEvent -> startEdit());
+            editBtn.setText("Edit");
+            editBtn.setOnAction(actionEvent -> startEdit());
 
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(85);
@@ -40,12 +38,17 @@ public class CustomCell extends ListCell<ICredit>{
     @Override
     public void updateItem(ICredit credit, boolean empty){
         super.updateItem(credit, empty);
-
-        if (!empty && credit != null){
-            this.name.setText(credit.buildView());
+        if (isEditing()){
+            getListView().scrollTo(credit);
+        }
+        if (empty || credit == null){
+            setText(null);
+            setGraphic(null);
+        } else {
+            this.credit = getItem();
+            name.setText(credit.buildView());
             setGraphic(pane);
         }
-        this.credit = credit;
     }
 
     @Override
@@ -56,11 +59,7 @@ public class CustomCell extends ListCell<ICredit>{
         }
         super.startEdit();
         if (isEditing()) {
-            TextField textField = new TextField();
-            textField.setPromptText(this.credit.getName());
-            pane.getChildren().removeAll();
-            pane.add(textField,0,0);
-
+            CreditOverlookController.getInstance().editItem(getItem());
         }
         getListView().setEditable(false);
     }

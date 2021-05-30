@@ -152,4 +152,11 @@ public class DatabaseLoaderFacade {
     public ResultSet getJobRoles() throws SQLException {
         return DatabaseLoader.getInstance().getAllJobRoles();
     }
+
+    public void updateCredit(IPerson person) throws SQLException{
+        DatabaseLoader.getInstance().updatePerson(person);
+    }
+    public void updateCredit(IMovie iMovie) throws SQLException {
+        DatabaseLoader.getInstance().updateMovie(iMovie);
+    }
 }

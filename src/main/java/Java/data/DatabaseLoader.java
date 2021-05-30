@@ -556,7 +556,7 @@ public class DatabaseLoader {
             updateMovie.setBoolean(2, false);
             updateMovie.setString(3, movie.getDescription());
             updateMovie.setInt(4, movie.getCreditID());
-            updateMovie.setInt(5, Category.valueOf(movie.getCategories()[0].toString().toUpperCase()).ordinal());
+            updateMovie.setInt(5, Category.valueOf(movie.getCategories()[0].toString().toUpperCase().replace(' ', '_')).ordinal()+1);
             updateMovie.setInt(6, movie.getLengthInSecs());
             updateMovie.setString(7, movie.getReleaseDate().toString());
             updateMovie.setInt(8, movie.getCreditID());
@@ -607,8 +607,6 @@ public class DatabaseLoader {
             getConnection().setAutoCommit(true);
             e.printStackTrace();
         }
-
-
     }
 
     public void updateShow(IShow show) throws SQLException {
