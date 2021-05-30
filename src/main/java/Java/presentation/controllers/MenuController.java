@@ -1,7 +1,6 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
-import Java.domain.services.MovieManager;
 import javafx.animation.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,6 +47,9 @@ public class MenuController implements Initializable {
     protected Pane approveCredit;
     @FXML
     protected Pane addCredits;
+
+    @FXML
+    protected Pane creditOverlook;
 
     @FXML
     protected ImageView loginButton;
@@ -126,10 +128,14 @@ public class MenuController implements Initializable {
                     System.out.println("approve credit legal");
                     VBoxMenu.getChildren().removeAll(approveCredit);
                 }
+                if (!ApplicationManager.getInstance().getUserType().getCreditOverlook()){
+                    System.out.println("approve credit overlook");
+                    VBoxMenu.getChildren().removeAll(creditOverlook);
+                }
                 VBoxMenu.getChildren().removeAll(login);
             } else { //Hvis ikke der er logget ind skal der kun vises login
                 System.out.println("usertype is null");
-                VBoxMenu.getChildren().removeAll(profile, approveCredit, addCredits,addUserI, logout);
+                VBoxMenu.getChildren().removeAll(profile, approveCredit, addCredits,addUserI, logout, creditOverlook);
                 VBoxMenu.toFront();
             }
 

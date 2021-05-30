@@ -127,7 +127,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane onMouseClicked="#handleCreditOverlook" prefHeight="75.0" prefWidth="200.0">
+                  <Pane fx:id="creditOverlook" onMouseClicked="#handleCreditOverlook" prefHeight="75.0" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
                            <image>
