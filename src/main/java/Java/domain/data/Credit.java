@@ -3,6 +3,10 @@ package Java.domain.data;
 import Java.interfaces.ICredit;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class Credit implements ICredit {
 
@@ -11,6 +15,7 @@ public abstract class Credit implements ICredit {
     private int creditID;
     private boolean approved;
     private String description;
+    private Map<String, Integer> IDMap;
 
 
     public Credit(String name, Date dateAdded, int creditID, boolean approved, String description){
@@ -21,11 +26,20 @@ public abstract class Credit implements ICredit {
         this.description = description;
     }
 
-    /*
+/*
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }*/
+        //Opretter en ny stringbuilder for hver credit der er blevet returneret
+        StringBuilder stringBuilder = new StringBuilder();
+        //Splitter ved ","
+        String[] observableResultsString = this.toString().split(",");
+        //Tilføj hver linje der er blevet splittet til string builder
+        for (String s: observableResultsString) { stringBuilder.append(s).append("\n"); }
+        //tilføj til liste
+        return stringBuilder.toString();
+    }
+
+ */
 
     @Override
     public String getName() {
@@ -78,7 +92,31 @@ public abstract class Credit implements ICredit {
     }
 
     @Override
-    public String toFileString(){
-        return "No";
+    public Map<String, Integer> getIDMap() {
+        return IDMap;
+    }
+
+    @Override
+    public void setIDMap(Map<String, Integer> IDs) {
+        this.IDMap = IDs;
+    }
+
+    @Override
+    public String buildView() {
+        //Opretter en ny stringbuilder for hver credit der er blevet returneret
+        StringBuilder stringBuilder = new StringBuilder();
+        //Splitter ved ","
+        String[] observableResultsString = this.toString().split(",");
+
+        //Tilføj hver linje der er blevet splittet til string builder
+        for (String s: observableResultsString) {
+            Pattern p = Pattern.compile("\\b.{1," + (80-1) + "}\\b\\W?");
+            Matcher m = p.matcher(s);
+            while (m.find()){
+                stringBuilder.append(m.group()).append("\n");
+            }
+        }
+        //tilføj til liste
+        return stringBuilder.toString();
     }
 }

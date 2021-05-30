@@ -2,6 +2,7 @@ package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
 import Java.domain.data.*;
+import Java.domain.objectMapping.Factory;
 import Java.domain.services.*;
 import Java.interfaces.*;
 import javafx.collections.*;
@@ -12,12 +13,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 /* ------------------------------------------------------------------------------------------------------------------
-Denne Controller alt funktionalitet på de forskellige sider
------------------------------------------------------------------------------------------------------------------- */
+   Denne Controller alt funktionalitet på de forskellige sider
+   ------------------------------------------------------------------------------------------------------------------ */
 
 public class DashboardController implements Initializable {
     @FXML
@@ -33,14 +33,14 @@ public class DashboardController implements Initializable {
 
     private ObservableList<IPerson> personObservableList;
     private ObservableList<IMovie> movieObservableList;
-    private ObservableMap<Integer, IShow> showObservableMap;
-    private ObservableMap<Integer, ISeason> seasonObservableMap = FXCollections.observableHashMap();
-    private ObservableMap<Integer, IEpisode> episodeObservableMap = FXCollections.observableHashMap();
+    private ObservableList<IShow> showObservableList;
+    private ObservableList<ISeason> seasonObservableList;
+    private ObservableList<IEpisode> episodeObservableList;
 
 
     /* ------------------------------------------------------------------------------------------------------------------
-        Metoder
-    ------------------------------------------------------------------------------------------------------------------ */
+       Metoder
+       ------------------------------------------------------------------------------------------------------------------ */
 
     private static final DashboardController instance = new DashboardController();
 
@@ -54,15 +54,15 @@ public class DashboardController implements Initializable {
 
     private void handleApproveCredit(int id, Class<? extends ICredit> credit) {
         if (Show.class.getTypeName().equals(credit.getTypeName())) {
-            ApplicationManager.getInstance().approveCredit(id, showObservableMap);
+            ApplicationManager.getInstance().approveCredit(id, showObservableList);
         } else if (Movie.class.getTypeName().equals(credit.getTypeName())) {
             ApplicationManager.getInstance().approveCredit(id, movieObservableList);
         } else if (Person.class.getTypeName().equals(credit.getTypeName())) {
             ApplicationManager.getInstance().approveCredit(id, personObservableList);
         } else if (Season.class.getTypeName().equals(credit.getTypeName())) {
-            ApplicationManager.getInstance().approveCredit(id, seasonObservableMap);
+            ApplicationManager.getInstance().approveCredit(id, seasonObservableList);
         } else if (Episode.class.getTypeName().equals(credit.getTypeName())) {
-            ApplicationManager.getInstance().approveCredit(id, episodeObservableMap);
+            ApplicationManager.getInstance().approveCredit(id, episodeObservableList);
         }
     }
 
@@ -125,51 +125,27 @@ public class DashboardController implements Initializable {
             }
         });
     }
-    private <T extends ICredit> void setContent(AnchorPane listToApprove, ObservableMap<Integer, T> creditList){
-        int offset = 20;
-        for (Map.Entry<Integer, T> credit : creditList.entrySet()){
-            if (!credit.getValue().isApproved()) {
-                addItem(listToApprove, credit.getValue(), offset);
-                offset += 30;
-            }
-        }
-
-        creditList.addListener(new MapChangeListener<Integer, T>() {
-            @Override
-            public void onChanged(Change<? extends Integer, ? extends T> change) {
-                int offset = 20;
-                System.out.println("change in map");
-                if (change.wasAdded()) {
-                    System.out.println("change add");
-                    ICredit credit = change.getValueAdded();
-                    if (!credit.isApproved()){
-                        addItem(listToApprove, credit, offset);
-                        offset += 30;
-                    }
-                } else if (change.wasRemoved()) {
-                    System.out.println("change removed");
-                    ICredit credit = change.getValueRemoved();
-                    if (!credit.isApproved()){
-                        removeItem(listToApprove, credit);
-                    }
-                }
-            }
-        });
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Factory factory = Factory.getInstance();
+        if (personObservableList != null) personObservableList.clear();
+        if (movieObservableList != null) movieObservableList.clear();
+        if (showObservableList != null) showObservableList.clear();
+        if (seasonObservableList != null) seasonObservableList.clear();
+        if (episodeObservableList != null) episodeObservableList.clear();
+
+
+        factory.getAllUnapprovedCredits();
         movieObservableList = MovieManager.getInstance().getMovies();
         setContent(movieToApprove, movieObservableList);
         personObservableList = PersonManager.getInstance().getPersonList();
         setContent(personToApprove, personObservableList);
-        showObservableMap = ShowManager.getInstance().getShowList();
-        setContent(showToApprove, showObservableMap);
-
-        seasonObservableMap = SeasonManager.getInstance().getSeasonMap();
-        episodeObservableMap = EpisodeManager.getInstance().getEpisodeMap();
-        setContent(seasonToApprove, seasonObservableMap);
-        setContent(episodeToApprove, episodeObservableMap);
+        showObservableList = ShowManager.getInstance().getShowList();
+        setContent(showToApprove, showObservableList);
+        seasonObservableList = SeasonManager.getInstance().getSeasonList();
+        setContent(seasonToApprove, seasonObservableList);
+        episodeObservableList = EpisodeManager.getInstance().getEpisodeList();
+        setContent(episodeToApprove, episodeObservableList);
     }
 }

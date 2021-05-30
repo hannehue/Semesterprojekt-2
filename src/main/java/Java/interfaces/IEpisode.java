@@ -4,8 +4,7 @@ public interface IEpisode extends IProduction {
 
     int getSeasonID();
     void setSeasonID(int seasonID);
-
-    String toFileString();
+    void setLengthInSecs(int LengthInSecs);
 
     void addStaffID(int id);
 }

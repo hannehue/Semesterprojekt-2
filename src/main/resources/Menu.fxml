@@ -127,6 +127,20 @@
                         </Label>
                      </children>
                   </Pane>
+                  <Pane fx:id="creditOverlook" onMouseClicked="#handleCreditOverlook" prefHeight="75.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="56.0" fitWidth="56.0" preserveRatio="true">
+                           <image>
+                              <Image url="@images/add (1).png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" prefHeight="56.0" style="-fx-text-alignment: center;" text="Credit Overlook" textAlignment="CENTER">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
                </children>
             </VBox>
          </children>

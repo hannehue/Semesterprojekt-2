@@ -28,8 +28,4 @@ public class Group extends Credit implements IGroup {
                 ", Description: " + getDescription() + ", GroupID: " + getGroupID();
     }
 
-    @Override
-    public String toFileString() {
-        return "" + getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() + "," + getDescription() + "," + getGroupID();
-    }
 }

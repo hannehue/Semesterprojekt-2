@@ -1,32 +1,40 @@
 package Java.presentation.controllers;
 
 import Java.domain.ApplicationManager;
+import Java.domain.data.Category;
+import Java.domain.objectMapping.Factory;
 import Java.domain.services.*;
-import Java.interfaces.IJob;
-import Java.interfaces.ISeason;
-import Java.interfaces.IShow;
+import Java.interfaces.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AddCreditController implements Initializable {
     @FXML
-    protected ChoiceBox choiceBoxShow;
-    @FXML
     protected ChoiceBox choiceBoxSeason;
+    @FXML
+    protected ChoiceBox choiceBoxCategory;
+    @FXML
+    protected ChoiceBox choiceBoxCategoryMovie;
     @FXML
     protected TextField personName;
     @FXML
@@ -34,9 +42,11 @@ public class AddCreditController implements Initializable {
     @FXML
     protected TextField personPhone;
     @FXML
+    protected TextArea personDescription;
+    @FXML
     protected TextField movieTitle;
     @FXML
-    protected TextField movieDescription;
+    protected TextArea movieDescription;
     @FXML
     protected TextField movieLength;
     @FXML
@@ -49,12 +59,21 @@ public class AddCreditController implements Initializable {
     protected Pane moviePeoplePane;
     @FXML
     protected Pane episodePeoplePane;
+    @FXML
+    protected Pane showSearchPane;
+    @FXML
+    protected TextField showSearch;
 
     private ListView PersonList;
     private ListView episodePersonList;
+    private ListView showSearchList;
+
+    private ObservableList<IShow> showList;
 
     private Stage createShow;
     private Stage createSeason;
+
+    private IShow currentShow;
 
     private static AddCreditController instance = new AddCreditController();
 
@@ -65,19 +84,6 @@ public class AddCreditController implements Initializable {
         return instance;
     }
 
-    /**
-     * Displays the choices in the choicebox show
-     *
-     * @param mouseEvent
-     */
-    public void handleGetShows(MouseEvent mouseEvent) {
-        choiceBoxShow.getItems().clear();
-        choiceBoxSeason.getItems().clear();
-        for (IShow show : ShowManager.getInstance().getAllShows()) {
-            choiceBoxShow.getItems().add(show);
-        }
-        choiceBoxShow.show();
-    }
 
     /**
      *
@@ -87,15 +93,13 @@ public class AddCreditController implements Initializable {
      */
     public void handleGetSeason(MouseEvent Event) {
         choiceBoxSeason.getItems().clear();
-        if (choiceBoxShow.getValue() != null) {
-            IShow show = ShowManager.getInstance().searchShowName(choiceBoxShow.getValue().toString());
-            if (show != null) {
-                for (Integer seasonId : show.getSeasons()) {
-                    ISeason season = SeasonManager.getInstance().getSeasonById(seasonId);
-                    choiceBoxSeason.getItems().add(season);
-                }
+        IShow selectedCredit = (IShow) showSearchList.getSelectionModel().getSelectedItem();
+            if (selectedCredit != null) {
+                choiceBoxSeason.getItems().addAll(Factory.getInstance().getSeasonsForShow(selectedCredit));
+
+                ArrayList<ISeason> seasons = new ArrayList<>();
+                seasons.addAll(choiceBoxSeason.getItems());
             }
-        }
         System.out.println("Showing choicebox wiht conttens " + choiceBoxSeason.getItems());
         choiceBoxSeason.show();
     }
@@ -107,13 +111,17 @@ public class AddCreditController implements Initializable {
      */
     @FXML
     protected void handleSendEpisodeButton(ActionEvent Event) throws IOException {
-        int id = ApplicationManager.getInstance().nextId();
-        EpisodeManager.getInstance().addEpisode(
-                episodeTitle.getText(),
-                Integer.parseInt(episodeLength.getText()),
-                ((ISeason) choiceBoxSeason.getValue()).getCreditID(),
-                id);
-        JobManager.getInstance().addJob(id);
+        IEpisode episode = EpisodeManager.getInstance().addEpisode(
+            ((ISeason) choiceBoxSeason.getValue()),
+            Integer.parseInt(episodeLength.getText()),
+            episodeTitle.getText(),
+            (Category) choiceBoxCategory.getValue()
+        );
+        JobManager.getInstance().addJob(episode.getProductionID());
+        showSearch.clear();
+        episodeId.clear();
+        episodeTitle.clear();
+        episodeLength.clear();
     }
 
     /**
@@ -124,15 +132,17 @@ public class AddCreditController implements Initializable {
      */
     @FXML
     protected void handleSendMovieButton(ActionEvent Event) throws IOException{
-        int id = ApplicationManager.getInstance().nextId();
-        MovieManager.getInstance().addMovie(
+        IMovie movie = MovieManager.getInstance().addMovie(
                 movieTitle.getText(),
                 movieDescription.getText(),
-                null,
-                id,
-                Integer.parseInt(movieLength.getText())
+                new Category[]{(Category) choiceBoxCategoryMovie.getValue()},
+                Integer.parseInt(movieLength.getText()),
+                new Date()
                 );
-        JobManager.getInstance().addJob(id);
+        JobManager.getInstance().addJob(movie.getIDMap().get("productionID"));
+        movieTitle.clear();
+        movieDescription.clear();
+        movieLength.clear();
     }
 
     /**
@@ -145,9 +155,14 @@ public class AddCreditController implements Initializable {
     protected void handleSendPersonButton(ActionEvent Event) throws IOException{
         PersonManager.getInstance().addPerson(
                 personName.getText(),
-                null,
+                personDescription.getText(), //description
                 personPhone.getText(),
+                "", //personalinfo
                 personEmail.getText());
+        personName.clear();
+        personEmail.clear();
+        personPhone.clear();
+        personDescription.clear();
     }
 
     /**
@@ -182,12 +197,13 @@ public class AddCreditController implements Initializable {
      */
     @FXML
     protected void handleCreateSeason(ActionEvent Event) throws IOException {
+        ICredit selectedCredit = (ICredit)  showSearchList.getSelectionModel().getSelectedItem();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(ApplicationManager.class.getClassLoader().getResource("CreateSeason.fxml"));
         loader.setController(CreateSeasonController.getInstance());
         Scene scene = new Scene(loader.load());
         createSeason = new Stage();
-        createSeason.setTitle("Opret Sæson til " + choiceBoxShow.getValue().toString());
+        createSeason.setTitle("Opret Sæson til " + selectedCredit.toString());
         createSeason.setScene(scene);
         createSeason.show();
     }
@@ -201,7 +217,9 @@ public class AddCreditController implements Initializable {
 
 
     protected void addSeason(String description) {
-        SeasonManager.getInstance().addSeason(description, ((IShow) choiceBoxShow.getValue()).getCreditID());
+        getInstance().choiceBoxSeason.setValue(
+                SeasonManager.getInstance().addSeason(description, ((IShow) showSearchList.getSelectionModel().getSelectedItem()))
+        );
     }
 
     /**
@@ -231,7 +249,7 @@ public class AddCreditController implements Initializable {
 
 
     private void reloadNextEpisode() {
-        episodeId.setText(EpisodeManager.getInstance().getNextEpisode(((ISeason) choiceBoxSeason.getValue()).getCreditID()));
+        episodeId.setText(EpisodeManager.getInstance().getNextEpisode(((ISeason) choiceBoxSeason.getValue())));
     }
 
     public void handleRemovePersons(ActionEvent actionEvent) {
@@ -241,20 +259,42 @@ public class AddCreditController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         PersonList = new ListView();
         PersonList.setPrefHeight(200);
         PersonList.setPrefWidth(493);
-        moviePeoplePane.getChildren().add(PersonList);
         ObservableList<IJob> observableResults = JobManager.getInstance().getTempList();
         PersonList.setItems(observableResults);
+        moviePeoplePane.getChildren().add(PersonList);
 
 
         episodePersonList = new ListView();
         episodePersonList.setPrefHeight(200);
         episodePersonList.setPrefWidth(493);
-        episodePeoplePane.getChildren().add(PersonList);
         ObservableList<IJob> episodeList = JobManager.getInstance().getTempList();
-        PersonList.setItems(episodeList);
+        episodePersonList.setItems(episodeList);
+        episodePeoplePane.getChildren().add(episodePersonList);
 
+        showSearchList = new ListView();
+        showSearchList.setPrefHeight(104);
+        showSearchList.setPrefWidth(252);
+        showSearchPane.getChildren().add(showSearchList);
+        showList = FXCollections.observableArrayList();
+        showSearchList.setItems(showList);
+
+        EventHandler<KeyEvent> ev = new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (showSearch.getText().length() > 3){
+                    showSearchList.getItems().clear();
+                    ApplicationManager.getInstance().searchShow(showSearch.getText(), showList);
+                }
+            }
+        };
+        showSearch.setOnKeyPressed(ev);
+
+        choiceBoxCategory.getItems().addAll(Category.values());
+        choiceBoxCategoryMovie.getItems().addAll(Category.values());
     }
 }

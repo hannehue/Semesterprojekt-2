@@ -1,13 +1,14 @@
 package Java.domain.services;
 
-import Java.domain.ApplicationManager;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.data.Season;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
+import javafx.collections.ObservableList;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class SeasonManager {
     private static SeasonManager instance = new SeasonManager();
@@ -17,30 +18,49 @@ public class SeasonManager {
         return instance;
     }
 
-    private final ObservableMap<Integer, ISeason> seasonMap = FXCollections.observableHashMap();
+    private final ObservableList<ISeason> seasonList = FXCollections.observableArrayList();
 
-    public void addSeason(String description, int showId) {
-        IShow show = ShowManager.getInstance().getShowById(showId);
+    public ISeason addSeason(String description, IShow show) {
+
         ISeason season = new Season(
-                "S" + (show.getNumberOfSeason() + 1),
-                new Date(),
-                ApplicationManager.getInstance().nextId(),
-                false,
+                "Season" + (show.getNumberOfSeason() + 1),
                 description,
-                show.getCreditID(),
                 false
         );
-        show.getSeasons().add(season.getCreditID());
-        seasonMap.put(season.getCreditID(), season);
+        season.setShowID(show.getIDMap().get("showID"));
+        Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(season);
+        season.setIDMap(IDs);
+        season.setCreditID(IDs.get("creditID"));
+        show.getSeasons().add(season);
+        seasonList.add(season);
         show.setAllSeasonApproved(false);
+        return season;
     }
 
 
-    public ISeason getSeasonById(int seasonId) {
-        return seasonMap.get(seasonId);
+    public ISeason getSeasonById(int seasonCreditId) {
+        for (ISeason season : seasonList) {
+            if (season.getCreditID() == seasonCreditId) {
+                return season;
+            }
+        }
+        return null;
     }
 
-    public ObservableMap<Integer, ISeason> getSeasonMap(){
-        return seasonMap;
+    public void addToList(ArrayList<ISeason> seasons){
+        for (ISeason season: seasons){
+            seasonList.add(season);
+        }
+        populateEpisodeList();
+    }
+
+    public void populateEpisodeList(){
+        for (ISeason season: seasonList){
+            EpisodeManager.getInstance().addToList(season);
+        }
+    }
+
+    public ObservableList<ISeason> getSeasonList(){
+        return seasonList;
     }
 }

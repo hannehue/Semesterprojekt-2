@@ -1,13 +1,15 @@
 package Java.domain.services;
 
-import Java.domain.ApplicationManager;
+import Java.persistence.DatabaseLoaderFacade;
+import Java.domain.data.Category;
 import Java.domain.data.Episode;
 import Java.interfaces.IEpisode;
 import Java.interfaces.ISeason;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
+import javafx.collections.ObservableList;
 
 import java.util.Date;
+import java.util.Map;
 
 public class EpisodeManager {
     private static EpisodeManager instance = new EpisodeManager();
@@ -20,35 +22,47 @@ public class EpisodeManager {
         return instance;
     }
 
-    private final ObservableMap<Integer, IEpisode> episodeMap = FXCollections.observableHashMap();
+    private final ObservableList<IEpisode> episodeList = FXCollections.observableArrayList();
 
-    public void addEpisode(String title, int length, int seasonId, int id) {
-        ISeason season = SeasonManager.getInstance().getSeasonById(seasonId);
+    public IEpisode addEpisode(ISeason season, int length, String title, Category category) {
         IEpisode episode = new Episode(
-                getNextEpisode(season.getCreditID()) + " - " + title,
-                new Date(),
-                id,
-                false,
+                getNextEpisode(season) + " - " + title,
                 "description",
-                ApplicationManager.getInstance().nextId(),
-                null,
+                new Category[]{category},
                 length,
-                null,
-                season.getCreditID()
+                new Date()
         );
-        season.getEpisodes().add(episode.getCreditID());
-        episodeMap.put(episode.getCreditID(), episode);
+        episode.setSeasonID(season.getIDMap().get("seasonID"));
+        Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(episode);
+        episode.setProductionID(IDs.get("productionID"));
+        season.getEpisodes().add(episode);
+        episodeList.add(episode);
         System.out.println("tilføjet " + episode.getName());
+        return episode;
     }
 
-    public String getNextEpisode(Integer seasonId) {
-        ISeason season = SeasonManager.getInstance().getSeasonById(seasonId);
+    public String getNextEpisode(ISeason season) {
         String episodeString = season + "E" + (season.getNumberOfEpisode() + 1);
         return episodeString;
     }
 
-    public ObservableMap<Integer, IEpisode> getEpisodeMap(){
-        return episodeMap;
+    public ObservableList<IEpisode> getEpisodeList(){
+        return episodeList;
+    }
+
+    public void addToList(ISeason season){
+        for (IEpisode episode: season.getEpisodes()){
+            episodeList.add(episode);
+        }
+    }
+
+    public IEpisode getEpisodeById(int episodeCreditId) {
+        for (IEpisode episode : episodeList) {
+            if (episode.getCreditID() == episodeCreditId) {
+                return episode;
+            }
+        }
+        return null;
     }
 
 }

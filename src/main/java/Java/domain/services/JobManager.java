@@ -1,5 +1,6 @@
 package Java.domain.services;
 
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.data.Job;
 import Java.domain.data.Role;
 import Java.interfaces.IJob;
@@ -14,7 +15,9 @@ public class JobManager {
 
     public void addJob(int productionId) {
         for (IJob job : tempList) {
-            PersonManager.getInstance().getPersonById(job.getPersonId()).addJob(job);
+            job.setProductionID(productionId);
+            DatabaseLoaderFacade.getInstance().putInDatabase(job);
+            //PersonManager.getInstance().getPersonById(job.getPersonId()).addJob(job);
         }
         tempList.clear();
     }

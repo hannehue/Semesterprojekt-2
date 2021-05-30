@@ -23,6 +23,21 @@ public class Person extends Credit implements IPerson {
         this.personEmail = personEmail;
     }
 
+    public Person(String name, String description, String phoneNumber, String personalInfo, String personEmail){
+        super(
+                name,
+                new Date(),
+                0,
+                false,
+                description
+        );
+        this.personID = 0;
+        this.jobs = new ArrayList<IJob>();
+        this.phoneNumber = phoneNumber;
+        this.personalInfo = personalInfo;
+        this.personEmail = personEmail;
+    }
+
     @Override
     public int getPersonID() {
         return personID;
@@ -44,6 +59,7 @@ public class Person extends Credit implements IPerson {
     }
     @Override
     public void addJob(IJob job){
+
         jobs.add(job);
     }
 
@@ -85,30 +101,6 @@ public class Person extends Credit implements IPerson {
         }
         return "Name: " + getName() + ", PersonID: " + personID + "\n" +
                 "Jobs:\n" + jobString;
-    }
-    @Override
-    public String toFileString() {
-        String personString = getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() +
-                "," + getDescription() + "," + getPersonID() + "," + getPhoneNumber() + "," +
-                getPersonalInfo() + "," + getEmail() + ",";
-
-        //Koreografi;Fotografer--165--Mand i hættetrøje ved tanken;Hans Jensen,
-        String jobString = "";
-
-        for (IJob j : getJobs()) {
-            String roles = "";
-            String characterNames = "";
-
-            roles = j.getRole().toString();
-
-            characterNames = j.getCharacterName();
-
-            jobString += roles + "--" + j.getProgram() + "--" + characterNames + ",";
-        }
-        personString += jobString;
-
-        System.out.println(personString);
-        return personString;
     }
 
     @Override

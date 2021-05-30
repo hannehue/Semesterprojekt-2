@@ -1,86 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" style="-fx-background-color: #009ceb;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <center>
-        <Pane prefHeight="713.0" prefWidth="1024.0" BorderPane.alignment="CENTER">
-            <children>
-                <Accordion layoutX="259.0" layoutY="21.0" prefHeight="585.0" prefWidth="541.0">
-                    <panes>
-                        <TitledPane animated="false" prefHeight="533.0" prefWidth="541.0" text="Tilføj Film">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <TextField fx:id="movieTitle" layoutX="200.0" prefHeight="26.0" prefWidth="295.0" />
-                                        <TextField fx:id="movieDescription" layoutX="200.0" layoutY="34.0" prefHeight="26.0" prefWidth="295.0" />
-                                        <Label layoutX="10.0" prefHeight="26.0" prefWidth="199.0" text="Titel" />
-                                        <Label layoutX="10.0" layoutY="35.0" prefHeight="26.0" prefWidth="199.0" text="Beskrivelse:" />
-                                        <Label layoutX="10.0" layoutY="70.0" prefHeight="26.0" prefWidth="199.0" text="Længde i sekunder:">
-                                            <font>
-                                                <Font name="System Bold" size="13.0" />
-                                            </font>
-                                        </Label>
-                                        <TextField fx:id="movieLength" layoutX="200.0" layoutY="69.0" prefHeight="26.0" prefWidth="295.0" />
-                                        <Button contentDisplay="CENTER" layoutX="200.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
-                                        <Pane fx:id="moviePeoplePane" layoutX="9.0" layoutY="244.0" prefHeight="214.0" prefWidth="522.0">
-                                            <children>
-                                            </children>
-                                        </Pane>
-                                        <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendMovieButton" text="Godkend og send" />
-                              <Button layoutX="410.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" />
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                        <TitledPane animated="false" prefHeight="369.0" prefWidth="498.0" text="Tilføj Person">
-                            <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                        <Label layoutX="14.0" prefHeight="26.0" text="Navn:" />
-                                        <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Email:" />
-                                        <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Telefon:" />
-                                        <TextField fx:id="personName" layoutX="230.0" layoutY="1.0" prefHeight="26.0" prefWidth="295.0" />
-                                        <TextField fx:id="personEmail" layoutX="230.0" layoutY="30.0" prefHeight="26.0" prefWidth="295.0" />
-                                        <TextField fx:id="personPhone" layoutX="230.0" layoutY="60.0" prefHeight="26.0" prefWidth="295.0" />
-                                        <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" />
-                                    </children>
-                                </AnchorPane>
-                            </content>
-                        </TitledPane>
-                  <TitledPane animated="false" onMouseClicked="#handleGetShows" prefHeight="369.0" prefWidth="498.0" text="Tilføj Episode">
-                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                           <children>
-                              <Label layoutX="10.0" layoutY="1.0" prefHeight="26.0" text="Serie" />
-                              <Label layoutX="10.0" layoutY="30.0" prefHeight="26.0" text="Sæsson" />
-                              <Label layoutX="10.0" layoutY="60.0" prefHeight="26.0" text="Episode:" />
-                              <Button contentDisplay="CENTER" layoutX="410.0" layoutY="462.0" mnemonicParsing="false" onAction="#handleSendEpisodeButton" text="Godkend og send" />
-                              <Button layoutX="488.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleCreateShow" text="+" />
-                              <ChoiceBox fx:id="choiceBoxShow" layoutX="230.0" layoutY="1.0"  onMouseClicked="#handleGetShows" prefHeight="27.0" prefWidth="249.0" />
-                              <ChoiceBox fx:id="choiceBoxSeason" layoutX="230.0" layoutY="30.0"  onMouseClicked="#handleGetSeason" prefHeight="27.0" prefWidth="249.0" />
-                              <Button layoutX="488.0" layoutY="30.0" mnemonicParsing="false" onAction="#handleCreateSeason" text="+" />
-                              <Label layoutX="10.0" layoutY="90.0" prefHeight="26.0" prefWidth="48.0" text="Title" />
-                              <TextField fx:id="episodeTitle" layoutX="230.0" layoutY="90.0" prefHeight="27.0" prefWidth="283.0" />
-                              <Label layoutX="14.0" layoutY="120.0" prefHeight="26.0" prefWidth="48.0" text="Længde" />
-                              <TextField fx:id="episodeLength" layoutX="230.0" layoutY="120.0" prefHeight="27.0" prefWidth="283.0" />
-                               <Pane fx:id="episodePeoplePane" layoutX="9.0" layoutY="244.0" prefHeight="214.0" prefWidth="522.0">
-                               <children>
-                               </children>
-                                </Pane>
-                            <Button layoutX="488.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleGetEpisodeName" text="+" />
-                              <TextField fx:id="episodeId" disable="true" layoutX="230.0" layoutY="60.0" prefHeight="27.0" prefWidth="248.0" />
-                              <Button layoutX="397.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" />
-                              <Button contentDisplay="CENTER" layoutX="190.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" />
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </TitledPane>
-                    </panes>
-                </Accordion>
-            </children>
-        </Pane>
-    </center>
-</BorderPane>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <panes>
+          <TitledPane animated="false" text="Tilføj Film">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="653.0" prefWidth="575.0">
+                                 <children>
+                                    <GridPane prefHeight="476.0" prefWidth="575.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="140.50000762939453" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="489.00000762939453" minWidth="10.0" prefWidth="329.49999237060547" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="489.00000762939453" minWidth="10.0" prefWidth="147.5" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Titel:" />
+                                          <TextField fx:id="movieTitle" GridPane.columnIndex="1" />
+                                          <Label text="Beskrivelse: " GridPane.rowIndex="1" />
+                                          <TextArea fx:id="movieDescription" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Label text="Længde i  sekunder" GridPane.rowIndex="2" />
+                                          <TextField fx:id="movieLength" prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label text="Kategori" GridPane.rowIndex="3" />
+                                          <ChoiceBox fx:id="choiceBoxCategoryMovie" prefHeight="27.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                          <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                          <Button mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="5" GridPane.rowSpan="2">
+                                             <children>
+                                                <Pane fx:id="moviePeoplePane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSendMovieButton" text="Godkend og send" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Tilføj Episode">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="618.0" prefWidth="577.0">
+                                 <children>
+                                    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="312.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="72.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Serie:" />
+                                          <Label text="Sæson:" GridPane.rowIndex="3" />
+                                          <Label text="Episode:" GridPane.rowIndex="4" />
+                                          <Label text="Titel:" GridPane.rowIndex="5" />
+                                          <Label text="Længde:" GridPane.rowIndex="6" />
+                                          <Label text="Kategori:" GridPane.rowIndex="7" />
+                                          <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSendEpisodeButton" text="Godkend og send" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="11" />
+                                          <Button mnemonicParsing="false" onAction="#handleCreateShow" text="+" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                          <Button mnemonicParsing="false" onAction="#handleCreateSeason" text="+" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                          <Button mnemonicParsing="false" onAction="#handleGetEpisodeName" text="+" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                          <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddCreditButton" text="Tilføj krediteret person" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                          <Button mnemonicParsing="false" onAction="#handleRemovePersons" text="Ryd Personer" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                          <TextField fx:id="episodeId" disable="true" prefHeight="27.0" prefWidth="248.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="9" GridPane.rowSpan="2">
+                                             <children>
+                                                <Pane fx:id="episodePeoplePane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                                             </children>
+                                          </AnchorPane>
+                                          <ChoiceBox fx:id="choiceBoxCategory" prefHeight="27.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+                                          <TextField fx:id="episodeLength" prefHeight="27.0" prefWidth="283.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                          <TextField fx:id="episodeTitle" prefHeight="27.0" prefWidth="283.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                          <TextField fx:id="showSearch" prefHeight="22.0" prefWidth="249.0" promptText="Søg" GridPane.columnIndex="1" />
+                                          <ChoiceBox fx:id="choiceBoxSeason" onMouseClicked="#handleGetSeason" prefHeight="27.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+                                             <children>
+                                                <Pane fx:id="showSearchPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+          <TitledPane animated="false" text="Tilføj Person">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="474.0" prefWidth="577.0">
+                                 <children>
+                                    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Navn:" />
+                                          <Label prefHeight="26.0" text="Email:" GridPane.rowIndex="1" />
+                                          <Label prefHeight="26.0" text="Telefon:" GridPane.rowIndex="2" />
+                                          <Label prefHeight="26.0" text="Beskrivelse:" GridPane.rowIndex="3" />
+                                          <TextField fx:id="personName" prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" />
+                                          <TextField fx:id="personEmail" prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <TextField fx:id="personPhone" prefHeight="26.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSendPersonButton" text="Godkend og send" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                          <TextArea fx:id="personDescription" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
+   </children>
+</AnchorPane>

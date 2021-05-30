@@ -49,6 +49,9 @@ public class MenuController implements Initializable {
     protected Pane addCredits;
 
     @FXML
+    protected Pane creditOverlook;
+
+    @FXML
     protected ImageView loginButton;
     @FXML
     protected Label loginButtonLabel;
@@ -125,10 +128,14 @@ public class MenuController implements Initializable {
                     System.out.println("approve credit legal");
                     VBoxMenu.getChildren().removeAll(approveCredit);
                 }
+                if (!ApplicationManager.getInstance().getUserType().getCreditOverlook()){
+                    System.out.println("approve credit overlook");
+                    VBoxMenu.getChildren().removeAll(creditOverlook);
+                }
                 VBoxMenu.getChildren().removeAll(login);
             } else { //Hvis ikke der er logget ind skal der kun vises login
                 System.out.println("usertype is null");
-                VBoxMenu.getChildren().removeAll(profile, approveCredit, addCredits,addUserI, logout);
+                VBoxMenu.getChildren().removeAll(profile, approveCredit, addCredits,addUserI, logout, creditOverlook);
                 VBoxMenu.toFront();
             }
 
@@ -152,58 +159,33 @@ public class MenuController implements Initializable {
         Menu.setVisible(false);
     }
 
-
     //Søge felt
     public void handleOpenSearch(MouseEvent mouseEvent) {
         //Hvis søgefeltet er synligt
-        if (searchField.visibleProperty().get()){
-            /*/Ignorer at der skal søge hvis brugeren ikke har indtastet noget
-            if (!searchField.getText().equalsIgnoreCase("")) {
-                //gemmer søgestrengen
-                searchString = searchField.getText();
-                //prøver at åbne søgeresultat ind i content
-                try {
-                    setContentPane("SearchResult.fxml", (Object) SearchController.getInstance());
-                    SearchController.getInstance().setContent();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //Hvis der ikke er indtastet noget
-            } else {
-                searchField.setPromptText("Indtast noget");
-            }
-            //Hvis søgefeltet ikke er åbent, så start animation
-            */
-        } else {
+        if (!searchField.visibleProperty().get()){
             searchField.setVisible(true);
             Timeline timeline = new Timeline();
             KeyValue keyValue = new KeyValue(searchField.translateXProperty(), 0, Interpolator.LINEAR);
             KeyFrame keyFrame = new KeyFrame(Duration.millis(3000), keyValue);
             timeline.getKeyFrames().add(keyFrame);
             timeline.play();
-            timeline.setOnFinished(event -> searchField.setPromptText(ApplicationManager.getInstance().getSearchFieldPlaceholder()));
         }
     }
 
     public void submitSearch(MouseEvent mouseEvent){
         System.out.println("clicked submit search");
         if (searchField.visibleProperty().get()){
-            //Ignorer at der skal søge hvis brugeren ikke har indtastet noget
             if (!searchField.getText().equalsIgnoreCase("")) {
-                //gemmer søgestrengen
                 searchString = searchField.getText();
-                //prøver at åbne søgeresultat ind i content
                 try {
                     setContentPane("SearchResult.fxml", (Object) SearchController.getInstance());
                     SearchController.getInstance().setContent();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //Hvis der ikke er indtastet noget
             } else {
                 searchField.setPromptText("Indtast noget");
             }
-            //Hvis søgefeltet ikke er åbent, så start animation
         }
     }
 
@@ -264,6 +246,15 @@ public class MenuController implements Initializable {
     public void handleAddUser(MouseEvent mouseEvent) {
         try {
             setContentPane("AddUsers.fxml", AddUserController.getInstance());
+            hideMenu();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void handleCreditOverlook(MouseEvent mouseEvent){
+        try{
+            setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
             hideMenu();
         } catch (Exception e){
             e.printStackTrace();

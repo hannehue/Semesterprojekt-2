@@ -1,13 +1,15 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoader;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.data.Category;
 import Java.domain.data.Movie;
+import Java.domain.objectMapping.Factory;
 import Java.interfaces.IMovie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.Map;
 
 public class MovieManager {
     private static MovieManager instance = new MovieManager();
@@ -23,23 +25,24 @@ public class MovieManager {
         return movieList;
     }
 
-    public void addMovie(String name, String description, Category[] categories, int id, int length) {
+    public IMovie addMovie(String name, String description, Category[] categories, int length, Date releaseDate) {
         IMovie movie = new Movie(
                 name,
-                null,
-                id,
-                false,
                 description,
-                1, // Change later
                 categories,
                 length,
-                null);
+                releaseDate);
+        Map<String, Integer> IDs = DatabaseLoaderFacade.getInstance().putInDatabase(movie);
         movieList.add(movie);
-        System.out.println(movie.getName());
+        movie.setIDMap(IDs);
+        //call to database, get the Id
+        System.out.println(movie.getName() + " added");
+        System.out.printf("IDs" + IDs.get("productionID"));
+        return movie;
     }
 
-    public ArrayList<IMovie> searchMovie(String findMovie){
-        return DatabaseLoader.getInstance().searchQueryToMovieList(findMovie);
+    public ObservableList<IMovie> searchMovie(String findMovie){
+        return Factory.getInstance().getMovies(findMovie);
     }
 
 }

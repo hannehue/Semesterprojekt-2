@@ -4,8 +4,8 @@ import Java.domain.data.Role;
 
 public interface IJob {
 
-    int getProgram();
-    void setProgram(int program);
+    int getProductionID();
+    void setProductionID(int program);
 
     Role getRole();
     void setRole(Role role);

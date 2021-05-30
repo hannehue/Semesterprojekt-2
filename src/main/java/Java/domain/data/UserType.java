@@ -1,23 +1,25 @@
 package Java.domain.data;
 
 public enum UserType {
-    ADMIN("Admin", true, true, true, false),
-    MODERATOR("Moderator", false, true, true, false),
-    PRODUCER("Producer", false, true, false, true),
-    PERSON("Person", false, false, false, true);
+    ADMIN("Admin", true, true, true, false, true),
+    MODERATOR("Moderator", false, true, true, false, true),
+    PRODUCER("Producer", false, true, false, true, false),
+    PERSON("Person", false, false, false, true, false);
 
     private final String userType;
     private final boolean addUser;
     private final boolean addCredit;
     private final boolean approveCredit;
     private final boolean personalProfile;
+    private final boolean creditOverlook;
 
-    UserType(String userType, Boolean addUser, Boolean addCredit, Boolean approveCredit, Boolean personalProfile){
+    UserType(String userType, Boolean addUser, Boolean addCredit, Boolean approveCredit, Boolean personalProfile, Boolean creditOverlook){
         this.userType = userType;
         this.addUser = addUser;
         this.addCredit = addCredit;
         this.approveCredit = approveCredit;
         this.personalProfile = personalProfile;
+        this.creditOverlook = creditOverlook;
     }
 
     public String toString() {
@@ -37,4 +39,6 @@ public enum UserType {
     }
 
     public boolean getPersonalProfile() {return personalProfile;}
+
+    public boolean getCreditOverlook(){return creditOverlook;}
 }

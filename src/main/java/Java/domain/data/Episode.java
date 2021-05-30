@@ -15,6 +15,21 @@ public class Episode extends Production implements IEpisode {
         this.seasonID = seasonID;
     }
 
+    public Episode(String name, String description, Category[] category, int lengthInSecs, Date releaseDate){
+        super(
+                name,
+                new Date(),
+                0,
+                false,
+                description,
+                0,
+                category,
+                lengthInSecs,
+                releaseDate
+        );
+        this.seasonID = 0;
+    }
+
     @Override
     public String toString() {
         return "Name: " + getName() + ", CreditID: " + getCreditID() +
@@ -25,31 +40,6 @@ public class Episode extends Production implements IEpisode {
     }
 
     @Override
-    public String toFileString() {
-        String EpisodeFileString = "";
-        EpisodeFileString += getName() + "," + getDateAdded() + "," + getCreditID() + "," + isApproved() +
-                "," + getDescription() + "," + getProductionID() + ",";
-
-        String categories = "";
-        for (Category category: getCategories()){
-            categories += category.toString() + ";";
-        }
-        EpisodeFileString += categories.substring(0, categories.length() - 1) + ",";
-
-        EpisodeFileString += getLengthInSecs() + "," + getReleaseDate() + ",";
-
-        String staffIDString = "";
-        for(Integer staffId: getStaffIDs()){
-            staffIDString += staffId + ";";
-        }
-        EpisodeFileString += staffIDString.substring(0, staffIDString.length() - 1) + ",";
-
-        EpisodeFileString += getSeasonID();
-
-        return EpisodeFileString;
-    }
-
-    @Override
     public int getSeasonID() {
         return seasonID;
     }
@@ -57,5 +47,10 @@ public class Episode extends Production implements IEpisode {
     @Override
     public void setSeasonID(int seasonID) {
         this.seasonID = seasonID;
+    }
+
+    @Override
+    public void setLengthInSecs(int lengthInSecs) {
+        super.setLengthInSecs(lengthInSecs);
     }
 }

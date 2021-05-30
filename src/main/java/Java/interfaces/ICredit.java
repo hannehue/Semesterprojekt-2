@@ -1,6 +1,7 @@
 package Java.interfaces;
 
 import java.util.Date;
+import java.util.Map;
 
 public interface ICredit {
 
@@ -21,6 +22,9 @@ public interface ICredit {
     void setApproved(boolean approved);
 
     //getters/setters for Season class
-    String toFileString();
 
+    Map<String, Integer> getIDMap();
+    void setIDMap(Map<String, Integer> IDs);
+
+    String buildView();
 }

@@ -49,7 +49,6 @@ public class CreditViewController implements Initializable {
 
             Label personInfoLabel = new Label();
             Label personInfo = new Label();
-
             personInfoLabel.setText("Personal info");
             personInfoLabel.setStyle("-fx-font-weight: bold");
             personInfo.setText(personCredit.getPersonalInfo());
