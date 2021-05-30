@@ -123,6 +123,7 @@ public class DatabaseLoaderFacade {
     public IProduction getFromDatabase(IProduction production){
         return null;
     }
+
     public ResultSet getAllUnApprovedCredits() throws SQLException {
       return DatabaseLoader.getInstance().getAllUnApprovedCredits();
     }
@@ -147,10 +148,6 @@ public class DatabaseLoaderFacade {
     }
     public ResultSet searchShowsFromDatabase(String searchString){
         return DatabaseLoader.getInstance().searchQueryToShowList(searchString);
-    }
-
-    public ResultSet searchSeasonsFromShow(IShow show){
-        return DatabaseLoader.getInstance().queryGetSeasonsForShow(show);
     }
 
     public ResultSet getJobRoles() throws SQLException {

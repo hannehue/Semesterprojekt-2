@@ -3,9 +3,12 @@ package Java.domain.services;
 import Java.data.DatabaseLoaderFacade;
 import Java.interfaces.ICredit;
 import Java.presentation.controllers.CreditOverlookController;
+import Java.presentation.controllers.MenuController;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class CustomCell extends ListCell<ICredit>{
@@ -55,6 +58,11 @@ public class CustomCell extends ListCell<ICredit>{
                         DatabaseLoaderFacade.getInstance().setCreditApproveState(credit,true);
                     } catch (SQLException sqlException) {
                         sqlException.printStackTrace();
+                    }
+                    try {
+                        MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 });
                 pane.add(approveBtn,3,0);
