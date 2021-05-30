@@ -1,6 +1,6 @@
 package Java.domain.services;
 
-import Java.persistance.DatabaseLoaderFacade;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.data.Job;
 import Java.domain.data.Role;
 import Java.interfaces.IJob;

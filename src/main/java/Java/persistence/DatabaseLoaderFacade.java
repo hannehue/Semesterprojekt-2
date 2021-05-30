@@ -1,4 +1,4 @@
-package Java.persistance;
+package Java.persistence;
 
 import Java.interfaces.*;
 

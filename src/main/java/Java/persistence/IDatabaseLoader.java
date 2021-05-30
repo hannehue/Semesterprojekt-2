@@ -1,4 +1,4 @@
-package Java.persistance;
+package Java.persistence;
 
 public interface IDatabaseLoader {
 }

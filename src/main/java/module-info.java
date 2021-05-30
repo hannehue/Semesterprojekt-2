@@ -8,8 +8,8 @@ module Java {
     opens Java.presentation.controllers to javafx.fxml;
     exports Java.presentation;
     opens Java.presentation to javafx.fxml;
-    exports Java.persistance;
-    opens Java.persistance to javafx.fxml;
+    exports Java.persistence;
+    opens Java.persistence to javafx.fxml;
     exports Java.interfaces;
     opens Java.interfaces to javafx.fxml;
     exports Java.domain;

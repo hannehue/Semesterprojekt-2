@@ -1,6 +1,6 @@
 package Java.presentation.controllers;
 
-import Java.persistance.DatabaseLoaderFacade;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Category;
 import Java.domain.data.Role;

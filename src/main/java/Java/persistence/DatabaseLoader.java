@@ -1,4 +1,4 @@
-package Java.persistance;
+package Java.persistence;
 
 import Java.domain.data.Category;
 import Java.interfaces.*;

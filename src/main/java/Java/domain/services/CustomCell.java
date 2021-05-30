@@ -1,6 +1,6 @@
 package Java.domain.services;
 
-import Java.persistance.DatabaseLoaderFacade;
+import Java.persistence.DatabaseLoaderFacade;
 import Java.interfaces.ICredit;
 import Java.interfaces.IPerson;
 import Java.presentation.controllers.CreditOverlookController;
