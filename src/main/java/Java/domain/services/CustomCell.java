@@ -1,9 +1,7 @@
 package Java.domain.services;
 
 import Java.persistence.DatabaseLoaderFacade;
-import Java.domain.ApplicationManager;
 import Java.interfaces.ICredit;
-import Java.interfaces.IPerson;
 import Java.presentation.controllers.CreditOverlookController;
 import Java.presentation.controllers.MenuController;
 import javafx.scene.control.*;

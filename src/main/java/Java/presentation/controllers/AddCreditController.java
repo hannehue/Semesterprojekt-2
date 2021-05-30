@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -41,11 +42,11 @@ public class AddCreditController implements Initializable {
     @FXML
     protected TextField personPhone;
     @FXML
-    protected TextField personDescription;
+    protected TextArea personDescription;
     @FXML
     protected TextField movieTitle;
     @FXML
-    protected TextField movieDescription;
+    protected TextArea movieDescription;
     @FXML
     protected TextField movieLength;
     @FXML
@@ -258,6 +259,8 @@ public class AddCreditController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         PersonList = new ListView();
         PersonList.setPrefHeight(200);
         PersonList.setPrefWidth(493);

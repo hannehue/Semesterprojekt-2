@@ -13,11 +13,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.StringConverter;
-import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,6 +34,13 @@ public class CreditOverlookController implements Initializable {
         return instance;
     }
 
+    @FXML
+    protected TabPane OuterTab;
+    @FXML
+    protected Tab tilfoejTab;
+
+    @FXML
+    protected AnchorPane ContentPane;
 
     @FXML
     protected ListView itemView;
@@ -53,6 +62,8 @@ public class CreditOverlookController implements Initializable {
     protected String Approved;
     @FXML
     protected String Unapproved;
+    @FXML
+    protected Pane radioButtonPane;
 
 
     ToggleGroup toggleGroup = new ToggleGroup();
@@ -125,8 +136,33 @@ public class CreditOverlookController implements Initializable {
             }
         }
         itemView.setItems(approvedList);
+
+        OuterTab.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+            @Override
+            public void changed(ObservableValue<? extends Tab> observableValue, Tab tab, Tab t1) {
+                System.out.println("tab change");
+                if (observableValue.getValue().equals(tilfoejTab)){
+                    try {
+                        radioButtonPane.setVisible(false);
+                        setContentPane("AddCredits.fxml", AddCreditController.getInstance());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    radioButtonPane.setVisible(true);
+                }
+            }
+        });
     }
 
+    public void setContentPane(String fxml, Object controller) throws IOException {
+        ContentPane.getChildren().clear();
+        Object fxmlController = controller;
+        FXMLLoader fxmlLoader = new FXMLLoader(MenuController.class.getClassLoader().getResource(fxml));
+        fxmlLoader.setController(fxmlController);
+        Parent root = fxmlLoader.load();
+        ContentPane.getChildren().add(root);
+    }
     public void editItem(ICredit credit) {
         ScrollPane scrollPane = new ScrollPane();
         FilterAllButton.setVisible(false);
