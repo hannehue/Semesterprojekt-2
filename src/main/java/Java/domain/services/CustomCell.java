@@ -52,21 +52,17 @@ public class CustomCell extends ListCell<ICredit>{
         } else {
             this.credit = getItem();
             name.setText(credit.buildView());
-            if (this.credit instanceof IPerson){
-                Button deleteBtn = new Button();
-                deleteBtn.setText("Slet person");
-                deleteBtn.setOnAction(actionEvent -> {
-                    DatabaseLoaderFacade.getInstance().deleteCredit(getItem());
-                    try {
-                        MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-                if (getItem() instanceof IPerson){
-                    pane.add(deleteBtn,4,0);
+            Button deleteBtn = new Button();
+            deleteBtn.setText("Slet kreditering");
+            deleteBtn.setOnAction(actionEvent -> {
+                DatabaseLoaderFacade.getInstance().deleteCredit(getItem());
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            }
+            });
+            pane.add(deleteBtn,4,0);
             if (!getItem().isApproved()){
                 Button approveBtn = new Button();
                 approveBtn.setText("Godkend");
