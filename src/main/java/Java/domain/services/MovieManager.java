@@ -1,6 +1,6 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistance.DatabaseLoaderFacade;
 import Java.domain.data.Category;
 import Java.domain.data.Movie;
 import Java.domain.objectMapping.Factory;

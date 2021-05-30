@@ -1,10 +1,8 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistance.DatabaseLoaderFacade;
 import Java.interfaces.ICredit;
-import Java.interfaces.IMovie;
 import Java.interfaces.IPerson;
-import Java.interfaces.IShow;
 import Java.presentation.controllers.CreditOverlookController;
 import Java.presentation.controllers.MenuController;
 import javafx.scene.control.*;
@@ -13,7 +11,6 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.function.IntPredicate;
 
 public class CustomCell extends ListCell<ICredit>{
 

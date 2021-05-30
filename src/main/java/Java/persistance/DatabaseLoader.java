@@ -1,4 +1,4 @@
-package Java.data;
+package Java.persistance;
 
 import Java.domain.data.Category;
 import Java.interfaces.*;
@@ -651,11 +651,11 @@ public class DatabaseLoader {
                             "UPDATE credits " +
                             "SET name = ?, " +
                             "approved = ?, " +
-                            "description = ?, " +
+                            "description = ? " +
                             "WHERE credit_id = ?) " +
                             "UPDATE seasons " +
                             "SET all_episodes_approved = ? " +
-                            "WHERE seaons.credit_id = ?"
+                            "WHERE seasons.credit_id = ?"
             );
             updateSeason.setString(1, season.getName());
             updateSeason.setBoolean(2, false);

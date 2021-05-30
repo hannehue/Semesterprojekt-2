@@ -1,6 +1,6 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistance.DatabaseLoaderFacade;
 import Java.domain.data.Show;
 import Java.domain.objectMapping.Factory;
 import Java.interfaces.ISeason;

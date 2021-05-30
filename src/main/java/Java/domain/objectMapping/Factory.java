@@ -1,6 +1,6 @@
 package Java.domain.objectMapping;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistance.DatabaseLoaderFacade;
 import Java.domain.services.*;
 import Java.interfaces.*;
 import javafx.collections.FXCollections;

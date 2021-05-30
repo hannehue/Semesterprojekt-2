@@ -1,9 +1,8 @@
 package Java.presentation.controllers;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistance.DatabaseLoaderFacade;
 import Java.domain.ApplicationManager;
 import Java.domain.data.Category;
-import Java.domain.data.Job;
 import Java.domain.data.Role;
 import Java.domain.objectMapping.CustomCellFactory;
 import Java.domain.services.*;

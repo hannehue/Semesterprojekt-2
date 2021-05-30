@@ -1,6 +1,6 @@
 package test;
 
-import Java.data.DatabaseLoaderFacade;
+import Java.persistance.DatabaseLoaderFacade;
 import Java.domain.services.PersonManager;
 import Java.interfaces.IPerson;
 import org.junit.Test;

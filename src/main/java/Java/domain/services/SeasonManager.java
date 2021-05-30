@@ -1,16 +1,13 @@
 package Java.domain.services;
 
-import Java.data.DatabaseLoaderFacade;
-import Java.domain.ApplicationManager;
+import Java.persistance.DatabaseLoaderFacade;
 import Java.domain.data.Season;
 import Java.interfaces.ISeason;
 import Java.interfaces.IShow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 
 public class SeasonManager {
