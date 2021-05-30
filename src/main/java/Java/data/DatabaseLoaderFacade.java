@@ -149,6 +149,10 @@ public class DatabaseLoaderFacade {
         return DatabaseLoader.getInstance().searchQueryToShowList(searchString);
     }
 
+    public ResultSet searchSeasonsFromShow(IShow show){
+        return DatabaseLoader.getInstance().queryGetSeasonsForShow(show);
+    }
+
     public ResultSet getJobRoles() throws SQLException {
         return DatabaseLoader.getInstance().getAllJobRoles();
     }
@@ -158,5 +162,11 @@ public class DatabaseLoaderFacade {
     }
     public void updateCredit(IMovie iMovie) throws SQLException {
         DatabaseLoader.getInstance().updateMovie(iMovie);
+    }
+    public void updateCredit(IShow iShow) throws SQLException {
+        DatabaseLoader.getInstance().updateShow(iShow);
+    }
+    public void updateCredit(ISeason iSeason) throws SQLException {
+        DatabaseLoader.getInstance().updateSeason(iSeason);
     }
 }

@@ -621,7 +621,7 @@ public class DatabaseLoader {
                             "description = ? " +
                             "WHERE credit_id = ?) " +
                             "UPDATE shows " +
-                            "all_seasons_approved = ?" +
+                            "SET all_seasons_approved = ?" +
                             "WHERE shows.credit_id = ?"
             );
             updateShow.setString(1, show.getName());

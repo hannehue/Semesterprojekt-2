@@ -6,10 +6,7 @@ import Java.domain.data.Category;
 import Java.domain.data.Job;
 import Java.domain.data.Role;
 import Java.domain.objectMapping.CustomCellFactory;
-import Java.domain.services.JobManager;
-import Java.domain.services.MovieManager;
-import Java.domain.services.PersonManager;
-import Java.domain.services.ShowManager;
+import Java.domain.services.*;
 import Java.interfaces.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -123,7 +120,9 @@ public class CreditOverlookController implements Initializable {
 
             //knap til godkend redigering
             Button godkendBtn = new Button();
+            Button annullerBtn = new Button();
                 godkendBtn.setText("Godkend redigering");
+                annullerBtn.setText("Annuller");
             //opret labels for tingene
             Label nameLabel = new Label("Navn: ");
             Label emailLabel = new Label("Email: ");
@@ -196,6 +195,7 @@ public class CreditOverlookController implements Initializable {
             editGrid.add(createdoneJobs(person),2,5);
 
             editGrid.add(godkendBtn,3,0);
+            editGrid.add(annullerBtn,3,1);
 
 
             addJobBtn.setOnAction(actionEvent -> {
@@ -231,6 +231,13 @@ public class CreditOverlookController implements Initializable {
                     e.printStackTrace();
                 }
             });
+            annullerBtn.setOnAction(actionEvent -> {
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
         if (credit instanceof IMovie){
             col0.setPercentWidth(8);
@@ -241,9 +248,11 @@ public class CreditOverlookController implements Initializable {
             editGrid.getColumnConstraints().add(2,col2);
 
             IMovie movie = MovieManager.getInstance().searchMovie(credit.getName()).get(0);
-                //knap til godkend redigering
-                Button godkendBtn = new Button();
-                    godkendBtn.setText("Godkend redigering");
+            //knap til godkend redigering
+            Button godkendBtn = new Button();
+            Button annullerBtn = new Button();
+                godkendBtn.setText("Godkend redigering");
+                annullerBtn.setText("Annuller");
 
                 Label movieNameLabel = new Label("Navn: ");
                 TextField movieName = new TextField();
@@ -281,6 +290,7 @@ public class CreditOverlookController implements Initializable {
             editGrid.add(movieLengthInSeconds,2,3);
 
             editGrid.add(godkendBtn,3,0);
+            editGrid.add(annullerBtn,3,1);
 
             godkendBtn.setOnAction(actionEvent -> {
                 movie.setName(movieName.getText());
@@ -303,8 +313,136 @@ public class CreditOverlookController implements Initializable {
                     e.printStackTrace();
                 }
             });
-
+            annullerBtn.setOnAction(actionEvent -> {
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
+        if (credit instanceof IShow){
+            col0.setPercentWidth(8);
+            col1.setPercentWidth(12);
+            col2.setPercentWidth(60);
+            editGrid.getColumnConstraints().add(0, col0);
+            editGrid.getColumnConstraints().add(1, col1);
+            editGrid.getColumnConstraints().add(2,col2);
+
+            IShow iShow = ShowManager.getInstance().getShowById(credit.getCreditID());
+
+            //knap til godkend redigering
+            Button godkendBtn = new Button();
+            Button annullerBtn = new Button();
+                godkendBtn.setText("Godkend redigering");
+                annullerBtn.setText("Annuller");
+
+            Label showNameLabel = new Label("Navn: ");
+            Label showDescriptionLabel = new Label("Beskrivelse: ");
+            Label showSeasonsLabel = new Label("Sæsoner: ");
+
+            TextField showName = new TextField();
+                showName.setText(iShow.getName());
+            TextArea showDescription = new TextArea();
+                showDescription.setText(iShow.getDescription());
+            ListView showSeasons = new ListView();
+                showSeasons.setCellFactory(new CustomCellFactory());
+                showSeasons.setItems(iShow.getSeasons());
+
+            editGrid.add(showNameLabel,1,0);
+            editGrid.add(showDescriptionLabel,1,1);
+            editGrid.add(showSeasonsLabel,1,2);
+
+            editGrid.add(showName,2,0);
+            editGrid.add(showDescription,2,1);
+            editGrid.add(showSeasons,2,2);
+
+            editGrid.add(godkendBtn,3,0);
+            editGrid.add(annullerBtn,3,1);
+
+            godkendBtn.setOnAction(actionEvent -> {
+                iShow.setName(showName.getText());
+                iShow.setDescription(showDescription.getText());
+                try {
+                    DatabaseLoaderFacade.getInstance().updateCredit(iShow);
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
+                }
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            annullerBtn.setOnAction(actionEvent -> {
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        if (credit instanceof ISeason) {
+            col0.setPercentWidth(8);
+            col1.setPercentWidth(12);
+            col2.setPercentWidth(60);
+            editGrid.getColumnConstraints().add(0, col0);
+            editGrid.getColumnConstraints().add(1, col1);
+            editGrid.getColumnConstraints().add(2,col2);
+
+            ISeason iSeason = SeasonManager.getInstance().getSeasonById(credit.getCreditID());
+
+            //knap til godkend redigering
+            Button godkendBtn = new Button();
+            Button annullerBtn = new Button();
+                godkendBtn.setText("Godkend redigering");
+                annullerBtn.setText("Annuller");
+
+
+            Label theshow = new Label(ShowManager.getInstance().getShowById(iSeason.getShowID()).getName() + " " + iSeason.getName());
+            Label seasonDescriptionLabel = new Label("Beskrivelse: ");
+            Label seasonEpisodesLabel = new Label("Episoder");
+
+            TextArea seasonDescription = new TextArea();
+                seasonDescription.setText(iSeason.getDescription());
+            ListView seasonEpisodes = new ListView();
+
+                seasonEpisodes.setCellFactory(new CustomCellFactory());
+                seasonEpisodes.setItems(iSeason.getEpisodes());
+
+
+            editGrid.add(theshow,1,0);
+            editGrid.add(seasonDescriptionLabel,1,1);
+            editGrid.add(seasonEpisodesLabel,1,2);
+
+            editGrid.add(seasonDescription,2,1);
+            editGrid.add(seasonEpisodes,2,2);
+
+            editGrid.add(godkendBtn,3,0);
+            editGrid.add(annullerBtn,3,1);
+
+            godkendBtn.setOnAction(actionEvent -> {
+                iSeason.setDescription(seasonDescription.getText());
+                try {
+                    DatabaseLoaderFacade.getInstance().updateCredit(iSeason);
+                } catch (SQLException sqlException) {
+                    sqlException.printStackTrace();
+                }
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            annullerBtn.setOnAction(actionEvent -> {
+                try {
+                    MenuController.getInstance().setContentPane("CreditOverlook.fxml", CreditOverlookController.getInstance());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         scrollPane.setContent(editGrid);

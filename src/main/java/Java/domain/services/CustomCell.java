@@ -1,10 +1,17 @@
 package Java.domain.services;
 
+import Java.data.DatabaseLoaderFacade;
 import Java.interfaces.ICredit;
+import Java.interfaces.ISeason;
+import Java.interfaces.IShow;
 import Java.presentation.controllers.CreditOverlookController;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.util.Callback;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class CustomCell extends ListCell<ICredit>{
 
@@ -13,7 +20,6 @@ public class CustomCell extends ListCell<ICredit>{
     private Button editBtn;
     private Button approveBtn;
     private Button godkend;
-    private ColumnConstraints col1 = new ColumnConstraints();
     private ICredit credit;
 
 
@@ -45,6 +51,7 @@ public class CustomCell extends ListCell<ICredit>{
             setText(null);
             setGraphic(null);
         } else {
+
             this.credit = getItem();
             name.setText(credit.buildView());
             setGraphic(pane);
