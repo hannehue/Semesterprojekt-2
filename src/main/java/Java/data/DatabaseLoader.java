@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class DatabaseLoader {
+ class DatabaseLoader {
 
     private static DatabaseLoader instance;
 
@@ -43,10 +43,7 @@ public class DatabaseLoader {
         return instance;
     }
 
-    public static void main(String[] args) {
-    }
-
-    public ResultSet searchQueryToPersonList(String searchString) {
+     ResultSet searchQueryToPersonList(String searchString) {
         ArrayList<IPerson> personObservableList = new ArrayList<>();
         try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
@@ -68,7 +65,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ResultSet queryGetJobsForPerson(IPerson person) {
+     ResultSet queryGetJobsForPerson(IPerson person) {
         try {
             // Job handling
             // Runs new query, using persons, jobs and job_roles
@@ -89,7 +86,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ResultSet searchQueryToMovieList(String searchString) {
+     ResultSet searchQueryToMovieList(String searchString) {
         try {
             PreparedStatement queryStatement = getInstance().connection.prepareStatement(
                     "SELECT * FROM credits " +
@@ -113,11 +110,11 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ArrayList<IGroup> searchQueryToGroup(String searchString) {
+     ArrayList<IGroup> searchQueryToGroup(String searchString) {
         return null;
     }
 
-    public ResultSet searchQueryToShowList(String searchString) {
+     ResultSet searchQueryToShowList(String searchString) {
         try {
             PreparedStatement searchQuery = getConnection().prepareStatement(
                     "SELECT * FROM credits, shows WHERE LOWER(name) LIKE LOWER(?)" +
@@ -134,7 +131,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ResultSet queryGetSeasonsForShow(IShow show) {
+     ResultSet queryGetSeasonsForShow(IShow show) {
         try {
             PreparedStatement getSeasonQuery = getConnection().prepareStatement(
                     "SELECT * FROM credits, seasons WHERE seasons.show_id = ?" +
@@ -151,7 +148,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ResultSet queryGetEpisodesForShow(ISeason season) {
+     ResultSet queryGetEpisodesForShow(ISeason season) {
         try {
 
             PreparedStatement getEpisodeQuery = getConnection().prepareStatement(
@@ -175,7 +172,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
+     Map<String, Integer> addPersonToDatabase(IPerson person) throws SQLException {
         // Set autoCommit to false, so only both prepared statements run
         getConnection().setAutoCommit(false);
         Savepoint beforeAddPerson = getConnection().setSavepoint();
@@ -217,7 +214,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public int addCreditToDatabase(ICredit credit) throws SQLException {
+     int addCreditToDatabase(ICredit credit) throws SQLException {
         PreparedStatement insertCredit = getConnection().prepareStatement(
                 "INSERT INTO credits(name, date_added, approved, description)"
                         + "VALUES(?, ?, ?, ?)"
@@ -232,7 +229,7 @@ public class DatabaseLoader {
         return insertCredit.getGeneratedKeys().getInt(1);
     }
 
-    public int addProductionToDatabase(IProduction production, int creditID) throws SQLException {
+     int addProductionToDatabase(IProduction production, int creditID) throws SQLException {
         PreparedStatement insertProduction = getConnection().prepareStatement(
                 "INSERT INTO productions(credit_id, category_id, length_in_secs, release_date)"
                         + "VALUES(?, ?, ?, ?)"
@@ -247,7 +244,7 @@ public class DatabaseLoader {
         return insertProduction.getGeneratedKeys().getInt(1);
     }
 
-    public Map<String, Integer> addMovieToDatabase(IMovie movie) throws SQLException {
+     Map<String, Integer> addMovieToDatabase(IMovie movie) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddMovie = getConnection().setSavepoint();
 
@@ -283,7 +280,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public Map<String, Integer> addShowToDatabase(IShow show) throws SQLException {
+     Map<String, Integer> addShowToDatabase(IShow show) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddShow = getConnection().setSavepoint();
         try {
@@ -317,7 +314,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public Map<String, Integer> addSeasonToDatabase(ISeason season) throws SQLException {
+     Map<String, Integer> addSeasonToDatabase(ISeason season) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddSeason = getConnection().setSavepoint();
         try {
@@ -356,7 +353,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public Map<String, Integer> addEpisodeToDatabase(IEpisode episode) throws SQLException {
+     Map<String, Integer> addEpisodeToDatabase(IEpisode episode) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddEpisode = getConnection().setSavepoint();
 
@@ -396,7 +393,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public Map<String, Integer> addJobToDatabase(IJob job) throws SQLException {
+     Map<String, Integer> addJobToDatabase(IJob job) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddJob = getConnection().setSavepoint();
 
@@ -446,7 +443,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ResultSet getAllUnApprovedCredits() throws SQLException {
+     ResultSet getAllUnApprovedCredits() throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddJob = getConnection().setSavepoint();
         try {
@@ -470,7 +467,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public ResultSet getAllJobRoles() throws SQLException {
+     ResultSet getAllJobRoles() throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddJob = getConnection().setSavepoint();
         try {
@@ -487,7 +484,7 @@ public class DatabaseLoader {
         return null;
     }
 
-    public void setCreditApproveState(ICredit credit, boolean bool) throws SQLException {
+     void setCreditApproveState(ICredit credit, boolean bool) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeSetApproveState = getConnection().setSavepoint();
         try {
@@ -509,7 +506,7 @@ public class DatabaseLoader {
         }
     }
 
-    public void deletePerson(int creditId) throws SQLException {
+     void deletePerson(int creditId) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeAddJob = getConnection().setSavepoint();
         try {
@@ -535,7 +532,7 @@ public class DatabaseLoader {
         }
     }
 
-    public void updateMovie(IMovie movie) throws SQLException {
+     void updateMovie(IMovie movie) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeUpdateMovie = getConnection().setSavepoint();
         try {
@@ -570,7 +567,7 @@ public class DatabaseLoader {
         }
     }
 
-    public void updatePerson(IPerson person) throws SQLException {
+     void updatePerson(IPerson person) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeUpdatePerson = getConnection().setSavepoint();
 
@@ -611,7 +608,7 @@ public class DatabaseLoader {
 
     }
 
-    public void updateShow(IShow show) throws SQLException {
+     void updateShow(IShow show) throws SQLException {
         getConnection().setAutoCommit(false);
         Savepoint beforeUpdateShow = getConnection().setSavepoint();
         try {
@@ -643,7 +640,7 @@ public class DatabaseLoader {
 
     }
 
-    public void updateSeason(ISeason season) throws SQLException{
+     void updateSeason(ISeason season) throws SQLException{
         getConnection().setAutoCommit(false);
         Savepoint beforeUpdateSeason = getConnection().setSavepoint();
         try {
@@ -675,7 +672,7 @@ public class DatabaseLoader {
         }
     }
 
-    public void updateEpisode(IEpisode episode) throws SQLException{
+     void updateEpisode(IEpisode episode) throws SQLException{
         getConnection().setAutoCommit(false);
         Savepoint beforeUpdateEpisode = getConnection().setSavepoint();
         try {

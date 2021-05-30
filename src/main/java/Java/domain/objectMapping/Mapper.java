@@ -24,6 +24,11 @@ public class Mapper {
         return instance;
     }
 
+    /**
+     * Construct a person from a resultSet.
+     * @param personResultSet
+     * @return
+     */
     IPerson mapPerson(ResultSet personResultSet) {
         try {
             IPerson tempPerson = new Person(
